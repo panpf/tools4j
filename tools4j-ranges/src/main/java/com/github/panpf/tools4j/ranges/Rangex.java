@@ -16,9 +16,7 @@
 
 package com.github.panpf.tools4j.ranges;
 
-import com.github.panpf.tools4j.iterable.CharProgression;
-import com.github.panpf.tools4j.iterable.IntProgression;
-import com.github.panpf.tools4j.iterable.LongProgression;
+import com.github.panpf.tools4j.iterable.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,6 +26,7 @@ import java.util.Date;
 /**
  * Range tool method
  */
+@SuppressWarnings("ManualMinMaxCalculation")
 public class Rangex {
 
     private Rangex() {
@@ -48,28 +47,7 @@ public class Rangex {
      * Create a positive-order byte range that does not contain [end]
      */
     public static IntProgression until(byte start, byte end, int step) {
-        return IntProgression.fromClosedRange(start, end - 1, step);
-    }
-
-    /**
-     * Create a reversed byte range
-     */
-    public static IntProgression downTo(byte start, byte endInclusive, int step) {
-        return IntProgression.fromClosedRange(start, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed byte range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(byte start, byte end, int step) {
-        return IntProgression.fromClosedRange(start, end + 1, step);
-    }
-
-    /**
-     * Create a reversed byte range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(byte start, byte end) {
-        return downUntilTo(start, end, -1);
+        return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
 
 
@@ -87,28 +65,7 @@ public class Rangex {
      * Create a positive-order short range that does not contain [end]
      */
     public static IntProgression until(short start, short end, int step) {
-        return IntProgression.fromClosedRange(start, end - 1, step);
-    }
-
-    /**
-     * Create a reversed short range
-     */
-    public static IntProgression downTo(short start, short endInclusive, int step) {
-        return IntProgression.fromClosedRange(start, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed short range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(short start, short end, int step) {
-        return IntProgression.fromClosedRange(start, end + 1, step);
-    }
-
-    /**
-     * Create a reversed short range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(short start, short end) {
-        return downUntilTo(start, end, -1);
+        return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
 
 
@@ -126,28 +83,7 @@ public class Rangex {
      * Create a positive-order int range that does not contain [end]
      */
     public static IntProgression until(int start, int end, int step) {
-        return IntProgression.fromClosedRange(start, end - 1, step);
-    }
-
-    /**
-     * Create a reversed int range
-     */
-    public static IntProgression downTo(int start, int endInclusive, int step) {
-        return IntProgression.fromClosedRange(start, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed int range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(int start, int end, int step) {
-        return IntProgression.fromClosedRange(start, end + 1, step);
-    }
-
-    /**
-     * Create a reversed int range that does not contain [end]
-     */
-    public static IntProgression downUntilTo(int start, int end) {
-        return downUntilTo(start, end, -1);
+        return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
 
 
@@ -165,28 +101,7 @@ public class Rangex {
      * Create a positive-order long range that does not contain [end]
      */
     public static LongProgression until(long start, long end, long step) {
-        return LongProgression.fromClosedRange(start, end - 1, step);
-    }
-
-    /**
-     * Create a reversed long range
-     */
-    public static LongProgression downTo(long start, long endInclusive, long step) {
-        return LongProgression.fromClosedRange(start, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed long range that does not contain [end]
-     */
-    public static LongProgression downUntilTo(long start, long end, long step) {
-        return LongProgression.fromClosedRange(start, end + 1, step);
-    }
-
-    /**
-     * Create a reversed long range that does not contain [end]
-     */
-    public static LongProgression downUntilTo(long start, long end) {
-        return downUntilTo(start, end, -1);
+        return LongProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
 
 
@@ -204,28 +119,7 @@ public class Rangex {
      * Create a positive-order char range that does not contain [end]
      */
     public static CharProgression until(char start, char end, int step) {
-        return CharProgression.fromClosedRange(start, (char) Math.max(Math.min(end - 1, Character.MAX_VALUE), Character.MIN_VALUE), step);
-    }
-
-    /**
-     * Create a reversed char range
-     */
-    public static CharProgression downTo(char start, char endInclusive, int step) {
-        return CharProgression.fromClosedRange(start, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed char range that does not contain [end]
-     */
-    public static CharProgression downUntilTo(char start, char end, int step) {
-        return CharProgression.fromClosedRange(start, (char) Math.max(Math.min(end + 1, Character.MAX_VALUE), Character.MIN_VALUE), step);
-    }
-
-    /**
-     * Create a reversed char range that does not contain [end]
-     */
-    public static CharProgression downUntilTo(char start, char end) {
-        return downUntilTo(start, end, -1);
+        return CharProgression.fromClosedRange(start, step > 0 ? (char) Math.max(Math.min(end - 1, Character.MAX_VALUE), Character.MIN_VALUE) : (char) Math.max(Math.min(end + 1, Character.MAX_VALUE), Character.MIN_VALUE), step);
     }
 
 
@@ -288,34 +182,12 @@ public class Rangex {
 
     /* ******************************************* Year Range *******************************************/
 
-
-    /**
-     * Create a positive-order year ranges
-     */
-    @NotNull
-    public static YearRange yearRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new YearRange(date, endInclusive, step);
-    }
-
     /**
      * Create a positive-order year ranges
      */
     @NotNull
     public static YearRange yearRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return yearRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order year range that does not contain [end]
-     */
-    @NotNull
-    public static YearRange yearUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.YEAR, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new YearRange(date, endInclusiveDate, step);
+        return new YearRange(date, endInclusive);
     }
 
     /**
@@ -323,45 +195,40 @@ public class Rangex {
      */
     @NotNull
     public static YearRange yearUntil(@NotNull Date date, @NotNull Date end) {
-        return yearUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed year range
-     */
-    @NotNull
-    public static YearRange yearDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new YearRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed year range
-     */
-    @NotNull
-    public static YearRange yearDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return yearDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed year range that does not contain [end]
-     */
-    @NotNull
-    public static YearRange yearDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.YEAR, 1);
+        calendar.add(Calendar.YEAR, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new YearRange(date, endInclusiveDate, step);
+        return new YearRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed year range that does not contain [end]
+     * Create a reversed year range
      */
     @NotNull
-    public static YearRange yearDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return yearDownUntilTo(date, end, -1);
+    public static YearProgression yearDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new YearProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order year ranges
+     */
+    @NotNull
+    public static YearProgression yearRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new YearProgression(date, endInclusive, step);
+    }
+
+    /**
+     * Create a positive-order year range that does not contain [end]
+     */
+    @NotNull
+    public static YearProgression yearUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.YEAR, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new YearProgression(date, endInclusiveDate, step);
     }
 
 
@@ -372,29 +239,8 @@ public class Rangex {
      * Create a positive-order month ranges
      */
     @NotNull
-    public static MonthRange monthRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MonthRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a positive-order month ranges
-     */
-    @NotNull
     public static MonthRange monthRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return monthRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order month range that does not contain [end]
-     */
-    @NotNull
-    public static MonthRange monthUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MONTH, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MonthRange(date, endInclusiveDate, step);
+        return new MonthRange(date, endInclusive);
     }
 
     /**
@@ -402,45 +248,41 @@ public class Rangex {
      */
     @NotNull
     public static MonthRange monthUntil(@NotNull Date date, @NotNull Date end) {
-        return monthUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed month range
-     */
-    @NotNull
-    public static MonthRange monthDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MonthRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed month range
-     */
-    @NotNull
-    public static MonthRange monthDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return monthDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed month range that does not contain [end]
-     */
-    @NotNull
-    public static MonthRange monthDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.MONTH, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MonthRange(date, endInclusiveDate, step);
+        return new MonthRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed month range that does not contain [end]
+     * Create a reversed month range
      */
     @NotNull
-    public static MonthRange monthDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return monthDownUntilTo(date, end, -1);
+    public static MonthProgression monthDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new MonthProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order month ranges
+     */
+    @NotNull
+    public static MonthProgression monthRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new MonthProgression(date, endInclusive, step);
+    }
+
+
+    /**
+     * Create a positive-order month range that does not contain [end]
+     */
+    @NotNull
+    public static MonthProgression monthUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.MONTH, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new MonthProgression(date, endInclusiveDate, step);
     }
 
 
@@ -451,29 +293,8 @@ public class Rangex {
      * Create a positive-order day ranges
      */
     @NotNull
-    public static DayRange dayRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new DayRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a positive-order day ranges
-     */
-    @NotNull
     public static DayRange dayRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return dayRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order day range that does not contain [end]
-     */
-    @NotNull
-    public static DayRange dayUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new DayRange(date, endInclusiveDate, step);
+        return new DayRange(date, endInclusive);
     }
 
     /**
@@ -481,45 +302,40 @@ public class Rangex {
      */
     @NotNull
     public static DayRange dayUntil(@NotNull Date date, @NotNull Date end) {
-        return dayUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed day range
-     */
-    @NotNull
-    public static DayRange dayDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new DayRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed day range
-     */
-    @NotNull
-    public static DayRange dayDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return dayDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed day range that does not contain [end]
-     */
-    @NotNull
-    public static DayRange dayDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new DayRange(date, endInclusiveDate, step);
+        return new DayRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed day range that does not contain [end]
+     * Create a reversed day range
      */
     @NotNull
-    public static DayRange dayDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return dayDownUntilTo(date, end, -1);
+    public static DayProgression dayDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new DayProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order day ranges
+     */
+    @NotNull
+    public static DayProgression dayRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new DayProgression(date, endInclusive, step);
+    }
+
+    /**
+     * Create a positive-order day range that does not contain [end]
+     */
+    @NotNull
+    public static DayProgression dayUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.DAY_OF_MONTH, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new DayProgression(date, endInclusiveDate, step);
     }
 
 
@@ -530,29 +346,8 @@ public class Rangex {
      * Create a positive-order hour ranges
      */
     @NotNull
-    public static HourRange hourRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new HourRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a positive-order hour ranges
-     */
-    @NotNull
     public static HourRange hourRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return hourRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order hour range that does not contain [end]
-     */
-    @NotNull
-    public static HourRange hourUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.HOUR_OF_DAY, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new HourRange(date, endInclusiveDate, step);
+        return new HourRange(date, endInclusive);
     }
 
     /**
@@ -560,45 +355,41 @@ public class Rangex {
      */
     @NotNull
     public static HourRange hourUntil(@NotNull Date date, @NotNull Date end) {
-        return hourUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed hour range
-     */
-    @NotNull
-    public static HourRange hourDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new HourRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed hour range
-     */
-    @NotNull
-    public static HourRange hourDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return hourDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed hour range that does not contain [end]
-     */
-    @NotNull
-    public static HourRange hourDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new HourRange(date, endInclusiveDate, step);
+        return new HourRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed hour range that does not contain [end]
+     * Create a reversed hour range
      */
     @NotNull
-    public static HourRange hourDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return hourDownUntilTo(date, end, -1);
+    public static HourProgression hourDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new HourProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order hour ranges
+     */
+    @NotNull
+    public static HourProgression hourRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new HourProgression(date, endInclusive, step);
+    }
+
+
+    /**
+     * Create a positive-order hour range that does not contain [end]
+     */
+    @NotNull
+    public static HourProgression hourUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.HOUR_OF_DAY, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new HourProgression(date, endInclusiveDate, step);
     }
 
 
@@ -609,75 +400,49 @@ public class Rangex {
      * Create a positive-order minute ranges
      */
     @NotNull
-    public static MinuteRange minuteRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MinuteRange(date, endInclusive, step);
+    public static MinuteRange minuteRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new MinuteRange(date, endInclusive);
     }
+
+    /**
+     * Create a positive-order minute range that does not contain [end]
+     */
+    @NotNull
+    public static MinuteProgression minuteUntil(@NotNull Date date, @NotNull Date end) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.MINUTE, -1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new MinuteProgression(date, endInclusiveDate, 1);
+    }
+
+    /**
+     * Create a reversed minute range
+     */
+    @NotNull
+    public static MinuteProgression minuteDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new MinuteProgression(date, endInclusive, -1);
+    }
+
 
     /**
      * Create a positive-order minute ranges
      */
     @NotNull
-    public static MinuteRange minuteRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return minuteRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order minute range that does not contain [end]
-     */
-    @NotNull
-    public static MinuteRange minuteUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MINUTE, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MinuteRange(date, endInclusiveDate, step);
+    public static MinuteProgression minuteRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new MinuteProgression(date, endInclusive, step);
     }
 
     /**
      * Create a positive-order minute range that does not contain [end]
      */
     @NotNull
-    public static MinuteRange minuteUntil(@NotNull Date date, @NotNull Date end) {
-        return minuteUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed minute range
-     */
-    @NotNull
-    public static MinuteRange minuteDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MinuteRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed minute range
-     */
-    @NotNull
-    public static MinuteRange minuteDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return minuteDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed minute range that does not contain [end]
-     */
-    @NotNull
-    public static MinuteRange minuteDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
+    public static MinuteProgression minuteUntil(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MINUTE, 1);
+        calendar.add(Calendar.MINUTE, step > 0 ? -1 : 1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MinuteRange(date, endInclusiveDate, step);
-    }
-
-    /**
-     * Create a reversed minute range that does not contain [end]
-     */
-    @NotNull
-    public static MinuteRange minuteDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return minuteDownUntilTo(date, end, -1);
+        return new MinuteProgression(date, endInclusiveDate, step);
     }
 
 
@@ -688,29 +453,8 @@ public class Rangex {
      * Create a positive-order second ranges
      */
     @NotNull
-    public static SecondRange secondRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new SecondRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a positive-order second ranges
-     */
-    @NotNull
     public static SecondRange secondRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return secondRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order second range that does not contain [end]
-     */
-    @NotNull
-    public static SecondRange secondUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.SECOND, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new SecondRange(date, endInclusiveDate, step);
+        return new SecondRange(date, endInclusive);
     }
 
     /**
@@ -718,45 +462,40 @@ public class Rangex {
      */
     @NotNull
     public static SecondRange secondUntil(@NotNull Date date, @NotNull Date end) {
-        return secondUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed second range
-     */
-    @NotNull
-    public static SecondRange secondDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new SecondRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed second range
-     */
-    @NotNull
-    public static SecondRange secondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return secondDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed second range that does not contain [end]
-     */
-    @NotNull
-    public static SecondRange secondDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.SECOND, 1);
+        calendar.add(Calendar.SECOND, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new SecondRange(date, endInclusiveDate, step);
+        return new SecondRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed second range that does not contain [end]
+     * Create a reversed second range
      */
     @NotNull
-    public static SecondRange secondDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return secondDownUntilTo(date, end, -1);
+    public static SecondProgression secondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new SecondProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order second ranges
+     */
+    @NotNull
+    public static SecondProgression secondRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new SecondProgression(date, endInclusive, step);
+    }
+
+    /**
+     * Create a positive-order second range that does not contain [end]
+     */
+    @NotNull
+    public static SecondProgression secondUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.SECOND, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new SecondProgression(date, endInclusiveDate, step);
     }
 
 
@@ -767,29 +506,8 @@ public class Rangex {
      * Create a positive-order millisecond ranges
      */
     @NotNull
-    public static MillisecondRange millisecondRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MillisecondRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a positive-order millisecond ranges
-     */
-    @NotNull
     public static MillisecondRange millisecondRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return millisecondRangeTo(date, endInclusive, 1);
-    }
-
-
-    /**
-     * Create a positive-order millisecond range that does not contain [end]
-     */
-    @NotNull
-    public static MillisecondRange millisecondUntil(@NotNull Date date, @NotNull Date end, int step) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MILLISECOND, -1);
-        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MillisecondRange(date, endInclusiveDate, step);
+        return new MillisecondRange(date, endInclusive);
     }
 
     /**
@@ -797,45 +515,40 @@ public class Rangex {
      */
     @NotNull
     public static MillisecondRange millisecondUntil(@NotNull Date date, @NotNull Date end) {
-        return millisecondUntil(date, end, 1);
-    }
-
-
-    /**
-     * Create a reversed millisecond range
-     */
-    @NotNull
-    public static MillisecondRange millisecondDownTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new MillisecondRange(date, endInclusive, step);
-    }
-
-    /**
-     * Create a reversed millisecond range
-     */
-    @NotNull
-    public static MillisecondRange millisecondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return millisecondDownTo(date, endInclusive, -1);
-    }
-
-
-    /**
-     * Create a reversed millisecond range that does not contain [end]
-     */
-    @NotNull
-    public static MillisecondRange millisecondDownUntilTo(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
-        calendar.add(Calendar.MILLISECOND, 1);
+        calendar.add(Calendar.MILLISECOND, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MillisecondRange(date, endInclusiveDate, step);
+        return new MillisecondRange(date, endInclusiveDate);
     }
 
     /**
-     * Create a reversed millisecond range that does not contain [end]
+     * Create a reversed millisecond range
      */
     @NotNull
-    public static MillisecondRange millisecondDownUntilTo(@NotNull Date date, @NotNull Date end) {
-        return millisecondDownUntilTo(date, end, -1);
+    public static MillisecondProgression millisecondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new MillisecondProgression(date, endInclusive, -1);
+    }
+
+
+    /**
+     * Create a positive-order millisecond ranges
+     */
+    @NotNull
+    public static MillisecondProgression millisecondRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new MillisecondProgression(date, endInclusive, step);
+    }
+
+    /**
+     * Create a positive-order millisecond range that does not contain [end]
+     */
+    @NotNull
+    public static MillisecondProgression millisecondUntil(@NotNull Date date, @NotNull Date end, int step) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(end.getTime());
+        calendar.add(Calendar.MILLISECOND, step > 0 ? -1 : 1);
+        Date endInclusiveDate = new Date(calendar.getTimeInMillis());
+        return new MillisecondProgression(date, endInclusiveDate, step);
     }
 
 
@@ -1088,7 +801,7 @@ public class Rangex {
      * Create a reversed byte range
      */
     public static IntProgression downTo(byte start, byte endInclusive) {
-        return downTo(start, endInclusive, -1);
+        return new IntProgression(start, endInclusive, -1);
     }
 
 
@@ -1113,7 +826,7 @@ public class Rangex {
      * Create a reversed short range
      */
     public static IntProgression downTo(short start, short endInclusive) {
-        return downTo(start, endInclusive, -1);
+        return new IntProgression(start, endInclusive, -1);
     }
 
 
@@ -1138,7 +851,7 @@ public class Rangex {
      * Create a reversed int range
      */
     public static IntProgression downTo(int start, int endInclusive) {
-        return downTo(start, endInclusive, -1);
+        return new IntProgression(start, endInclusive, -1);
     }
 
 
@@ -1163,7 +876,7 @@ public class Rangex {
      * Create a reversed long range
      */
     public static LongProgression downTo(long start, long endInclusive) {
-        return downTo(start, endInclusive, -1);
+        return new LongProgression(start, endInclusive, -1);
     }
 
 
@@ -1210,7 +923,7 @@ public class Rangex {
      * Create a reversed char range
      */
     public static CharProgression downTo(char start, char endInclusive) {
-        return downTo(start, endInclusive, -1);
+        return new CharProgression(start, endInclusive, -1);
     }
 
 

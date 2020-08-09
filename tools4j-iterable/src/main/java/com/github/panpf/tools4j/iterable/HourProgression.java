@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.iterable.DateProgression;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class HourRange extends DateProgression implements ClosedRange<Date> {
+@SuppressWarnings("WeakerAccess")
+public final class HourProgression extends DateProgression {
 
-    public HourRange(@NotNull Date start, @NotNull Date endInclusive) {
-        super(start, endInclusive, 1);
+    public HourProgression(@NotNull Date first, @NotNull Date last, int step) {
+        super(first, last, step);
     }
 
     @NotNull
@@ -35,32 +34,5 @@ public final class HourRange extends DateProgression implements ClosedRange<Date
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.HOUR_OF_DAY, this.getStep());
         return new Date(calendar.getTimeInMillis());
-    }
-
-    @NotNull
-    @Override
-    public Date getStart() {
-        return getFirst();
-    }
-
-    @NotNull
-    @Override
-    public Date getEndInclusive() {
-        return getLast();
-    }
-
-    @Override
-    public boolean contains(@NotNull Date value) {
-        return getFirst().compareTo(value) <= 0 && value.compareTo(getLast()) <= 0;
-    }
-
-    public boolean isEmpty() {
-        return getFirst().compareTo(getLast()) > 0;
-    }
-
-    @NotNull
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        return dateFormat.format(getFirst()) + ".." + dateFormat.format(getLast());
     }
 }

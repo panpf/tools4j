@@ -30,10 +30,10 @@ public class CharProgression implements Iterable<Character> {
     private final char last;
     private final int step;
 
-    public CharProgression(char start, char endInclusive, int step) {
+    public CharProgression(char first, char last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
-        this.first = start;
-        this.last = (char) IterableUtil.getProgressionLastElement(start, endInclusive, step);
+        this.first = first;
+        this.last = (char) IterableUtil.getProgressionLastElement(first, last, step);
         this.step = step;
     }
 

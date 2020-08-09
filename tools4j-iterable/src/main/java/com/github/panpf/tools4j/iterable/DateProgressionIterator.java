@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,16 +22,19 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
-public class DateRangeIterator implements Iterator<Date> {
-    private boolean hasNext;
+public class DateProgressionIterator implements Iterator<Date> {
+
     @NotNull
-    private Date next;
-    private final DateRange range;
+    private final DateProgression range;
+    @NotNull
     private final Date last;
     private final int step;
 
-    public DateRangeIterator(@NotNull DateRange range, @NotNull Date first, @NotNull Date last, int step) {
+    @NotNull
+    private Date next;
+    private boolean hasNext;
+
+    public DateProgressionIterator(@NotNull DateProgression range, @NotNull Date first, @NotNull Date last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.range = range;
         this.last = last;

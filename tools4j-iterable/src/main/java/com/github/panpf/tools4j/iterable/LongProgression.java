@@ -30,10 +30,10 @@ public class LongProgression implements Iterable<Long> {
     private final long last;
     private final long step;
 
-    public LongProgression(long start, long endInclusive, long step) {
+    public LongProgression(long first, long last, long step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
-        this.first = start;
-        this.last = IterableUtil.getProgressionLastElement(start, endInclusive, step);
+        this.first = first;
+        this.last = IterableUtil.getProgressionLastElement(first, last, step);
         this.step = step;
     }
 

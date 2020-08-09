@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.iterable.DateProgression;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class MillisecondRange extends DateProgression implements ClosedRange<Date> {
+public final class MillisecondProgression extends DateProgression {
 
-    public MillisecondRange(@NotNull Date start, @NotNull Date endInclusive) {
-        super(start, endInclusive, 1);
+    public MillisecondProgression(@NotNull Date first, @NotNull Date last, int step) {
+        super(first, last, step);
     }
 
     @NotNull
@@ -35,32 +33,5 @@ public final class MillisecondRange extends DateProgression implements ClosedRan
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.MILLISECOND, this.getStep());
         return new Date(calendar.getTimeInMillis());
-    }
-
-    @NotNull
-    @Override
-    public Date getStart() {
-        return getFirst();
-    }
-
-    @NotNull
-    @Override
-    public Date getEndInclusive() {
-        return getLast();
-    }
-
-    @Override
-    public boolean contains(@NotNull Date value) {
-        return getFirst().compareTo(value) <= 0 && value.compareTo(getLast()) <= 0;
-    }
-
-    public boolean isEmpty() {
-        return getFirst().compareTo(getLast()) > 0;
-    }
-
-    @NotNull
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        return dateFormat.format(getFirst()) + ".." + dateFormat.format(getLast());
     }
 }

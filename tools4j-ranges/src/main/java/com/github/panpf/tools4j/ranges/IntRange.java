@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A range of values of type `Integer`.
  */
-@SuppressWarnings("WeakerAccess")
 public class IntRange extends IntProgression implements ClosedRange<Integer> {
 
     public IntRange(int start, int endInclusive) {

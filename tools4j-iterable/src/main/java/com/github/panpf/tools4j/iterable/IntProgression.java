@@ -30,10 +30,10 @@ public class IntProgression implements Iterable<Integer> {
     private final int last;
     private final int step;
 
-    public IntProgression(int start, int endInclusive, int step) {
+    public IntProgression(int first, int last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
-        this.first = start;
-        this.last = IterableUtil.getProgressionLastElement(start, endInclusive, step);
+        this.first = first;
+        this.last = IterableUtil.getProgressionLastElement(first, last, step);
         this.step = step;
     }
 

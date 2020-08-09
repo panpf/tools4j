@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A range of values of type `Char`.
  */
-@SuppressWarnings("WeakerAccess")
 public class CharRange extends CharProgression implements ClosedRange<Character> {
 
     public CharRange(char start, char endInclusive) {

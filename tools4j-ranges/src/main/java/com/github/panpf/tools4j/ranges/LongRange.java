@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A range of values of type `Long`.
  */
-@SuppressWarnings("WeakerAccess")
 public class LongRange extends LongProgression implements ClosedRange<Long> {
 
     /**

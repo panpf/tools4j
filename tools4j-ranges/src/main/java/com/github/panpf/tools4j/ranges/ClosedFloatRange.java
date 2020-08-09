@@ -19,7 +19,6 @@ package com.github.panpf.tools4j.ranges;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("WeakerAccess")
 public class ClosedFloatRange extends ClosedFloatingPointRange<Float> {
 
     private final float start;

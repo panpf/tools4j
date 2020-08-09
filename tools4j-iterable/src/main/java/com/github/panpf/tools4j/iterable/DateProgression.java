@@ -14,55 +14,44 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.Iterator;
 
-@SuppressWarnings("WeakerAccess")
-public abstract class DateRange implements Iterable<Date>, ClosedRange<Date> {
+public abstract class DateProgression implements Iterable<Date> {
 
     @NotNull
-    private final Date start;
+    private final Date first;
     @NotNull
-    private final Date endInclusive;
+    private final Date last;
     private final int step;
 
-    public DateRange(@NotNull Date start, @NotNull Date endInclusive, int step) {
+    public DateProgression(@NotNull Date first, @NotNull Date last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
-        this.start = start;
-        this.endInclusive = endInclusive;
+        this.first = first;
+        this.last = last;
         this.step = step;
     }
 
     @NotNull
     public Iterator<Date> iterator() {
-        return (new DateRangeIterator(this, this.getStart(), this.getEndInclusive(), this.step));
-    }
-
-    @Override
-    public boolean contains(@NotNull Date value) {
-        return this.step > 0 ? value.compareTo(this.getStart()) >= 0 && value.compareTo(this.getEndInclusive()) <= 0 : (this.step < 0 && (value.compareTo(this.getStart()) <= 0 && value.compareTo(this.getEndInclusive()) >= 0));
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.step > 0 ? this.getStart().compareTo(this.getEndInclusive()) > 0 : (this.step >= 0 || this.getStart().compareTo(this.getEndInclusive()) < 0);
+        return (new DateProgressionIterator(this, this.getFirst(), this.getLast(), this.step));
     }
 
     @NotNull
     public abstract Date nextDate(@NotNull Date var1);
 
     @NotNull
-    public Date getStart() {
-        return this.start;
+    public Date getFirst() {
+        return this.first;
     }
 
     @NotNull
-    public Date getEndInclusive() {
-        return this.endInclusive;
+    public Date getLast() {
+        return this.last;
     }
 
     public final int getStep() {
