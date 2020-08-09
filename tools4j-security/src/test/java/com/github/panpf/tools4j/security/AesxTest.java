@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.crypto;
+package com.github.panpf.tools4j.security;
 
-import com.github.panpf.tools4j.crypto.Aesx;
-import com.github.panpf.tools4j.crypto.Keyx;
 import org.junit.Assert;
 import org.junit.Test;
 

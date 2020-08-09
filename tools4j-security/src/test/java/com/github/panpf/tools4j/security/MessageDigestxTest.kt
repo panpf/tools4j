@@ -61,7 +61,7 @@ class MessageDigestxTest {
     @Test
     @Throws(IOException::class)
     fun testInputStreamDigest() {
-        val callback = TestDigestListener()
+        val callback = TestMessageDigestListener()
         Assert.assertEquals(TEXT_MD2, MessageDigestx.getDigest(TEST_TEXT.byteInputStream(), "MD2"))
         Assert.assertEquals(TEXT_MD2, MessageDigestx.getDigest(TEST_TEXT.byteInputStream(), "MD2", callback.reset()))
         Assert.assertEquals("8192,16384,19296", callback.toString())
@@ -126,7 +126,7 @@ class MessageDigestxTest {
     @Test
     @Throws(IOException::class)
     fun testFileDigest() {
-        val callback = TestDigestListener()
+        val callback = TestMessageDigestListener()
         val file = File("/tmp/testDigest.tmp")
         try {
             file.writeText(TEST_FILE_TEXT)
@@ -183,7 +183,7 @@ class MessageDigestxTest {
         }
     }
 
-    private class TestDigestListener : DigestListener {
+    private class TestMessageDigestListener : MessageDigestListener {
         private var builder = StringBuilder()
         private var makeDamage = false
         private var updateProgressCount = 0
@@ -197,14 +197,14 @@ class MessageDigestxTest {
             updateProgressCount++
         }
 
-        fun reset(): TestDigestListener {
+        fun reset(): TestMessageDigestListener {
             builder = StringBuilder()
             makeDamage = false
             updateProgressCount = 0
             return this
         }
 
-        fun resetMakeDamage(): TestDigestListener {
+        fun resetMakeDamage(): TestMessageDigestListener {
             builder = StringBuilder()
             makeDamage = true
             updateProgressCount = 0

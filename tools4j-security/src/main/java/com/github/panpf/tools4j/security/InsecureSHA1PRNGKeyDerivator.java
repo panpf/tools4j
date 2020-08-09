@@ -1,4 +1,4 @@
-package com.github.panpf.tools4j.crypto;
+package com.github.panpf.tools4j.security;
 
 /**
  * Stripped-down version of the SHA1PRNG provided by the Crypto provider.

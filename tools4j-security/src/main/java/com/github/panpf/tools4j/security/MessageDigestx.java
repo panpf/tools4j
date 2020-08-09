@@ -41,7 +41,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the specified [algorithm]
      */
     @NotNull
-    public static String getDigest(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable DigestListener listener) throws IOException {
+    public static String getDigest(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable MessageDigestListener listener) throws IOException {
         MessageDigest messageDigest;
         try {
             messageDigest = MessageDigest.getInstance(algorithm);
@@ -86,7 +86,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the specified [algorithm]
      */
     @NotNull
-    public static String getDigestOrEmpty(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable DigestListener listener) {
+    public static String getDigestOrEmpty(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable MessageDigestListener listener) {
         try {
             return getDigest(inputStream, algorithm, listener);
         } catch (IOException e) {
@@ -112,7 +112,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the specified [algorithm]
      */
     @Nullable
-    public static String getDigestOrNull(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable DigestListener listener) {
+    public static String getDigestOrNull(@NotNull InputStream inputStream, @NotNull String algorithm, @Nullable MessageDigestListener listener) {
         try {
             return getDigest(inputStream, algorithm, listener);
         } catch (IOException e) {
@@ -138,7 +138,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm
      */
     @NotNull
-    public static String getMD5(@NotNull InputStream inputStream, @Nullable DigestListener listener) throws IOException {
+    public static String getMD5(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) throws IOException {
         return getDigest(inputStream, "MD5", listener);
     }
 
@@ -154,7 +154,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm
      */
     @NotNull
-    public static String getMD5OrEmpty(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getMD5OrEmpty(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getMD5(inputStream, listener);
         } catch (IOException e) {
@@ -180,7 +180,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm
      */
     @Nullable
-    public static String getMD5OrNull(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getMD5OrNull(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getMD5(inputStream, listener);
         } catch (IOException e) {
@@ -206,7 +206,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @NotNull
-    public static String getMD5_16(@NotNull InputStream inputStream, @Nullable DigestListener listener) throws IOException {
+    public static String getMD5_16(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) throws IOException {
         return getDigest(inputStream, "MD5", listener).substring(8, 24);
     }
 
@@ -222,7 +222,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @NotNull
-    public static String getMD5_16OrEmpty(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getMD5_16OrEmpty(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getMD5_16(inputStream, listener);
         } catch (IOException e) {
@@ -248,7 +248,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @Nullable
-    public static String getMD5_16OrNull(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getMD5_16OrNull(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getMD5_16(inputStream, listener);
         } catch (IOException e) {
@@ -274,7 +274,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA1 algorithm
      */
     @NotNull
-    public static String getSHA1(@NotNull InputStream inputStream, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA1(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) throws IOException {
         return getDigest(inputStream, "SHA1", listener);
     }
 
@@ -290,7 +290,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA1 algorithm
      */
     @NotNull
-    public static String getSHA1OrEmpty(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA1OrEmpty(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA1(inputStream, listener);
         } catch (IOException e) {
@@ -316,7 +316,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA1 algorithm
      */
     @Nullable
-    public static String getSHA1OrNull(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA1OrNull(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA1(inputStream, listener);
         } catch (IOException e) {
@@ -342,7 +342,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-256 algorithm
      */
     @NotNull
-    public static String getSHA256(@NotNull InputStream inputStream, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA256(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) throws IOException {
         return getDigest(inputStream, "SHA-256", listener);
     }
 
@@ -358,7 +358,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-256 algorithm
      */
     @NotNull
-    public static String getSHA256OrEmpty(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA256OrEmpty(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA256(inputStream, listener);
         } catch (IOException e) {
@@ -384,7 +384,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-256 algorithm
      */
     @Nullable
-    public static String getSHA256OrNull(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA256OrNull(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA256(inputStream, listener);
         } catch (IOException e) {
@@ -410,7 +410,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-512 algorithm
      */
     @NotNull
-    public static String getSHA512(@NotNull InputStream inputStream, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA512(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) throws IOException {
         return getDigest(inputStream, "SHA-512", listener);
     }
 
@@ -426,7 +426,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-512 algorithm
      */
     @NotNull
-    public static String getSHA512OrEmpty(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA512OrEmpty(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA512(inputStream, listener);
         } catch (IOException e) {
@@ -452,7 +452,7 @@ public class MessageDigestx {
      * Get the message digest of the input stream using the SHA-512 algorithm
      */
     @Nullable
-    public static String getSHA512OrNull(@NotNull InputStream inputStream, @Nullable DigestListener listener) {
+    public static String getSHA512OrNull(@NotNull InputStream inputStream, @Nullable MessageDigestListener listener) {
         try {
             return getSHA512(inputStream, listener);
         } catch (IOException e) {
@@ -718,7 +718,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the specified [algorithm]
      */
     @NotNull
-    public static String getDigest(@NotNull File file, @NotNull String algorithm, @Nullable DigestListener listener) throws IOException {
+    public static String getDigest(@NotNull File file, @NotNull String algorithm, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -758,7 +758,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the specified [algorithm]
      */
     @NotNull
-    public static String getDigestOrEmpty(@NotNull File file, @NotNull String algorithm, @Nullable DigestListener listener) {
+    public static String getDigestOrEmpty(@NotNull File file, @NotNull String algorithm, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -804,7 +804,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the specified [algorithm]
      */
     @Nullable
-    public static String getDigestOrNull(@NotNull File file, @NotNull String algorithm, @Nullable DigestListener listener) {
+    public static String getDigestOrNull(@NotNull File file, @NotNull String algorithm, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -850,7 +850,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm
      */
     @NotNull
-    public static String getMD5(@NotNull File file, @Nullable DigestListener listener) throws IOException {
+    public static String getMD5(@NotNull File file, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -890,7 +890,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm
      */
     @NotNull
-    public static String getMD5OrEmpty(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getMD5OrEmpty(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -936,7 +936,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm
      */
     @Nullable
-    public static String getMD5OrNull(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getMD5OrNull(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -982,7 +982,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @NotNull
-    public static String getMD5_16(@NotNull File file, @Nullable DigestListener listener) throws IOException {
+    public static String getMD5_16(@NotNull File file, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1022,7 +1022,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @NotNull
-    public static String getMD5_16OrEmpty(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getMD5_16OrEmpty(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1068,7 +1068,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the MD5 algorithm, only the middle 16 bits are reserved
      */
     @Nullable
-    public static String getMD5_16OrNull(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getMD5_16OrNull(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1114,7 +1114,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA1 algorithm
      */
     @NotNull
-    public static String getSHA1(@NotNull File file, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA1(@NotNull File file, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1154,7 +1154,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA1 algorithm
      */
     @NotNull
-    public static String getSHA1OrEmpty(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA1OrEmpty(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1200,7 +1200,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA1 algorithm
      */
     @Nullable
-    public static String getSHA1OrNull(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA1OrNull(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1246,7 +1246,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-256 algorithm
      */
     @NotNull
-    public static String getSHA256(@NotNull File file, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA256(@NotNull File file, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1286,7 +1286,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-256 algorithm
      */
     @NotNull
-    public static String getSHA256OrEmpty(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA256OrEmpty(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1332,7 +1332,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-256 algorithm
      */
     @Nullable
-    public static String getSHA256OrNull(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA256OrNull(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1378,7 +1378,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-512 algorithm
      */
     @NotNull
-    public static String getSHA512(@NotNull File file, @Nullable DigestListener listener) throws IOException {
+    public static String getSHA512(@NotNull File file, @Nullable MessageDigestListener listener) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1418,7 +1418,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-512 algorithm
      */
     @NotNull
-    public static String getSHA512OrEmpty(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA512OrEmpty(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -1464,7 +1464,7 @@ public class MessageDigestx {
      * Get the message digest of the file using the SHA-512 algorithm
      */
     @Nullable
-    public static String getSHA512OrNull(@NotNull File file, @Nullable DigestListener listener) {
+    public static String getSHA512OrNull(@NotNull File file, @Nullable MessageDigestListener listener) {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);

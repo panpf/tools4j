@@ -17,9 +17,9 @@
 package com.github.panpf.tools4j.security;
 
 /**
- * Digestx work listener
+ * MessageDigestx work listener
  */
-public interface DigestListener {
+public interface MessageDigestListener {
     /**
      * If it returns true , it stops
      */

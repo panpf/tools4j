@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.crypto;
+package com.github.panpf.tools4j.security;
 
 import com.github.panpf.tools4j.base64.Base64x;
 import org.jetbrains.annotations.NotNull;
@@ -76,7 +76,7 @@ public class Aesx {
     @NotNull
     public static Key createKeyByPassword(String password, int keySizeInBytes) {
         byte[] passwordBytes = password.getBytes(Charset.forName("UTF-8"));
-        byte[] key = com.github.panpf.tools4j.crypto.InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(passwordBytes, keySizeInBytes);
+        byte[] key = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(passwordBytes, keySizeInBytes);
         return new SecretKeySpec(key, ALGORITHM);
     }
 

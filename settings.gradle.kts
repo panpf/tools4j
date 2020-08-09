@@ -1,7 +1,6 @@
 include(":tools4j-base64")
 include(":tools4j-collections")
 include(":tools4j-common")
-include(":tools4j-crypto")
 include(":tools4j-datetime")
 include(":tools4j-grouping")
 include(":tools4j-io")

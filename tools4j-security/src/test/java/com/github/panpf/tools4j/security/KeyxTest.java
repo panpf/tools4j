@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.crypto;
+package com.github.panpf.tools4j.security;
 
 import com.github.panpf.tools4j.base64.Base64x;
 import org.junit.Assert;
