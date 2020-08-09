@@ -33,9 +33,9 @@ project.file("local.properties").takeIf { it.exists() }?.let { file -> file.inpu
 
     configure<PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-collections"
+        artifactId = "tools4j-iterable"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Collections"
+        desc = "Java, Tools, Iterable"
         website = "https://github.com/panpf/tools4j"
         userOrg = moduleLocalProperties.getProperty("bintray.userOrg")
         bintrayUser = moduleLocalProperties.getProperty("bintray.user")
