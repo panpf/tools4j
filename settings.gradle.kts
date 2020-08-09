@@ -1,3 +1,4 @@
+include(":tools4j-annotation")
 include(":tools4j-base64")
 include(":tools4j-collections")
 include(":tools4j-common")
