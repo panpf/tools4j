@@ -27,8 +27,9 @@ import java.util.*;
  */
 public class BoundedQueue<E> implements Queue<E> {
 
+    private final Queue<E> queue = new LinkedList<E>();
+
     private int maxSize;
-    private Queue<E> queue = new LinkedList<E>();
 
     /**
      * Create a queue of limited length

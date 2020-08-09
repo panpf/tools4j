@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
+import com.github.panpf.tools4j.iterable.IntProgression;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +26,6 @@ import java.util.*;
 /**
  * Collection tool method
  */
-@SuppressWarnings({"WeakerAccess"})
 public class Collectionx {
 
     private Collectionx() {
@@ -2038,6 +2038,18 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> plusElement(@Nullable Iterable<T> iterable, @Nullable T element) {
         return plus(iterable, element);
+    }
+
+
+    /* ******************************************* indices ******************************************* */
+
+
+    /**
+     * Returns the range of valid indices for the Collection.
+     */
+    @NotNull
+    public static <T> IntProgression indices(@Nullable Collection<T> collection) {
+        return new IntProgression(0, count(collection) - 1, 1);
     }
 
 

@@ -20,13 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayBooleanIterator extends BooleanIterator {
 
-    private int index = 0;
-
     @Nullable
-    private boolean[] elements;
+    private final boolean[] elements;
+
+    private int index = 0;
 
     public ArrayBooleanIterator(@Nullable boolean[] elements) {
         this.elements = elements;

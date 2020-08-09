@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
-
-import com.github.panpf.tools4j.iterable.LongIterator;
+package com.github.panpf.tools4j.iterable;
 
 import java.util.NoSuchElementException;
 
@@ -25,8 +23,9 @@ import java.util.NoSuchElementException;
  */
 public class LongProgressionIterator extends LongIterator {
 
-    private long step;
-    private long finalElement;
+    private final long step;
+    private final long finalElement;
+
     private boolean hasNext;
     private long next;
 

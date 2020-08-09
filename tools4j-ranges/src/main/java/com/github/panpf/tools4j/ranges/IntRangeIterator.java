@@ -16,24 +16,26 @@
 
 package com.github.panpf.tools4j.ranges;
 
+import com.github.panpf.tools4j.iterable.IterableUtil;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Int`.
  */
-@SuppressWarnings("WeakerAccess")
 public class IntRangeIterator implements Iterator<Integer> {
-    private int step;
 
-    private int finalElement;
+    private final int step;
+
+    private final int finalElement;
     private int next;
     private boolean hasNext;
 
     public IntRangeIterator(int start, int endInclusive, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.step = step;
-        this.finalElement = Rangex.getProgressionLastElement(start, endInclusive, step);
+        this.finalElement = IterableUtil.getProgressionLastElement(start, endInclusive, step);
         this.hasNext = step > 0 ? start <= finalElement : start >= finalElement;
         this.next = hasNext ? start : finalElement;
     }

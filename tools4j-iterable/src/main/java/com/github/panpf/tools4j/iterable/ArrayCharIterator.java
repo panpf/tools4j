@@ -20,12 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayCharIterator extends CharIterator {
-    private int index = 0;
 
     @Nullable
-    private char[] elements;
+    private final char[] elements;
+
+    private int index = 0;
 
     public ArrayCharIterator(@Nullable char[] elements) {
         this.elements = elements;

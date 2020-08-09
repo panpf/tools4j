@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,16 +24,16 @@ import java.util.Iterator;
 /**
  * A progression of values of type `Char`.
  */
-@SuppressWarnings("WeakerAccess")
 public class CharProgression implements Iterable<Character> {
-    private char first;
-    private char last;
-    private int step;
 
-    CharProgression(char start, char endInclusive, int step) {
+    private final char first;
+    private final char last;
+    private final int step;
+
+    public CharProgression(char start, char endInclusive, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.first = start;
-        this.last = (char) Rangex.getProgressionLastElement(start, endInclusive, step);
+        this.last = (char) IterableUtil.getProgressionLastElement(start, endInclusive, step);
         this.step = step;
     }
 

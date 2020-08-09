@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-@SuppressWarnings("WeakerAccess")
 public class IndexingIterator<T> implements Iterator<IndexedValue<T>> {
 
     @NotNull
-    private Iterator<T> iterator;
+    private final Iterator<T> iterator;
+
     private int index = 0;
 
     public IndexingIterator(@NotNull Iterator<T> iterator) {

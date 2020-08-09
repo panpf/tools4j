@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
-
-import com.github.panpf.tools4j.iterable.CharIterator;
+package com.github.panpf.tools4j.iterable;
 
 import java.util.NoSuchElementException;
 
 /**
- * An iterator over a progression of values of type `Char`.
+ * An iterator over a progression of values of type `Int`.
  */
-public class CharProgressionIterator extends CharIterator {
+public class IntProgressionIterator extends IntIterator {
 
     private final int step;
-    private final char finalElement;
+    private final int finalElement;
     private boolean hasNext;
-    private char next;
+    private int next;
 
 
     /**
-     * An iterator over a progression of values of type `Char`.
+     * An iterator over a progression of values of type `Int`.
      *
      * @param step the number by which the value is incremented on each step.
      */
-    public CharProgressionIterator(char first, char last, int step) {
+    public IntProgressionIterator(int first, int last, int step) {
         this.step = step;
         finalElement = last;
         hasNext = step > 0 ? first <= last : first >= last;
@@ -49,8 +47,8 @@ public class CharProgressionIterator extends CharIterator {
     }
 
     @Override
-    public Character nextChar() {
-        char value = next;
+    public Integer nextInt() {
+        int value = next;
         if (value == finalElement) {
             if (!hasNext()) throw new NoSuchElementException();
             hasNext = false;

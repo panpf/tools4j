@@ -16,24 +16,26 @@
 
 package com.github.panpf.tools4j.ranges;
 
+import com.github.panpf.tools4j.iterable.IterableUtil;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Character`.
  */
-@SuppressWarnings("WeakerAccess")
 public class CharRangeIterator implements Iterator<Character> {
-    private int step;
 
-    private char finalElement;
+    private final int step;
+
+    private final char finalElement;
     private char next;
     private boolean hasNext;
 
     public CharRangeIterator(char start, char endInclusive, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.step = step;
-        finalElement = (char) Rangex.getProgressionLastElement(start, endInclusive, step);
+        finalElement = (char) IterableUtil.getProgressionLastElement(start, endInclusive, step);
         hasNext = step > 0 ? start <= finalElement : start >= finalElement;
         next = hasNext ? start : finalElement;
     }

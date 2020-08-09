@@ -16,24 +16,26 @@
 
 package com.github.panpf.tools4j.ranges;
 
+import com.github.panpf.tools4j.iterable.IterableUtil;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Long`.
  */
-@SuppressWarnings("WeakerAccess")
 public class LongRangeIterator implements Iterator<Long> {
-    private long step;
 
-    private long finalElement;
+    private final long step;
+
+    private final long finalElement;
     private long next;
     private boolean hasNext;
 
     public LongRangeIterator(long start, long endInclusive, long step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.step = step;
-        finalElement = Rangex.getProgressionLastElement(start, endInclusive, step);
+        finalElement = IterableUtil.getProgressionLastElement(start, endInclusive, step);
         hasNext = step > 0 ? start <= finalElement : start >= finalElement;
         next = hasNext ? start : finalElement;
     }

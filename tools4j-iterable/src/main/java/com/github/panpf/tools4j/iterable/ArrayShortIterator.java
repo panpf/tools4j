@@ -20,13 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayShortIterator extends ShortIterator {
 
-    private int index = 0;
-
     @Nullable
-    private short[] elements;
+    private final short[] elements;
+
+    private int index = 0;
 
     public ArrayShortIterator(@Nullable short[] elements) {
         this.elements = elements;

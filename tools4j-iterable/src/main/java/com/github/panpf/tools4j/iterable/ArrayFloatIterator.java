@@ -20,13 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayFloatIterator extends FloatIterator {
 
-    private int index = 0;
-
     @Nullable
-    private float[] elements;
+    private final float[] elements;
+
+    private int index = 0;
 
     public ArrayFloatIterator(@Nullable float[] elements) {
         this.elements = elements;

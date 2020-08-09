@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,16 +24,16 @@ import java.util.Iterator;
 /**
  * A progression of values of type `Int`.
  */
-@SuppressWarnings("WeakerAccess")
 public class IntProgression implements Iterable<Integer> {
-    private int first;
-    private int last;
-    private int step;
 
-    IntProgression(int start, int endInclusive, int step) {
+    private final int first;
+    private final int last;
+    private final int step;
+
+    public IntProgression(int start, int endInclusive, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.first = start;
-        this.last = Rangex.getProgressionLastElement(start, endInclusive, step);
+        this.last = IterableUtil.getProgressionLastElement(start, endInclusive, step);
         this.step = step;
     }
 

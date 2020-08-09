@@ -21,12 +21,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayIterator<T> implements Iterator<T> {
-    private int index = 0;
 
     @Nullable
-    private T[] elements;
+    private final T[] elements;
+
+    private int index = 0;
 
     public ArrayIterator(@Nullable T[] elements) {
         this.elements = elements;

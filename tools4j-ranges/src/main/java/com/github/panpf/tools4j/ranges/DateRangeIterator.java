@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings("WeakerAccess")
-public final class DateRangeIterator implements Iterator<Date> {
+public class DateRangeIterator implements Iterator<Date> {
     private boolean hasNext;
     @NotNull
     private Date next;

@@ -21,12 +21,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class CharSequenceIterator implements Iterator<Character> {
 
-    private int index;
     @Nullable
-    private CharSequence charSequence;
+    private final CharSequence charSequence;
+
+    private int index;
 
     public CharSequenceIterator(@Nullable CharSequence charSequence) {
         this.charSequence = charSequence;

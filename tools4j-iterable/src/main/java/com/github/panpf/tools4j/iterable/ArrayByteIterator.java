@@ -20,12 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayByteIterator extends ByteIterator {
-    private int index = 0;
 
     @Nullable
-    private byte[] elements;
+    private final byte[] elements;
+
+    private int index = 0;
 
     public ArrayByteIterator(@Nullable byte[] elements) {
         this.elements = elements;

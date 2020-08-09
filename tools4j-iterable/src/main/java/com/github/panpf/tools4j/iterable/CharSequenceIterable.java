@@ -21,11 +21,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 
-@SuppressWarnings("WeakerAccess")
 public class CharSequenceIterable implements Iterable<Character> {
 
     @Nullable
-    private CharSequence charSequence;
+    private final CharSequence charSequence;
 
     public CharSequenceIterable(@Nullable CharSequence charSequence) {
         this.charSequence = charSequence;

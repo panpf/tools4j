@@ -25,41 +25,6 @@ import java.util.*
 class RangexTest {
 
     @Test
-    fun testGetProgressionLastElement() {
-        assertEquals(10, Rangex.getProgressionLastElement(0, 10, 1))
-        assertEquals(10, Rangex.getProgressionLastElement(0, 11, 2))
-        try {
-            Rangex.getProgressionLastElement(0, 10, 0)
-            fail()
-        } catch (e: IllegalArgumentException) {
-        }
-
-        assertEquals(10L, Rangex.getProgressionLastElement(0L, 10L, 1L))
-        assertEquals(10L, Rangex.getProgressionLastElement(0L, 11L, 2L))
-        try {
-            Rangex.getProgressionLastElement(0L, 10L, 0L)
-            fail()
-        } catch (e: IllegalArgumentException) {
-        }
-
-        assertEquals(0, Rangex.getProgressionLastElement(10, 0, -1))
-        assertEquals(1, Rangex.getProgressionLastElement(11, 0, -2))
-        try {
-            Rangex.getProgressionLastElement(10, 0, 0)
-            fail()
-        } catch (e: IllegalArgumentException) {
-        }
-
-        assertEquals(0L, Rangex.getProgressionLastElement(10L, 0L, -1L))
-        assertEquals(1L, Rangex.getProgressionLastElement(11L, 0L, -2L))
-        try {
-            Rangex.getProgressionLastElement(10L, 0L, 0L)
-            fail()
-        } catch (e: IllegalArgumentException) {
-        }
-    }
-
-    @Test
     fun testIn() {
         assertTrue(Rangex.`in`(9.toByte(), 3.toByte(), 10.toByte()))
         assertFalse(Rangex.`in`(2.toByte(), 3.toByte(), 10.toByte()))

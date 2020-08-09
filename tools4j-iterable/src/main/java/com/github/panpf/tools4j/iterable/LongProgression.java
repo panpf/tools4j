@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,16 +24,16 @@ import java.util.Iterator;
 /**
  * A progression of values of type `Long`.
  */
-@SuppressWarnings("WeakerAccess")
 public class LongProgression implements Iterable<Long> {
-    private long first;
-    private long last;
-    private long step;
 
-    LongProgression(long start, long endInclusive, long step) {
+    private final long first;
+    private final long last;
+    private final long step;
+
+    public LongProgression(long start, long endInclusive, long step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.first = start;
-        this.last = Rangex.getProgressionLastElement(start, endInclusive, step);
+        this.last = IterableUtil.getProgressionLastElement(start, endInclusive, step);
         this.step = step;
     }
 

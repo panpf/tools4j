@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class IndexingIterable<T> implements Iterable<IndexedValue<T>> {
 
     @NotNull
-    private DefaultValue<Iterator<T>> defaultValue;
+    private final DefaultValue<Iterator<T>> defaultValue;
 
     public IndexingIterable(@NotNull DefaultValue<Iterator<T>> defaultValue) {
         this.defaultValue = defaultValue;

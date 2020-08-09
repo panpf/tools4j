@@ -20,13 +20,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("WeakerAccess")
 public class ArrayDoubleIterator extends DoubleIterator {
 
-    private int index = 0;
-
     @Nullable
-    private double[] elements;
+    private final double[] elements;
+
+    private int index = 0;
 
     public ArrayDoubleIterator(@Nullable double[] elements) {
         this.elements = elements;

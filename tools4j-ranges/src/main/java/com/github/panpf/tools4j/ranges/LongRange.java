@@ -16,6 +16,7 @@
 
 package com.github.panpf.tools4j.ranges;
 
+import com.github.panpf.tools4j.iterable.LongProgression;
 import org.jetbrains.annotations.NotNull;
 
 /**
