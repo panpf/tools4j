@@ -17,14 +17,11 @@
 package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.*;
-import com.github.panpf.tools4j.grouping.Grouping;
 import com.github.panpf.tools4j.iterable.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -1490,29 +1487,6 @@ public class Sequencex {
             list.add(valueTransform.transform(element));
         }
         return destination;
-    }
-
-    /**
-     * Creates a [Grouping] source from a sequence to be used later with one of group-and-fold operations
-     * using the specified [keySelector] function to extract a key from each element.
-     * <p>
-     * The operation is _intermediate_ and _stateless_.
-     */
-    @NotNull
-    public static <T, K> Grouping<T, K> groupingBy(@NotNull final Sequence<T> sequence, @NotNull final Transformer<T, K> keySelector) {
-        return new Grouping<T, K>() {
-            @NotNull
-            @Override
-            public Iterator<T> sourceIterator() {
-                return sequence.iterator();
-            }
-
-            @NotNull
-            @Override
-            public K keyOf(@NotNull T element) {
-                return keySelector.transform(element);
-            }
-        };
     }
 
 

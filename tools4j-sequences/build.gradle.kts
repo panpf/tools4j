@@ -20,7 +20,6 @@ dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
     api(project(":tools4j-common"))
     api(project(":tools4j-iterable"))
-    api(project(":tools4j-grouping"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
