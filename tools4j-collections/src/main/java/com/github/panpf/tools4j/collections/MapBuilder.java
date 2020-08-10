@@ -25,7 +25,7 @@ import java.util.*;
 public class MapBuilder<K, V> {
 
     @NotNull
-    private List<Pair<K, V>> list = new LinkedList<>();
+    private final List<Pair<K, V>> list = new LinkedList<>();
 
     public MapBuilder(@NotNull K k, @Nullable V v) {
         put(k, v);

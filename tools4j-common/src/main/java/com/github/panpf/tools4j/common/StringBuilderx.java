@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * StringBuilder tool method
  */
+// todo rename to Appendablex
 @SuppressWarnings("WeakerAccess")
 public class StringBuilderx {
 

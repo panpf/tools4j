@@ -24,6 +24,7 @@ import java.util.Comparator;
 /**
  * Comparison tool method
  */
+// todo 减少对它的依赖并独立出去
 public class Comparisonx {
 
     private Comparisonx() {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * The implementation of a stopwatch timer can not only implement a complete stopwatch program, but also can be used to record the time of each node of a time-consuming task.
  */
-@SuppressWarnings("WeakerAccess")
+// todo 不应该放在这里面
 public final class Stopwatch {
 
     /**

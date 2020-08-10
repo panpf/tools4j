@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.grouping;
 
 import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.ArrayIterator;
+import com.github.panpf.tools4j.iterable.CharSequenceIterator;
 import com.github.panpf.tools4j.iterable.EmptyIterator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +38,27 @@ public class Groupingx {
      * From kotlin standard library
      * *****************************************************************************************************************
      */
+
+    /**
+     * Creates a [Grouping] source from a char sequence to be used later with one of group-and-fold operations
+     * using the specified [keySelector] function to extract a key from each character.
+     */
+    @NotNull
+    public static <K> Grouping<Character, K> groupingBy(@Nullable final CharSequence charSequence, @NotNull final Transformer<Character, K> keySelector) {
+        return new Grouping<Character, K>() {
+            @NotNull
+            @Override
+            public Iterator<Character> sourceIterator() {
+                return new CharSequenceIterator(charSequence);
+            }
+
+            @NotNull
+            @Override
+            public K keyOf(@NotNull Character element) {
+                return keySelector.transform(element);
+            }
+        };
+    }
 
     /**
      * Creates a [Grouping] source from an array to be used later with one of group-and-fold operations

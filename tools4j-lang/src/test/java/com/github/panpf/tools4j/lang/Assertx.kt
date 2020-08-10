@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.panpf.tools4j.collections
+package com.github.panpf.tools4j.lang
 
 import org.junit.Assert
 

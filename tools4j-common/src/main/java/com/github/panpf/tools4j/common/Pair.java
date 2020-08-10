@@ -16,7 +16,6 @@
 
 package com.github.panpf.tools4j.common;
 
-@SuppressWarnings("WeakerAccess")
 public class Pair<A, B> {
     public final A first;
     public final B second;
