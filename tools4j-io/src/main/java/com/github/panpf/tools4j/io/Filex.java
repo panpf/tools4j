@@ -1687,7 +1687,7 @@ public class Filex {
 
         int sameCount = 0;
         int maxSameCount = Math.min(thisCount, baseCount);
-        while (sameCount < maxSameCount && Comparisonx.areEqual(thisComponents.segments.get(sameCount), baseComponents.segments.get(sameCount))) {
+        while (sameCount < maxSameCount && thisComponents.segments.get(sameCount).equals(baseComponents.segments.get(sameCount))) {
             sameCount++;
         }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.compare;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,10 +24,9 @@ import java.util.Comparator;
 /**
  * Comparison tool method
  */
-// todo 减少对它的依赖并独立出去
-public class Comparisonx {
+public class Comparex {
 
-    private Comparisonx() {
+    private Comparex() {
     }
 
 
@@ -45,24 +44,8 @@ public class Comparisonx {
         return first == null ? second == null : second != null && first.doubleValue() == second.doubleValue();
     }
 
-    public static boolean areEqual(@Nullable Double first, double second) {
-        return first != null && first == second;
-    }
-
-    public static boolean areEqual(double first, Double second) {
-        return second != null && first == second;
-    }
-
     public static boolean areEqual(@Nullable Float first, @Nullable Float second) {
         return first == null ? second == null : second != null && first.floatValue() == second.floatValue();
-    }
-
-    public static boolean areEqual(@Nullable Float first, float second) {
-        return first != null && first == second;
-    }
-
-    public static boolean areEqual(float first, @Nullable Float second) {
-        return second != null && first == second;
     }
 
 
@@ -82,7 +65,7 @@ public class Comparisonx {
      * The function is applied to the given values [a] and [b] and return [Comparable] objects.
      * The result of comparison of these [Comparable] instances is returned.
      */
-    public static <T, R extends Comparable<R>> int compareValuesBy(@Nullable T a, @Nullable T b, NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> int compareValuesBy(@Nullable T a, @Nullable T b, @NotNull CompareTransformer<T, R> selector) {
         return compareValues(selector.transform(a), selector.transform(b));
     }
 
@@ -90,7 +73,7 @@ public class Comparisonx {
      * Creates a comparator using the function to transform value to a [Comparable] instance for comparison.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Comparator<T> compareBy(@NotNull final NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> Comparator<T> compareBy(@NotNull final CompareTransformer<T, R> selector) {
         return (a, b) -> compareValuesBy(a, b, selector);
     }
 
@@ -98,7 +81,7 @@ public class Comparisonx {
      * Creates a descending comparator using the function to transform value to a [Comparable] instance for comparison.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Comparator<T> compareByDescending(@NotNull final NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> Comparator<T> compareByDescending(@NotNull final CompareTransformer<T, R> selector) {
         return (a, b) -> compareValuesBy(b, a, selector);
     }
 
@@ -118,34 +101,6 @@ public class Comparisonx {
     public static <T extends Comparable<T>> Comparator<T> reverseOrder() {
         //noinspection unchecked
         return (Comparator<T>) ReverseOrderComparator.INSTANCE;
-    }
-
-    public static class NaturalOrderComparator<T extends Comparable<T>> implements Comparator<T> {
-
-        private static final NaturalOrderComparator<?> INSTANCE = new NaturalOrderComparator<>();
-
-        @Override
-        public int compare(T a, T b) {
-            return a.compareTo(b);
-        }
-
-        public Comparator<T> reversed() {
-            return new ReverseOrderComparator<>();
-        }
-    }
-
-    public static class ReverseOrderComparator<T extends Comparable<T>> implements Comparator<T> {
-
-        private static final ReverseOrderComparator<?> INSTANCE = new ReverseOrderComparator<>();
-
-        @Override
-        public int compare(T a, T b) {
-            return b.compareTo(a);
-        }
-
-        public Comparator<T> reversed() {
-            return new NaturalOrderComparator<>();
-        }
     }
 
     /**

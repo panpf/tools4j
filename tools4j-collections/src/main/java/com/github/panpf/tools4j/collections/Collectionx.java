@@ -2158,7 +2158,14 @@ public class Collectionx {
      */
     public static <T, R extends Comparable<R>> void sortBy(@Nullable List<T> list, @NotNull final NullableAllTransformer<T, R> selector) {
         if (list != null && list.size() > 1) {
-            sortWith(list, Comparisonx.compareBy(selector));
+            sortWith(list, new Comparator<T>() {
+                @Override
+                public int compare(T o1, T o2) {
+                    R r1 = selector.transform(o1);
+                    R r2 = selector.transform(o2);
+                    return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+                }
+            });
         }
     }
 
@@ -2167,7 +2174,14 @@ public class Collectionx {
      */
     public static <T, R extends Comparable<R>> void sortByDescending(@Nullable List<T> list, @NotNull NullableAllTransformer<T, R> selector) {
         if (list != null && list.size() > 1) {
-            sortWith(list, Comparisonx.compareByDescending(selector));
+            sortWith(list, new Comparator<T>() {
+                @Override
+                public int compare(T o1, T o2) {
+                    R r1 = selector.transform(o2);
+                    R r2 = selector.transform(o1);
+                    return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+                }
+            });
         }
     }
 
@@ -2175,7 +2189,12 @@ public class Collectionx {
      * Sorts elements in the list in-place descending according to their natural sort order.
      */
     public static <T extends Comparable<T>> void sortDescending(@Nullable List<T> list) {
-        sortWith(list, new Comparisonx.ReverseOrderComparator<T>());
+        sortWith(list, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return o2.compareTo(o1);
+            }
+        });
     }
 
     /**
@@ -2204,7 +2223,14 @@ public class Collectionx {
      */
     @NotNull
     public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable Iterable<T> iterable, @NotNull NullableAllTransformer<T, R> selector) {
-        return sortedWith(iterable, Comparisonx.compareBy(selector));
+        return sortedWith(iterable, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                R r1 = selector.transform(o1);
+                R r2 = selector.transform(o2);
+                return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+            }
+        });
     }
 
     /**
@@ -2233,7 +2259,14 @@ public class Collectionx {
      */
     @NotNull
     public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable Iterable<T> iterable, @NotNull NullableAllTransformer<T, R> selector) {
-        return sortedWith(iterable, Comparisonx.compareByDescending(selector));
+        return sortedWith(iterable, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                R r1 = selector.transform(o2);
+                R r2 = selector.transform(o1);
+                return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+            }
+        });
     }
 
     /**
@@ -2241,7 +2274,12 @@ public class Collectionx {
      */
     @NotNull
     public static <T extends Comparable<T>> List<T> sortedDescending(@Nullable Iterable<T> iterable) {
-        return sortedWith(iterable, new Comparisonx.ReverseOrderComparator<T>());
+        return sortedWith(iterable, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return o2.compareTo(o1);
+            }
+        });
     }
 
 

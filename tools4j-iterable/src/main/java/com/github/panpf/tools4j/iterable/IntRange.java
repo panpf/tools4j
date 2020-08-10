@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A range of values of type `Integer`.
  */
-// todo 之前用 IntProgression 替代 IntRange 的地方再恢复成 IntRange
 public class IntRange extends IntProgression implements ClosedRange<Integer> {
 
     public IntRange(int start, int endInclusive) {

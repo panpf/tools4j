@@ -5,7 +5,7 @@ import org.junit.Test
 
 class IterableUtilTest {
 
-    // todo 测试各种迭代器
+    // todo 测试
 
     @Test
     fun testGetProgressionLastElement() {

@@ -857,7 +857,6 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> filterIndexed(@NotNull Sequence<T> sequence, @NotNull final IndexedPredicate<T> predicate) {
-        // TODO: Rewrite with generalized MapFilterIndexingSequence
         return new TransformingSequence<>(new FilteringSequence<>(new IndexingSequence<>(sequence), true, new Predicate<IndexedValue<T>>() {
             @Override
             public boolean accept(@NotNull IndexedValue<T> it) {
@@ -1081,7 +1080,14 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull NullableAllTransformer<T, R> selector) {
-        return sortedWith(sequence, Comparisonx.compareBy(selector));
+        return sortedWith(sequence, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                R r1 = selector.transform(o1);
+                R r2 = selector.transform(o2);
+                return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+            }
+        });
     }
 
     /**
@@ -1091,7 +1097,14 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull NullableAllTransformer<T, R> selector) {
-        return sortedWith(sequence, Comparisonx.compareByDescending(selector));
+        return sortedWith(sequence, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                R r1 = selector.transform(o2);
+                R r2 = selector.transform(o1);
+                return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
+            }
+        });
     }
 
     /**
@@ -1101,7 +1114,12 @@ public class Sequencex {
      */
     @NotNull
     public static <T extends Comparable<T>> Sequence<T> sortedDescending(@NotNull Sequence<T> sequence) {
-        return sortedWith(sequence, Comparisonx.<T>reverseOrder());
+        return sortedWith(sequence, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return o2.compareTo(o1);
+            }
+        });
     }
 
     /**
