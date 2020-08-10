@@ -16,8 +16,6 @@
 
 package com.github.panpf.tools4j.sequences;
 
-import com.github.panpf.tools4j.common.LazyValue;
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -30,17 +28,13 @@ import java.util.NoSuchElementException;
 public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
     @NotNull
-    private Sequence<T> sequence;
-    private int count;
+    private final Sequence<T> sequence;
+    private final int count;
 
     public TakeSequence(@NotNull Sequence<T> sequence, final int count) {
-        Premisex.require(count >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "count must be non-negative, but was " + count + ".";
-            }
-        });
+        if (count < 0) {
+            throw new IllegalArgumentException("Param 'count' is less than to zero.");
+        }
         this.sequence = sequence;
         this.count = count;
     }
@@ -68,7 +62,7 @@ public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
             }
 
             int left = count;
-            Iterator<T> iterator = sequence.iterator();
+            final Iterator<T> iterator = sequence.iterator();
 
             @Override
             public T next() {

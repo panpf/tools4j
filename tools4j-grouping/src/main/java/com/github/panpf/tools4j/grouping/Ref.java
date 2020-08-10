@@ -1,4 +1,4 @@
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.grouping;
 
 import java.io.Serializable;
 

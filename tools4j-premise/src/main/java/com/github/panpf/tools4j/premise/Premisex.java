@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.premise;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,8 +22,6 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Premise tool method
  */
-// todo 谁也不依赖它
-@SuppressWarnings({"UnusedReturnValue"})
 public class Premisex {
 
     private Premisex() {

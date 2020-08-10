@@ -17,11 +17,11 @@
 package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
-import com.github.panpf.tools4j.iterable.IntProgression;
 import com.github.panpf.tools4j.iterable.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -96,9 +96,9 @@ public class Collectionx {
      */
 
 
-    public static int collectionSizeOrDefault(@Nullable Iterable iterable, int defaultValue) {
+    public static int collectionSizeOrDefault(@Nullable Iterable<?> iterable, int defaultValue) {
         if (iterable == null) return 0;
-        return iterable instanceof Collection ? ((Collection) iterable).size() : defaultValue;
+        return iterable instanceof Collection ? ((Collection<?>) iterable).size() : defaultValue;
     }
 
 
@@ -304,7 +304,6 @@ public class Collectionx {
 
     /* ******************************************* filter ******************************************* */
 
-    // TODO: 2018/11/28 测试
 
     /**
      * Appends all elements matching the given [predicate] to the given [destination].
@@ -639,24 +638,24 @@ public class Collectionx {
         if (postfix == null) postfix = "";
         if (truncated == null) truncated = "...";
 
-        StringBuilderx.appendElement(buffer, prefix, null);
+        appendElement(buffer, prefix, null);
         int count = 0;
         if (iterable != null) {
             for (T element : iterable) {
                 if (++count > 1) {
-                    StringBuilderx.appendElement(buffer, separator, null);
+                    appendElement(buffer, separator, null);
                 }
                 if (limit < 0 || count <= limit) {
-                    StringBuilderx.appendElement(buffer, element, transform);
+                    appendElement(buffer, element, transform);
                 } else {
                     break;
                 }
             }
         }
         if (limit >= 0 && count > limit) {
-            StringBuilderx.appendElement(buffer, truncated, null);
+            appendElement(buffer, truncated, null);
         }
-        StringBuilderx.appendElement(buffer, postfix, null);
+        appendElement(buffer, postfix, null);
         return buffer;
     }
 
@@ -749,7 +748,7 @@ public class Collectionx {
     public static <T> int count(@Nullable Iterable<T> iterable) {
         if (iterable == null) return 0;
         if (iterable instanceof Collection) {
-            return ((Collection) iterable).size();
+            return ((Collection<T>) iterable).size();
         }
         int count = 0;
         for (T ignored : iterable) {
@@ -763,7 +762,7 @@ public class Collectionx {
      */
     public static <T> int count(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
         if (iterable == null) return 0;
-        if (iterable instanceof Collection && ((Collection) iterable).isEmpty()) {
+        if (iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) {
             return 0;
         }
         int count = 0;
@@ -961,11 +960,11 @@ public class Collectionx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the collection.
      */
-    public static <T> int sumBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Integer> selector) {
+    public static <T> int sumBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Integer> transformer) {
         int sum = 0;
         if (iterable != null) {
             for (T element : iterable) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -974,11 +973,11 @@ public class Collectionx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the collection.
      */
-    public static <T> double sumByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+    public static <T> double sumByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> transformer) {
         double sum = 0.0;
         if (iterable != null) {
             for (T element : iterable) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -1325,14 +1324,14 @@ public class Collectionx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T maxBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T maxElem = iterator.next();
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         while (iterator.hasNext()) {
             T e = iterator.next();
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -1417,14 +1416,14 @@ public class Collectionx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T minBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T minElem = iterator.next();
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         while (iterator.hasNext()) {
             T e = iterator.next();
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -1573,7 +1572,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> toList(@Nullable Iterable<T> iterable) {
         if (iterable instanceof Collection) {
-            return toCollection(iterable, new ArrayList<T>(((Collection) iterable).size()));
+            return toCollection(iterable, new ArrayList<T>(((Collection<T>) iterable).size()));
         } else {
             return toCollection(iterable, new ArrayList<T>());
         }
@@ -1587,7 +1586,7 @@ public class Collectionx {
     @NotNull
     public static <T> Set<T> toSet(@Nullable Iterable<T> iterable) {
         if (iterable instanceof Collection) {
-            return toCollection(iterable, new LinkedHashSet<T>(Mapx.capacity(collectionSizeOrDefault(iterable, ((Collection) iterable).size()))));
+            return toCollection(iterable, new LinkedHashSet<T>(Mapx.capacity(collectionSizeOrDefault(iterable, ((Collection<T>) iterable).size()))));
         } else {
             return toCollection(iterable, new LinkedHashSet<T>());
         }
@@ -1795,13 +1794,9 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<List<T>> chunked(@Nullable Iterable<T> iterable, int size) {
-        Premisex.require(size > 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "size is 0";
-            }
-        });
+        if (size <= 0) {
+            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
+        }
 
         int listSize = count(iterable);
         int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
@@ -1837,13 +1832,9 @@ public class Collectionx {
      */
     @NotNull
     public static <T, R> List<R> chunked(@Nullable Iterable<T> iterable, int size, @NotNull Transformer<List<T>, R> transform) {
-        Premisex.require(size > 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "size is 0";
-            }
-        });
+        if (size <= 0) {
+            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
+        }
 
         int listSize = count(iterable);
         int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
@@ -2149,6 +2140,7 @@ public class Collectionx {
      */
     public static <T> void sortWith(@Nullable List<T> list, @NotNull Comparator<T> comparator) {
         if (list != null && list.size() > 1) {
+            //noinspection Java8ListSort
             Collections.sort(list, comparator);
         }
     }
@@ -2156,13 +2148,13 @@ public class Collectionx {
     /**
      * Sorts elements in the list in-place according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortBy(@Nullable List<T> list, @NotNull final NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> void sortBy(@Nullable List<T> list, @NotNull final NullableTransformer<T, R> transformer) {
         if (list != null && list.size() > 1) {
             sortWith(list, new Comparator<T>() {
                 @Override
-                public int compare(T o1, T o2) {
-                    R r1 = selector.transform(o1);
-                    R r2 = selector.transform(o2);
+                public int compare(@Nullable T o1, @Nullable T o2) {
+                    R r1 = o1 != null ? transformer.transform(o1) : null;
+                    R r2 = o2 != null ? transformer.transform(o2) : null;
                     return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
                 }
             });
@@ -2172,13 +2164,13 @@ public class Collectionx {
     /**
      * Sorts elements in the list in-place descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable List<T> list, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable List<T> list, @NotNull NullableTransformer<T, R> transformer) {
         if (list != null && list.size() > 1) {
             sortWith(list, new Comparator<T>() {
                 @Override
-                public int compare(T o1, T o2) {
-                    R r1 = selector.transform(o2);
-                    R r2 = selector.transform(o1);
+                public int compare(@Nullable T o1, @Nullable T o2) {
+                    R r1 = o2 != null ? transformer.transform(o2) : null;
+                    R r2 = o1 != null ? transformer.transform(o1) : null;
                     return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
                 }
             });
@@ -2222,12 +2214,12 @@ public class Collectionx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable Iterable<T> iterable, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable Iterable<T> iterable, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(iterable, new Comparator<T>() {
             @Override
-            public int compare(T o1, T o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+            public int compare(@Nullable T o1, @Nullable T o2) {
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2258,12 +2250,12 @@ public class Collectionx {
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable Iterable<T> iterable, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable Iterable<T> iterable, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(iterable, new Comparator<T>() {
             @Override
-            public int compare(T o1, T o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+            public int compare(@Nullable T o1, @Nullable T o2) {
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2613,18 +2605,14 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> take(@Nullable Iterable<T> iterable, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested element count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (n == 0) {
             return Collectionx.arrayListOf();
         }
         if (iterable instanceof Collection) {
-            if (n >= ((Collection) iterable).size()) {
+            if (n >= ((Collection<T>) iterable).size()) {
                 return toList(iterable);
             }
             if (n == 1) {
@@ -2650,13 +2638,9 @@ public class Collectionx {
         if (isNullOrEmpty(list)) {
             return Collectionx.arrayListOf();
         }
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (n == 0) {
             return Collectionx.arrayListOf();
         }
@@ -2743,12 +2727,12 @@ public class Collectionx {
      * The elements in the resulting list are in the same order as they were in the source collection.
      */
     @NotNull
-    public static <T, K> List<T> distinctBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, K> selector) {
+    public static <T, K> List<T> distinctBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, K> transformer) {
         HashSet<K> set = new HashSet<>();
         ArrayList<T> list = new ArrayList<>();
         if (iterable != null) {
             for (T e : iterable) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) {
                     list.add(e);
                 }
@@ -2779,7 +2763,7 @@ public class Collectionx {
     /* ******************************************* retain ******************************************* */
 
 
-    private static boolean retainNothing(@Nullable Collection collection) {
+    private static boolean retainNothing(@Nullable Collection<?> collection) {
         boolean result = isNotNullOrEmpty(collection);
         if (collection != null) {
             collection.clear();
@@ -2928,13 +2912,9 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> drop(@Nullable Iterable<T> iterable, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (n == 0) return toList(iterable);
 
         ArrayList<T> list;
@@ -2984,13 +2964,9 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> dropLast(@Nullable List<T> list, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         return take(list, Math.max(count(list) - n, 0));
     }
 
@@ -3611,5 +3587,21 @@ public class Collectionx {
             }
         }
         return result;
+    }
+    
+    static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {
+        try {
+            if (transform != null) {
+                appendable.append(transform.transform(element));
+            } else if (element instanceof CharSequence) {
+                appendable.append((CharSequence) element);
+            } else if (element instanceof Character) {
+                appendable.append((Character) element);
+            } else {
+                appendable.append(element.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

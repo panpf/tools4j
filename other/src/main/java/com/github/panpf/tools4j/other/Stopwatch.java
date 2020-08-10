@@ -1,4 +1,20 @@
-package com.github.panpf.tools4j.common;
+/*
+ * Copyright (C) 2018 Peng fei Pan <panpfpanpf@outlook.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.panpf.tools4j.other;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,7 +24,6 @@ import java.util.ArrayList;
 /**
  * The implementation of a stopwatch timer can not only implement a complete stopwatch program, but also can be used to record the time of each node of a time-consuming task.
  */
-// todo 不应该放在这里面
 public final class Stopwatch {
 
     /**

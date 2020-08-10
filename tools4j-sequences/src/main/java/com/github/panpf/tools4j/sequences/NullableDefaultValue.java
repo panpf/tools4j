@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.sequences;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface NextValue<T> {
+public interface NullableDefaultValue<R> {
     @Nullable
-    T next(@NotNull T t);
+    R get();
 }

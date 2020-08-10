@@ -585,13 +585,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence limit(@Nullable CharSequence charSequence, final int length, @Nullable String suffix) {
-        Premisex.require(length >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Desired length %d is less than zero.", length);
-            }
-        });
+        if (length < 0) {
+            throw new IllegalArgumentException("Param 'length' is less than to zero.");
+        }
         if (count(charSequence) <= length) return orEmpty(charSequence);
 
         CharSequence limitString = orEmpty(charSequence).subSequence(0, length);
@@ -1299,13 +1295,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence padStart(@Nullable CharSequence charSequence, final int length, char padChar) {
-        Premisex.require(length >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Desired length %d is less than zero.", length);
-            }
-        });
+        if (length < 0) {
+            throw new IllegalArgumentException("Param 'length' is less than to zero.");
+        }
         final CharSequence finalCharSequence = orEmpty(charSequence);
         if (length <= count(finalCharSequence))
             return finalCharSequence.subSequence(0, count(finalCharSequence));
@@ -1368,13 +1360,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence padEnd(@Nullable CharSequence charSequence, final int length, char padChar) {
-        Premisex.require(length >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Desired length %d is less than zero.", length);
-            }
-        });
+        if (length < 0) {
+            throw new IllegalArgumentException("Param 'length' is less than to zero.");
+        }
         final CharSequence finalCharSequence = orEmpty(charSequence);
         if (length <= count(finalCharSequence))
             return finalCharSequence.subSequence(0, count(finalCharSequence));
@@ -3191,13 +3179,9 @@ public class Stringx {
     @NotNull
     private static Iterable<IntRange> rangesDelimitedBy(@Nullable CharSequence charSequence, @NotNull final char[] delimiters,
                                                         @SuppressWarnings("SameParameterValue") int startIndex, final boolean ignoreCase, final int limit) {
-        Premisex.require(limit >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Limit must be non-negative, but was " + limit + ".";
-            }
-        });
+        if (limit < 0) {
+            throw new IllegalArgumentException("Param 'limit' is less than to zero.");
+        }
         return new DelimitedRangesIterable(orEmpty(charSequence), startIndex, limit, new NextMatch() {
             @Nullable
             @Override
@@ -3225,13 +3209,9 @@ public class Stringx {
     @NotNull
     private static Iterable<IntRange> rangesDelimitedBy(@Nullable CharSequence charSequence, @NotNull String[] delimiters,
                                                         @SuppressWarnings("SameParameterValue") int startIndex, final boolean ignoreCase, final int limit) {
-        Premisex.require(limit >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Limit must be non-negative, but was " + limit + ".";
-            }
-        });
+        if (limit < 0) {
+            throw new IllegalArgumentException("Param 'limit' is less than to zero.");
+        }
         final List<String> delimitersList = new ArrayList<>(delimiters.length);
         Collections.addAll(delimitersList, delimiters);
         return new DelimitedRangesIterable(charSequence != null ? charSequence : "", startIndex, limit, new NextMatch() {
@@ -3479,13 +3459,9 @@ public class Stringx {
      */
     @NotNull
     private static List<String> split(@Nullable CharSequence charSequence, @NotNull String delimiter, boolean ignoreCase, final int limit) {
-        Premisex.require(limit >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Limit must be non-negative, but was " + limit + ".";
-            }
-        });
+        if (limit < 0) {
+            throw new IllegalArgumentException("Param 'limit' is less than to zero.");
+        }
 
         int currentOffset = 0;
         int nextIndex = indexOf(charSequence, delimiter, currentOffset, ignoreCase);
@@ -3654,13 +3630,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence drop(@Nullable CharSequence charSequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return orEmpty(charSequence).subSequence(Math.min(n, count(charSequence)), count(charSequence));
     }
 
@@ -3669,13 +3641,9 @@ public class Stringx {
      */
     @NotNull
     public static String drop(@Nullable String string, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return orEmpty(string).substring(Math.min(n, count(string)));
     }
 
@@ -3684,13 +3652,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence dropLast(@Nullable CharSequence charSequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return take(charSequence, Math.max((count(charSequence) - n), 0));
     }
 
@@ -3699,13 +3663,9 @@ public class Stringx {
      */
     @NotNull
     public static String dropLast(@Nullable String string, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return take(string, Math.max((count(string) - n), 0));
     }
 
@@ -3821,13 +3781,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence take(@Nullable CharSequence charSequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return orEmpty(charSequence).subSequence(0, Math.min(n, count(charSequence)));
     }
 
@@ -3836,13 +3792,9 @@ public class Stringx {
      */
     @NotNull
     public static String take(@Nullable String string, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         return orEmpty(string).substring(0, Math.min(n, count(string)));
     }
 
@@ -3851,13 +3803,9 @@ public class Stringx {
      */
     @NotNull
     public static CharSequence takeLast(@Nullable CharSequence charSequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         int length = count(charSequence);
         return orEmpty(charSequence).subSequence(length - Math.min(n, length), length);
     }
@@ -3867,13 +3815,9 @@ public class Stringx {
      */
     @NotNull
     public static String takeLast(@Nullable String string, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested character count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         int length = count(string);
         return orEmpty(string).substring(length - Math.min(n, length));
     }
@@ -4821,13 +4765,12 @@ public class Stringx {
      */
     @NotNull
     public static <R> List<R> windowed(@Nullable CharSequence charSequence, final int size, final int step, boolean partialWindows, @NotNull Transformer<CharSequence, R> transform) {
-        Premisex.require(size > 0 && step > 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return size != step ? "Both size " + size + " and step " + step + " must be greater than zero." : "size " + size + " must be greater than zero.";
-            }
-        });
+        if (size <= 0) {
+            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
+        }
+        if (step <= 0) {
+            throw new IllegalArgumentException("Param 'step' is less than or equal to zero.");
+        }
         int thisSize = count(charSequence);
         List<R> result = new ArrayList<R>((thisSize + step - 1) / step);
         if (charSequence != null) {
@@ -4894,13 +4837,12 @@ public class Stringx {
      */
     @NotNull
     public static <R> Iterable<R> windowedIterable(@Nullable final CharSequence charSequence, final int size, final int step, boolean partialWindows, @NotNull final Transformer<CharSequence, R> transform) {
-        Premisex.require(size > 0 && step > 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return size != step ? "Both size $size and step $step must be greater than zero." : "size $size must be greater than zero.";
-            }
-        });
+        if (size <= 0) {
+            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
+        }
+        if (step <= 0) {
+            throw new IllegalArgumentException("Param 'step' is less than or equal to zero.");
+        }
         IntProgression progression = (partialWindows ? indices(charSequence) : new IntRange(0, count(charSequence) - size));
         IntProgression windows = IntProgression.fromClosedRange(progression.getFirst(), progression.getLast(), step);
         return new TransformingIterable<>(windows, new Transformer<Integer, R>() {

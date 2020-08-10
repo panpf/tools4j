@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.premise;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface FoldOperation<T, K, R> {
-
+public interface LazyValue<R> {
     @NotNull
-    R operation(@NotNull K key, @NotNull R accumulator, @NotNull T element);
+    R get();
 }

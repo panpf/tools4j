@@ -17,7 +17,6 @@
 package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.Predicate;
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -58,7 +57,7 @@ public class FilteringSequence<T> implements Sequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
             private int nextState = -1; // -1 for unknown, 0 for done, 1 for continue
             @Nullable
             T nextItem = null;
@@ -85,7 +84,10 @@ public class FilteringSequence<T> implements Sequence<T> {
                 T result = nextItem;
                 nextItem = null;
                 nextState = -1;
-                return Premisex.requireNotNull(result);
+                if (result == null) {
+                    throw new IllegalArgumentException("'result' is null");
+                }
+                return result;
             }
 
             @Override

@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.grouping;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public interface IndexedAction2<T1, T2> {
-    void action(int index, @NotNull T1 t1, @NotNull T2 t2);
+public interface AggregateOperation<T, K, R> {
+
+    @NotNull
+    R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first);
 }

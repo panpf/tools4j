@@ -18,8 +18,6 @@ package com.github.panpf.tools4j.io;
 
 import com.github.panpf.tools4j.iterable.AbstractIterator;
 import com.github.panpf.tools4j.common.Action;
-import com.github.panpf.tools4j.common.LazyValue;
-import com.github.panpf.tools4j.common.Premisex;
 import com.github.panpf.tools4j.common.Transformer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -343,13 +341,9 @@ public class FileTreeWalk implements Iterable<File> {
      */
     @NotNull
     public FileTreeWalk maxDepth(final int newDepth) {
-        Premisex.require(newDepth > 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("depth must be positive, but was %d.", newDepth);
-            }
-        });
+        if (newDepth <= 0) {
+            throw new IllegalArgumentException("Param 'newDepth' is less than or equal to zero.");
+        }
         return new FileTreeWalk(start, direction, onEnter, onLeave, onFail, newDepth);
     }
 }

@@ -16,8 +16,6 @@
 
 package com.github.panpf.tools4j.zip;
 
-import com.github.panpf.tools4j.common.LazyValue;
-import com.github.panpf.tools4j.common.Premisex;
 import com.github.panpf.tools4j.common.Transformer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -388,13 +386,9 @@ public class Zipx {
         if (!zipSourceFile.exists()) {
             throw new FileNotFoundException(String.format("The file pointed to by this parameter 'sourceFile': %s", zipSourceFile.getPath()));
         }
-        Premisex.require(!destinationDir.exists() || destinationDir.isDirectory(), new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return destinationDir.getPath() + " not directory";
-            }
-        });
+        if (destinationDir.exists() && !destinationDir.isDirectory()) {
+            throw new IllegalArgumentException(String.format("'%s' not directory", destinationDir.getPath()));
+        }
 
         ZipFile zipFile = new ZipFile(zipSourceFile);
         try {
@@ -408,7 +402,7 @@ public class Zipx {
                 currentZipEntry[0] = zipEntry;
                 File file = new File(destinationDir, zipEntry.getName());
                 if (zipEntry.isDirectory()) {
-                    if (!file.exists()){
+                    if (!file.exists()) {
                         //noinspection ResultOfMethodCallIgnored
                         file.mkdirs();
                         if (!file.exists()) {
@@ -416,9 +410,9 @@ public class Zipx {
                         }
                     }
                 } else {
-                    if (!file.exists()){
+                    if (!file.exists()) {
                         File parentDir = file.getParentFile();
-                        if (!parentDir.exists()){
+                        if (!parentDir.exists()) {
                             //noinspection ResultOfMethodCallIgnored
                             parentDir.mkdirs();
                             if (!parentDir.exists()) {

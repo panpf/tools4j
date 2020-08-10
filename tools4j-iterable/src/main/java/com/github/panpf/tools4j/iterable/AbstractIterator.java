@@ -16,7 +16,6 @@
 
 package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +35,9 @@ public abstract class AbstractIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        Premisex.require(state != State.Failed);
+        if (state == State.Failed) {
+            throw new IllegalStateException("State is Failed");
+        }
         if (state == State.Done) {
             return false;
         } else if (state == State.Ready) {

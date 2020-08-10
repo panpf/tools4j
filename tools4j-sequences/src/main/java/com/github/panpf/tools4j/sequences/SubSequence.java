@@ -16,8 +16,6 @@
 
 package com.github.panpf.tools4j.sequences;
 
-import com.github.panpf.tools4j.common.LazyValue;
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -30,32 +28,20 @@ import java.util.NoSuchElementException;
 public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
     @NotNull
-    private Sequence<T> sequence;
-    private int startIndex;
-    private int endIndex;
+    private final Sequence<T> sequence;
+    private final int startIndex;
+    private final int endIndex;
 
     public SubSequence(@NotNull Sequence<T> sequence, final int startIndex, final int endIndex) {
-        Premisex.require(startIndex >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "startIndex should be non-negative, but is " + startIndex;
-            }
-        });
-        Premisex.require(endIndex >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "endIndex should be non-negative, but is " + endIndex;
-            }
-        });
-        Premisex.require(endIndex >= startIndex, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "endIndex should be not less than startIndex, but was $endIndex < " + startIndex;
-            }
-        });
+        if (startIndex < 0) {
+            throw new IllegalArgumentException("Param 'startIndex' is less than to zero.");
+        }
+        if (endIndex < 0) {
+            throw new IllegalArgumentException("Param 'endIndex' is less than to zero.");
+        }
+        if (endIndex < startIndex) {
+            throw new IllegalArgumentException(String.format("endIndex should be not less than startIndex, but was $endIndex < %d", startIndex));
+        }
         this.sequence = sequence;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -68,6 +54,7 @@ public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     @NotNull
     @Override
     public Sequence<T> drop(int n) {
+        //noinspection unchecked
         return n >= getCount() ? (Sequence<T>) Sequencex.emptySequence() : new SubSequence<>(sequence, startIndex + n, endIndex);
     }
 
@@ -82,7 +69,7 @@ public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
             private int position = 0;
 
             // Shouldn't be called from constructor to avoid premature iteration

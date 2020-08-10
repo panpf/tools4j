@@ -16,8 +16,6 @@
 
 package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.common.LazyValue;
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -49,13 +47,9 @@ public class BoundedQueue<E> implements Queue<E> {
      * Adjust max size
      */
     public void setMaxSize(int maxSize) {
-        Premisex.require(maxSize >= 1, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "maxSize not less than 1";
-            }
-        });
+        if (maxSize < 1) {
+            throw new IllegalArgumentException("Param 'maxSize' less than 1");
+        }
         this.maxSize = maxSize;
         adjustSize(0);
     }

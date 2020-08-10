@@ -28,7 +28,6 @@ import java.util.*;
  * Array tool method
  */
 public class Arrayx {
-    // TODO: 2018/11/28 测试
 
     private Arrayx() {
     }
@@ -1082,7 +1081,8 @@ public class Arrayx {
 
             @Override
             public T get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1101,7 +1101,8 @@ public class Arrayx {
 
             @Override
             public Byte get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1120,7 +1121,8 @@ public class Arrayx {
 
             @Override
             public Short get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1139,7 +1141,8 @@ public class Arrayx {
 
             @Override
             public Integer get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1158,7 +1161,8 @@ public class Arrayx {
 
             @Override
             public Long get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1177,7 +1181,8 @@ public class Arrayx {
 
             @Override
             public Float get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1196,7 +1201,8 @@ public class Arrayx {
 
             @Override
             public Double get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1215,7 +1221,8 @@ public class Arrayx {
 
             @Override
             public Boolean get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -1234,7 +1241,8 @@ public class Arrayx {
 
             @Override
             public Character get(int index) {
-                return Premisex.requireNotNull(elements)[index];
+                if (elements == null) throw new IllegalStateException("This method cannot be called when size is 0");
+                return elements[index];
             }
         };
     }
@@ -2350,13 +2358,13 @@ public class Arrayx {
     /**
      * Sorts elements in the array in-place according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortBy(@Nullable T[] elements, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> void sortBy(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
         if (elements != null && elements.length > 1) {
             sortWith(elements, new Comparator<T>() {
                 @Override
                 public int compare(T o1, T o2) {
-                    R r1 = selector.transform(o1);
-                    R r2 = selector.transform(o2);
+                    R r1 = o1 != null ? transformer.transform(o1) : null;
+                    R r2 = o2 != null ? transformer.transform(o2) : null;
                     return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
                 }
             });
@@ -2367,13 +2375,13 @@ public class Arrayx {
     /**
      * Sorts elements in the array in-place descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable T[] elements, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
         if (elements != null && elements.length > 1) {
             sortWith(elements, new Comparator<T>() {
                 @Override
                 public int compare(T o1, T o2) {
-                    R r1 = selector.transform(o2);
-                    R r2 = selector.transform(o1);
+                    R r1 = o2 != null ? transformer.transform(o2) : null;
+                    R r2 = o1 != null ? transformer.transform(o1) : null;
                     return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
                 }
             });
@@ -2637,12 +2645,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable T[] elements, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(elements, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2652,12 +2660,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Byte> sortedBy(@Nullable byte[] elements, @NotNull NullableAllTransformer<Byte, R> selector) {
+    public static <R extends Comparable<R>> List<Byte> sortedBy(@Nullable byte[] elements, @NotNull NullableTransformer<Byte, R> transformer) {
         return sortedWith(elements, new Comparator<Byte>() {
             @Override
             public int compare(Byte o1, Byte o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2667,12 +2675,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Short> sortedBy(@Nullable short[] elements, @NotNull NullableAllTransformer<Short, R> selector) {
+    public static <R extends Comparable<R>> List<Short> sortedBy(@Nullable short[] elements, @NotNull NullableTransformer<Short, R> transformer) {
         return sortedWith(elements, new Comparator<Short>() {
             @Override
             public int compare(Short o1, Short o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2682,12 +2690,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Integer> sortedBy(@Nullable int[] elements, @NotNull NullableAllTransformer<Integer, R> selector) {
+    public static <R extends Comparable<R>> List<Integer> sortedBy(@Nullable int[] elements, @NotNull NullableTransformer<Integer, R> transformer) {
         return sortedWith(elements, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2697,12 +2705,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Long> sortedBy(@Nullable long[] elements, @NotNull NullableAllTransformer<Long, R> selector) {
+    public static <R extends Comparable<R>> List<Long> sortedBy(@Nullable long[] elements, @NotNull NullableTransformer<Long, R> transformer) {
         return sortedWith(elements, new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2712,12 +2720,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Float> sortedBy(@Nullable float[] elements, @NotNull NullableAllTransformer<Float, R> selector) {
+    public static <R extends Comparable<R>> List<Float> sortedBy(@Nullable float[] elements, @NotNull NullableTransformer<Float, R> transformer) {
         return sortedWith(elements, new Comparator<Float>() {
             @Override
             public int compare(Float o1, Float o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2727,12 +2735,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Double> sortedBy(@Nullable double[] elements, @NotNull NullableAllTransformer<Double, R> selector) {
+    public static <R extends Comparable<R>> List<Double> sortedBy(@Nullable double[] elements, @NotNull NullableTransformer<Double, R> transformer) {
         return sortedWith(elements, new Comparator<Double>() {
             @Override
             public int compare(Double o1, Double o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2742,12 +2750,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Boolean> sortedBy(@Nullable boolean[] elements, @NotNull NullableAllTransformer<Boolean, R> selector) {
+    public static <R extends Comparable<R>> List<Boolean> sortedBy(@Nullable boolean[] elements, @NotNull NullableTransformer<Boolean, R> transformer) {
         return sortedWith(elements, new Comparator<Boolean>() {
             @Override
             public int compare(Boolean o1, Boolean o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2757,12 +2765,12 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Character> sortedBy(@Nullable char[] elements, @NotNull NullableAllTransformer<Character, R> selector) {
+    public static <R extends Comparable<R>> List<Character> sortedBy(@Nullable char[] elements, @NotNull NullableTransformer<Character, R> transformer) {
         return sortedWith(elements, new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2772,12 +2780,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable T[] elements, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(elements, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2786,12 +2794,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Byte> sortedByDescending(@Nullable byte[] elements, @NotNull NullableAllTransformer<Byte, R> selector) {
+    public static <R extends Comparable<R>> List<Byte> sortedByDescending(@Nullable byte[] elements, @NotNull NullableTransformer<Byte, R> transformer) {
         return sortedWith(elements, new Comparator<Byte>() {
             @Override
             public int compare(Byte o1, Byte o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2800,12 +2808,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Short> sortedByDescending(@Nullable short[] elements, @NotNull NullableAllTransformer<Short, R> selector) {
+    public static <R extends Comparable<R>> List<Short> sortedByDescending(@Nullable short[] elements, @NotNull NullableTransformer<Short, R> transformer) {
         return sortedWith(elements, new Comparator<Short>() {
             @Override
             public int compare(Short o1, Short o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2814,12 +2822,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Integer> sortedByDescending(@Nullable int[] elements, @NotNull NullableAllTransformer<Integer, R> selector) {
+    public static <R extends Comparable<R>> List<Integer> sortedByDescending(@Nullable int[] elements, @NotNull NullableTransformer<Integer, R> transformer) {
         return sortedWith(elements, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2828,12 +2836,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Long> sortedByDescending(@Nullable long[] elements, @NotNull NullableAllTransformer<Long, R> selector) {
+    public static <R extends Comparable<R>> List<Long> sortedByDescending(@Nullable long[] elements, @NotNull NullableTransformer<Long, R> transformer) {
         return sortedWith(elements, new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2842,12 +2850,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Float> sortedByDescending(@Nullable float[] elements, @NotNull NullableAllTransformer<Float, R> selector) {
+    public static <R extends Comparable<R>> List<Float> sortedByDescending(@Nullable float[] elements, @NotNull NullableTransformer<Float, R> transformer) {
         return sortedWith(elements, new Comparator<Float>() {
             @Override
             public int compare(Float o1, Float o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2856,12 +2864,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Double> sortedByDescending(@Nullable double[] elements, @NotNull NullableAllTransformer<Double, R> selector) {
+    public static <R extends Comparable<R>> List<Double> sortedByDescending(@Nullable double[] elements, @NotNull NullableTransformer<Double, R> transformer) {
         return sortedWith(elements, new Comparator<Double>() {
             @Override
             public int compare(Double o1, Double o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2870,12 +2878,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Boolean> sortedByDescending(@Nullable boolean[] elements, @NotNull NullableAllTransformer<Boolean, R> selector) {
+    public static <R extends Comparable<R>> List<Boolean> sortedByDescending(@Nullable boolean[] elements, @NotNull NullableTransformer<Boolean, R> transformer) {
         return sortedWith(elements, new Comparator<Boolean>() {
             @Override
             public int compare(Boolean o1, Boolean o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -2884,12 +2892,12 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Character> sortedByDescending(@Nullable char[] elements, @NotNull NullableAllTransformer<Character, R> selector) {
+    public static <R extends Comparable<R>> List<Character> sortedByDescending(@Nullable char[] elements, @NotNull NullableTransformer<Character, R> transformer) {
         return sortedWith(elements, new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -5080,13 +5088,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T maxBy(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5099,13 +5107,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Byte maxBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+    public static <R extends Comparable<R>> Byte maxBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5118,13 +5126,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Short maxBy(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+    public static <R extends Comparable<R>> Short maxBy(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5137,13 +5145,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Integer maxBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+    public static <R extends Comparable<R>> Integer maxBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5156,13 +5164,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Long maxBy(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+    public static <R extends Comparable<R>> Long maxBy(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5175,13 +5183,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Float maxBy(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+    public static <R extends Comparable<R>> Float maxBy(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             float e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5194,13 +5202,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Double maxBy(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+    public static <R extends Comparable<R>> Double maxBy(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             double e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5213,13 +5221,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Boolean maxBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+    public static <R extends Comparable<R>> Boolean maxBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             boolean e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5232,13 +5240,13 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character maxBy(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+    public static <R extends Comparable<R>> Character maxBy(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char maxElem = elements[0];
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -5537,13 +5545,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T minBy(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5556,13 +5564,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Byte minBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+    public static <R extends Comparable<R>> Byte minBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5575,13 +5583,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Short minBy(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+    public static <R extends Comparable<R>> Short minBy(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5594,13 +5602,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Integer minBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+    public static <R extends Comparable<R>> Integer minBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5613,13 +5621,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Long minBy(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+    public static <R extends Comparable<R>> Long minBy(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5632,13 +5640,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Float minBy(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+    public static <R extends Comparable<R>> Float minBy(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             float e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5651,13 +5659,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Double minBy(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+    public static <R extends Comparable<R>> Double minBy(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             double e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5670,13 +5678,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Boolean minBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+    public static <R extends Comparable<R>> Boolean minBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             boolean e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5689,13 +5697,13 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character minBy(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+    public static <R extends Comparable<R>> Character minBy(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char minElem = elements[0];
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -5853,7 +5861,7 @@ public class Arrayx {
             for (T element : elements) {
                 if (++count > 1) buffer.append(separator);
                 if (limit < 0 || count <= limit) {
-                    StringBuilderx.appendElement(buffer, element, transform);
+                    Collectionx.appendElement(buffer, element, transform);
                 } else {
                     break;
                 }
@@ -6848,11 +6856,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static <T> int sumBy(@Nullable T[] elements, @NotNull Transformer<T, Integer> selector) {
+    public static <T> int sumBy(@Nullable T[] elements, @NotNull Transformer<T, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (T element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6861,11 +6869,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable byte[] elements, @NotNull Transformer<Byte, Integer> selector) {
+    public static int sumBy(@Nullable byte[] elements, @NotNull Transformer<Byte, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (byte element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6874,11 +6882,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable short[] elements, @NotNull Transformer<Short, Integer> selector) {
+    public static int sumBy(@Nullable short[] elements, @NotNull Transformer<Short, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (short element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6887,11 +6895,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable int[] elements, @NotNull Transformer<Integer, Integer> selector) {
+    public static int sumBy(@Nullable int[] elements, @NotNull Transformer<Integer, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (int element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6900,11 +6908,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable long[] elements, @NotNull Transformer<Long, Integer> selector) {
+    public static int sumBy(@Nullable long[] elements, @NotNull Transformer<Long, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (long element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6913,11 +6921,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable float[] elements, @NotNull Transformer<Float, Integer> selector) {
+    public static int sumBy(@Nullable float[] elements, @NotNull Transformer<Float, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (float element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6926,11 +6934,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable double[] elements, @NotNull Transformer<Double, Integer> selector) {
+    public static int sumBy(@Nullable double[] elements, @NotNull Transformer<Double, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (double element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6939,11 +6947,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Integer> selector) {
+    public static int sumBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (boolean element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6952,11 +6960,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static int sumBy(@Nullable char[] elements, @NotNull Transformer<Character, Integer> selector) {
+    public static int sumBy(@Nullable char[] elements, @NotNull Transformer<Character, Integer> transformer) {
         int sum = 0;
         if (elements != null) {
             for (char element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6965,11 +6973,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static <T> double sumByDouble(@Nullable T[] elements, @NotNull Transformer<T, Double> selector) {
+    public static <T> double sumByDouble(@Nullable T[] elements, @NotNull Transformer<T, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (T element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6978,11 +6986,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> selector) {
+    public static double sumByDouble(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (byte element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -6991,11 +6999,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable short[] elements, @NotNull Transformer<Short, Double> selector) {
+    public static double sumByDouble(@Nullable short[] elements, @NotNull Transformer<Short, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (short element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7004,11 +7012,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable int[] elements, @NotNull Transformer<Integer, Double> selector) {
+    public static double sumByDouble(@Nullable int[] elements, @NotNull Transformer<Integer, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (int element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7017,11 +7025,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable long[] elements, @NotNull Transformer<Long, Double> selector) {
+    public static double sumByDouble(@Nullable long[] elements, @NotNull Transformer<Long, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (long element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7030,11 +7038,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable float[] elements, @NotNull Transformer<Float, Double> selector) {
+    public static double sumByDouble(@Nullable float[] elements, @NotNull Transformer<Float, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (float element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7043,11 +7051,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable double[] elements, @NotNull Transformer<Double, Double> selector) {
+    public static double sumByDouble(@Nullable double[] elements, @NotNull Transformer<Double, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (double element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7056,11 +7064,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> selector) {
+    public static double sumByDouble(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (boolean element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -7069,11 +7077,11 @@ public class Arrayx {
     /**
      * Returns the sum of all values produced by [selector] function applied to each element in the array.
      */
-    public static double sumByDouble(@Nullable char[] elements, @NotNull Transformer<Character, Double> selector) {
+    public static double sumByDouble(@Nullable char[] elements, @NotNull Transformer<Character, Double> transformer) {
         double sum = 0.0;
         if (elements != null) {
             for (char element : elements) {
-                sum += selector.transform(element);
+                sum += transformer.transform(element);
             }
         }
         return sum;
@@ -12978,15 +12986,11 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> drop(@Nullable T[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -12994,15 +12998,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> drop(@Nullable byte[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13010,15 +13010,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> drop(@Nullable short[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13026,15 +13022,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> drop(@Nullable int[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13042,15 +13034,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> drop(@Nullable long[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13058,15 +13046,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> drop(@Nullable float[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13074,15 +13058,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> drop(@Nullable double[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13090,15 +13070,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> drop(@Nullable boolean[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13106,15 +13082,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> drop(@Nullable char[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return takeLast(elements, dropSize >= 0 ? dropSize : 0);
+        return takeLast(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13122,15 +13094,11 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> dropLast(@Nullable T[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13138,15 +13106,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> dropLast(@Nullable byte[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13154,15 +13118,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> dropLast(@Nullable short[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13170,15 +13130,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> dropLast(@Nullable int[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13186,15 +13142,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> dropLast(@Nullable long[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13202,15 +13154,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> dropLast(@Nullable float[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13218,15 +13166,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> dropLast(@Nullable double[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13234,15 +13178,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> dropLast(@Nullable boolean[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13250,15 +13190,11 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> dropLast(@Nullable char[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         int dropSize = count(elements) - n;
-        return take(elements, dropSize >= 0 ? dropSize : 0);
+        return take(elements, Math.max(dropSize, 0));
     }
 
     /**
@@ -13585,13 +13521,9 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> take(@Nullable T[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13610,13 +13542,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> take(@Nullable byte[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13635,13 +13563,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> take(@Nullable short[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13660,13 +13584,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> take(@Nullable int[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13685,13 +13605,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> take(@Nullable long[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13710,13 +13626,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> take(@Nullable float[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13735,13 +13647,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> take(@Nullable double[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13760,13 +13668,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> take(@Nullable boolean[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13785,13 +13689,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> take(@Nullable char[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
@@ -13810,13 +13710,9 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> takeLast(@Nullable T[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13832,13 +13728,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> takeLast(@Nullable byte[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13854,13 +13746,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> takeLast(@Nullable short[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13876,13 +13764,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> takeLast(@Nullable int[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13898,13 +13782,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> takeLast(@Nullable long[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13920,13 +13800,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> takeLast(@Nullable float[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13942,13 +13818,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> takeLast(@Nullable double[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13964,13 +13836,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> takeLast(@Nullable boolean[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -13986,13 +13854,9 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> takeLast(@Nullable char[] elements, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("Requested element count %d is less than zero.", n);
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than zero.");
+        }
         if (elements == null || n == 0) return Collectionx.arrayListOf();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
@@ -14383,12 +14247,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <T, K> List<T> distinctBy(@Nullable T[] elements, @NotNull Transformer<T, K> selector) {
+    public static <T, K> List<T> distinctBy(@Nullable T[] elements, @NotNull Transformer<T, K> transformer) {
         List<T> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (T e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14402,12 +14266,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Byte> distinctBy(@Nullable byte[] elements, @NotNull Transformer<Byte, K> selector) {
+    public static <K> List<Byte> distinctBy(@Nullable byte[] elements, @NotNull Transformer<Byte, K> transformer) {
         List<Byte> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (byte e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14421,12 +14285,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Short> distinctBy(@Nullable short[] elements, @NotNull Transformer<Short, K> selector) {
+    public static <K> List<Short> distinctBy(@Nullable short[] elements, @NotNull Transformer<Short, K> transformer) {
         List<Short> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (short e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14440,12 +14304,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Integer> distinctBy(@Nullable int[] elements, @NotNull Transformer<Integer, K> selector) {
+    public static <K> List<Integer> distinctBy(@Nullable int[] elements, @NotNull Transformer<Integer, K> transformer) {
         List<Integer> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (int e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14459,12 +14323,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Long> distinctBy(@Nullable long[] elements, @NotNull Transformer<Long, K> selector) {
+    public static <K> List<Long> distinctBy(@Nullable long[] elements, @NotNull Transformer<Long, K> transformer) {
         List<Long> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (long e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14478,12 +14342,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Float> distinctBy(@Nullable float[] elements, @NotNull Transformer<Float, K> selector) {
+    public static <K> List<Float> distinctBy(@Nullable float[] elements, @NotNull Transformer<Float, K> transformer) {
         List<Float> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (float e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14497,12 +14361,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Double> distinctBy(@Nullable double[] elements, @NotNull Transformer<Double, K> selector) {
+    public static <K> List<Double> distinctBy(@Nullable double[] elements, @NotNull Transformer<Double, K> transformer) {
         List<Double> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (double e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14516,12 +14380,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Boolean> distinctBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, K> selector) {
+    public static <K> List<Boolean> distinctBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, K> transformer) {
         List<Boolean> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (boolean e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }
@@ -14535,12 +14399,12 @@ public class Arrayx {
      * The elements in the resulting list are in the same order as they were in the source array.
      */
     @NotNull
-    public static <K> List<Character> distinctBy(@Nullable char[] elements, @NotNull Transformer<Character, K> selector) {
+    public static <K> List<Character> distinctBy(@Nullable char[] elements, @NotNull Transformer<Character, K> transformer) {
         List<Character> list = new ArrayList<>();
         if (elements != null) {
             HashSet<K> set = new HashSet<>();
             for (char e : elements) {
-                K key = selector.transform(e);
+                K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
             }
         }

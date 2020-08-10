@@ -16,7 +16,8 @@
 
 package com.github.panpf.tools4j.grouping;
 
-import com.github.panpf.tools4j.common.*;
+import com.github.panpf.tools4j.common.Transformer;
+import com.github.panpf.tools4j.common.Transformer2;
 import com.github.panpf.tools4j.iterable.ArrayIterator;
 import com.github.panpf.tools4j.iterable.CharSequenceIterator;
 import com.github.panpf.tools4j.iterable.EmptyIterator;
@@ -171,7 +172,18 @@ public class Groupingx {
      */
     @NotNull
     public static <T, K, R> Map<K, R> fold(@Nullable Grouping<T, K> grouping, @NotNull final Transformer2<K, T, R> initialValueSelector, @NotNull final FoldOperation<T, K, R> operation) {
-        return aggregate(grouping, (key, accumulator, element, first) -> operation.operation(key, first ? initialValueSelector.transform(key, element) : Premisex.requireNotNull(accumulator), element));
+        return aggregate(grouping, (key, accumulator, element, first) -> {
+            R nextAccumulator;
+            if (first) {
+                nextAccumulator = initialValueSelector.transform(key, element);
+            } else {
+                if (accumulator == null) {
+                    throw new IllegalArgumentException("Param 'accumulator' is null");
+                }
+                nextAccumulator = accumulator;
+            }
+            return operation.operation(key, nextAccumulator, element);
+        });
     }
 
     /**
@@ -194,8 +206,21 @@ public class Groupingx {
      * @return the [destination] map associating the key of each group with the result of accumulating the group elements.
      */
     @NotNull
-    public static <T, K, R, M extends Map<K, R>> M foldTo(@Nullable Grouping<T, K> grouping, @NotNull M destination, @NotNull final Transformer2<K, T, R> initialValueSelector, @NotNull final FoldOperation<T, K, R> operation) {
-        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> operation.operation(key, first ? initialValueSelector.transform(key, element) : Premisex.requireNotNull(accumulator), element));
+    public static <T, K, R, M extends Map<K, R>> M foldTo(@Nullable Grouping<T, K> grouping, @NotNull M destination,
+                                                          @NotNull final Transformer2<K, T, R> initialValueSelector,
+                                                          @NotNull final FoldOperation<T, K, R> operation) {
+        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> {
+            R nextAccumulator;
+            if (first) {
+                nextAccumulator = initialValueSelector.transform(key, element);
+            } else {
+                if (accumulator == null) {
+                    throw new IllegalArgumentException("Param 'accumulator' is null");
+                }
+                nextAccumulator = accumulator;
+            }
+            return operation.operation(key, nextAccumulator, element);
+        });
     }
 
 
@@ -211,7 +236,13 @@ public class Groupingx {
      */
     @NotNull
     public static <T, K, R> Map<K, R> fold(@Nullable Grouping<T, K> grouping, @NotNull final R initialValue, @NotNull final Transformer2<R, T, R> operation) {
-        return aggregate(grouping, (key, accumulator, element, first) -> operation.transform(Premisex.requireNotNull(first ? initialValue : accumulator), element));
+        return aggregate(grouping, (key, accumulator, element, first) -> {
+            R r = first ? initialValue : accumulator;
+            if (r == null) {
+                throw new IllegalArgumentException("Param 'r' is null");
+            }
+            return operation.transform(r, element);
+        });
     }
 
     /**
@@ -230,7 +261,13 @@ public class Groupingx {
      */
     @NotNull
     public static <T, K, R, M extends Map<K, R>> M foldTo(@Nullable Grouping<T, K> grouping, @NotNull M destination, @NotNull final R initialValue, @NotNull final Transformer2<R, T, R> operation) {
-        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> operation.transform(Premisex.requireNotNull(first ? initialValue : accumulator), element));
+        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> {
+            R r = first ? initialValue : accumulator;
+            if (r == null) {
+                throw new IllegalArgumentException("Param 'r' is null");
+            }
+            return operation.transform(r, element);
+        });
     }
 
 
@@ -249,7 +286,16 @@ public class Groupingx {
      */
     @NotNull
     public static <S, T extends S, K> Map<K, S> reduce(@Nullable Grouping<T, K> grouping, @NotNull final ReduceOperation<T, K, S> operation) {
-        return aggregate(grouping, (key, accumulator, element, first) -> first ? element : operation.operation(key, Premisex.requireNotNull(accumulator), element));
+        return aggregate(grouping, (key, accumulator, element, first) -> {
+            if (first) {
+                return element;
+            } else {
+                if (accumulator == null) {
+                    throw new IllegalArgumentException("Param 'accumulator' is null");
+                }
+                return operation.operation(key, accumulator, element);
+            }
+        });
     }
 
     /**
@@ -270,7 +316,16 @@ public class Groupingx {
      */
     @NotNull
     public static <S, T extends S, K, M extends Map<K, S>> M reduceTo(@Nullable Grouping<T, K> grouping, @NotNull M destination, @NotNull final ReduceOperation<T, K, S> operation) {
-        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> first ? element : operation.operation(key, Premisex.requireNotNull(accumulator), element));
+        return aggregateTo(grouping, destination, (key, accumulator, element, first) -> {
+            if (first) {
+                return element;
+            } else {
+                if (accumulator == null) {
+                    throw new IllegalArgumentException("Param 'accumulator' is null");
+                }
+                return operation.operation(key, accumulator, element);
+            }
+        });
     }
 
 
@@ -280,11 +335,10 @@ public class Groupingx {
      * @return a [Map] associating the key of each group with the count of elements in the group.
      */
     @NotNull
-    public static <T, K> Map<K, Integer> eachCount(@Nullable Grouping<T, K> grouping)// fold(0) { acc, e -> acc + 1 } optimized for boxing
-    {
+    public static <T, K> Map<K, Integer> eachCount(@Nullable Grouping<T, K> grouping) {
         return mapValuesInPlace(foldTo(grouping, new LinkedHashMap<>(0), (k, t) -> new Ref.IntRef(), (key, accumulator, element) -> {
-            Premisex.requireNotNull(accumulator).element += 1;
-            return Premisex.requireNotNull(accumulator);
+            accumulator.element += 1;
+            return accumulator;
         }), kIntRefEntry -> kIntRefEntry.getValue().element);
     }
 

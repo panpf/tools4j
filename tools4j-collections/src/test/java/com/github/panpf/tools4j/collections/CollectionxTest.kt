@@ -27,6 +27,8 @@ import kotlin.collections.LinkedHashSet
 
 class CollectionxTest {
 
+    // todo Complete test
+
     @Test
     fun testNullOrEmpty() {
         assertTrue(Collectionx.isNullOrEmpty(null as Collection<String>?))

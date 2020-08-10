@@ -807,13 +807,9 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> drop(@NotNull Sequence<T> sequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested element count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         if (n == 0) {
             return sequence;
         } else if (sequence instanceof DropTakeSequence) {
@@ -1025,13 +1021,9 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> take(@NotNull Sequence<T> sequence, final int n) {
-        Premisex.require(n >= 0, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return "Requested element count " + n + " is less than zero.";
-            }
-        });
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
         if (n == 0) {
             return emptySequence();
         } else if (sequence instanceof DropTakeSequence) {
@@ -1079,12 +1071,12 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
-            public int compare(T o1, T o2) {
-                R r1 = selector.transform(o1);
-                R r2 = selector.transform(o2);
+            public int compare(@Nullable T o1, @Nullable T o2) {
+                R r1 = o1 != null ? transformer.transform(o1) : null;
+                R r2 = o2 != null ? transformer.transform(o2) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -1096,12 +1088,12 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull NullableAllTransformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
-            public int compare(T o1, T o2) {
-                R r1 = selector.transform(o2);
-                R r2 = selector.transform(o1);
+            public int compare(@Nullable T o1, @Nullable T o2) {
+                R r1 = o2 != null ? transformer.transform(o2) : null;
+                R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
             }
         });
@@ -1681,8 +1673,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, K> Sequence<T> distinctBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> selector) {
-        return new DistinctSequence<>(sequence, selector);
+    public static <T, K> Sequence<T> distinctBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> transformer) {
+        return new DistinctSequence<>(sequence, transformer);
     }
 
 
@@ -1938,15 +1930,15 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T maxBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
         T maxElem = iterator.next();
-        R maxValue = selector.transform(maxElem);
+        R maxValue = transformer.transform(maxElem);
         while (iterator.hasNext()) {
             T e = iterator.next();
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (maxValue.compareTo(v) < 0) {
                 maxElem = e;
                 maxValue = v;
@@ -2045,15 +2037,15 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> selector) {
+    public static <T, R extends Comparable<R>> T minBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
         T minElem = iterator.next();
-        R minValue = selector.transform(minElem);
+        R minValue = transformer.transform(minElem);
         while (iterator.hasNext()) {
             T e = iterator.next();
-            R v = selector.transform(e);
+            R v = transformer.transform(e);
             if (minValue.compareTo(v) > 0) {
                 minElem = e;
                 minValue = v;
@@ -2157,12 +2149,12 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int sumBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Integer> selector) {
+    public static <T> int sumBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Integer> transformer) {
         int sum = 0;
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
-            sum += selector.transform(element);
+            sum += transformer.transform(element);
         }
         return sum;
     }
@@ -2172,12 +2164,12 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> double sumByDouble(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> double sumByDouble(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Double> transformer) {
         double sum = 0.0;
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
-            sum += selector.transform(element);
+            sum += transformer.transform(element);
         }
         return sum;
     }
@@ -2647,7 +2639,7 @@ public class Sequencex {
                     }
                 }
                 if (limit < 0 || count <= limit) {
-                    StringBuilderx.appendElement(buffer, element, transform);
+                    appendElement(buffer, element, transform);
                 } else {
                     break;
                 }
@@ -2976,5 +2968,21 @@ public class Sequencex {
             }
         }
         return sum;
+    }
+
+    private static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {
+        try {
+            if (transform != null) {
+                appendable.append(transform.transform(element));
+            } else if (element instanceof CharSequence) {
+                appendable.append((CharSequence) element);
+            } else if (element instanceof Character) {
+                appendable.append((Character) element);
+            } else {
+                appendable.append(element.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

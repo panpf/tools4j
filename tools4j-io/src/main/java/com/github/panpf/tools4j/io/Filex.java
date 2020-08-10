@@ -1623,13 +1623,9 @@ public class Filex {
     @NotNull
     public static String toRelativeString(@NotNull final File self, @NotNull final File base) {
         String relative = toRelativeStringOrNull(self, base);
-        Premisex.require(relative != null, new LazyValue<String>() {
-            @NotNull
-            @Override
-            public String get() {
-                return String.format("this and base files have different roots: %s and %s.", self.getPath(), base.getPath());
-            }
-        });
+        if (relative == null) {
+            throw new IllegalArgumentException(String.format("this and base files have different roots: %s and %s.", self.getPath(), base.getPath()));
+        }
         return relative;
     }
 

@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.common;
+package com.github.panpf.tools4j.sequences;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public interface IndexedTransformer2<T1, T2, V> {
-    @NotNull
-    V transform(int index, @NotNull T1 t1, @NotNull T2 t2);
+public interface NextValue<T> {
+    @Nullable
+    T next(@NotNull T t);
 }

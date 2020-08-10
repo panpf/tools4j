@@ -16,9 +16,6 @@
 
 package com.github.panpf.tools4j.sequences;
 
-import com.github.panpf.tools4j.common.NextValue;
-import com.github.panpf.tools4j.common.NullableDefaultValue;
-import com.github.panpf.tools4j.common.Premisex;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,9 +25,9 @@ import java.util.NoSuchElementException;
 public class GeneratorSequence<T> implements Sequence<T> {
 
     @NotNull
-    private NullableDefaultValue<T> getInitialValue;
+    private final NullableDefaultValue<T> getInitialValue;
     @NotNull
-    private NextValue<T> getNextValue;
+    private final NextValue<T> getNextValue;
 
     public GeneratorSequence(@NotNull NullableDefaultValue<T> getInitialValue, @NotNull NextValue<T> getNextValue) {
         this.getInitialValue = getInitialValue;
@@ -47,7 +44,14 @@ public class GeneratorSequence<T> implements Sequence<T> {
             private int nextState = -2; // -2 for initial unknown, -1 for next unknown, 0 for done, 1 for continue
 
             private void calcNext() {
-                nextItem = nextState == -2 ? getInitialValue.get() : getNextValue.next(Premisex.requireNotNull(nextItem));
+                if (nextState == -2) {
+                    nextItem = getInitialValue.get();
+                } else {
+                    if (nextItem == null) {
+                        throw new IllegalArgumentException("'nextItem' is null");
+                    }
+                    nextItem = getNextValue.next(nextItem);
+                }
                 nextState = nextItem == null ? 0 : 1;
             }
 
