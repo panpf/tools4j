@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.iterable.DateProgression;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class MinuteRange extends DateProgression implements ClosedRange<Date> {
+public final class SecondRange extends DateProgression implements ClosedRange<Date> {
 
-    public MinuteRange(@NotNull Date start, @NotNull Date endInclusive) {
+    public SecondRange(@NotNull Date start, @NotNull Date endInclusive) {
         super(start, endInclusive, 1);
     }
 
@@ -33,7 +32,7 @@ public final class MinuteRange extends DateProgression implements ClosedRange<Da
     public Date nextDate(@NotNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date.getTime());
-        calendar.add(Calendar.MINUTE, this.getStep());
+        calendar.add(Calendar.SECOND, this.getStep());
         return new Date(calendar.getTimeInMillis());
     }
 

@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.iterable.DateProgression;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;

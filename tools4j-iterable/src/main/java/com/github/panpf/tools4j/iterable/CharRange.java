@@ -14,34 +14,33 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.ranges;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.iterable.IntProgression;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A range of values of type `Integer`.
+ * A range of values of type `Char`.
  */
-public class IntRange extends IntProgression implements ClosedRange<Integer> {
+public class CharRange extends CharProgression implements ClosedRange<Character> {
 
-    public IntRange(int start, int endInclusive) {
+    public CharRange(char start, char endInclusive) {
         super(start, endInclusive, 1);
     }
 
     @NotNull
     @Override
-    public Integer getStart() {
+    public Character getStart() {
         return getFirst();
     }
 
     @NotNull
     @Override
-    public Integer getEndInclusive() {
+    public Character getEndInclusive() {
         return getLast();
     }
 
     @Override
-    public boolean contains(@NotNull Integer value) {
+    public boolean contains(@NotNull Character value) {
         return getFirst() <= value && value <= getLast();
     }
 

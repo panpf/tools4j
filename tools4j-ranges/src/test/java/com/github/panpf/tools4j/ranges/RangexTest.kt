@@ -16,6 +16,7 @@
 
 package com.github.panpf.tools4j.ranges
 
+import com.github.panpf.tools4j.iterable.ClosedRange
 import org.junit.Assert.*
 import org.junit.Test
 import java.text.ParseException

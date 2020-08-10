@@ -7319,72 +7319,72 @@ public class Arrayx {
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static <T> IntProgression indices(@Nullable T[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static <T> IntRange indices(@Nullable T[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable byte[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable byte[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable short[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable short[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable int[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable int[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable long[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable long[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable float[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable float[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable double[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable double[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable boolean[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable boolean[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
     /**
      * Returns the range of valid indices for the array.
      */
     @NotNull
-    public static IntProgression indices(@Nullable char[] elements) {
-        return new IntProgression(0, count(elements) - 1, 1);
+    public static IntRange indices(@Nullable char[] elements) {
+        return new IntRange(0, count(elements) - 1);
     }
 
 

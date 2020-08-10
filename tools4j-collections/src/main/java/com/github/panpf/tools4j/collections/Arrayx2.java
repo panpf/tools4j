@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.Pair;
 import com.github.panpf.tools4j.common.Transformer;
+import com.github.panpf.tools4j.iterable.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -797,81 +798,81 @@ public class Arrayx2 {
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static <T> List<T> slice(@Nullable T[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static <T> List<T> slice(@Nullable T[] elements, @NotNull IntRange indices) {
+        if (elements == null || indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Byte> slice(@Nullable byte[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Byte> slice(@Nullable byte[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Short> slice(@Nullable short[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Short> slice(@Nullable short[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Integer> slice(@Nullable int[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Integer> slice(@Nullable int[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Long> slice(@Nullable long[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Long> slice(@Nullable long[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Float> slice(@Nullable float[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Float> slice(@Nullable float[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Double> slice(@Nullable double[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Double> slice(@Nullable double[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Boolean> slice(@Nullable boolean[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Boolean> slice(@Nullable boolean[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static List<Character> slice(@Nullable char[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return Collectionx.arrayListOf();
-        return Arrayx.asList(Arrayx2.copyOfRange(elements, start, endInclusive + 1));
+    public static List<Character> slice(@Nullable char[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        return Arrayx.asList(Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
     /**
@@ -1139,81 +1140,81 @@ public class Arrayx2 {
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static <T> T[] sliceArray(@NotNull T[] elements, int start, int endInclusive) {
-        if (elements.length <= 0 || start > endInclusive) return Arrayx2.copyOfRange(elements, 0, 0);
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static <T> T[] sliceArray(@NotNull T[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return Arrayx2.copyOfRange(elements, 0, 0);
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static byte[] sliceArray(@Nullable byte[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new byte[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static byte[] sliceArray(@Nullable byte[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new byte[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static short[] sliceArray(@Nullable short[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new short[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static short[] sliceArray(@Nullable short[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new short[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static int[] sliceArray(@Nullable int[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new int[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static int[] sliceArray(@Nullable int[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new int[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static long[] sliceArray(@Nullable long[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new long[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static long[] sliceArray(@Nullable long[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new long[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static float[] sliceArray(@Nullable float[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new float[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static float[] sliceArray(@Nullable float[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new float[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static double[] sliceArray(@Nullable double[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new double[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static double[] sliceArray(@Nullable double[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new double[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static boolean[] sliceArray(@Nullable boolean[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new boolean[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static boolean[] sliceArray(@Nullable boolean[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new boolean[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
     /**
      * Returns a list containing elements at indices in the specified [indices] range.
      */
     @NotNull
-    public static char[] sliceArray(@Nullable char[] elements, int start, int endInclusive) {
-        if (elements == null || start > endInclusive) return new char[0];
-        return Arrayx2.copyOfRange(elements, start, endInclusive + 1);
+    public static char[] sliceArray(@Nullable char[] elements, @NotNull IntRange indices) {
+        if (indices.isEmpty()) return new char[0];
+        return Arrayx2.copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1);
     }
 
 

@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.IntProgression;
+import com.github.panpf.tools4j.iterable.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -2048,8 +2049,8 @@ public class Collectionx {
      * Returns the range of valid indices for the Collection.
      */
     @NotNull
-    public static <T> IntProgression indices(@Nullable Collection<T> collection) {
-        return new IntProgression(0, count(collection) - 1, 1);
+    public static <T> IntRange indices(@Nullable Collection<T> collection) {
+        return new IntRange(0, count(collection) - 1);
     }
 
 
