@@ -7,6 +7,8 @@ include(":tools4j-base64")
 include(":tools4j-base64-ktx")
 
 include(":tools4j-collections")
+include(":tools4j-collections-ktx")
+
 include(":tools4j-common")
 include(":tools4j-compare")
 include(":tools4j-datetime")
