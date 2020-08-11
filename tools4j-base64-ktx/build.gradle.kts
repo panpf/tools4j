@@ -17,9 +17,10 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
+    api(project(":tools4j-base64"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
 }
 
 tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))
@@ -32,9 +33,9 @@ project.file("local.properties").takeIf { it.exists() }?.let { file -> file.inpu
 
     configure<PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-base64"
+        artifactId = "tools4j-base64-ktx"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Base64"
+        desc = "Java, Tools, Base64, Ktx"
         website = "https://github.com/panpf/tools4j"
         userOrg = moduleLocalProperties.getProperty("bintray.userOrg")
         bintrayUser = moduleLocalProperties.getProperty("bintray.user")
