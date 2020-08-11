@@ -13,207 +13,202 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.panpf.tools4j.datetime
 
-package com.github.panpf.tools4j.datetime;
+import org.junit.Assert
+import org.junit.Test
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-public class TimexTest {
-
+class TimexTest {
     @Test
-    public void testTotalTime() {
+    fun testTotalTime() {
         // millisecond
-        assertEquals(Timex.totalTime(0L, 0, " ", "d", "h", "m", "s", "ms"), "0s");
-        assertEquals(Timex.totalTime(-10L, new TotalTimeConfig(0, " ", "d", "h", "m", "s", "ms")), "0s");
-        assertEquals(Timex.totalTime(-10L), "0s");
-        assertEquals(Timex.totalTime(590), "590ms");
-        assertEquals(Timex.totalTime(590, 1), "0s");
+        Assert.assertEquals(Timex.totalTime(0L, 0, " ", "d", "h", "m", "s", "ms"), "0s")
+        Assert.assertEquals(Timex.totalTime(-10L, TotalTimeConfig(0, " ", "d", "h", "m", "s", "ms")), "0s")
+        Assert.assertEquals(Timex.totalTime(-10L), "0s")
+        Assert.assertEquals(Timex.totalTime(590), "590ms")
+        Assert.assertEquals(Timex.totalTime(590, 1), "0s")
 
         // second
-        assertEquals(Timex.totalTime(1000 * 3), "3s");
-        assertEquals(Timex.totalTime(1000 * 3 + 590), "3s 590ms");
-        assertEquals(Timex.totalTime(1000 * 3 + 590, 1), "3s");
+        Assert.assertEquals(Timex.totalTime(1000 * 3), "3s")
+        Assert.assertEquals(Timex.totalTime(1000 * 3 + 590), "3s 590ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 3 + 590, 1), "3s")
 
         // minute
-        assertEquals(Timex.totalTime(1000 * 60 * 3), "3m");
-        assertEquals(Timex.totalTime(1000 * 60 * 3 + (1000 * 23)), "3m 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 3 + (1000 * 23) + 467), "3m 23s 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 3 + 467), "3m 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 3 + 467, 1), "3m");
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 3), "3m")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 3 + 1000 * 23), "3m 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 3 + 1000 * 23 + 467), "3m 23s 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 3 + 467), "3m 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 3 + 467, 1), "3m")
 
         // hour
-        assertEquals(Timex.totalTime(1000 * 60 * 60), "1h");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + (1000 * 60 * 23)), "1h 23m");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1h 23m 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + (1000 * 23)), "1h 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1h 23m 23s 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + 467), "1h 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 + 467, 1), "1h");
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60), "1h")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 1000 * 60 * 23), "1h 23m")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1h 23m 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 1000 * 23), "1h 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1h 23m 23s 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 467), "1h 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 + 467, 1), "1h")
 
         // day
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24), "1d");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23)), "1d 1h 23m");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1d 1h 23m 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 23)), "1d 1h 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1d 1h 23m 23s 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1d 1h 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 467), "1d 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 467, 1), "1d");
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24), "1d")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23), "1d 1h 23m")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1d 1h 23m 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 23), "1d 1h 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1d 1h 23m 23s 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1d 1h 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 467), "1d 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 467, 1), "1d")
     }
 
     @Test
-    public void testTotalTimeLevel() {
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1d 1h 23m 23s 467ms");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 1), "1d 1h 23m 23s");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 2), "1d 1h 23m");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 3), "1d 1h");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 4), "1d");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 5), "0d");
-        assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467, 6), "0d");
-
-        assertEquals(Timex.totalTime(0, 0), "0s");
-        assertEquals(Timex.totalTime(0, 1), "0s");
-        assertEquals(Timex.totalTime(0, 2), "0m");
-        assertEquals(Timex.totalTime(0, 3), "0h");
-        assertEquals(Timex.totalTime(0, 4), "0d");
-        assertEquals(Timex.totalTime(0, 5), "0d");
+    fun testTotalTimeLevel() {
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1d 1h 23m 23s 467ms")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 1), "1d 1h 23m 23s")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 2), "1d 1h 23m")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 3), "1d 1h")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 4), "1d")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 5), "0d")
+        Assert.assertEquals(Timex.totalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467, 6), "0d")
+        Assert.assertEquals(Timex.totalTime(0, 0), "0s")
+        Assert.assertEquals(Timex.totalTime(0, 1), "0s")
+        Assert.assertEquals(Timex.totalTime(0, 2), "0m")
+        Assert.assertEquals(Timex.totalTime(0, 3), "0h")
+        Assert.assertEquals(Timex.totalTime(0, 4), "0d")
+        Assert.assertEquals(Timex.totalTime(0, 5), "0d")
     }
 
     @Test
-    public void testShortTotalTime() {
+    fun testShortTotalTime() {
         // millisecond
-        assertEquals(Timex.shortTotalTime(0L), "0s");
-        assertEquals(Timex.shortTotalTime(590), "590ms");
-        assertEquals(Timex.shortTotalTime(590, 1), "0s");
+        Assert.assertEquals(Timex.shortTotalTime(0L), "0s")
+        Assert.assertEquals(Timex.shortTotalTime(590), "590ms")
+        Assert.assertEquals(Timex.shortTotalTime(590, 1), "0s")
 
         // second
-        assertEquals(Timex.shortTotalTime(1000 * 3), "3s");
-        assertEquals(Timex.shortTotalTime(1000 * 3 + 590), "3s590ms");
-        assertEquals(Timex.shortTotalTime(1000 * 3 + 590, 1), "3s");
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 3), "3s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 3 + 590), "3s590ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 3 + 590, 1), "3s")
 
         // minute
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 3), "3m");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + (1000 * 23)), "3m23s");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + (1000 * 23) + 467), "3m23s467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 467), "3m467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 467, 1), "3m");
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 3), "3m")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 1000 * 23), "3m23s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 1000 * 23 + 467), "3m23s467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 467), "3m467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 3 + 467, 1), "3m")
 
         // hour
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60), "1h");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + (1000 * 60 * 23)), "1h23m");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1h23m23s");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + (1000 * 23)), "1h23s");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1h23m23s467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 467), "1h467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 467, 1), "1h");
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60), "1h")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 1000 * 60 * 23), "1h23m")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1h23m23s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 1000 * 23), "1h23s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1h23m23s467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 467), "1h467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 + 467, 1), "1h")
 
         // day
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24), "1d");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23)), "1d1h23m");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1d1h23m23s");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 23)), "1d1h23s");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1d1h23m23s467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1d1h467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 467), "1d467ms");
-        assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 467, 1), "1d");
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24), "1d")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23), "1d1h23m")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1d1h23m23s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 23), "1d1h23s")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1d1h23m23s467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1d1h467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 467), "1d467ms")
+        Assert.assertEquals(Timex.shortTotalTime(1000 * 60 * 60 * 24 + 467, 1), "1d")
     }
 
     @Test
-    public void testTotalTimeZH() {
+    fun testTotalTimeZH() {
         // millisecond
-        assertEquals(Timex.totalTimeZH(0L), "0秒");
-        assertEquals(Timex.totalTimeZH(590), "590毫秒");
-        assertEquals(Timex.totalTimeZH(590, 1), "0秒");
+        Assert.assertEquals(Timex.totalTimeZH(0L), "0秒")
+        Assert.assertEquals(Timex.totalTimeZH(590), "590毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(590, 1), "0秒")
 
         // second
-        assertEquals(Timex.totalTimeZH(1000 * 3), "3秒");
-        assertEquals(Timex.totalTimeZH(1000 * 3 + 590), "3秒 590毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 3 + 590, 1), "3秒");
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 3), "3秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 3 + 590), "3秒 590毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 3 + 590, 1), "3秒")
 
         // minute
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 3), "3分钟");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + (1000 * 23)), "3分钟 23秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + (1000 * 23) + 467), "3分钟 23秒 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 467), "3分钟 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 467, 1), "3分钟");
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 3), "3分钟")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 1000 * 23), "3分钟 23秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 1000 * 23 + 467), "3分钟 23秒 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 467), "3分钟 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 3 + 467, 1), "3分钟")
 
         // hour
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60), "1小时");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23)), "1小时 23分钟");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1小时 23分钟 23秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + (1000 * 23)), "1小时 23秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1小时 23分钟 23秒 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 467), "1小时 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 467, 1), "1小时");
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60), "1小时")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23), "1小时 23分钟")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1小时 23分钟 23秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 1000 * 23), "1小时 23秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1小时 23分钟 23秒 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 467), "1小时 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 + 467, 1), "1小时")
 
         // day
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24), "1天");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23)), "1天 1小时 23分钟");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1天 1小时 23分钟 23秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 23)), "1天 1小时 23秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1天 1小时 23分钟 23秒 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1天 1小时 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 467), "1天 467毫秒");
-        assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 467, 1), "1天");
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24), "1天")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23), "1天 1小时 23分钟")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1天 1小时 23分钟 23秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 23), "1天 1小时 23秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1天 1小时 23分钟 23秒 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1天 1小时 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 467), "1天 467毫秒")
+        Assert.assertEquals(Timex.totalTimeZH(1000 * 60 * 60 * 24 + 467, 1), "1天")
     }
 
     @Test
-    public void testShortTotalTimeZH() {
+    fun testShortTotalTimeZH() {
         // millisecond
-        assertEquals(Timex.shortTotalTimeZH(0L), "0秒");
-        assertEquals(Timex.shortTotalTimeZH(590), "590毫秒");
-        assertEquals(Timex.shortTotalTimeZH(590, 1), "0秒");
+        Assert.assertEquals(Timex.shortTotalTimeZH(0L), "0秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(590), "590毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(590, 1), "0秒")
 
         // second
-        assertEquals(Timex.shortTotalTimeZH(1000 * 3), "3秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 3 + 590), "3秒590毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 3 + 590, 1), "3秒");
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 3), "3秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 3 + 590), "3秒590毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 3 + 590, 1), "3秒")
 
         // minute
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3), "3分钟");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + (1000 * 23)), "3分钟23秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + (1000 * 23) + 467), "3分钟23秒467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 467), "3分钟467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 467, 1), "3分钟");
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3), "3分钟")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 1000 * 23), "3分钟23秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 1000 * 23 + 467), "3分钟23秒467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 467), "3分钟467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 3 + 467, 1), "3分钟")
 
         // hour
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60), "1小时");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23)), "1小时23分钟");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1小时23分钟23秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + (1000 * 23)), "1小时23秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1小时23分钟23秒467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 467), "1小时467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 467, 1), "1小时");
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60), "1小时")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23), "1小时23分钟")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1小时23分钟23秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 1000 * 23), "1小时23秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1小时23分钟23秒467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 467), "1小时467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 + 467, 1), "1小时")
 
         // day
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24), "1天");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23)), "1天1小时23分钟");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23)), "1天1小时23分钟23秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 23)), "1天1小时23秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + (1000 * 60 * 23) + (1000 * 23) + 467), "1天1小时23分钟23秒467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1天1小时467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 467), "1天467毫秒");
-        assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 467, 1), "1天");
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24), "1天")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23), "1天1小时23分钟")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23), "1天1小时23分钟23秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 23), "1天1小时23秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 1000 * 60 * 23 + 1000 * 23 + 467), "1天1小时23分钟23秒467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 1000 * 60 * 60 + 467), "1天1小时467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 467), "1天467毫秒")
+        Assert.assertEquals(Timex.shortTotalTimeZH(1000 * 60 * 60 * 24 + 467, 1), "1天")
     }
 
     @Test
-    public void testDuration() {
-        assertEquals(Timex.duration(0), "00:00:00");
-        assertEquals(Timex.duration(1000 * 5), "00:00:05");
-        assertEquals(Timex.duration(1000 * 59), "00:00:59");
-        assertEquals(Timex.duration(1000 * 60), "00:01:00");
-        assertEquals(Timex.duration((1000 * 60) + (1000 * 4)), "00:01:04");
-        assertEquals(Timex.duration(1000 * 60 * 60), "01:00:00");
-        assertEquals(Timex.duration((1000 * 60 * 60) + (1000 * 4)), "01:00:04");
-        assertEquals(Timex.duration((1000 * 60 * 60) + (1000 * 60 * 18) + (1000 * 4)), "01:18:04");
-        assertEquals(Timex.duration((1000 * 60 * 60 * 100) + (1000 * 60 * 18) + (1000 * 4)), "100:18:04");
-
-        assertEquals(Timex.shortDuration(0), "00:00");
-        assertEquals(Timex.shortDuration(1000 * 5), "00:05");
-        assertEquals(Timex.shortDuration(1000 * 59), "00:59");
-        assertEquals(Timex.shortDuration(1000 * 60), "01:00");
-        assertEquals(Timex.shortDuration((1000 * 60) + (1000 * 4)), "01:04");
+    fun testDuration() {
+        Assert.assertEquals(Timex.duration(0), "00:00:00")
+        Assert.assertEquals(Timex.duration(1000 * 5.toLong()), "00:00:05")
+        Assert.assertEquals(Timex.duration(1000 * 59.toLong()), "00:00:59")
+        Assert.assertEquals(Timex.duration(1000 * 60.toLong()), "00:01:00")
+        Assert.assertEquals(Timex.duration(1000 * 60 + (1000 * 4).toLong()), "00:01:04")
+        Assert.assertEquals(Timex.duration(1000 * 60 * 60.toLong()), "01:00:00")
+        Assert.assertEquals(Timex.duration(1000 * 60 * 60 + (1000 * 4).toLong()), "01:00:04")
+        Assert.assertEquals(Timex.duration(1000 * 60 * 60 + 1000 * 60 * 18 + (1000 * 4).toLong()), "01:18:04")
+        Assert.assertEquals(Timex.duration(1000 * 60 * 60 * 100 + 1000 * 60 * 18 + (1000 * 4).toLong()), "100:18:04")
+        Assert.assertEquals(Timex.shortDuration(0), "00:00")
+        Assert.assertEquals(Timex.shortDuration(1000 * 5.toLong()), "00:05")
+        Assert.assertEquals(Timex.shortDuration(1000 * 59.toLong()), "00:59")
+        Assert.assertEquals(Timex.shortDuration(1000 * 60.toLong()), "01:00")
+        Assert.assertEquals(Timex.shortDuration(1000 * 60 + (1000 * 4).toLong()), "01:04")
     }
 }

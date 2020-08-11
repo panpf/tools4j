@@ -13,32 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.panpf.tools4j.security
 
-package com.github.panpf.tools4j.security;
+import com.github.panpf.tools4j.base64.Base64x
+import org.junit.Assert
+import org.junit.Test
 
-import com.github.panpf.tools4j.base64.Base64x;
-import org.junit.Assert;
-import org.junit.Test;
-
-public class KeyxTest {
+class KeyxTest {
 
     @Test
-    public void testToBase64() {
-        String seed = "" + System.currentTimeMillis();
-
-        String key1 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16));
-        String key2 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16));
-
-        Assert.assertEquals("testToBase64", key1, key2);
+    fun testToBase64() {
+        val seed = "" + System.currentTimeMillis()
+        val key1 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16))
+        val key2 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16))
+        Assert.assertEquals("testToBase64", key1, key2)
     }
 
     @Test
-    public void testToBytes() {
-        String seed = "" + System.currentTimeMillis();
-
-        String key1 = Base64x.encodeToString(Keyx.toBytes(Aesx.createKeyByPassword(seed, 16)), Base64x.NO_WRAP);
-        String key2 = Base64x.encodeToString(Keyx.toBytes(Aesx.createKeyByPassword(seed, 16)), Base64x.NO_WRAP);
-
-        Assert.assertEquals("testToBytes", key1, key2);
+    fun testToBytes() {
+        val seed = "" + System.currentTimeMillis()
+        val key1 = Base64x.encodeToString(Keyx.toBytes(Aesx.createKeyByPassword(seed, 16)), Base64x.NO_WRAP)
+        val key2 = Base64x.encodeToString(Keyx.toBytes(Aesx.createKeyByPassword(seed, 16)), Base64x.NO_WRAP)
+        Assert.assertEquals("testToBytes", key1, key2)
     }
 }

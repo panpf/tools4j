@@ -13,126 +13,133 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.panpf.tools4j.security
 
-package com.github.panpf.tools4j.security;
+import org.junit.Assert
+import org.junit.Test
+import java.security.InvalidKeyException
+import java.security.SignatureException
+import java.security.spec.InvalidKeySpecException
+import javax.crypto.BadPaddingException
+import javax.crypto.IllegalBlockSizeException
 
-import org.junit.Assert;
-import org.junit.Test;
+class RsaxTest {
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-
-public class RsaxTest {
-
-    private static final String SOURCE = "{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}";
-
-    private static final String SOURCE_OAEP = "小红那年七岁，她跟着爸妈去赶集，站在一个卖童装的摊位旁边";
+    companion object {
+        private const val SOURCE = "{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}{\"key1\":\"value1\",\"key2\":\"value2\"}"
+        private const val SOURCE_OAEP = "小红那年七岁，她跟着爸妈去赶集，站在一个卖童装的摊位旁边"
+    }
 
     /**
      * 测试公钥加密私钥解密
      */
     @Test
-    public void testPubPriBytes() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        byte[] encryptResult = Rsax.encrypt(SOURCE.getBytes(), Rsax.DEFAULT, keyPair.getPublic());
-        String decryptResult = Rsax.decryptToString(encryptResult, Rsax.DEFAULT, keyPair.getPrivate());
-        Assert.assertEquals("testPubPriBytes", SOURCE, decryptResult);
+    @Throws(BadPaddingException::class, InvalidKeyException::class, IllegalBlockSizeException::class)
+    fun testPubPriBytes() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encrypt(SOURCE.toByteArray(), Rsax.DEFAULT, keyPair.public)
+        val decryptResult = Rsax.decryptToString(encryptResult, Rsax.DEFAULT, keyPair.private)
+        Assert.assertEquals("testPubPriBytes", SOURCE, decryptResult)
     }
 
     /**
      * 测试私钥加密公钥解密
      */
     @Test
-    public void testPriPubBytes() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        byte[] encryptResult = Rsax.encrypt(SOURCE, Rsax.DEFAULT, keyPair.getPrivate());
-        String decryptResult = Rsax.decryptToString(encryptResult, Rsax.DEFAULT, keyPair.getPublic());
-        Assert.assertEquals("testPriPubBytes", SOURCE, decryptResult);
+    @Throws(BadPaddingException::class, InvalidKeyException::class, IllegalBlockSizeException::class)
+    fun testPriPubBytes() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encrypt(SOURCE, Rsax.DEFAULT, keyPair.private)
+        val decryptResult = Rsax.decryptToString(encryptResult, Rsax.DEFAULT, keyPair.public)
+        Assert.assertEquals("testPriPubBytes", SOURCE, decryptResult)
     }
 
     /**
      * 测试公钥加密私钥解密转 Base64
      */
     @Test
-    public void testPubPriWithBase64() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        String encryptResult = Rsax.encryptToBase64(SOURCE, Rsax.DEFAULT, keyPair.getPublic());
-        String decryptResult = Rsax.decryptToStringFromBase64(encryptResult, Rsax.DEFAULT, keyPair.getPrivate());
-        Assert.assertEquals("testPubPriWithBase64", SOURCE, decryptResult);
+    @Throws(BadPaddingException::class, InvalidKeyException::class, IllegalBlockSizeException::class)
+    fun testPubPriWithBase64() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encryptToBase64(SOURCE, Rsax.DEFAULT, keyPair.public)
+        val decryptResult = Rsax.decryptToStringFromBase64(encryptResult, Rsax.DEFAULT, keyPair.private)
+        Assert.assertEquals("testPubPriWithBase64", SOURCE, decryptResult)
     }
 
     /**
      * 测试私钥加密公钥解密转 Base64
      */
     @Test
-    public void testPriPubWithBase64() throws BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        String encryptResult = Rsax.encryptToBase64(SOURCE.getBytes(), Rsax.DEFAULT, keyPair.getPrivate());
-        String decryptResult = Rsax.decryptToStringFromBase64(encryptResult, Rsax.DEFAULT, keyPair.getPublic());
-        Assert.assertEquals("testPriPubWithBase64", SOURCE, decryptResult);
+    @Throws(BadPaddingException::class, InvalidKeyException::class, IllegalBlockSizeException::class)
+    fun testPriPubWithBase64() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encryptToBase64(SOURCE.toByteArray(), Rsax.DEFAULT, keyPair.private)
+        val decryptResult = Rsax.decryptToStringFromBase64(encryptResult, Rsax.DEFAULT, keyPair.public)
+        Assert.assertEquals("testPriPubWithBase64", SOURCE, decryptResult)
     }
-
 
     /**
      * 测试签名、验证
      */
     @Test
-    public void testSignBytes() throws InvalidKeyException, SignatureException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        byte[] bytesSign = Rsax.sign(SOURCE, keyPair.getPrivate());
-        Assert.assertTrue("testSignBytes", Rsax.verify(bytesSign, SOURCE, keyPair.getPublic()));
+    @Throws(InvalidKeyException::class, SignatureException::class)
+    fun testSignBytes() {
+        val keyPair = Rsax.createKey(1024)
+        val bytesSign = Rsax.sign(SOURCE, keyPair.private)
+        Assert.assertTrue("testSignBytes", Rsax.verify(bytesSign, SOURCE, keyPair.public))
     }
 
     /**
      * 测试签名、验证 Base64
      */
     @Test
-    public void testSignWithBase64() throws InvalidKeyException, SignatureException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        String base64Sign = Rsax.signToBase64(SOURCE, keyPair.getPrivate());
-        Assert.assertTrue("testSignWithBase64", Rsax.verifyFromBase64(base64Sign, SOURCE, keyPair.getPublic()));
+    @Throws(InvalidKeyException::class, SignatureException::class)
+    fun testSignWithBase64() {
+        val keyPair = Rsax.createKey(1024)
+        val base64Sign = Rsax.signToBase64(SOURCE, keyPair.private)
+        Assert.assertTrue("testSignWithBase64", Rsax.verifyFromBase64(base64Sign, SOURCE, keyPair.public))
     }
 
     /**
      * 使用错误的 KEY 解密
      */
     @Test
-    public void testErrorKey() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        byte[] encryptBytes = Rsax.encrypt(SOURCE.getBytes(), Rsax.DEFAULT, Rsax.createKey(1024).getPublic());
-        String bytesPriKeyDecryptResult = null;
+    @Throws(InvalidKeyException::class, IllegalBlockSizeException::class, BadPaddingException::class)
+    fun testErrorKey() {
+        val encryptBytes = Rsax.encrypt(SOURCE.toByteArray(), Rsax.DEFAULT, Rsax.createKey(1024).public)
+        var bytesPriKeyDecryptResult: String? = null
         try {
-            bytesPriKeyDecryptResult = Rsax.decryptToString(encryptBytes, Rsax.DEFAULT, Rsax.createKey(1024).getPrivate());
-        } catch (Exception ignored) {
+            bytesPriKeyDecryptResult = Rsax.decryptToString(encryptBytes, Rsax.DEFAULT, Rsax.createKey(1024).private)
+        } catch (ignored: Exception) {
         }
-        Assert.assertNotEquals("testErrorKey", SOURCE, bytesPriKeyDecryptResult);
+        Assert.assertNotEquals("testErrorKey", SOURCE, bytesPriKeyDecryptResult)
     }
 
     @Test
-    public void testEcbPKCS1Padding() throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        byte[] encryptResult = Rsax.encrypt(SOURCE.getBytes(), Rsax.ECB_PKCS1, keyPair.getPublic());
-        String decryptResult = Rsax.decryptToString(encryptResult, Rsax.ECB_PKCS1, keyPair.getPrivate());
-        Assert.assertEquals("testEcbPKCS1Padding", SOURCE, decryptResult);
+    @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
+    fun testEcbPKCS1Padding() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encrypt(SOURCE.toByteArray(), Rsax.ECB_PKCS1, keyPair.public)
+        val decryptResult = Rsax.decryptToString(encryptResult, Rsax.ECB_PKCS1, keyPair.private)
+        Assert.assertEquals("testEcbPKCS1Padding", SOURCE, decryptResult)
     }
 
     @Test
-    public void testEcbOAEPPadding() throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        KeyPair keyPair = Rsax.createKey(1024);
-        byte[] encryptResult = Rsax.encrypt(SOURCE_OAEP.getBytes(), Rsax.ECB_OAEP, keyPair.getPublic());
-        String decryptResult = Rsax.decryptToString(encryptResult, Rsax.ECB_OAEP, keyPair.getPrivate());
-        Assert.assertEquals("testEcbOAEPPadding", SOURCE_OAEP, decryptResult);
+    @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
+    fun testEcbOAEPPadding() {
+        val keyPair = Rsax.createKey(1024)
+        val encryptResult = Rsax.encrypt(SOURCE_OAEP.toByteArray(), Rsax.ECB_OAEP, keyPair.public)
+        val decryptResult = Rsax.decryptToString(encryptResult, Rsax.ECB_OAEP, keyPair.private)
+        Assert.assertEquals("testEcbOAEPPadding", SOURCE_OAEP, decryptResult)
     }
 
     @Test
-    public void testKeyToBase64() throws InvalidKeySpecException, SignatureException, InvalidKeyException {
-        KeyPair keyPair = Rsax.createKey(1024);
-
-        PublicKey pubKey = Rsax.pubKeyFromBase64(Keyx.toBase64(keyPair.getPublic()));
-        PrivateKey priKey = Rsax.priKeyFromBase64(Keyx.toBase64(keyPair.getPrivate()));
-
-        String base64Sign = Rsax.signToBase64(SOURCE.getBytes(), priKey);
-        Assert.assertTrue(Rsax.verifyFromBase64(base64Sign, SOURCE.getBytes(), pubKey));
+    @Throws(InvalidKeySpecException::class, SignatureException::class, InvalidKeyException::class)
+    fun testKeyToBase64() {
+        val keyPair = Rsax.createKey(1024)
+        val pubKey = Rsax.pubKeyFromBase64(Keyx.toBase64(keyPair.public))
+        val priKey = Rsax.priKeyFromBase64(Keyx.toBase64(keyPair.private))
+        val base64Sign = Rsax.signToBase64(SOURCE.toByteArray(), priKey)
+        Assert.assertTrue(Rsax.verifyFromBase64(base64Sign, SOURCE.toByteArray(), pubKey))
     }
 }

@@ -17,6 +17,7 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
+
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
 }
