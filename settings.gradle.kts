@@ -9,7 +9,7 @@ include(":tools4j-base64-ktx")
 include(":tools4j-collections")
 include(":tools4j-collections-ktx")
 
-include(":tools4j-common-core")
+include(":tools4j-common-action")
 include(":tools4j-common-intrange")
 include(":tools4j-common-iterable")
 

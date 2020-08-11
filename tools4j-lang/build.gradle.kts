@@ -17,7 +17,7 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
-    api(project(":tools4j-common-core"))
+    api(project(":tools4j-common-action"))
     api(project(":tools4j-common-iterable"))
     api(project(":tools4j-common-intrange"))
 
