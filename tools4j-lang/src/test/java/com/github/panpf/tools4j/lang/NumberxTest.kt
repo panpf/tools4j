@@ -19,39 +19,6 @@ import org.junit.Assert
 import org.junit.Test
 
 class NumberxTest {
-    @Test
-    fun testTo() {
-        Assert.assertEquals(Numberx.toByteOrDefault("5", 4.toByte()).toString(), 5.toString())
-        Assert.assertEquals(Numberx.toByteOrDefault("g", 4.toByte()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toByteOrZero("g").toString(), 0.toString())
-        Assert.assertEquals(Numberx.toByteOrDefault("", 4.toByte()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toByteOrDefault(null, 4.toByte()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toShortOrDefault("5", 4.toShort()).toString(), 5.toString())
-        Assert.assertEquals(Numberx.toShortOrDefault("g", 4.toShort()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toShortOrZero("g").toString(), 0.toString())
-        Assert.assertEquals(Numberx.toShortOrDefault("", 4.toShort()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toShortOrDefault(null, 4.toShort()).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toIntOrDefault("5", 4).toString(), 5.toString())
-        Assert.assertEquals(Numberx.toIntOrDefault("g", 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toIntOrZero("g").toString(), 0.toString())
-        Assert.assertEquals(Numberx.toIntOrDefault("", 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toIntOrDefault(null, 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toLongOrDefault("5", 4).toString(), 5.toString())
-        Assert.assertEquals(Numberx.toLongOrDefault("g", 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toLongOrZero("g").toString(), 0.toString())
-        Assert.assertEquals(Numberx.toLongOrDefault("", 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toLongOrDefault(null, 4).toString(), 4.toString())
-        Assert.assertEquals(Numberx.toFloatOrDefault("5.5", 4.5f).toString(), 5.5f.toString())
-        Assert.assertEquals(Numberx.toFloatOrDefault("g", 4.4f).toString(), 4.4f.toString())
-        Assert.assertEquals(Numberx.toFloatOrZero("g").toString(), 0.0f.toString())
-        Assert.assertEquals(Numberx.toFloatOrDefault("", 4.4f).toString(), 4.4f.toString())
-        Assert.assertEquals(Numberx.toFloatOrDefault(null, 4.4f).toString(), 4.4f.toString())
-        Assert.assertEquals(Numberx.toDoubleOrDefault("5.5", 4.4).toString(), 5.5.toString())
-        Assert.assertEquals(Numberx.toDoubleOrDefault("g", 4.4).toString(), 4.4.toString())
-        Assert.assertEquals(Numberx.toDoubleOrZero("g").toString(), 0.0.toString())
-        Assert.assertEquals(Numberx.toDoubleOrDefault("", 4.4).toString(), 4.4.toString())
-        Assert.assertEquals(Numberx.toDoubleOrDefault(null, 4.4).toString(), 4.4.toString())
-    }
 
     @Test
     fun testRequireNotZero() {
@@ -97,5 +64,60 @@ class NumberxTest {
     fun testPad() {
         Assert.assertEquals(Numberx.pad(10, 5), "00010")
         Assert.assertEquals(Numberx.pad(10L, 5), "00010")
+    }
+
+    @Test
+    fun testOrZero() {
+        Assert.assertEquals(0.toByte(), Numberx.orZero((null as Byte?)))
+        Assert.assertEquals(1.toByte(), Numberx.orZero(1.toByte()))
+
+        Assert.assertEquals(0.toShort(), Numberx.orZero((null as Short?)))
+        Assert.assertEquals(1.toShort(), Numberx.orZero(1.toShort()))
+
+        Assert.assertEquals(0.toInt(), Numberx.orZero((null as Int?)))
+        Assert.assertEquals(1.toInt(), Numberx.orZero(1.toInt()))
+
+        Assert.assertEquals(0.toLong(), Numberx.orZero((null as Long?)))
+        Assert.assertEquals(1.toLong(), Numberx.orZero(1.toLong()))
+
+        Assert.assertEquals(0.toFloat(), Numberx.orZero((null as Float?)))
+        Assert.assertEquals(1.toFloat(), Numberx.orZero(1.toFloat()))
+
+        Assert.assertEquals(0.toDouble(), Numberx.orZero((null as Double?)), 0.toDouble())
+        Assert.assertEquals(1.toDouble(), Numberx.orZero(1.toDouble()), 0.toDouble())
+    }
+
+    @Test
+    fun testTo() {
+        Assert.assertEquals(Numberx.toByteOrDefault("5", 4.toByte()).toString(), 5.toString())
+        Assert.assertEquals(Numberx.toByteOrDefault("g", 4.toByte()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toByteOrZero("g").toString(), 0.toString())
+        Assert.assertEquals(Numberx.toByteOrDefault("", 4.toByte()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toByteOrDefault(null, 4.toByte()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toShortOrDefault("5", 4.toShort()).toString(), 5.toString())
+        Assert.assertEquals(Numberx.toShortOrDefault("g", 4.toShort()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toShortOrZero("g").toString(), 0.toString())
+        Assert.assertEquals(Numberx.toShortOrDefault("", 4.toShort()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toShortOrDefault(null, 4.toShort()).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toIntOrDefault("5", 4).toString(), 5.toString())
+        Assert.assertEquals(Numberx.toIntOrDefault("g", 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toIntOrZero("g").toString(), 0.toString())
+        Assert.assertEquals(Numberx.toIntOrDefault("", 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toIntOrDefault(null, 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toLongOrDefault("5", 4).toString(), 5.toString())
+        Assert.assertEquals(Numberx.toLongOrDefault("g", 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toLongOrZero("g").toString(), 0.toString())
+        Assert.assertEquals(Numberx.toLongOrDefault("", 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toLongOrDefault(null, 4).toString(), 4.toString())
+        Assert.assertEquals(Numberx.toFloatOrDefault("5.5", 4.5f).toString(), 5.5f.toString())
+        Assert.assertEquals(Numberx.toFloatOrDefault("g", 4.4f).toString(), 4.4f.toString())
+        Assert.assertEquals(Numberx.toFloatOrZero("g").toString(), 0.0f.toString())
+        Assert.assertEquals(Numberx.toFloatOrDefault("", 4.4f).toString(), 4.4f.toString())
+        Assert.assertEquals(Numberx.toFloatOrDefault(null, 4.4f).toString(), 4.4f.toString())
+        Assert.assertEquals(Numberx.toDoubleOrDefault("5.5", 4.4).toString(), 5.5.toString())
+        Assert.assertEquals(Numberx.toDoubleOrDefault("g", 4.4).toString(), 4.4.toString())
+        Assert.assertEquals(Numberx.toDoubleOrZero("g").toString(), 0.0.toString())
+        Assert.assertEquals(Numberx.toDoubleOrDefault("", 4.4).toString(), 4.4.toString())
+        Assert.assertEquals(Numberx.toDoubleOrDefault(null, 4.4).toString(), 4.4.toString())
     }
 }

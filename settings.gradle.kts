@@ -24,6 +24,8 @@ include(":tools4j-io")
 include(":tools4j-io-ktx")
 
 include(":tools4j-lang")
+include(":tools4j-lang-ktx")
+
 include(":tools4j-math")
 include(":tools4j-net")
 include(":tools4j-premise")

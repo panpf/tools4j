@@ -160,6 +160,34 @@ public class Numberx {
     }
 
 
+    /* ******************************************* orZero *******************************************/
+
+
+
+    public static byte orZero(@Nullable Byte aByte) {
+        return aByte != null ? aByte : 0;
+    }
+
+    public static short orZero(@Nullable Short aShort) {
+        return aShort != null ? aShort : 0;
+    }
+
+    public static int orZero(@Nullable Integer integer) {
+        return integer != null ? integer : 0;
+    }
+
+    public static long orZero(@Nullable Long aLong) {
+        return aLong != null ? aLong : 0;
+    }
+
+    public static float orZero(@Nullable Float aFloat) {
+        return aFloat != null ? aFloat : 0;
+    }
+
+    public static double orZero(@Nullable Double aDouble) {
+        return aDouble != null ? aDouble : 0;
+    }
+
     /*
      * *****************************************************************************************************************
      * From kotlin standard library

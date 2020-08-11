@@ -90,6 +90,42 @@ public class Stringx {
         return isSafe(string) ? string : null;
     }
 
+    /**
+     * If the [value] is null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
+     */
+    public static <T extends CharSequence> T requireSafe(@Nullable T value, @NotNull String paramName) {
+        if (isSafe(value)) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("The string parameter '%s' is null or empty or blank", paramName));
+        }
+    }
+
+    /**
+     * If the [value] is null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
+     */
+    public static <T extends CharSequence> T requireSafe(@Nullable T value) {
+        return requireSafe(value, "unknown");
+    }
+
+    /**
+     * If the [value] is not null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
+     */
+    public static <T extends CharSequence> T requireNotSafe(@Nullable T value, @NotNull String paramName) {
+        if (isNotSafe(value)) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("The string parameter '%s' is not null or empty or blank", paramName));
+        }
+    }
+
+    /**
+     * If the [value] is not null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
+     */
+    public static <T extends CharSequence> T requireNotSafe(@Nullable T value) {
+        return requireNotSafe(value, "unknown");
+    }
+
 
     /* ******************************************* blank ****************************************** */
 
@@ -801,46 +837,6 @@ public class Stringx {
     @NotNull
     public static String hiddenEndChars(@Nullable final String input, final int hiddenLength) {
         return hiddenEndChars(input, hiddenLength, '*');
-    }
-
-
-    /* ******************************************* require *******************************************/
-
-
-    /**
-     * If the [value] is null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
-     */
-    public static <T extends CharSequence> T requireSafe(@Nullable T value, @NotNull String paramName) {
-        if (isSafe(value)) {
-            return value;
-        } else {
-            throw new IllegalArgumentException(String.format("The string parameter '%s' is null or empty or blank", paramName));
-        }
-    }
-
-    /**
-     * If the [value] is null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
-     */
-    public static <T extends CharSequence> T requireSafe(@Nullable T value) {
-        return requireSafe(value, "unknown");
-    }
-
-    /**
-     * If the [value] is not null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
-     */
-    public static <T extends CharSequence> T requireNotSafe(@Nullable T value, @NotNull String paramName) {
-        if (isNotSafe(value)) {
-            return value;
-        } else {
-            throw new IllegalArgumentException(String.format("The string parameter '%s' is not null or empty or blank", paramName));
-        }
-    }
-
-    /**
-     * If the [value] is not null or empty or blank, it returns itself, otherwise it throws an IllegalArgumentException.
-     */
-    public static <T extends CharSequence> T requireNotSafe(@Nullable T value) {
-        return requireNotSafe(value, "unknown");
     }
 
     /*
