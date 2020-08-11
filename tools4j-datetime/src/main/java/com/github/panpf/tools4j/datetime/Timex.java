@@ -17,7 +17,7 @@ public class Timex {
      * Returns the total time of formatting that can be displayed
      */
     @NotNull
-    public static String totalTime(long totalTimeMillis, @NotNull TotalTimeConfig config) {
+    public static String formatTotalTime(long totalTimeMillis, @NotNull TotalTimeConfig config) {
         long finalTotalTimeMillis = totalTimeMillis >= 0 ? totalTimeMillis : 0;
         int finalLevel = Math.max(config.getLevel(), 0);
 
@@ -71,10 +71,10 @@ public class Timex {
      * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
      */
     @NotNull
-    public static String totalTime(long totalTimeMillis, int level, @NotNull String divider,
-                                   @NotNull String daySuffix, @NotNull String hourSuffix, @NotNull String minuteSuffix,
-                                   @NotNull String secondSuffix, @NotNull String millisecondSuffix) {
-        return totalTime(totalTimeMillis, new TotalTimeConfig(level, divider, daySuffix, hourSuffix, minuteSuffix, secondSuffix, millisecondSuffix));
+    public static String formatTotalTime(long totalTimeMillis, int level, @NotNull String divider,
+                                         @NotNull String daySuffix, @NotNull String hourSuffix, @NotNull String minuteSuffix,
+                                         @NotNull String secondSuffix, @NotNull String millisecondSuffix) {
+        return formatTotalTime(totalTimeMillis, new TotalTimeConfig(level, divider, daySuffix, hourSuffix, minuteSuffix, secondSuffix, millisecondSuffix));
     }
 
     /**
@@ -83,34 +83,16 @@ public class Timex {
      * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
      */
     @NotNull
-    public static String totalTime(long totalTimeMillis, int level) {
-        return totalTime(totalTimeMillis, level, " ", "d", "h", "m", "s", "ms");
+    public static String formatTotalTime(long totalTimeMillis, int level) {
+        return formatTotalTime(totalTimeMillis, level, " ", "d", "h", "m", "s", "ms");
     }
 
     /**
      * Returns the total time of formatting that can be displayed
      */
     @NotNull
-    public static String totalTime(long totalTimeMillis) {
-        return totalTime(totalTimeMillis, 0);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     *
-     * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
-     */
-    @NotNull
-    public static String totalTime(int totalTime, int level) {
-        return totalTime((long) totalTime, level);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     */
-    @NotNull
-    public static String totalTime(int totalTime) {
-        return totalTime((long) totalTime, 0);
+    public static String formatTotalTime(long totalTimeMillis) {
+        return formatTotalTime(totalTimeMillis, 0);
     }
 
     /**
@@ -119,34 +101,16 @@ public class Timex {
      * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
      */
     @NotNull
-    public static String totalTimeZH(long totalTimeMillis, int level) {
-        return totalTime(totalTimeMillis, level, " ", "天", "小时", "分钟", "秒", "毫秒");
+    public static String formatTotalTimeZH(long totalTimeMillis, int level) {
+        return formatTotalTime(totalTimeMillis, level, " ", "天", "小时", "分钟", "秒", "毫秒");
     }
 
     /**
      * Returns the total time of formatting that can be displayed
      */
     @NotNull
-    public static String totalTimeZH(long totalTimeMillis) {
-        return totalTimeZH(totalTimeMillis, 0);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     *
-     * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
-     */
-    @NotNull
-    public static String totalTimeZH(int totalTime, int level) {
-        return totalTimeZH((long) totalTime, level);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     */
-    @NotNull
-    public static String totalTimeZH(int totalTime) {
-        return totalTimeZH((long) totalTime, 0);
+    public static String formatTotalTimeZH(long totalTimeMillis) {
+        return formatTotalTimeZH(totalTimeMillis, 0);
     }
 
     /**
@@ -155,34 +119,16 @@ public class Timex {
      * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
      */
     @NotNull
-    public static String shortTotalTime(long totalTimeMillis, int level) {
-        return totalTime(totalTimeMillis, level, "", "d", "h", "m", "s", "ms");
+    public static String formatShortTotalTime(long totalTimeMillis, int level) {
+        return formatTotalTime(totalTimeMillis, level, "", "d", "h", "m", "s", "ms");
     }
 
     /**
      * Returns the total time of formatting that can be displayed
      */
     @NotNull
-    public static String shortTotalTime(long totalTimeMillis) {
-        return shortTotalTime(totalTimeMillis, 0);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     *
-     * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
-     */
-    @NotNull
-    public static String shortTotalTime(int totalTime, int level) {
-        return shortTotalTime((long) totalTime, level);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     */
-    @NotNull
-    public static String shortTotalTime(int totalTime) {
-        return shortTotalTime((long) totalTime, 0);
+    public static String formatShortTotalTime(long totalTimeMillis) {
+        return formatShortTotalTime(totalTimeMillis, 0);
     }
 
     /**
@@ -191,34 +137,16 @@ public class Timex {
      * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
      */
     @NotNull
-    public static String shortTotalTimeZH(long totalTimeMillis, int level) {
-        return totalTime(totalTimeMillis, level, "", "天", "小时", "分钟", "秒", "毫秒");
+    public static String formatShortTotalTimeZH(long totalTimeMillis, int level) {
+        return formatTotalTime(totalTimeMillis, level, "", "天", "小时", "分钟", "秒", "毫秒");
     }
 
     /**
      * Returns the total time of formatting that can be displayed
      */
     @NotNull
-    public static String shortTotalTimeZH(long totalTimeMillis) {
-        return shortTotalTimeZH(totalTimeMillis, 0);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     *
-     * @param level 0: Accurate to milliseconds; 1: Accurate to seconds; 2: Accurate to minute; 3: Accurate to hour; 4: Accurate to day; 5 or more always returns 0 seconds
-     */
-    @NotNull
-    public static String shortTotalTimeZH(int totalTime, int level) {
-        return shortTotalTimeZH((long) totalTime, level);
-    }
-
-    /**
-     * Returns the total time of formatting that can be displayed
-     */
-    @NotNull
-    public static String shortTotalTimeZH(int totalTime) {
-        return shortTotalTimeZH((long) totalTime, 0);
+    public static String formatShortTotalTimeZH(long totalTimeMillis) {
+        return formatShortTotalTimeZH(totalTimeMillis, 0);
     }
 
 
@@ -231,7 +159,8 @@ public class Timex {
      * @param duration Duration, in milliseconds
      * @param shorted  If true, '00:23:22' will return '23:22'
      */
-    private static String duration(long duration, boolean shorted) {
+    @NotNull
+    private static String formatDurationTime(long duration, boolean shorted) {
         long secondsRemaining = duration / 1000 % 60;
         long minuteRemaining = duration / 1000 / 60 % 60;
         long hour = duration / 1000 / 60 / 60;
@@ -277,8 +206,9 @@ public class Timex {
      *
      * @param duration Duration, in milliseconds
      */
-    public static String duration(long duration) {
-        return duration(duration, false);
+    @NotNull
+    public static String formatDurationTime(long duration) {
+        return formatDurationTime(duration, false);
     }
 
     /**
@@ -286,7 +216,8 @@ public class Timex {
      *
      * @param duration Duration, in milliseconds
      */
-    public static String shortDuration(long duration) {
-        return duration(duration, true);
+    @NotNull
+    public static String formatShortDurationTime(long duration) {
+        return formatDurationTime(duration, true);
     }
 }

@@ -10,8 +10,12 @@ include(":tools4j-collections")
 include(":tools4j-collections-ktx")
 
 include(":tools4j-common")
+
 include(":tools4j-compare")
+
 include(":tools4j-datetime")
+include(":tools4j-datetime-ktx")
+
 include(":tools4j-grouping")
 include(":tools4j-io")
 include(":tools4j-iterable")
