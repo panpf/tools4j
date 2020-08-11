@@ -435,7 +435,7 @@ public class Mathx {
     }
 
 
-    /* ******************************************* formatPercent *******************************************/
+    /* ******************************************* formatPercentWith *******************************************/
 
 
     /**
@@ -447,7 +447,7 @@ public class Mathx {
      * @param decimalPlacesFillZero Use 0 instead when the number of decimal places is insufficient
      */
     @NotNull
-    public static String formatPercent(double value1, double value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
+    public static String formatPercentWith(double value1, double value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
         return format(value2 != 0.0 ? value1 / value2 : 1.0, "%", decimalPlacesLength, decimalPlacesFillZero);
     }
 
@@ -459,8 +459,8 @@ public class Mathx {
      * @param decimalPlacesLength Keep a few decimal places
      */
     @NotNull
-    public static String formatPercent(double value1, double value2, int decimalPlacesLength) {
-        return formatPercent(value1, value2, decimalPlacesLength, false);
+    public static String formatPercentWith(double value1, double value2, int decimalPlacesLength) {
+        return formatPercentWith(value1, value2, decimalPlacesLength, false);
     }
 
     /**
@@ -470,8 +470,8 @@ public class Mathx {
      * @param value2 value2
      */
     @NotNull
-    public static String formatPercent(double value1, double value2) {
-        return formatPercent(value1, value2, 2, false);
+    public static String formatPercentWith(double value1, double value2) {
+        return formatPercentWith(value1, value2, 2, false);
     }
 
     /**
@@ -483,7 +483,7 @@ public class Mathx {
      * @param decimalPlacesFillZero Use 0 instead when the number of decimal places is insufficient
      */
     @NotNull
-    public static String formatPercent(float value1, float value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
+    public static String formatPercentWith(float value1, float value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
         return format(value2 != 0f ? value1 / value2 : 1f, "%", decimalPlacesLength, decimalPlacesFillZero);
     }
 
@@ -495,8 +495,8 @@ public class Mathx {
      * @param decimalPlacesLength Keep a few decimal places
      */
     @NotNull
-    public static String formatPercent(float value1, float value2, int decimalPlacesLength) {
-        return formatPercent(value1, value2, decimalPlacesLength, false);
+    public static String formatPercentWith(float value1, float value2, int decimalPlacesLength) {
+        return formatPercentWith(value1, value2, decimalPlacesLength, false);
     }
 
     /**
@@ -506,8 +506,8 @@ public class Mathx {
      * @param value2 value2
      */
     @NotNull
-    public static String formatPercent(float value1, float value2) {
-        return formatPercent(value1, value2, 2, false);
+    public static String formatPercentWith(float value1, float value2) {
+        return formatPercentWith(value1, value2, 2, false);
     }
 
 
@@ -520,8 +520,8 @@ public class Mathx {
      * @param decimalPlacesFillZero Use 0 instead when the number of decimal places is insufficient
      */
     @NotNull
-    public static String formatPercent(int value1, int value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
-        return formatPercent((double) value1, value2, decimalPlacesLength, decimalPlacesFillZero);
+    public static String formatPercentWith(int value1, int value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
+        return formatPercentWith((double) value1, value2, decimalPlacesLength, decimalPlacesFillZero);
     }
 
     /**
@@ -532,8 +532,8 @@ public class Mathx {
      * @param decimalPlacesLength Keep a few decimal places
      */
     @NotNull
-    public static String formatPercent(int value1, int value2, int decimalPlacesLength) {
-        return formatPercent(value1, value2, decimalPlacesLength, false);
+    public static String formatPercentWith(int value1, int value2, int decimalPlacesLength) {
+        return formatPercentWith(value1, value2, decimalPlacesLength, false);
     }
 
     /**
@@ -542,8 +542,8 @@ public class Mathx {
      * @param value1 value1
      * @param value2 value2
      */
-    public static String formatPercent(int value1, int value2) {
-        return formatPercent(value1, value2, 2, false);
+    public static String formatPercentWith(int value1, int value2) {
+        return formatPercentWith(value1, value2, 2, false);
     }
 
 
@@ -556,8 +556,8 @@ public class Mathx {
      * @param decimalPlacesFillZero Use 0 instead when the number of decimal places is insufficient
      */
     @NotNull
-    public static String formatPercent(long value1, long value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
-        return formatPercent((double) value1, (double) value2, decimalPlacesLength, decimalPlacesFillZero);
+    public static String formatPercentWith(long value1, long value2, int decimalPlacesLength, boolean decimalPlacesFillZero) {
+        return formatPercentWith((double) value1, (double) value2, decimalPlacesLength, decimalPlacesFillZero);
     }
 
     /**
@@ -568,8 +568,8 @@ public class Mathx {
      * @param decimalPlacesLength Keep a few decimal places
      */
     @NotNull
-    public static String formatPercent(long value1, long value2, int decimalPlacesLength) {
-        return formatPercent((double) value1, (double) value2, decimalPlacesLength, false);
+    public static String formatPercentWith(long value1, long value2, int decimalPlacesLength) {
+        return formatPercentWith((double) value1, (double) value2, decimalPlacesLength, false);
     }
 
     /**
@@ -579,7 +579,7 @@ public class Mathx {
      * @param value2 value2
      */
     @NotNull
-    public static String formatPercent(long value1, long value2) {
-        return formatPercent((double) value1, (double) value2, 2, false);
+    public static String formatPercentWith(long value1, long value2) {
+        return formatPercentWith((double) value1, (double) value2, 2, false);
     }
 }

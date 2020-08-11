@@ -245,22 +245,22 @@ class MathxTest {
     }
 
     @Test
-    fun testFormatPercent() {
-        Assert.assertEquals(Mathx.formatPercent(3, 8), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3, 8, 2), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3, 8, 2, true), "37.50%")
-        Assert.assertEquals(Mathx.formatPercent(3, 0), "100%")
-        Assert.assertEquals(Mathx.formatPercent(3.0, 8.0), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3.0, 8.0, 2), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3.0, 8.0, 2, true), "37.50%")
-        Assert.assertEquals(Mathx.formatPercent(3.0, 0.0), "100%")
-        Assert.assertEquals(Mathx.formatPercent(3f, 8f), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3f, 8f, 2), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3f, 8f, 2, true), "37.50%")
-        Assert.assertEquals(Mathx.formatPercent(3f, 0f), "100%")
-        Assert.assertEquals(Mathx.formatPercent(3L, 8L), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3L, 8L, 2), "37.5%")
-        Assert.assertEquals(Mathx.formatPercent(3L, 8L, 2, true), "37.50%")
-        Assert.assertEquals(Mathx.formatPercent(3L, 0L), "100%")
+    fun testFormatPercentWith() {
+        Assert.assertEquals(Mathx.formatPercentWith(3, 8), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3, 8, 2), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3, 8, 2, true), "37.50%")
+        Assert.assertEquals(Mathx.formatPercentWith(3, 0), "100%")
+        Assert.assertEquals(Mathx.formatPercentWith(3.0, 8.0), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3.0, 8.0, 2), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3.0, 8.0, 2, true), "37.50%")
+        Assert.assertEquals(Mathx.formatPercentWith(3.0, 0.0), "100%")
+        Assert.assertEquals(Mathx.formatPercentWith(3f, 8f), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3f, 8f, 2), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3f, 8f, 2, true), "37.50%")
+        Assert.assertEquals(Mathx.formatPercentWith(3f, 0f), "100%")
+        Assert.assertEquals(Mathx.formatPercentWith(3L, 8L), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3L, 8L, 2), "37.5%")
+        Assert.assertEquals(Mathx.formatPercentWith(3L, 8L, 2, true), "37.50%")
+        Assert.assertEquals(Mathx.formatPercentWith(3L, 0L), "100%")
     }
 }

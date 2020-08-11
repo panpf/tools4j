@@ -27,6 +27,8 @@ include(":tools4j-lang")
 include(":tools4j-lang-ktx")
 
 include(":tools4j-math")
+include(":tools4j-math-ktx")
+
 include(":tools4j-net")
 include(":tools4j-premise")
 include(":tools4j-ranges")
