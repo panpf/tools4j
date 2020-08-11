@@ -30,7 +30,6 @@ import java.util.*;
 /**
  * 文件工具类，提供一些有关文件的便捷方法
  */
-@SuppressWarnings("WeakerAccess")
 public class Filex {
 
 

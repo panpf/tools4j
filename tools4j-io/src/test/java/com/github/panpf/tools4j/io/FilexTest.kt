@@ -453,7 +453,7 @@ class FilexTest {
 
 
     @Test
-    fun testForamtFileSize() {
+    fun testFormatFileSize() {
         assertEquals(Filex.formatFileSize(-10L), "0 B")
         assertEquals(Filex.formatFileSize(0L), "0 B")
         assertEquals(Filex.formatFileSize(999), "999 B")
@@ -519,7 +519,7 @@ class FilexTest {
     }
 
     @Test
-    fun tesForamtMediumSize() {
+    fun tesFormatMediumSize() {
         assertEquals(Filex.formatMediumFileSize(0), "0 B")
         assertEquals(Filex.formatMediumFileSize(800), "800 B")
         assertEquals(Filex.formatMediumFileSize(1024), "1 KB")

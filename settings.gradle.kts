@@ -17,7 +17,10 @@ include(":tools4j-datetime")
 include(":tools4j-datetime-ktx")
 
 include(":tools4j-grouping")
+
 include(":tools4j-io")
+include(":tools4j-io-ktx")
+
 include(":tools4j-iterable")
 include(":tools4j-lang")
 include(":tools4j-math")
