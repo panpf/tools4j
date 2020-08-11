@@ -17,8 +17,6 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
-    api(project(":tools4j-common-iterable"))
-    api(project(":tools4j-common-intrange"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
@@ -34,9 +32,9 @@ project.file("local.properties").takeIf { it.exists() }?.let { file -> file.inpu
 
     configure<PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-ranges"
+        artifactId = "tools4j-common-core"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Ranges"
+        desc = "Java, Tools, Common, Core"
         website = "https://github.com/panpf/tools4j"
         userOrg = moduleLocalProperties.getProperty("bintray.userOrg")
         bintrayUser = moduleLocalProperties.getProperty("bintray.user")

@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.Pair;
 import com.github.panpf.tools4j.common.Transformer;
-import com.github.panpf.tools4j.iterable.IntRange;
+import com.github.panpf.tools4j.ranges.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

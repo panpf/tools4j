@@ -9,7 +9,9 @@ include(":tools4j-base64-ktx")
 include(":tools4j-collections")
 include(":tools4j-collections-ktx")
 
-include(":tools4j-common")
+include(":tools4j-common-core")
+include(":tools4j-common-intrange")
+include(":tools4j-common-iterable")
 
 include(":tools4j-compare")
 
@@ -21,7 +23,6 @@ include(":tools4j-grouping")
 include(":tools4j-io")
 include(":tools4j-io-ktx")
 
-include(":tools4j-iterable")
 include(":tools4j-lang")
 include(":tools4j-math")
 include(":tools4j-net")
