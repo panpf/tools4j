@@ -24,6 +24,8 @@ import java.util.*
 
 class RangexTest {
 
+    // todo 测试 reversed 和 step
+
     @Test
     fun testIn() {
         assertTrue(Rangex.`in`(9.toByte(), 3.toByte(), 10.toByte()))

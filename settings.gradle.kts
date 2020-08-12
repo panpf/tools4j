@@ -35,6 +35,8 @@ include(":tools4j-premise")
 include(":tools4j-premise-ktx")
 
 include(":tools4j-ranges")
+include(":tools4j-ranges-ktx")
+
 include(":tools4j-reflect")
 include(":tools4j-regex")
 include(":tools4j-security")

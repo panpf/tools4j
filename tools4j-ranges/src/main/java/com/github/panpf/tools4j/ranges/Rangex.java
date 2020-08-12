@@ -39,6 +39,7 @@ public class Rangex {
     /**
      * Create a positive-order byte ranges
      */
+    @NotNull
     public static IntProgression rangeTo(byte start, byte endInclusive, int step) {
         return IntProgression.fromClosedRange(start, endInclusive, step);
     }
@@ -46,6 +47,7 @@ public class Rangex {
     /**
      * Create a positive-order byte range that does not contain [end]
      */
+    @NotNull
     public static IntProgression until(byte start, byte end, int step) {
         return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
@@ -57,6 +59,7 @@ public class Rangex {
     /**
      * Create a positive-order short ranges
      */
+    @NotNull
     public static IntProgression rangeTo(short start, short endInclusive, int step) {
         return IntProgression.fromClosedRange(start, endInclusive, step);
     }
@@ -64,6 +67,7 @@ public class Rangex {
     /**
      * Create a positive-order short range that does not contain [end]
      */
+    @NotNull
     public static IntProgression until(short start, short end, int step) {
         return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
@@ -75,6 +79,7 @@ public class Rangex {
     /**
      * Create a positive-order int ranges
      */
+    @NotNull
     public static IntProgression rangeTo(int start, int endInclusive, int step) {
         return IntProgression.fromClosedRange(start, endInclusive, step);
     }
@@ -82,6 +87,7 @@ public class Rangex {
     /**
      * Create a positive-order int range that does not contain [end]
      */
+    @NotNull
     public static IntProgression until(int start, int end, int step) {
         return IntProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
@@ -93,6 +99,7 @@ public class Rangex {
     /**
      * Create a positive-order long ranges
      */
+    @NotNull
     public static LongProgression rangeTo(long start, long endInclusive, long step) {
         return LongProgression.fromClosedRange(start, endInclusive, step);
     }
@@ -100,6 +107,7 @@ public class Rangex {
     /**
      * Create a positive-order long range that does not contain [end]
      */
+    @NotNull
     public static LongProgression until(long start, long end, long step) {
         return LongProgression.fromClosedRange(start, step > 0 ? end - 1 : end + 1, step);
     }
@@ -111,6 +119,7 @@ public class Rangex {
     /**
      * Create a positive-order char ranges
      */
+    @NotNull
     public static CharProgression rangeTo(char start, char endInclusive, int step) {
         return CharProgression.fromClosedRange(start, endInclusive, step);
     }
@@ -118,6 +127,7 @@ public class Rangex {
     /**
      * Create a positive-order char range that does not contain [end]
      */
+    @NotNull
     public static CharProgression until(char start, char end, int step) {
         return CharProgression.fromClosedRange(start, step > 0 ? (char) Math.max(Math.min(end - 1, Character.MAX_VALUE), Character.MIN_VALUE) : (char) Math.max(Math.min(end + 1, Character.MAX_VALUE), Character.MIN_VALUE), step);
     }
@@ -180,6 +190,8 @@ public class Rangex {
     }
 
 
+    // todo date range 也支持 reversed 和 step
+
     /* ******************************************* Year Range *******************************************/
 
     /**
@@ -209,7 +221,6 @@ public class Rangex {
     public static YearProgression yearDownTo(@NotNull Date date, @NotNull Date endInclusive) {
         return new YearProgression(date, endInclusive, -1);
     }
-
 
     /**
      * Create a positive-order year ranges
@@ -263,7 +274,6 @@ public class Rangex {
         return new MonthProgression(date, endInclusive, -1);
     }
 
-
     /**
      * Create a positive-order month ranges
      */
@@ -271,7 +281,6 @@ public class Rangex {
     public static MonthProgression monthRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
         return new MonthProgression(date, endInclusive, step);
     }
-
 
     /**
      * Create a positive-order month range that does not contain [end]
@@ -316,7 +325,6 @@ public class Rangex {
     public static DayProgression dayDownTo(@NotNull Date date, @NotNull Date endInclusive) {
         return new DayProgression(date, endInclusive, -1);
     }
-
 
     /**
      * Create a positive-order day ranges
@@ -370,7 +378,6 @@ public class Rangex {
         return new HourProgression(date, endInclusive, -1);
     }
 
-
     /**
      * Create a positive-order hour ranges
      */
@@ -378,7 +385,6 @@ public class Rangex {
     public static HourProgression hourRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
         return new HourProgression(date, endInclusive, step);
     }
-
 
     /**
      * Create a positive-order hour range that does not contain [end]
@@ -408,12 +414,12 @@ public class Rangex {
      * Create a positive-order minute range that does not contain [end]
      */
     @NotNull
-    public static MinuteProgression minuteUntil(@NotNull Date date, @NotNull Date end) {
+    public static MinuteRange minuteUntil(@NotNull Date date, @NotNull Date end) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
         calendar.add(Calendar.MINUTE, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new MinuteProgression(date, endInclusiveDate, 1);
+        return new MinuteRange(date, endInclusiveDate);
     }
 
     /**
@@ -423,7 +429,6 @@ public class Rangex {
     public static MinuteProgression minuteDownTo(@NotNull Date date, @NotNull Date endInclusive) {
         return new MinuteProgression(date, endInclusive, -1);
     }
-
 
     /**
      * Create a positive-order minute ranges
@@ -448,7 +453,7 @@ public class Rangex {
 
     /* ******************************************* Second Range *******************************************/
 
-
+    // todo 日期时间独立 module
     /**
      * Create a positive-order second ranges
      */
@@ -476,7 +481,6 @@ public class Rangex {
     public static SecondProgression secondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
         return new SecondProgression(date, endInclusive, -1);
     }
-
 
     /**
      * Create a positive-order second ranges
@@ -529,7 +533,6 @@ public class Rangex {
     public static MillisecondProgression millisecondDownTo(@NotNull Date date, @NotNull Date endInclusive) {
         return new MillisecondProgression(date, endInclusive, -1);
     }
-
 
     /**
      * Create a positive-order millisecond ranges
@@ -786,6 +789,7 @@ public class Rangex {
     /**
      * Create a positive-order byte ranges
      */
+    @NotNull
     public static IntRange rangeTo(byte start, byte endInclusive) {
         return new IntRange(start, endInclusive);
     }
@@ -793,6 +797,7 @@ public class Rangex {
     /**
      * Create a positive-order byte range that does not contain [end]
      */
+    @NotNull
     public static IntRange until(byte start, byte end) {
         return new IntRange(start, end - 1);
     }
@@ -800,6 +805,7 @@ public class Rangex {
     /**
      * Create a reversed byte range
      */
+    @NotNull
     public static IntProgression downTo(byte start, byte endInclusive) {
         return new IntProgression(start, endInclusive, -1);
     }
@@ -811,6 +817,7 @@ public class Rangex {
     /**
      * Create a positive-order short ranges
      */
+    @NotNull
     public static IntRange rangeTo(short start, short endInclusive) {
         return new IntRange(start, endInclusive);
     }
@@ -818,6 +825,7 @@ public class Rangex {
     /**
      * Create a positive-order short range that does not contain [end]
      */
+    @NotNull
     public static IntRange until(short start, short end) {
         return new IntRange(start, end - 1);
     }
@@ -825,6 +833,7 @@ public class Rangex {
     /**
      * Create a reversed short range
      */
+    @NotNull
     public static IntProgression downTo(short start, short endInclusive) {
         return new IntProgression(start, endInclusive, -1);
     }
@@ -836,6 +845,7 @@ public class Rangex {
     /**
      * Create a positive-order int ranges
      */
+    @NotNull
     public static IntRange rangeTo(int start, int endInclusive) {
         return new IntRange(start, endInclusive);
     }
@@ -843,6 +853,7 @@ public class Rangex {
     /**
      * Create a positive-order int range that does not contain [end]
      */
+    @NotNull
     public static IntRange until(int start, int end) {
         return new IntRange(start, end - 1);
     }
@@ -850,6 +861,7 @@ public class Rangex {
     /**
      * Create a reversed int range
      */
+    @NotNull
     public static IntProgression downTo(int start, int endInclusive) {
         return new IntProgression(start, endInclusive, -1);
     }
@@ -861,6 +873,7 @@ public class Rangex {
     /**
      * Create a positive-order long ranges
      */
+    @NotNull
     public static LongRange rangeTo(long start, long endInclusive) {
         return new LongRange(start, endInclusive);
     }
@@ -868,6 +881,7 @@ public class Rangex {
     /**
      * Create a positive-order long range that does not contain [end]
      */
+    @NotNull
     public static LongRange until(long start, long end) {
         return new LongRange(start, end - 1);
     }
@@ -875,6 +889,7 @@ public class Rangex {
     /**
      * Create a reversed long range
      */
+    @NotNull
     public static LongProgression downTo(long start, long endInclusive) {
         return new LongProgression(start, endInclusive, -1);
     }
@@ -886,6 +901,7 @@ public class Rangex {
     /**
      * Create a positive-order float ranges
      */
+    @NotNull
     public static ClosedFloatingPointRange<Float> rangeTo(float start, float endInclusive) {
         return new ClosedFloatRange(start, endInclusive);
     }
@@ -897,6 +913,7 @@ public class Rangex {
     /**
      * Create a positive-order double ranges
      */
+    @NotNull
     public static ClosedFloatingPointRange<Double> rangeTo(double start, double endInclusive) {
         return new ClosedDoubleRange(start, endInclusive);
     }
@@ -908,6 +925,7 @@ public class Rangex {
     /**
      * Create a positive-order char ranges
      */
+    @NotNull
     public static CharRange rangeTo(char start, char endInclusive) {
         return new CharRange(start, endInclusive);
     }
@@ -915,6 +933,7 @@ public class Rangex {
     /**
      * Create a positive-order char range that does not contain [end]
      */
+    @NotNull
     public static CharRange until(char start, char end) {
         return new CharRange(start, (char) Math.max(Math.min(end - 1, Character.MAX_VALUE), Character.MIN_VALUE));
     }
@@ -922,6 +941,7 @@ public class Rangex {
     /**
      * Create a reversed char range
      */
+    @NotNull
     public static CharProgression downTo(char start, char endInclusive) {
         return new CharProgression(start, endInclusive, -1);
     }
@@ -1158,6 +1178,7 @@ public class Rangex {
      *
      * @return this value if it's in the range, or [minimumValue] if this value is less than [minimumValue], or [maximumValue] if this value is greater than [maximumValue].
      */
+    @NotNull
     public static <T extends Comparable<T>> T coerceIn(@NotNull T self, @Nullable T minimumValue, @Nullable T maximumValue) {
         if (minimumValue != null && maximumValue != null) {
             if (minimumValue.compareTo(maximumValue) > 0)
