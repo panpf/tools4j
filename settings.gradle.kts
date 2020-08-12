@@ -1,4 +1,5 @@
 include(":other")
+include(":other-ktx")
 
 include(":tools4j-annotation")
 include(":tools4j-annotation-ktx")
@@ -14,8 +15,8 @@ include(":tools4j-common-iterable")
 
 include(":tools4j-compare")
 
-include(":tools4j-datetime")
-include(":tools4j-datetime-ktx")
+include(":tools4j-date")
+include(":tools4j-date-ktx")
 
 include(":tools4j-grouping")
 
@@ -33,11 +34,11 @@ include(":tools4j-net")
 include(":tools4j-premise")
 include(":tools4j-premise-ktx")
 
-include(":tools4j-ranges-core")
-include(":tools4j-ranges-core-ktx")
+include(":tools4j-ranges")
+include(":tools4j-ranges-ktx")
 
-include(":tools4j-ranges-datetime")
-include(":tools4j-ranges-datetime-ktx")
+include(":tools4j-ranges-date")
+include(":tools4j-ranges-date-ktx")
 
 include(":tools4j-reflect")
 include(":tools4j-reflect-ktx")

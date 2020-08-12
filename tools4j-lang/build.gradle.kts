@@ -19,11 +19,11 @@ dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
     api(project(":tools4j-common-action"))
     api(project(":tools4j-common-iterable"))
-    api(project(":tools4j-ranges-core"))
+    api(project(":tools4j-ranges"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
-    testImplementation(project(":tools4j-ranges-core"))
+    testImplementation(project(":tools4j-ranges"))
     testImplementation(project(":tools4j-regex"))
     testImplementation(project(":tools4j-base64"))
 }

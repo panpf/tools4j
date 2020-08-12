@@ -20,6 +20,7 @@ import org.junit.Assert
 import org.junit.Test
 
 class StopwatchTest {
+
     @Test
     @Throws(InterruptedException::class)
     fun testStartTime() {

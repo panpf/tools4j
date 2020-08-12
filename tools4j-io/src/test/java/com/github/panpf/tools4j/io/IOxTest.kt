@@ -180,13 +180,13 @@ class IOxTest {
             Assert.assertEquals(Filex.reader(file).use { IOx.readText(it) }, content)
 
             val resultBytes = IOx.readBytes(URL("http://pv.sohu.com/cityjson"))
-            Assert.assertTrue(Regexx.find(Regexx.IPV4, String(resultBytes)))
+            Assert.assertTrue(Regexx.find(String(resultBytes), Regexx.IPV4))
 
             val result = IOx.readText(URL("http://pv.sohu.com/cityjson"), StandardCharsets.UTF_8)
-            Assert.assertTrue(Regexx.find(Regexx.IPV4, result))
+            Assert.assertTrue(Regexx.find(result, Regexx.IPV4))
 
             val result2 = IOx.readText(URL("http://pv.sohu.com/cityjson"))
-            Assert.assertTrue(Regexx.find(Regexx.IPV4, result2))
+            Assert.assertTrue(Regexx.find(result2, Regexx.IPV4))
 
             Assert.assertEquals(StringBuilder().apply {
                 IOx.readLines(Filex.reader(file)).forEach { lineString ->

@@ -32,9 +32,9 @@ project.file("local.properties").takeIf { it.exists() }?.let { file -> file.inpu
 
     configure<PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-common-core"
+        artifactId = "tools4j-date"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Common, Action"
+        desc = "Java, Tools, Date"
         website = "https://github.com/panpf/tools4j"
         userOrg = moduleLocalProperties.getProperty("bintray.userOrg")
         bintrayUser = moduleLocalProperties.getProperty("bintray.user")
