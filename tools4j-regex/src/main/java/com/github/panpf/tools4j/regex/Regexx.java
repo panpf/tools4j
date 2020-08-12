@@ -29,71 +29,85 @@ public class Regexx {
     /**
      * IP v4
      */
+    @NotNull
     public static final Pattern IPV4 = Pattern.compile("((?:(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d))\\.){3}(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d)))");
 
     /**
      * IP v6. Supports converged IP v4 format
      */
+    @NotNull
     public static final Pattern IPV6 = Pattern.compile("\\s*((([0-9A-Fa-f]{1,4}:){7}(([0-9A-Fa-f]{1,4})|:))|(([0-9A-Fa-f]{1,4}:){6}(:|((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})|(:[0-9A-Fa-f]{1,4})))|(([0-9A-Fa-f]{1,4}:){5}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(([0-9A-Fa-f]{1,4}:){4}(:[0-9A-Fa-f]{1,4}){0,1}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(([0-9A-Fa-f]{1,4}:){3}(:[0-9A-Fa-f]{1,4}){0,2}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(([0-9A-Fa-f]{1,4}:){2}(:[0-9A-Fa-f]{1,4}){0,3}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(([0-9A-Fa-f]{1,4}:)(:[0-9A-Fa-f]{1,4}){0,4}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(:(:[0-9A-Fa-f]{1,4}){0,5}((:((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})?)|((:[0-9A-Fa-f]{1,4}){1,2})))|(((25[0-5]|2[0-4]\\d|[01]?\\d{1,2})(\\.(25[0-5]|2[0-4]\\d|[01]?\\d{1,2})){3})))(%.+)?\\s*");
 
     /**
      * Mac Address. Support for splitting in ':' and '-'
      */
+    @NotNull
     public static final Pattern MAC_ADDRESS = Pattern.compile("([A-Fa-f0-9]{2}(-[A-Fa-f0-9]{2}){5})|([A-Fa-f0-9]{2}(:[A-Fa-f0-9]{2}){5})");
 
     /**
      * Chinese (without Chinese symbols)
      */
+    @NotNull
     public static final Pattern CHINESE = Pattern.compile("[\\u4e00-\\u9fa5]+");
 
     /**
      * Chinese (including Chinese symbols)
      */
+    @NotNull
     public static final Pattern CHINESE_AND_SYMBOL = Pattern.compile("[^\\x00-\\xff]+");
 
     /**
      * Blank characters such as spaces, carriage returns, line feeds, etc.
      */
+    @NotNull
     public static final Pattern BLANK = Pattern.compile("[\\n\\s*\\r]+");
 
     /**
      * Email address
      */
+    @NotNull
     public static final Pattern EMAIL = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?");
 
     /**
      * URI
      */
+    @NotNull
     public static final Pattern URI = Pattern.compile("[a-zA-z]+://[^\\s]*");
 
     /**
      * Positive float number
      */
+    @NotNull
     public static final Pattern POSITIVE_FLOAT_NUMBER = Pattern.compile("[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*");
 
     /**
      * Negative float number
      */
+    @NotNull
     public static final Pattern NEGATIVE_FLOAT_NUMBER = Pattern.compile("-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*");
 
     /**
      * Float number
      */
+    @NotNull
     public static final Pattern FLOAT_NUMBER = Pattern.compile("-?[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*");
 
     /**
      * Positive integer
      */
+    @NotNull
     public static final Pattern POSITIVE_INTEGER = Pattern.compile("[1-9]\\d*");
 
     /**
      * Negative integer
      */
+    @NotNull
     public static final Pattern NEGATIVE_INTEGER = Pattern.compile("-[1-9]\\d*");
 
     /**
      * Integer
      */
+    @NotNull
     public static final Pattern INTEGER = Pattern.compile("-?[1-9]\\d*");
 
     private Regexx() {
@@ -102,64 +116,64 @@ public class Regexx {
     /**
      * Return true if the entire sequence of characters matches the given regular expression
      */
-    public static boolean matches(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static boolean matches(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         return pattern.matcher(charSequence != null ? charSequence : "").matches();
     }
 
     /**
      * Return true if the entire sequence of characters matches the given regular expression
      */
-    public static boolean matches(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return matches(Pattern.compile(regex), charSequence != null ? charSequence : "");
+    public static boolean matches(@Nullable CharSequence charSequence, @NotNull String regex) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").matches();
     }
 
     /**
      * Returns true if the specified sequence of characters matches any given position from the specified position to the given regular expression
      */
-    public static boolean find(@NotNull Pattern pattern, @Nullable CharSequence charSequence, int start) {
+    public static boolean find(@Nullable CharSequence charSequence, @NotNull Pattern pattern, int start) {
         return pattern.matcher(charSequence != null ? charSequence : "").find(start);
     }
 
     /**
      * Returns true if the specified sequence of characters matches any given position from the specified position to the given regular expression
      */
-    public static boolean find(@NotNull String regex, @Nullable CharSequence charSequence, int start) {
-        return find(Pattern.compile(regex), charSequence, start);
+    public static boolean find(@Nullable CharSequence charSequence, @NotNull String regex, int start) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").find(start);
     }
 
     /**
      * Return true if a given regular expression is matched anywhere in a given sequence of characters
      */
-    public static boolean find(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static boolean find(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         return pattern.matcher(charSequence != null ? charSequence : "").find();
     }
 
     /**
      * Return true if a given regular expression is matched anywhere in a given sequence of characters
      */
-    public static boolean find(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return find(Pattern.compile(regex), charSequence);
+    public static boolean find(@Nullable CharSequence charSequence, @NotNull String regex) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").find();
     }
 
     /**
      * Return true if the given regular expression is matched at the beginning of the character sequence
      */
-    public static boolean lookingAt(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static boolean lookingAt(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         return pattern.matcher(charSequence != null ? charSequence : "").lookingAt();
     }
 
     /**
      * Return true if the given regular expression is matched at the beginning of the character sequence
      */
-    public static boolean lookingAt(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return lookingAt(Pattern.compile(regex), charSequence);
+    public static boolean lookingAt(@Nullable CharSequence charSequence, @NotNull String regex) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").lookingAt();
     }
 
     /**
      * Get the first matching string
      */
     @Nullable
-    public static String getFirst(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static String getFirst(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
         return matcher.find() ? matcher.group() : null;
     }
@@ -168,15 +182,16 @@ public class Regexx {
      * Get the first matching string
      */
     @Nullable
-    public static String getFirst(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return getFirst(Pattern.compile(regex), charSequence);
+    public static String getFirst(@Nullable CharSequence charSequence, @NotNull String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
+        return matcher.find() ? matcher.group() : null;
     }
 
     /**
      * Get the all matching string
      */
     @NotNull
-    public static String[] getAll(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static String[] getAll(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
         List<String> stringList = new LinkedList<>();
         while (matcher.find()) {
@@ -189,15 +204,20 @@ public class Regexx {
      * Get the all matching string
      */
     @NotNull
-    public static String[] getAll(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return getAll(Pattern.compile(regex), charSequence);
+    public static String[] getAll(@Nullable CharSequence charSequence, @NotNull String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
+        List<String> stringList = new LinkedList<>();
+        while (matcher.find()) {
+            stringList.add(matcher.group());
+        }
+        return stringList.toArray(new String[0]);
     }
 
     /**
      * Get the first matching group
      */
     @Nullable
-    public static Group firstGroup(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static Group firstGroup(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
         return matcher.find() ? new Group(matcher.start(), matcher.end(), matcher.group()) : null;
     }
@@ -206,15 +226,16 @@ public class Regexx {
      * Get the first matching group
      */
     @Nullable
-    public static Group firstGroup(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return firstGroup(Pattern.compile(regex), charSequence);
+    public static Group firstGroup(@Nullable CharSequence charSequence, @NotNull String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
+        return matcher.find() ? new Group(matcher.start(), matcher.end(), matcher.group()) : null;
     }
 
     /**
      * Get the all matching group
      */
     @NotNull
-    public static Group[] allGroup(@NotNull Pattern pattern, @Nullable CharSequence charSequence) {
+    public static Group[] allGroup(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
         List<Group> stringList = new LinkedList<>();
         while (matcher.find()) {
@@ -227,15 +248,20 @@ public class Regexx {
      * Get the all matching group
      */
     @NotNull
-    public static Group[] allGroup(@NotNull String regex, @Nullable CharSequence charSequence) {
-        return allGroup(Pattern.compile(regex), charSequence);
+    public static Group[] allGroup(@Nullable CharSequence charSequence, @NotNull String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
+        List<Group> stringList = new LinkedList<>();
+        while (matcher.find()) {
+            stringList.add(new Group(matcher.start(), matcher.end(), matcher.group()));
+        }
+        return stringList.toArray(new Group[0]);
     }
 
     /**
      * Replace the first matching string
      */
     @NotNull
-    public static String replaceFirst(@NotNull Pattern pattern, @Nullable CharSequence charSequence, @NotNull String replacement) {
+    public static String replaceFirst(@Nullable CharSequence charSequence, @NotNull Pattern pattern, @NotNull String replacement) {
         return pattern.matcher(charSequence != null ? charSequence : "").replaceFirst(replacement);
     }
 
@@ -243,15 +269,15 @@ public class Regexx {
      * Replace the first matching string
      */
     @NotNull
-    public static String replaceFirst(@NotNull String regex, @Nullable CharSequence charSequence, @NotNull String replacement) {
-        return replaceFirst(Pattern.compile(regex), charSequence, replacement);
+    public static String replaceFirst(@Nullable CharSequence charSequence, @NotNull String regex, @NotNull String replacement) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").replaceFirst(replacement);
     }
 
     /**
      * Replace the all matching string
      */
     @NotNull
-    public static String replaceAll(@NotNull Pattern pattern, @Nullable CharSequence charSequence, @NotNull String replacement) {
+    public static String replaceAll(@Nullable CharSequence charSequence, @NotNull Pattern pattern, @NotNull String replacement) {
         return pattern.matcher(charSequence != null ? charSequence : "").replaceAll(replacement);
     }
 
@@ -259,33 +285,7 @@ public class Regexx {
      * Replace the all matching string
      */
     @NotNull
-    public static String replaceAll(@NotNull String regex, @Nullable CharSequence charSequence, @NotNull String replacement) {
-        return replaceAll(Pattern.compile(regex), charSequence, replacement);
-    }
-
-    public static class Group {
-        private int start;
-        private int end;
-        @NotNull
-        private String content;
-
-        public Group(int start, int end, @NotNull String content) {
-            this.start = start;
-            this.end = end;
-            this.content = content;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        @NotNull
-        public String getContent() {
-            return content;
-        }
+    public static String replaceAll(@Nullable CharSequence charSequence, @NotNull String regex, @NotNull String replacement) {
+        return Pattern.compile(regex).matcher(charSequence != null ? charSequence : "").replaceAll(replacement);
     }
 }
