@@ -46,5 +46,7 @@ include(":tools4j-regex")
 include(":tools4j-regex-ktx")
 
 include(":tools4j-security")
+include(":tools4j-security-ktx")
+
 include(":tools4j-sequences")
 include(":tools4j-zip")

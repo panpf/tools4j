@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.panpf.tools4j.security
 
+package com.github.panpf.tools4j.security.ktx
+
+import com.github.panpf.tools4j.security.Aesx
 import org.junit.Assert
 import org.junit.Test
 import java.security.InvalidKeyException
@@ -37,119 +39,125 @@ class AesxTest {
                 "可是裙子最终还是没买。她反而成了全家人的笑柄，一直到很多年后，妈妈提起她小时候，还是笑得肚子疼，“一丁点儿大，臭美得很！”\n" +
                 "\n" +
                 "然后有兄弟姐妹在旁边起哄揶揄她"
+
         private const val SOURCE_NO_PADDING = "小红那年七岁，她跟着爸妈去赶集，站在一个卖童装的摊位旁边，盯着那"
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testDefaultConfig() {
-        val key = Aesx.createKey(128)
+        val key = createAesKey(128)
 
-        val decryptResult = String(Aesx.decrypt(Aesx.encrypt(SOURCE.toByteArray(), Aesx.DEFAULT, key), Aesx.DEFAULT, key))
+        val decryptResult = String(SOURCE.toByteArray().aesEncrypt(Aesx.DEFAULT, key).aesDecrypt(Aesx.DEFAULT, key))
         Assert.assertEquals("testDefaultConfig", SOURCE, decryptResult)
 
-        val decryptResult2 = Aesx.decryptToString(Aesx.encrypt(SOURCE.toByteArray(), Aesx.DEFAULT, key), Aesx.DEFAULT, key)
+        val decryptResult2 = SOURCE.toByteArray().aesEncrypt(Aesx.DEFAULT, key).aesDecryptToString(Aesx.DEFAULT, key)
         Assert.assertEquals("testDefaultConfig", SOURCE, decryptResult2)
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testDefaultConfigWithBase64() {
-        val key = Aesx.createKey(128)
+        val key = createAesKey(128)
 
-        val decryptResult = String(Aesx.decryptFromBase64(Aesx.encryptToBase64(SOURCE.toByteArray(), Aesx.DEFAULT, key), Aesx.DEFAULT, key))
+        val decryptResult = String(SOURCE.toByteArray().aesEncryptToBase64(Aesx.DEFAULT, key).aesDecryptFromBase64(Aesx.DEFAULT, key))
         Assert.assertEquals("testDefaultConfigWithBase64", SOURCE, decryptResult)
 
-        val decryptResult2 = Aesx.decryptToStringFromBase64(Aesx.encryptToBase64(SOURCE.toByteArray(), Aesx.DEFAULT, key), Aesx.DEFAULT, key)
+        val decryptResult2 = SOURCE.toByteArray().aesEncryptToBase64(Aesx.DEFAULT, key).aesDecryptToStringFromBase64(Aesx.DEFAULT, key)
         Assert.assertEquals("testDefaultConfigWithBase64", SOURCE, decryptResult2)
     }
+
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testEcbNoPadding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE_NO_PADDING.toByteArray(), Aesx.ECB_NO, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.ECB_NO, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE_NO_PADDING.toByteArray().aesEncrypt(Aesx.ECB_NO, key).aesDecryptToString(Aesx.ECB_NO, key)
         Assert.assertEquals("testEcbNoPadding", SOURCE_NO_PADDING, decryptResult)
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testEcbPKCS5Padding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE.toByteArray(), Aesx.ECB_PKCS5, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.ECB_PKCS5, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE.toByteArray().aesEncrypt(Aesx.ECB_PKCS5, key).aesDecryptToString(Aesx.ECB_PKCS5, key)
         Assert.assertEquals("testEcbPKCS5Padding", SOURCE, decryptResult)
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testEcbISO10126Padding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE.toByteArray(), Aesx.ECB_ISO10126, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.ECB_ISO10126, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE.toByteArray().aesEncrypt(Aesx.ECB_ISO10126, key).aesDecryptToString(Aesx.ECB_ISO10126, key)
         Assert.assertEquals("testEcbISO10126Padding", SOURCE, decryptResult)
     }
+
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testCbcNoPadding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE_NO_PADDING.toByteArray(), Aesx.CBC_NO, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.CBC_NO, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE_NO_PADDING.toByteArray().aesEncrypt(Aesx.CBC_NO, key).aesDecryptToString(Aesx.CBC_NO, key)
         Assert.assertEquals("testCbcNoPadding", SOURCE_NO_PADDING, decryptResult)
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testCbcPKCS5Padding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE.toByteArray(), Aesx.CBC_PKCS5, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.CBC_PKCS5, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE.toByteArray().aesEncrypt(Aesx.CBC_PKCS5, key).aesDecryptToString(Aesx.CBC_PKCS5, key)
         Assert.assertEquals("testCbcPKCS5Padding", SOURCE, decryptResult)
     }
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testCbcISO10126Padding() {
-        val key = Aesx.createKey(128)
-        val encryptResult = Aesx.encrypt(SOURCE, Aesx.CBC_ISO10126, key)
-        val decryptResult = Aesx.decryptToString(encryptResult, Aesx.CBC_ISO10126, key)
+        val key = createAesKey(128)
+        val decryptResult = SOURCE.aesEncrypt(Aesx.CBC_ISO10126, key).aesDecryptToString(Aesx.CBC_ISO10126, key)
         Assert.assertEquals("testCbcISO10126Padding", SOURCE, decryptResult)
     }
+
 
     @Test
     @Throws(InvalidKeyException::class, BadPaddingException::class, IllegalBlockSizeException::class)
     fun testErrorPassword() {
-        val key = Aesx.createKey(128)
-        val errorKey = Aesx.createKey(128)
-        val encryptResult = Aesx.encryptToBase64(SOURCE, Aesx.CBC_PKCS5, key)
+        val key = createAesKey(128)
+        val errorKey = createAesKey(128)
+
+        val encryptResult = SOURCE.aesEncryptToBase64(Aesx.CBC_PKCS5, key)
         var errorDecryptResult: String? = null
         try {
-            errorDecryptResult = Aesx.decryptToStringFromBase64(encryptResult, Aesx.CBC_PKCS5, errorKey)
-        } catch (ignored: BadPaddingException) {
+            errorDecryptResult = encryptResult.aesDecryptToStringFromBase64(Aesx.CBC_PKCS5, errorKey)
+        } catch (e: BadPaddingException) {
+            //            e.printStackTrace();
         }
+
         Assert.assertNotEquals("testErrorPassword", SOURCE, errorDecryptResult)
     }
 
     @Test
     fun testCreateKeyBySeed() {
         val seed = "" + System.currentTimeMillis()
-        val key1 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16))
-        val key2 = Keyx.toBase64(Aesx.createKeyByPassword(seed, 16))
+
+        val key1 = seed.createAesKeyByPassword(16).toBase64()
+        val key2 = seed.createAesKeyByPassword(16).toBase64()
+
         Assert.assertEquals("testCreateKeyBySeed", key1, key2)
     }
 
     @Test
     @Throws(BadPaddingException::class, InvalidKeyException::class, IllegalBlockSizeException::class)
     fun testFromKey() {
-        val key = Aesx.createKey(128)
-        val encodeText = Aesx.encryptToBase64(SOURCE, Aesx.CBC_PKCS5, key)
-        val keyBytes = Keyx.toBytes(key)
-        val fromBytesKey = Aesx.keyFromBytes(keyBytes)
-        Assert.assertEquals(Aesx.decryptToStringFromBase64(encodeText, Aesx.CBC_PKCS5, fromBytesKey), SOURCE)
-        val base64Key = Keyx.toBase64(key)
-        val fromBase64Key = Aesx.keyFromBase64(base64Key)
-        Assert.assertEquals(Aesx.decryptToStringFromBase64(encodeText, Aesx.CBC_PKCS5, fromBase64Key), SOURCE)
+        val key = createAesKey(128)
+
+        val encodeText = SOURCE.aesEncryptToBase64(Aesx.CBC_PKCS5, key)
+
+        val keyBytes = key.toBytes()
+        val fromBytesKey = keyBytes.toAesKeyFromBytes()
+        Assert.assertEquals(encodeText.aesDecryptToStringFromBase64(Aesx.CBC_PKCS5, fromBytesKey), SOURCE)
+
+        val base64Key = key.toBase64()
+        val fromBase64Key = base64Key.toAesKeyFromBase64()
+        Assert.assertEquals(encodeText.aesDecryptToStringFromBase64(Aesx.CBC_PKCS5, fromBase64Key), SOURCE)
     }
 }
