@@ -1,6 +1,9 @@
 include(":other")
 include(":other-ktx")
 
+include(":tools4j")
+include(":tools4j-ktx")
+
 include(":tools4j-annotation")
 include(":tools4j-annotation-ktx")
 
