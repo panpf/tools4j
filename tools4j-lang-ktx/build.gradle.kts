@@ -11,13 +11,22 @@ group = "com.github.panpf.tools4j"
 version = property("VERSION").toString()
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.6"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.6"
+    }
 }
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
-    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
     api(project(":tools4j-lang"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")

@@ -2140,7 +2140,6 @@ public class Collectionx {
      */
     public static <T> void sortWith(@Nullable List<T> list, @NotNull Comparator<T> comparator) {
         if (list != null && list.size() > 1) {
-            //noinspection Java8ListSort
             Collections.sort(list, comparator);
         }
     }
@@ -2164,7 +2163,7 @@ public class Collectionx {
     /**
      * Sorts elements in the list in-place descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable List<T> list, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable List<T> list, @NotNull final NullableTransformer<T, R> transformer) {
         if (list != null && list.size() > 1) {
             sortWith(list, new Comparator<T>() {
                 @Override
@@ -2214,7 +2213,7 @@ public class Collectionx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable Iterable<T> iterable, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable Iterable<T> iterable, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(iterable, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {
@@ -2250,7 +2249,7 @@ public class Collectionx {
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable Iterable<T> iterable, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable Iterable<T> iterable, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(iterable, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {

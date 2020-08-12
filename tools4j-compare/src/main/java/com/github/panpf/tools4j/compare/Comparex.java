@@ -74,7 +74,12 @@ public class Comparex {
      */
     @NotNull
     public static <T, R extends Comparable<R>> Comparator<T> compareBy(@NotNull final CompareTransformer<T, R> selector) {
-        return (a, b) -> compareValuesBy(a, b, selector);
+        return new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return compareValuesBy(o1, o2, selector);
+            }
+        };
     }
 
     /**
@@ -82,7 +87,12 @@ public class Comparex {
      */
     @NotNull
     public static <T, R extends Comparable<R>> Comparator<T> compareByDescending(@NotNull final CompareTransformer<T, R> selector) {
-        return (a, b) -> compareValuesBy(b, a, selector);
+        return new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return compareValuesBy(o2, o1, selector);
+            }
+        };
     }
 
     /**
@@ -119,14 +129,14 @@ public class Comparex {
      * Returns the greater of two values.
      */
     public static byte maxOf(byte a, byte b) {
-        return (byte) Math.max((int) a, (int) b);
+        return (byte) Math.max(a, b);
     }
 
     /**
      * Returns the greater of two values.
      */
     public static short maxOf(short a, short b) {
-        return (short) Math.max((int) a, (int) b);
+        return (short) Math.max(a, b);
     }
 
     /**
@@ -169,14 +179,14 @@ public class Comparex {
      * Returns the greater of three values.
      */
     public static byte maxOf(byte a, byte b, byte c) {
-        return (byte) Math.max((int) a, Math.max((int) b, (int) c));
+        return (byte) Math.max(a, Math.max(b, c));
     }
 
     /**
      * Returns the greater of three values.
      */
     public static short maxOf(short a, short b, short c) {
-        return (short) Math.max((int) a, Math.max((int) b, (int) c));
+        return (short) Math.max(a, Math.max(b, c));
     }
 
     /**
@@ -223,14 +233,14 @@ public class Comparex {
      * Returns the smaller of two values.
      */
     public static byte minOf(byte a, byte b) {
-        return (byte) Math.min((int) a, (int) b);
+        return (byte) Math.min(a, b);
     }
 
     /**
      * Returns the smaller of two values.
      */
     public static short minOf(short a, short b) {
-        return (short) Math.min((int) a, (int) b);
+        return (short) Math.min(a, b);
     }
 
     /**
@@ -273,14 +283,14 @@ public class Comparex {
      * Returns the smaller of three values.
      */
     public static byte minOf(byte a, byte b, byte c) {
-        return (byte) Math.min((int) a, Math.min((int) b, (int) c));
+        return (byte) Math.min(a, Math.min(b, c));
     }
 
     /**
      * Returns the smaller of three values.
      */
     public static short minOf(short a, short b, short c) {
-        return (short) Math.min((int) a, Math.min((int) b, (int) c));
+        return (short) Math.min(a, Math.min(b, c));
     }
 
     /**

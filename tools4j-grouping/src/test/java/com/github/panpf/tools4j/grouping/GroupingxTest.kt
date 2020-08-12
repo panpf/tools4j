@@ -130,16 +130,6 @@ class GroupingxTest {
     @Test
     fun testGroupingString() {
         val source = "1365268945336807532324589"
-        val map = sortedMapOf("0" to listOf('0')
-                , "1" to listOf('1')
-                , "2" to listOf('2', '2', '2')
-                , "3" to listOf('3', '3', '3', '3', '3')
-                , "4" to listOf('4', '4')
-                , "5" to listOf('5', '5', '5', '5')
-                , "6" to listOf('6', '6', '6')
-                , "7" to listOf('7')
-                , "8" to listOf('8', '8', '8')
-                , "9" to listOf('9', '9'))
         val map2 = sortedMapOf("0" to listOf("0")
                 , "1" to listOf("1")
                 , "2" to listOf("2", "2", "2")

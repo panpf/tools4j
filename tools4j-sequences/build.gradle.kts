@@ -11,8 +11,8 @@ group = "com.github.panpf.tools4j"
 version = property("VERSION").toString()
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
     // todo 试试 Sequencex.sortedWIth 方法在 android 16 上能不能运行，主要是用了 List.sort 这个 java8 才有的方法
 }
 
@@ -22,7 +22,7 @@ dependencies {
     api(project(":tools4j-common-iterable"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${property("KOTLIN_VERSION")}")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
 }
 
 tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))

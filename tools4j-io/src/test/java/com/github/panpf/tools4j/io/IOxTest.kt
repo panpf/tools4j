@@ -16,12 +16,11 @@
 
 package com.github.panpf.tools4j.io
 
-import com.github.panpf.tools4j.common.Action
+import com.github.panpf.tools4j.reflect.ktx.getFieldValue
 import com.github.panpf.tools4j.regex.Regexx
 import org.junit.Assert
 import org.junit.Test
 import java.io.*
-import java.lang.reflect.Field
 import java.net.URL
 import java.nio.charset.StandardCharsets
 
@@ -206,7 +205,7 @@ class IOxTest {
         Filex.writeText(file, content)
         try {
             Assert.assertEquals(StringBuilder().apply {
-                IOx.lineIterable(Filex.bufferedReader(file)).forEach{ lineString ->
+                IOx.lineIterable(Filex.bufferedReader(file)).forEach { lineString ->
                     if (length > 0) append("\n")
                     append(lineString)
                 }
@@ -214,7 +213,7 @@ class IOxTest {
 
             Assert.assertEquals(StringBuilder().apply {
                 IOx.useLines(Filex.reader(file)) { sequence ->
-                    sequence.forEach{ lineString ->
+                    sequence.forEach { lineString ->
                         if (length > 0) append("\n")
                         append(lineString)
                     }
@@ -343,45 +342,4 @@ class IOxTest {
             IOx.closeQuietly(outputStream)
         }
     }
-}
-
-
-/**
- * Get the declared field with the specified name from the specified class
- */
-@Throws(NoSuchFieldException::class)
-fun getDeclaredFieldRecursive(clazz: Class<*>, fieldName: String): Field {
-    var field: Field? = null
-    var currentClazz: Class<*>? = clazz
-    while (field == null && currentClazz != null) {
-        try {
-            field = currentClazz.getDeclaredField(fieldName)
-        } catch (ignored: NoSuchFieldException) {
-        }
-        if (field == null) {
-            currentClazz = currentClazz.superclass
-        }
-    }
-    return field
-            ?: throw NoSuchFieldException(String.format("No such field by name '%s' in class '%s' and its parent class", fieldName, clazz.name))
-}
-
-/**
- * Get the value of the specified field
- */
-fun <T> getFieldValue(`object`: Any, field: Field): T? {
-    field.isAccessible = true
-    return try {
-        field[`object`] as T
-    } catch (e: IllegalAccessException) {
-        throw IllegalStateException(e)
-    }
-}
-
-/**
- * Get the value of the specified field name
- */
-@Throws(NoSuchFieldException::class)
-fun <T> Any.getFieldValue(fieldName: String): T? {
-    return getFieldValue(this, getDeclaredFieldRecursive(this.javaClass, fieldName))
 }

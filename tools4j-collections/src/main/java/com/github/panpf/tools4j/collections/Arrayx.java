@@ -2359,7 +2359,7 @@ public class Arrayx {
     /**
      * Sorts elements in the array in-place according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortBy(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> void sortBy(@Nullable T[] elements, @NotNull final NullableTransformer<T, R> transformer) {
         if (elements != null && elements.length > 1) {
             sortWith(elements, new Comparator<T>() {
                 @Override
@@ -2376,7 +2376,7 @@ public class Arrayx {
     /**
      * Sorts elements in the array in-place descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> void sortByDescending(@Nullable T[] elements, @NotNull final NullableTransformer<T, R> transformer) {
         if (elements != null && elements.length > 1) {
             sortWith(elements, new Comparator<T>() {
                 @Override
@@ -2646,7 +2646,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> List<T> sortedBy(@Nullable T[] elements, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(elements, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
@@ -2661,7 +2661,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Byte> sortedBy(@Nullable byte[] elements, @NotNull NullableTransformer<Byte, R> transformer) {
+    public static <R extends Comparable<R>> List<Byte> sortedBy(@Nullable byte[] elements, @NotNull final NullableTransformer<Byte, R> transformer) {
         return sortedWith(elements, new Comparator<Byte>() {
             @Override
             public int compare(Byte o1, Byte o2) {
@@ -2676,7 +2676,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Short> sortedBy(@Nullable short[] elements, @NotNull NullableTransformer<Short, R> transformer) {
+    public static <R extends Comparable<R>> List<Short> sortedBy(@Nullable short[] elements, @NotNull final NullableTransformer<Short, R> transformer) {
         return sortedWith(elements, new Comparator<Short>() {
             @Override
             public int compare(Short o1, Short o2) {
@@ -2691,7 +2691,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Integer> sortedBy(@Nullable int[] elements, @NotNull NullableTransformer<Integer, R> transformer) {
+    public static <R extends Comparable<R>> List<Integer> sortedBy(@Nullable int[] elements, @NotNull final NullableTransformer<Integer, R> transformer) {
         return sortedWith(elements, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
@@ -2706,7 +2706,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Long> sortedBy(@Nullable long[] elements, @NotNull NullableTransformer<Long, R> transformer) {
+    public static <R extends Comparable<R>> List<Long> sortedBy(@Nullable long[] elements, @NotNull final NullableTransformer<Long, R> transformer) {
         return sortedWith(elements, new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
@@ -2721,7 +2721,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Float> sortedBy(@Nullable float[] elements, @NotNull NullableTransformer<Float, R> transformer) {
+    public static <R extends Comparable<R>> List<Float> sortedBy(@Nullable float[] elements, @NotNull final NullableTransformer<Float, R> transformer) {
         return sortedWith(elements, new Comparator<Float>() {
             @Override
             public int compare(Float o1, Float o2) {
@@ -2736,7 +2736,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Double> sortedBy(@Nullable double[] elements, @NotNull NullableTransformer<Double, R> transformer) {
+    public static <R extends Comparable<R>> List<Double> sortedBy(@Nullable double[] elements, @NotNull final NullableTransformer<Double, R> transformer) {
         return sortedWith(elements, new Comparator<Double>() {
             @Override
             public int compare(Double o1, Double o2) {
@@ -2751,7 +2751,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Boolean> sortedBy(@Nullable boolean[] elements, @NotNull NullableTransformer<Boolean, R> transformer) {
+    public static <R extends Comparable<R>> List<Boolean> sortedBy(@Nullable boolean[] elements, @NotNull final NullableTransformer<Boolean, R> transformer) {
         return sortedWith(elements, new Comparator<Boolean>() {
             @Override
             public int compare(Boolean o1, Boolean o2) {
@@ -2766,7 +2766,7 @@ public class Arrayx {
      * Returns a list of all elements sorted according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
-    public static <R extends Comparable<R>> List<Character> sortedBy(@Nullable char[] elements, @NotNull NullableTransformer<Character, R> transformer) {
+    public static <R extends Comparable<R>> List<Character> sortedBy(@Nullable char[] elements, @NotNull final NullableTransformer<Character, R> transformer) {
         return sortedWith(elements, new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
@@ -2781,7 +2781,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable T[] elements, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> List<T> sortedByDescending(@Nullable T[] elements, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(elements, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
@@ -2795,7 +2795,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Byte> sortedByDescending(@Nullable byte[] elements, @NotNull NullableTransformer<Byte, R> transformer) {
+    public static <R extends Comparable<R>> List<Byte> sortedByDescending(@Nullable byte[] elements, @NotNull final NullableTransformer<Byte, R> transformer) {
         return sortedWith(elements, new Comparator<Byte>() {
             @Override
             public int compare(Byte o1, Byte o2) {
@@ -2809,7 +2809,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Short> sortedByDescending(@Nullable short[] elements, @NotNull NullableTransformer<Short, R> transformer) {
+    public static <R extends Comparable<R>> List<Short> sortedByDescending(@Nullable short[] elements, @NotNull final NullableTransformer<Short, R> transformer) {
         return sortedWith(elements, new Comparator<Short>() {
             @Override
             public int compare(Short o1, Short o2) {
@@ -2823,7 +2823,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Integer> sortedByDescending(@Nullable int[] elements, @NotNull NullableTransformer<Integer, R> transformer) {
+    public static <R extends Comparable<R>> List<Integer> sortedByDescending(@Nullable int[] elements, @NotNull final NullableTransformer<Integer, R> transformer) {
         return sortedWith(elements, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
@@ -2837,7 +2837,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Long> sortedByDescending(@Nullable long[] elements, @NotNull NullableTransformer<Long, R> transformer) {
+    public static <R extends Comparable<R>> List<Long> sortedByDescending(@Nullable long[] elements, @NotNull final NullableTransformer<Long, R> transformer) {
         return sortedWith(elements, new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
@@ -2851,7 +2851,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Float> sortedByDescending(@Nullable float[] elements, @NotNull NullableTransformer<Float, R> transformer) {
+    public static <R extends Comparable<R>> List<Float> sortedByDescending(@Nullable float[] elements, @NotNull final NullableTransformer<Float, R> transformer) {
         return sortedWith(elements, new Comparator<Float>() {
             @Override
             public int compare(Float o1, Float o2) {
@@ -2865,7 +2865,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Double> sortedByDescending(@Nullable double[] elements, @NotNull NullableTransformer<Double, R> transformer) {
+    public static <R extends Comparable<R>> List<Double> sortedByDescending(@Nullable double[] elements, @NotNull final NullableTransformer<Double, R> transformer) {
         return sortedWith(elements, new Comparator<Double>() {
             @Override
             public int compare(Double o1, Double o2) {
@@ -2879,7 +2879,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Boolean> sortedByDescending(@Nullable boolean[] elements, @NotNull NullableTransformer<Boolean, R> transformer) {
+    public static <R extends Comparable<R>> List<Boolean> sortedByDescending(@Nullable boolean[] elements, @NotNull final NullableTransformer<Boolean, R> transformer) {
         return sortedWith(elements, new Comparator<Boolean>() {
             @Override
             public int compare(Boolean o1, Boolean o2) {
@@ -2893,7 +2893,7 @@ public class Arrayx {
     /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
-    public static <R extends Comparable<R>> List<Character> sortedByDescending(@Nullable char[] elements, @NotNull NullableTransformer<Character, R> transformer) {
+    public static <R extends Comparable<R>> List<Character> sortedByDescending(@Nullable char[] elements, @NotNull final NullableTransformer<Character, R> transformer) {
         return sortedWith(elements, new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {

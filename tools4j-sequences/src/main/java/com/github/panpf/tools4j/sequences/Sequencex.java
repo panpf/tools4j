@@ -67,7 +67,7 @@ public class Sequencex {
      * Creates a sequence that returns all values from this enumeration. The sequence is constrained to be iterated only once.
      */
     @NotNull
-    public static <T> Sequence<T> asSequence(@NotNull Enumeration<T> enumeration) {
+    public static <T> Sequence<T> asSequence(@NotNull final Enumeration<T> enumeration) {
         return asSequence(new Iterator<T>() {
             @Override
             public boolean hasNext() {
@@ -105,7 +105,13 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> asSequence(@NotNull final Iterator<T> iterator) {
-        return constrainOnce(() -> iterator);
+        return constrainOnce(new Sequence<T>() {
+            @NotNull
+            @Override
+            public Iterator<T> iterator() {
+                return iterator;
+            }
+        });
     }
 
     /**
@@ -113,7 +119,13 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> asSequence(@NotNull final Iterable<T> iterable) {
-        return iterable::iterator;
+        return new Sequence<T>() {
+            @NotNull
+            @Override
+            public Iterator<T> iterator() {
+                return iterable.iterator();
+            }
+        };
     }
 
     /**
@@ -129,7 +141,13 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Iterable<T> asIterable(@NotNull final Sequence<T> sequence) {
-        return sequence::iterator;
+        return new Iterable<T>() {
+            @NotNull
+            @Override
+            public Iterator<T> iterator() {
+                return sequence.iterator();
+            }
+        };
     }
 
     /**
@@ -1071,7 +1089,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {
@@ -1088,7 +1106,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {

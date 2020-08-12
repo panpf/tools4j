@@ -16,11 +16,17 @@
 
 package com.github.panpf.tools4j.common;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class Pair<A, B> {
+    @NotNull
     public final A first;
+
+    @NotNull
     public final B second;
 
-    public Pair(A var1, B var2) {
+    public Pair(@NotNull A var1, @NotNull B var2) {
         this.first = var1;
         this.second = var2;
     }
@@ -29,21 +35,26 @@ public class Pair<A, B> {
         return "(" + this.first + ", " + this.second + ")";
     }
 
-    public boolean equals(Object var1) {
-        return var1 instanceof Pair
-                && (this.first == ((Pair) var1).first || (this.first != null && this.first.equals(((Pair) var1).first)))
-                && (this.second == ((Pair) var1).second || (this.second != null && this.second.equals(((Pair) var1).second)));
+    public boolean equals(@Nullable Object var1) {
+        Pair<?, ?> var1Cast = var1 instanceof Pair<?, ?> ? (Pair<?, ?>) var1 : null;
+        //noinspection ConstantConditions,EqualsReplaceableByObjectsCall,EqualsReplaceableByObjectsCall
+        return var1Cast != null
+                && (this.first == var1Cast.first || (this.first != null && this.first.equals(var1Cast.first)))
+                && (this.second == var1Cast.second || (this.second != null && this.second.equals(var1Cast.second)));
     }
 
     public int hashCode() {
+        //noinspection ConstantConditions
         if (this.first == null) {
             return this.second == null ? 0 : this.second.hashCode() + 1;
         } else {
+            //noinspection ConstantConditions
             return this.second == null ? this.first.hashCode() + 2 : this.first.hashCode() * 17 + this.second.hashCode();
         }
     }
 
-    public static <A, B> Pair<A, B> of(A var0, B var1) {
-        return new Pair<>(var0, var1);
+    @NotNull
+    public static <A, B> Pair<A, B> of(@NotNull A var0, @NotNull B var1) {
+        return new Pair<A, B>(var0, var1);
     }
 }

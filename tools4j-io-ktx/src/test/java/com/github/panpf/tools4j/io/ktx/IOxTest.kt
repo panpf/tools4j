@@ -18,12 +18,12 @@ package com.github.panpf.tools4j.io.ktx
 
 import com.github.panpf.tools4j.io.CopyListener
 import com.github.panpf.tools4j.io.IOx
+import com.github.panpf.tools4j.reflect.ktx.getFieldValue
 import org.junit.Assert
 import org.junit.Test
 import java.io.*
-import java.lang.reflect.Field
 
-class StreamxTest {
+class IOxTest {
 
     @Test
     fun testSafeClose() {
@@ -197,45 +197,4 @@ class StreamxTest {
             outputStream.closeQuietly()
         }
     }
-}
-
-
-/**
- * Get the declared field with the specified name from the specified class
- */
-@Throws(NoSuchFieldException::class)
-fun getDeclaredFieldRecursive(clazz: Class<*>, fieldName: String): Field {
-    var field: Field? = null
-    var currentClazz: Class<*>? = clazz
-    while (field == null && currentClazz != null) {
-        try {
-            field = currentClazz.getDeclaredField(fieldName)
-        } catch (ignored: NoSuchFieldException) {
-        }
-        if (field == null) {
-            currentClazz = currentClazz.superclass
-        }
-    }
-    return field
-            ?: throw NoSuchFieldException(String.format("No such field by name '%s' in class '%s' and its parent class", fieldName, clazz.name))
-}
-
-/**
- * Get the value of the specified field
- */
-fun <T> getFieldValue(`object`: Any, field: Field): T? {
-    field.isAccessible = true
-    return try {
-        field[`object`] as T
-    } catch (e: IllegalAccessException) {
-        throw IllegalStateException(e)
-    }
-}
-
-/**
- * Get the value of the specified field name
- */
-@Throws(NoSuchFieldException::class)
-fun <T> Any.getFieldValue(fieldName: String): T? {
-    return getFieldValue(this, getDeclaredFieldRecursive(this.javaClass, fieldName))
 }
