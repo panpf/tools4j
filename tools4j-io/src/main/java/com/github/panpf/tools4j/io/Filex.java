@@ -2331,39 +2331,4 @@ public class Filex {
     public static FileTreeWalk walkBottomUp(@NotNull File file) {
         return walk(file, FileWalkDirection.BOTTOM_UP);
     }
-
-
-    public static class FilePredicate implements Predicate<File> {
-
-        @Override
-        public boolean accept(@NotNull File file) {
-            return file.isFile();
-        }
-    }
-
-    @SuppressWarnings("unused")
-    public static class DirectoryPredicate implements Predicate<File> {
-
-        @Override
-        public boolean accept(@NotNull File file) {
-            return file.isDirectory();
-        }
-    }
-
-    @SuppressWarnings("unused")
-    public static class FileComparator implements Comparator<File> {
-
-        @Override
-        public int compare(File o1, File o2) {
-            return compareFilePath(o1, o2);
-        }
-    }
-
-    public static class FilePathComparator implements Comparator<String> {
-
-        @Override
-        public int compare(String o1, String o2) {
-            return compareFilePath(o1, o2);
-        }
-    }
 }
