@@ -19,6 +19,7 @@ import org.junit.Assert
 import org.junit.Test
 
 class PremisexTest {
+
     @Test
     fun testRequire() {
         Premisex.require(true)
@@ -64,7 +65,7 @@ class PremisexTest {
     }
 
     @Test
-    fun testNotNull() {
+    fun testRequireNotNull() {
         Premisex.requireNotNull("", { "is null" })
         try {
             Premisex.requireNotNull<Any>(null, { "is null" })
@@ -86,6 +87,10 @@ class PremisexTest {
         } catch (e: Exception) {
             // e.printStackTrace();
         }
+    }
+
+    @Test
+    fun testCheckNotNull() {
         Premisex.checkNotNull("", { "is null" })
         try {
             Premisex.checkNotNull<Any>(null, { "is null" })

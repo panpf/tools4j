@@ -66,7 +66,7 @@ public class Premisex {
             @NotNull
             @Override
             public String get() {
-                return "Failed requirement.";
+                return "Failed check.";
             }
         });
     }
