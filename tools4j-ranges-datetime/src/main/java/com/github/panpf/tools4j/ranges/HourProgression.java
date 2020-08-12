@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
-@SuppressWarnings("WeakerAccess")
 public final class HourProgression extends DateProgression {
 
     public HourProgression(@NotNull Date first, @NotNull Date last, int step) {

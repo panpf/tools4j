@@ -33,7 +33,6 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * RSA encryption and decryption tool method
  */
-@SuppressWarnings("WeakerAccess")
 public class Rsax {
 
     private static final String ALGORITHM = "RSA";

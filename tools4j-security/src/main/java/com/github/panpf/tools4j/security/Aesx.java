@@ -32,7 +32,6 @@ import java.security.spec.AlgorithmParameterSpec;
 /**
  * AES encryption and decryption tool method
  */
-@SuppressWarnings("WeakerAccess")
 public class Aesx {
 
     private static final String ALGORITHM = "AES";

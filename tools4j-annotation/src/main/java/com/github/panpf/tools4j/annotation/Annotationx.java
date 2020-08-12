@@ -24,7 +24,6 @@ import java.lang.annotation.Annotation;
 /**
  * Annotation tool method
  */
-@SuppressWarnings("WeakerAccess")
 public class Annotationx {
 
     private Annotationx() {

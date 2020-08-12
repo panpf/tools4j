@@ -32,7 +32,6 @@ import java.security.spec.InvalidKeySpecException;
 /**
  * DES encryption and decryption tool method
  */
-@SuppressWarnings("WeakerAccess")
 public class Desx {
 
     private static final String ALGORITHM = "DES";

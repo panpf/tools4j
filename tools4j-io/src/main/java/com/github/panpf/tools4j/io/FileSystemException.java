@@ -22,17 +22,16 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 
-@SuppressWarnings("WeakerAccess")
 public class FileSystemException extends IOException {
 
     @NotNull
-    public File file;
+    private final File file;
 
     @Nullable
-    public File other;
+    private final File other;
 
     @Nullable
-    public String reason;
+    private final String reason;
 
     /**
      * A base exception class for file system exceptions.
@@ -63,6 +62,7 @@ public class FileSystemException extends IOException {
         return reason;
     }
 
+    @NotNull
     private static String constructMessage(@NotNull File file, @Nullable File other, @Nullable String reason) {
         StringBuilder sb = new StringBuilder(file.toString());
         if (other != null) {
