@@ -40,11 +40,11 @@ class ClassxTest {
          * getFieldsRecursive
          */
         val filterJacocoFieldPredicate: (Field) -> Boolean = { it.name != "\$jacocoData" }
-        Assert.assertEquals(2, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.inclusive(TestClass3::class.java)).filter(filterJacocoFieldPredicate).size)
-        Assert.assertEquals(2, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.exclusive(TestClass2::class.java)).filter(filterJacocoFieldPredicate).size)
-        Assert.assertEquals(4, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.inclusive(TestClass2::class.java)).filter(filterJacocoFieldPredicate).size)
-        Assert.assertEquals(4, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.exclusive(TestClass1::class.java)).filter(filterJacocoFieldPredicate).size)
-        Assert.assertEquals(6, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.inclusive(TestClass1::class.java)).filter(filterJacocoFieldPredicate).size)
+        Assert.assertEquals(2, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.end(TestClass3::class.java)).filter(filterJacocoFieldPredicate).size)
+        Assert.assertEquals(2, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.until(TestClass2::class.java)).filter(filterJacocoFieldPredicate).size)
+        Assert.assertEquals(4, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.end(TestClass2::class.java)).filter(filterJacocoFieldPredicate).size)
+        Assert.assertEquals(4, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.until(TestClass1::class.java)).filter(filterJacocoFieldPredicate).size)
+        Assert.assertEquals(6, Classx.getDeclaredFieldsRecursive(TestClass3::class.java, Brake.end(TestClass1::class.java)).filter(filterJacocoFieldPredicate).size)
         Assert.assertEquals(6, Classx.getDeclaredFieldsRecursive(TestClass3::class.java).filter(filterJacocoFieldPredicate).size)
 
 
@@ -91,13 +91,13 @@ class ClassxTest {
          * getMethodsRecursive
          */
         val filterJacocoMethodPredicate: (Method) -> Boolean = { it.name != "\$jacocoInit" }
-        Assert.assertEquals(4, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.inclusive(TestClass3::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(4, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.exclusive(TestClass2::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(8, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.inclusive(TestClass2::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(8, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.exclusive(TestClass1::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(12, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.inclusive(TestClass1::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(12, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.exclusive(Any::class.java)).filter(filterJacocoMethodPredicate).size)
-        Assert.assertEquals(12 + Classx.getDeclaredMethodsRecursive(Any::class.java).size, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.inclusive(Any::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(4, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.end(TestClass3::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(4, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.until(TestClass2::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(8, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.end(TestClass2::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(8, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.until(TestClass1::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(12, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.end(TestClass1::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(12, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.until(Any::class.java)).filter(filterJacocoMethodPredicate).size)
+        Assert.assertEquals(12 + Classx.getDeclaredMethodsRecursive(Any::class.java).size, Classx.getDeclaredMethodsRecursive(TestClass3::class.java, Brake.end(Any::class.java)).filter(filterJacocoMethodPredicate).size)
         Assert.assertEquals(12 + Classx.getDeclaredMethodsRecursive(Any::class.java).size, Classx.getDeclaredMethodsRecursive(TestClass3::class.java).filter(filterJacocoMethodPredicate).size)
 
 
@@ -148,12 +148,12 @@ class ClassxTest {
             Assert.fail()
         } catch (ignored: NoSuchMethodException) {
         }
-        Assert.assertEquals(1, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.inclusive(TestClass3::class.java)).size.toLong())
-        Assert.assertEquals(1, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.exclusive(TestClass2::class.java)).size.toLong())
-        Assert.assertEquals(2, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.inclusive(TestClass2::class.java)).size.toLong())
-        Assert.assertEquals(2, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.exclusive(TestClass1::class.java)).size.toLong())
-        Assert.assertEquals(3, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.inclusive(TestClass1::class.java)).size.toLong())
-        Assert.assertEquals(3, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.exclusive(Any::class.java)).size.toLong())
+        Assert.assertEquals(1, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.end(TestClass3::class.java)).size.toLong())
+        Assert.assertEquals(1, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.until(TestClass2::class.java)).size.toLong())
+        Assert.assertEquals(2, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.end(TestClass2::class.java)).size.toLong())
+        Assert.assertEquals(2, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.until(TestClass1::class.java)).size.toLong())
+        Assert.assertEquals(3, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.end(TestClass1::class.java)).size.toLong())
+        Assert.assertEquals(3, Classx.getDeclaredConstructorsRecursive(TestClass3::class.java, Brake.until(Any::class.java)).size.toLong())
         Assert.assertEquals(3 + Classx.getDeclaredConstructorsRecursive(Any::class.java).size.toLong(), Classx.getDeclaredConstructorsRecursive(TestClass3::class.java).size.toLong())
     }
 

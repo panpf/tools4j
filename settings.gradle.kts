@@ -35,10 +35,13 @@ include(":tools4j-premise-ktx")
 
 include(":tools4j-ranges-core")
 include(":tools4j-ranges-core-ktx")
+
 include(":tools4j-ranges-datetime")
 include(":tools4j-ranges-datetime-ktx")
 
 include(":tools4j-reflect")
+include(":tools4j-reflect-ktx")
+
 include(":tools4j-regex")
 include(":tools4j-security")
 include(":tools4j-sequences")

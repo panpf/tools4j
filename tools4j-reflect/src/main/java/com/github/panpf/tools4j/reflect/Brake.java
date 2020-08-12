@@ -29,12 +29,12 @@ public class Brake {
     }
 
     @NotNull
-    public static Brake inclusive(@NotNull Class<?> clazz) {
+    public static Brake end(@NotNull Class<?> clazz) {
         return new Brake(clazz, true);
     }
 
     @NotNull
-    public static Brake exclusive(@NotNull Class<?> clazz) {
+    public static Brake until(@NotNull Class<?> clazz) {
         return new Brake(clazz, false);
     }
 }
