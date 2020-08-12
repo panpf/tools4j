@@ -23,11 +23,11 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * Class tool
+ * Reflect tool
  */
-public class Classx {
+public class Reflectx {
 
-    private Classx() {
+    private Reflectx() {
     }
 
 

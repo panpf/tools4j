@@ -17,14 +17,14 @@
 package com.github.panpf.tools4j.reflect.ktx
 
 import com.github.panpf.tools4j.reflect.Brake
-import com.github.panpf.tools4j.reflect.Classx
+import com.github.panpf.tools4j.reflect.Reflectx
 import org.junit.Assert
 import org.junit.Test
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.*
 
-class ClassxTest {
+class ReflectxTest {
 
     @Test
     @Throws(NoSuchFieldException::class)
@@ -70,7 +70,7 @@ class ClassxTest {
          * get and set static field value
          */
         TestStatic::class.java.getDeclaredFieldRecursive("field1").setStaticValue("field11")
-        Assert.assertEquals("field11", Classx.getStaticFieldValue(TestStatic::class.java.getDeclaredFieldRecursive("field1")))
+        Assert.assertEquals("field11", Reflectx.getStaticFieldValue(TestStatic::class.java.getDeclaredFieldRecursive("field1")))
         TestStatic::class.java.getDeclaredFieldRecursive("field1").setStaticValue("field12")
         Assert.assertEquals("field12", TestStatic::class.java.getDeclaredFieldRecursive("field1").getStaticValue())
 

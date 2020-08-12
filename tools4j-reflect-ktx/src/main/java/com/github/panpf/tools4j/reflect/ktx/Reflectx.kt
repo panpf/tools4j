@@ -19,14 +19,14 @@
 package com.github.panpf.tools4j.reflect.ktx
 
 import com.github.panpf.tools4j.reflect.Brake
-import com.github.panpf.tools4j.reflect.Classx
+import com.github.panpf.tools4j.reflect.Reflectx
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 
 /*
- * Class related extension methods or properties
+ * Reflect related extension methods or properties
  */
 
 
@@ -37,7 +37,7 @@ import java.lang.reflect.Method
  * Get the declared field with the specified name from the specified class
  */
 @Throws(NoSuchFieldException::class)
-inline fun Class<*>.getDeclaredFieldRecursive(fieldName: String): Field = Classx.getDeclaredFieldRecursive(this, fieldName)
+inline fun Class<*>.getDeclaredFieldRecursive(fieldName: String): Field = Reflectx.getDeclaredFieldRecursive(this, fieldName)
 
 
 /**
@@ -45,60 +45,60 @@ inline fun Class<*>.getDeclaredFieldRecursive(fieldName: String): Field = Classx
  *
  * @param brake Specify which class to stop searching
  */
-inline fun Class<*>.getDeclaredFieldsRecursive(brake: Brake): Array<Field> = Classx.getDeclaredFieldsRecursive(this, brake)
+inline fun Class<*>.getDeclaredFieldsRecursive(brake: Brake): Array<Field> = Reflectx.getDeclaredFieldsRecursive(this, brake)
 
 /**
  * Get all the declared fields of a given class and all its parent classes
  */
-inline fun Class<*>.getDeclaredFieldsRecursive(): Array<Field> = Classx.getDeclaredFieldsRecursive(this)
+inline fun Class<*>.getDeclaredFieldsRecursive(): Array<Field> = Reflectx.getDeclaredFieldsRecursive(this)
 
 
 /**
  * Get the value of the specified field
  */
-inline fun <T> Any.getFieldValue(field: Field): T? = Classx.getFieldValue<T>(this, field)
+inline fun <T> Any.getFieldValue(field: Field): T? = Reflectx.getFieldValue<T>(this, field)
 
 /**
  * Get the value of the specified field name
  */
 @Throws(NoSuchFieldException::class)
-inline fun <T> Any.getFieldValue(fieldName: String): T? = Classx.getFieldValue<T>(this, fieldName)
+inline fun <T> Any.getFieldValue(fieldName: String): T? = Reflectx.getFieldValue<T>(this, fieldName)
 
 
 /**
  * Get the value of the specified field
  */
-inline fun <T> Field.getStaticValue(): T? = Classx.getStaticFieldValue<T>(this)
+inline fun <T> Field.getStaticValue(): T? = Reflectx.getStaticFieldValue<T>(this)
 
 /**
  * Get the value of the specified field name
  */
 @Throws(NoSuchFieldException::class)
-inline fun <T> Class<*>.getStaticFieldValue(fieldName: String): T? = Classx.getStaticFieldValue<T>(this, fieldName)
+inline fun <T> Class<*>.getStaticFieldValue(fieldName: String): T? = Reflectx.getStaticFieldValue<T>(this, fieldName)
 
 
 /**
  * Set field value
  */
-inline fun Any.setFieldValue(field: Field, newValue: Any?) = Classx.setFieldValue(this, field, newValue)
+inline fun Any.setFieldValue(field: Field, newValue: Any?) = Reflectx.setFieldValue(this, field, newValue)
 
 /**
  * Set field value by field name
  */
 @Throws(NoSuchFieldException::class)
-inline fun Any.setFieldValue(fieldName: String, newValue: Any?) = Classx.setFieldValue(this, fieldName, newValue)
+inline fun Any.setFieldValue(fieldName: String, newValue: Any?) = Reflectx.setFieldValue(this, fieldName, newValue)
 
 
 /**
  * Set field value
  */
-inline fun Field.setStaticValue(newValue: Any?) = Classx.setStaticFieldValue(this, newValue)
+inline fun Field.setStaticValue(newValue: Any?) = Reflectx.setStaticFieldValue(this, newValue)
 
 /**
  * Set field value by field name
  */
 @Throws(NoSuchFieldException::class)
-inline fun Class<*>.setStaticFieldValue(fieldName: String, newValue: Any?) = Classx.setStaticFieldValue(this, fieldName, newValue)
+inline fun Class<*>.setStaticFieldValue(fieldName: String, newValue: Any?) = Reflectx.setStaticFieldValue(this, fieldName, newValue)
 
 
 /* ******************************************* Method *******************************************/
@@ -108,7 +108,7 @@ inline fun Class<*>.setStaticFieldValue(fieldName: String, newValue: Any?) = Cla
  * Get the declared method with the specified name from the specified class
  */
 @Throws(NoSuchMethodException::class)
-inline fun Class<*>.getDeclaredMethodRecursive(methodName: String, vararg params: Class<*>): Method = Classx.getDeclaredMethodRecursive(this, methodName, *params)
+inline fun Class<*>.getDeclaredMethodRecursive(methodName: String, vararg params: Class<*>): Method = Reflectx.getDeclaredMethodRecursive(this, methodName, *params)
 
 
 /**
@@ -116,36 +116,36 @@ inline fun Class<*>.getDeclaredMethodRecursive(methodName: String, vararg params
  *
  * @param brake Specify which class to stop searching
  */
-inline fun Class<*>.getDeclaredMethodsRecursive(brake: Brake): Array<Method> = Classx.getDeclaredMethodsRecursive(this, brake)
+inline fun Class<*>.getDeclaredMethodsRecursive(brake: Brake): Array<Method> = Reflectx.getDeclaredMethodsRecursive(this, brake)
 
 /**
  * Get all the declared methods of a given class and its parent classes
  */
-inline fun Class<*>.getDeclaredMethodsRecursive(): Array<Method> = Classx.getDeclaredMethodsRecursive(this)
+inline fun Class<*>.getDeclaredMethodsRecursive(): Array<Method> = Reflectx.getDeclaredMethodsRecursive(this)
 
 
 /**
  * Method of executing of the specified object
  */
-inline fun <T> Any.callMethod(method: Method, vararg params: Any): T? = Classx.callMethod<T>(this, method, *params)
+inline fun <T> Any.callMethod(method: Method, vararg params: Any): T? = Reflectx.callMethod<T>(this, method, *params)
 
 /**
  * Method of executing the specified name of the specified object
  */
 @Throws(NoSuchMethodException::class)
-inline fun <T> Any.callMethod(methodName: String, vararg params: Any): T? = Classx.callMethod<T>(this, methodName, *params)
+inline fun <T> Any.callMethod(methodName: String, vararg params: Any): T? = Reflectx.callMethod<T>(this, methodName, *params)
 
 
 /**
  * Method of executing of the specified object
  */
-inline fun <T> Method.callStaticMethod(vararg params: Any): T? = Classx.callStaticMethod<T>(this, *params)
+inline fun <T> Method.callStaticMethod(vararg params: Any): T? = Reflectx.callStaticMethod<T>(this, *params)
 
 /**
  * Method of executing the specified name of the specified object
  */
 @Throws(NoSuchMethodException::class)
-inline fun <T> Class<*>.callStaticMethod(methodName: String, vararg params: Any): T? = Classx.callStaticMethod<T>(this, methodName, *params)
+inline fun <T> Class<*>.callStaticMethod(methodName: String, vararg params: Any): T? = Reflectx.callStaticMethod<T>(this, methodName, *params)
 
 
 /* ******************************************* Constructor *******************************************/
@@ -155,7 +155,7 @@ inline fun <T> Class<*>.callStaticMethod(methodName: String, vararg params: Any)
  * Get the declared constructor from the specified class
  */
 @Throws(NoSuchMethodException::class)
-inline fun Class<*>.getDeclaredConstructorRecursive(vararg params: Class<*>): Constructor<*> = Classx.getDeclaredConstructorRecursive(this, *params)
+inline fun Class<*>.getDeclaredConstructorRecursive(vararg params: Class<*>): Constructor<*> = Reflectx.getDeclaredConstructorRecursive(this, *params)
 
 
 /**
@@ -163,12 +163,12 @@ inline fun Class<*>.getDeclaredConstructorRecursive(vararg params: Class<*>): Co
  *
  * @param brake Specify which class to stop searching
  */
-inline fun Class<*>.getDeclaredConstructorsRecursive(brake: Brake): Array<Constructor<*>> = Classx.getDeclaredConstructorsRecursive(this, brake)
+inline fun Class<*>.getDeclaredConstructorsRecursive(brake: Brake): Array<Constructor<*>> = Reflectx.getDeclaredConstructorsRecursive(this, brake)
 
 /**
  * Get all the declared constructors of a given class and its parent classes
  */
-inline fun Class<*>.getDeclaredConstructorsRecursive(): Array<Constructor<*>> = Classx.getDeclaredConstructorsRecursive(this)
+inline fun Class<*>.getDeclaredConstructorsRecursive(): Array<Constructor<*>> = Reflectx.getDeclaredConstructorsRecursive(this)
 
 
 /* ******************************************* Class Hierarchy *******************************************/
@@ -179,12 +179,12 @@ inline fun Class<*>.getDeclaredConstructorsRecursive(): Array<Constructor<*>> = 
  *
  * @param ignoreSelf Ignore myself in the return list
  */
-inline fun Class<*>.getClassHierarchy(ignoreSelf: Boolean): Array<Class<*>> = Classx.getClassHierarchy(this, ignoreSelf)
+inline fun Class<*>.getClassHierarchy(ignoreSelf: Boolean): Array<Class<*>> = Reflectx.getClassHierarchy(this, ignoreSelf)
 
 /**
  * Get all the inheritance lists of the specified class
  */
-inline fun Class<*>.getClassHierarchy(): Array<Class<*>> = Classx.getClassHierarchy(this)
+inline fun Class<*>.getClassHierarchy(): Array<Class<*>> = Reflectx.getClassHierarchy(this)
 
 
 /* ******************************************* Type *******************************************/
@@ -193,9 +193,9 @@ inline fun Class<*>.getClassHierarchy(): Array<Class<*>> = Classx.getClassHierar
 /**
  * Determine if the given field is an array of the specified type
  */
-inline fun Field.isTypeArray(type: Class<*>): Boolean = Classx.isTypeArray(this, type)
+inline fun Field.isTypeArray(type: Class<*>): Boolean = Reflectx.isTypeArray(this, type)
 
 /**
  * Determine if a given field is a collection of the specified type
  */
-inline fun Field.isTypeCollection(collectionType: Class<out Collection<*>>, type: Class<*>): Boolean = Classx.isTypeCollection(this, collectionType, type)
+inline fun Field.isTypeCollection(collectionType: Class<out Collection<*>>, type: Class<*>): Boolean = Reflectx.isTypeCollection(this, collectionType, type)
