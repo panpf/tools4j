@@ -15,6 +15,7 @@ include(":tools4j-collections-ktx")
 
 include(":tools4j-common-action")
 include(":tools4j-common-iterable")
+include(":tools4j-common-rangesbase")
 
 include(":tools4j-compare")
 
