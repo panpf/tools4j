@@ -179,7 +179,89 @@ class FilexTest {
         }
     }
 
-    // todo add ensurDirNotExist test method
+    @Test
+    fun testEnsureDirNotExist() {
+        val testDir = File("/tmp/testEnsureDirNotExist/source.txt.tmp")
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp", Filex.ensureDirNotExist(testDir, 100).path)
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(testDir)
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-1", Filex.ensureDirNotExist(testDir, 100).path)
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-9", Filex.ensureDirNotExist(testDir, 9).path)
+            fail("No Exception")
+        } catch (e: IllegalStateException) {
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(testDir)
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-1", Filex.ensureDirNotExist(testDir, 0).path)
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(testDir)
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-1", Filex.ensureDirNotExist(testDir, 100).path)
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            Filex.mkdirsOrThrow(Filex.ensureDirNotExist(testDir, 100))
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-1", Filex.ensureDirNotExist(testDir, 2).path)
+            fail("No Exception")
+        } catch (e: IllegalStateException) {
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        try {
+            Filex.deleteRecursively(testDir.parentFile)
+            Filex.mkdirsOrThrow(testDir)
+            assertEquals("/tmp/testEnsureDirNotExist/source.txt.tmp-1", Filex.ensureDirNotExist(testDir).path)
+        } finally {
+            Filex.deleteRecursively(testDir.parentFile)
+        }
+
+        val testDir2 = File("/tmp/testEnsureDirNotExist/testDir")
+        try {
+            Filex.deleteRecursively(testDir2.parentFile)
+            Filex.mkdirsOrThrow(testDir2)
+            assertEquals("/tmp/testEnsureDirNotExist/testDir-1", Filex.ensureDirNotExist(testDir2).path)
+        } finally {
+            Filex.deleteRecursively(testDir2.parentFile)
+        }
+    }
 
     @Test
     fun testClean() {
