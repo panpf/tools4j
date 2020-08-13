@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.io
 
 import com.github.panpf.tools4j.reflect.ktx.getFieldValue
 import com.github.panpf.tools4j.regex.Regexx
+import com.github.panpf.tools4j.regex.ktx.regexFind
 import org.junit.Assert
 import org.junit.Test
 import java.io.*
@@ -179,13 +180,13 @@ class IOxTest {
             Assert.assertEquals(Filex.reader(file).use { IOx.readText(it) }, content)
 
             val resultBytes = IOx.readBytes(URL("http://pv.sohu.com/cityjson"))
-            Assert.assertTrue(Regexx.find(String(resultBytes), Regexx.IPV4))
+            Assert.assertTrue(String(resultBytes).regexFind(Regexx.IPV4))
 
             val result = IOx.readText(URL("http://pv.sohu.com/cityjson"), StandardCharsets.UTF_8)
-            Assert.assertTrue(Regexx.find(result, Regexx.IPV4))
+            Assert.assertTrue(result.regexFind(Regexx.IPV4))
 
             val result2 = IOx.readText(URL("http://pv.sohu.com/cityjson"))
-            Assert.assertTrue(Regexx.find(result2, Regexx.IPV4))
+            Assert.assertTrue(result2.regexFind(Regexx.IPV4))
 
             Assert.assertEquals(StringBuilder().apply {
                 IOx.readLines(Filex.reader(file)).forEach { lineString ->

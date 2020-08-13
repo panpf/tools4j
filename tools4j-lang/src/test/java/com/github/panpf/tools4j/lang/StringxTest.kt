@@ -18,7 +18,7 @@
 
 package com.github.panpf.tools4j.lang
 
-import com.github.panpf.tools4j.base64.Base64x
+import com.github.panpf.tools4j.base64.ktx.base64EncodeToString
 import com.github.panpf.tools4j.common.Pair
 import com.github.panpf.tools4j.ranges.Rangex
 import com.github.panpf.tools4j.regex.Regexx
@@ -937,7 +937,7 @@ class StringxTest {
 
     @Test
     fun testToByteArray() {
-        val sourceText = Base64x.encodeToString("abcdefg")
+        val sourceText = "abcdefg".base64EncodeToString()
         val charset = Charset.defaultCharset()
 
         Assertx.assertThreeEquals(sourceText, String(Stringx.toByteArray(sourceText, charset), charset), String(sourceText.toByteArray(charset), charset))

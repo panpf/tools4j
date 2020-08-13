@@ -19,6 +19,7 @@ package com.github.panpf.tools4j.zip.ktx
 import com.github.panpf.tools4j.collections.Collectionx
 import com.github.panpf.tools4j.collections.ktx.joinToArrayString
 import com.github.panpf.tools4j.io.Filex
+import com.github.panpf.tools4j.io.ktx.compareFilePath
 import com.github.panpf.tools4j.io.ktx.createFileTree
 import com.github.panpf.tools4j.io.ktx.createNewFileOrThrow
 import com.github.panpf.tools4j.io.ktx.listFilesRecursively
@@ -102,7 +103,7 @@ class ZipxTest {
             sourceDir.listFiles().zipCompressFilesTo(compressDstFile, ZipEntryNameTransformer.createByParent(sourceDir))
             Assert.assertEquals(compressDstFile.listZipEntryName().sortedWith(FilePathComparator()).joinToArrayString(), "[test/file1.txt, test/file2.txt, test/file3.txt, test/dir1/file1.txt, test/dir1/file2.txt, test/dir1/file3.txt, test/dir2/file1.txt, test/dir2/file2.txt, test/dir2/file3.txt, test/dir3/file1.txt, test/dir3/file2.txt, test/dir3/file3.txt]")
 
-            Filex.deleteRecursively(sourceDir)
+            sourceDir.deleteRecursively()
             val decompressDstDir = File(compressDstFile.parentFile, compressDstFile.nameWithoutExtension + "1")
             compressDstFile.zipDecompressTo(decompressDstDir)
 
@@ -150,7 +151,7 @@ class ZipxTest {
             sourceDir.listFiles().zipCompressFilesTo(compressDstFile) { t -> t.path.replace(sourceDir.parent + File.separator, "") }
             Assert.assertEquals(compressDstFile.listZipEntryName().sortedWith(FilePathComparator()).joinToArrayString(), "[test/file1.txt, test/file2.txt, test/file3.txt, test/dir1/file1.txt, test/dir1/file2.txt, test/dir1/file3.txt, test/dir2/file1.txt, test/dir2/file2.txt, test/dir2/file3.txt, test/dir3/file1.txt, test/dir3/file2.txt, test/dir3/file3.txt]")
 
-            Filex.deleteRecursively(sourceDir)
+            sourceDir.deleteRecursively()
             val decompressDstDir = File(compressDstFile.parentFile, compressDstFile.nameWithoutExtension + "1")
             compressDstFile.zipDecompressTo(decompressDstDir)
 
@@ -184,7 +185,7 @@ class ZipxTest {
             compressDstFile.zipDecompressTo(decompressDstDir, decompressProgressListener)
             Assert.assertEquals(decompressProgressListener.log, "[EntryStart: test/dir1/file1.txt, 15/180->test/dir1/file1.txt: 15/15, EntryEnd: test/dir1/file1.txt, EntryStart: test/dir1/file3.txt, 30/180->test/dir1/file3.txt: 15/15, EntryEnd: test/dir1/file3.txt, EntryStart: test/dir1/file2.txt, 45/180->test/dir1/file2.txt: 15/15, EntryEnd: test/dir1/file2.txt, EntryStart: test/dir3/file1.txt, 60/180->test/dir3/file1.txt: 15/15, EntryEnd: test/dir3/file1.txt, EntryStart: test/dir3/file3.txt, 75/180->test/dir3/file3.txt: 15/15, EntryEnd: test/dir3/file3.txt, EntryStart: test/dir3/file2.txt, 90/180->test/dir3/file2.txt: 15/15, EntryEnd: test/dir3/file2.txt, EntryStart: test/dir2/file1.txt, 105/180->test/dir2/file1.txt: 15/15, EntryEnd: test/dir2/file1.txt, EntryStart: test/dir2/file3.txt, 120/180->test/dir2/file3.txt: 15/15, EntryEnd: test/dir2/file3.txt, EntryStart: test/dir2/file2.txt, 135/180->test/dir2/file2.txt: 15/15, EntryEnd: test/dir2/file2.txt, EntryStart: test/file1.txt, 150/180->test/file1.txt: 15/15, EntryEnd: test/file1.txt, EntryStart: test/file3.txt, 165/180->test/file3.txt: 15/15, EntryEnd: test/file3.txt, EntryStart: test/file2.txt, 180/180->test/file2.txt: 15/15, EntryEnd: test/file2.txt]")
 
-            Filex.deleteRecursively(compressDstFile)
+            compressDstFile.deleteRecursively()
             val decompressContents = decompressDstDir.listFilesRecursively()?.filter { it.isFile }?.joinToString("\n") { it.readText() }
                     ?: ""
             Assert.assertEquals(sourceContents, decompressContents)
@@ -194,7 +195,7 @@ class ZipxTest {
 
         val file2 = File("/tmp/testFileTo2/file.txt")
         try {
-            Filex.writeText(file2.createNewFileOrThrow(), "testFilesTo")
+            file2.createNewFileOrThrow().writeText("testFilesTo")
             val sourceMd5 = file2.getMD5Digest()
 
             val compressDstFile = file2.getZipCompressDstFile()
@@ -391,7 +392,7 @@ class ZipxTest {
     @Test
     @Throws(IOException::class)
     fun testLisEntryName() {
-        val dir1 = Filex.createFileTree(File("/tmp/testLisEntryName/test"), 3, 2, "file.txt", "testListEntry")
+        val dir1 = File("/tmp/testLisEntryName/test").createFileTree(3, 2, "file.txt", "testListEntry")
         try {
             val compressDstFile = dir1.zipCompressFile()
             Assert.assertEquals(compressDstFile.listZipEntryName().sortedWith(FilePathComparator()).joinToArrayString(), "[test/file1.txt, test/file2.txt, test/file3.txt, test/dir1/file1.txt, test/dir1/file2.txt, test/dir1/file3.txt, test/dir2/file1.txt, test/dir2/file2.txt, test/dir2/file3.txt, test/dir3/file1.txt, test/dir3/file2.txt, test/dir3/file3.txt]")
@@ -437,7 +438,7 @@ class ZipxTest {
 
     class FilePathComparator : Comparator<String?> {
         override fun compare(o1: String?, o2: String?): Int {
-            return Filex.compareFilePath(o1, o2)
+            return o1.compareFilePath(o2)
         }
     }
 }
