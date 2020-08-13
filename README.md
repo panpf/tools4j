@@ -19,7 +19,7 @@ Add the following maven repository to your project `build.gradle` file:
 ```groovy
 allprojects {
     repositories {
-        maven { url "https://dl.bintray.com/appchina/maven/" }
+        maven { url "https://dl.bintray.com/panpf/maven/" }
     }
 }
 ```
