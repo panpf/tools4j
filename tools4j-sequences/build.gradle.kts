@@ -13,7 +13,6 @@ version = property("VERSION").toString()
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
-    // todo 试试 Sequencex.sortedWIth 方法在 android 16 上能不能运行，主要是用了 List.sort 这个 java8 才有的方法
 }
 
 dependencies {
