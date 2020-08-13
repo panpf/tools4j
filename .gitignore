@@ -7,7 +7,3 @@ local.properties
 build/
 captures/
 out/
-javax/
-javax-ktx/
-CHANGELOG.md
-README.md
