@@ -30,7 +30,6 @@ dependencies {
     api(project(":tools4j-io"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
-    testImplementation(project(":tools4j-messagedigest"))
     testImplementation(project(":tools4j-regex"))
     testImplementation(project(":tools4j-reflect-ktx"))
 }

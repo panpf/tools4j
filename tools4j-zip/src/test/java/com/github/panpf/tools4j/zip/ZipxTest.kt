@@ -16,7 +16,7 @@
 package com.github.panpf.tools4j.zip
 
 import com.github.panpf.tools4j.io.Filex
-import com.github.panpf.tools4j.messagedigest.MessageDigestx
+import com.github.panpf.tools4j.security.ktx.getMD5Digest
 import org.junit.Assert
 import org.junit.Test
 import java.io.File
@@ -124,13 +124,13 @@ class ZipxTest {
         val file2 = File("/tmp/testFileTo2/file.txt")
         try {
             Filex.writeText(Filex.createNewFileOrThrow(file2), "testFilesTo")
-            val sourceMd5: String = MessageDigestx.getMD5(file2)
+            val sourceMd5: String = file2.getMD5Digest()
             val compressDstFile = Zipx.getCompressDstFile(file2)
             Zipx.compressFileTo(file2, compressDstFile)
             Filex.deleteRecursively(file2)
             val decompressDstDir = Zipx.getDecompressDstDir(compressDstFile)
             Zipx.decompressTo(compressDstFile, decompressDstDir)
-            val decompressMd5: String = MessageDigestx.getMD5(File(decompressDstDir, file2.name))
+            val decompressMd5: String = File(decompressDstDir, file2.name).getMD5Digest()
             Assert.assertEquals(sourceMd5, decompressMd5)
         } finally {
             Filex.deleteRecursively(file2.parentFile)
@@ -163,11 +163,11 @@ class ZipxTest {
         val file2 = File("/tmp/testFile2/file.txt")
         try {
             Filex.writeText(Filex.createNewFileOrThrow(file2), "testFilesTo")
-            val sourceMd5: String = MessageDigestx.getMD5(file2)
+            val sourceMd5: String = file2.getMD5Digest()
             val compressDstFile = Zipx.compressFile(file2)
             Filex.deleteRecursively(file2)
             val decompressDstDir = Zipx.decompress(compressDstFile)
-            val decompressMd5: String = MessageDigestx.getMD5(File(decompressDstDir, file2.name))
+            val decompressMd5: String = File(decompressDstDir, file2.name).getMD5Digest()
             Assert.assertEquals(sourceMd5, decompressMd5)
         } finally {
             Filex.deleteRecursively(file2.parentFile)
@@ -202,13 +202,13 @@ class ZipxTest {
         val file2 = File("/tmp/testChildFileTo2/file.txt")
         try {
             Filex.writeText(Filex.createNewFileOrThrow(file2), "testChildFileTo")
-            val sourceMd5: String = MessageDigestx.getMD5(file2)
+            val sourceMd5: String = file2.getMD5Digest()
             val compressDstFile = Zipx.getCompressDstFile(file2)
             Zipx.compressChildFileTo(file2, compressDstFile)
             Filex.deleteRecursively(file2)
             val decompressDstDir = Zipx.getDecompressDstDir(compressDstFile)
             Zipx.decompressTo(compressDstFile, decompressDstDir)
-            val decompressMd5: String = MessageDigestx.getMD5(File(decompressDstDir, file2.name))
+            val decompressMd5: String = File(decompressDstDir, file2.name).getMD5Digest()
             Assert.assertEquals(sourceMd5, decompressMd5)
         } finally {
             Filex.deleteRecursively(file2.parentFile)
@@ -241,11 +241,11 @@ class ZipxTest {
         val file2 = File("/tmp/testChildFile2/file.txt")
         try {
             Filex.writeText(Filex.createNewFileOrThrow(file2), "testChildFile")
-            val sourceMd5: String = MessageDigestx.getMD5(file2)
+            val sourceMd5: String = file2.getMD5Digest()
             val compressDstFile = Zipx.compressChildFile(file2)
             Filex.deleteRecursively(file2)
             val decompressDstDir = Zipx.decompress(compressDstFile)
-            val decompressMd5: String = MessageDigestx.getMD5(File(decompressDstDir, file2.name))
+            val decompressMd5: String = File(decompressDstDir, file2.name).getMD5Digest()
             Assert.assertEquals(sourceMd5, decompressMd5)
         } finally {
             Filex.deleteRecursively(file2.parentFile)

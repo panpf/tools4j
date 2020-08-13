@@ -53,8 +53,8 @@ include(":tools4j-reflect-ktx")
 include(":tools4j-regex")
 include(":tools4j-regex-ktx")
 
-include(":tools4j-messagedigest")
-include(":tools4j-messagedigest-ktx")
+include(":tools4j-security")
+include(":tools4j-security-ktx")
 
 include(":tools4j-sequences")
 

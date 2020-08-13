@@ -53,7 +53,7 @@ implementation "com.github.panpf.tools4j:tools4j-ranges:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-ranges-date:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-reflect:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-regex:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-messagedigest:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-security:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
 
@@ -71,7 +71,7 @@ implementation "com.github.panpf.tools4j:tools4j-ranges-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-ranges-date-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-reflect-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-regex-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-messagedigest-ktx:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION"
 ```
 
@@ -267,10 +267,6 @@ Dependencies：
     * divide, divideToInt, divideToLong, scale, proportion, percent, 
     * format, formatPercentWith
 
-### tools4j-messagedigest
-* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
-    * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
-
 ### tools4j-net
 * Netx: [Netx.java] ([Test][NetxTest.kt])
     * isIPV4, isIPV6, isMacAddress, getLocalIPAddress, getLocalIPV4Address, 
@@ -306,6 +302,10 @@ Dependencies：
     * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup, 
     * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE, 
     * CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
+
+### tools4j-security
+* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
+    * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
 
 ### tools4j-sequences
 * Sequencex: [Sequencex.java] | [Sequencex.kt]
@@ -401,6 +401,26 @@ Please view the [CHANGELOG.md] file
 [Comparex.java]: tools4j-compare/src/main/java/com/github/panpf/tools4j/compare/Comparex.java
 [ComparexTest.kt]: tools4j-compare/src/test/java/com/github/panpf/tools4j/compare/ComparexTest.kt
 
+[Aesx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Aesx.java
+[AesxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/AesxTest.kt
+[Aesx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Aesx.kt
+[AesxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/AesxTest.kt
+
+[Desx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Desx.java
+[DesxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/DesxTest.kt
+[Desx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Desx.kt
+[DesxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/DesxTest.kt
+
+[Keyx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Keyx.java
+[KeyxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/KeyxTest.kt
+[Keyx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Keyx.kt
+[KeyxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/KeyxTest.kt
+
+[Rsax.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Rsax.java
+[RsaxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/RsaxTest.kt
+[Rsax.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Rsax.kt
+[RsaxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/RsaxTest.kt
+
 [Datex.java]: tools4j-date/src/main/java/com/github/panpf/tools4j/date/Datex.java
 [DatexTest.kt]: tools4j-date/src/test/java/com/github/panpf/tools4j/date/DatexTest.kt
 [Datex.kt]: tools4j-date-ktx/src/main/java/com/github/panpf/tools4j/date/ktx/Datex.kt
@@ -477,30 +497,10 @@ Please view the [CHANGELOG.md] file
 [Regexx.kt]: tools4j-regex-ktx/src/main/java/com/github/panpf/tools4j/regex/ktx/Regexx.kt
 [RegexxTest.kt]: tools4j-regex-ktx/src/test/java/com/github/panpf/tools4j/regex/ktx/RegexxTest.kt
 
-[Aesx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/Aesx.java
-[AesxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/AesxTest.kt
-[Aesx.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/Aesx.kt
-[AesxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/AesxTest.kt
-
-[Desx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/Desx.java
-[DesxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/DesxTest.kt
-[Desx.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/Desx.kt
-[DesxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/DesxTest.kt
-
-[Keyx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/Keyx.java
-[KeyxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/KeyxTest.kt
-[Keyx.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/Keyx.kt
-[KeyxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/KeyxTest.kt
-
 [MessageDigestx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/MessageDigestx.java
 [MessageDigestxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/MessageDigestxTest.kt
 [MessageDigestx.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/MessageDigestx.kt
 [MessageDigestxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/MessageDigestxTest.kt
-
-[Rsax.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/Rsax.java
-[RsaxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/RsaxTest.kt
-[Rsax.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/Rsax.kt
-[RsaxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/RsaxTest.kt
 
 [Sequencex.java]: tools4j-sequences/src/main/java/com/github/panpf/tools4j/sequences/Sequencex.java
 [SequencexTest.kt]: tools4j-sequences/src/test/java/com/github/panpf/tools4j/sequences/SequencexTest.kt

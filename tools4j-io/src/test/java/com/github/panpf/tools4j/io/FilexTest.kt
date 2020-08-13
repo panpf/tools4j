@@ -16,7 +16,7 @@
 
 package com.github.panpf.tools4j.io
 
-import com.github.panpf.tools4j.messagedigest.MessageDigestx
+import com.github.panpf.tools4j.security.ktx.getMD5Digest
 import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
@@ -804,7 +804,7 @@ class FilexTest {
 
             // 覆盖
             Filex.copyTo(copySourceFile, copyTargetFile, true)
-            assertEquals(MessageDigestx.getMD5(copySourceFile), MessageDigestx.getMD5(copyTargetFile))
+            assertEquals(copySourceFile.getMD5Digest(), copyTargetFile.getMD5Digest())
 
             // 不覆盖
             try {
@@ -820,7 +820,7 @@ class FilexTest {
         try {
             Filex.writeText(Filex.createNewFileOrThrow(copySourceFile), "testCopyFile")
             Filex.copyTo(copySourceFile, copyTargetFile, 1024 * 4)
-            assertEquals(MessageDigestx.getMD5(copySourceFile), MessageDigestx.getMD5(copyTargetFile))
+            assertEquals(copySourceFile.getMD5Digest(), copyTargetFile.getMD5Digest())
         } finally {
             Filex.deleteRecursively(copySourceFile)
             Filex.deleteRecursively(copyTargetFile)
@@ -829,7 +829,7 @@ class FilexTest {
         try {
             Filex.writeText(Filex.createNewFileOrThrow(copySourceFile), "testCopyFile")
             Filex.copyTo(copySourceFile, copyTargetFile)
-            assertEquals(MessageDigestx.getMD5(copySourceFile), MessageDigestx.getMD5(copyTargetFile))
+            assertEquals(copySourceFile.getMD5Digest(), copyTargetFile.getMD5Digest())
         } finally {
             Filex.deleteRecursively(copySourceFile)
             Filex.deleteRecursively(copyTargetFile)

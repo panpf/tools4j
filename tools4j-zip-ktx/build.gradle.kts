@@ -31,7 +31,7 @@ dependencies {
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
     testImplementation(project(":tools4j-io-ktx"))
-    testImplementation(project(":tools4j-messagedigest-ktx"))
+    testImplementation(project(":tools4j-security-ktx"))
     testImplementation(project(":tools4j-collections-ktx"))
 }
 
