@@ -31,11 +31,6 @@ class DatexTest {
         assertNotNull(Date().createCalendar(Locale.CANADA))
         assertNotNull(Date().createCalendar(defaultFirstDayOfWeek))
         assertNotNull(Date().createCalendar(defaultFirstDayOfWeek, Locale.CANADA))
-
-        assertNotNull(System.currentTimeMillis().createCalendar())
-        assertNotNull(System.currentTimeMillis().createCalendar(Locale.CANADA))
-        assertNotNull(System.currentTimeMillis().createCalendar(defaultFirstDayOfWeek))
-        assertNotNull(System.currentTimeMillis().createCalendar(defaultFirstDayOfWeek, Locale.CANADA))
     }
 
     @Test
@@ -67,32 +62,6 @@ class DatexTest {
 
         assertEquals("2016-02-29".toDateYMD().formatYMD(), "2016-02-29")
         assertEquals("2017-02-29".toDateYMD().formatYMD(), "2017-03-01")
-
-
-        assertEquals("2018".toMillisecond(SimpleDateFormat("yyyy")).format(SimpleDateFormat("yyyy")), "2018")
-        assertEquals("2018".toMillisecond("yyyy").format("yyyy"), "2018")
-        assertEquals("2018".toMillisecond("yyyy", Locale.getDefault()).format("yyyy", Locale.getDefault()), "2018")
-        assertEquals("2018".toMillisecondY().formatY(), "2018")
-        assertEquals("2018".toMillisecondY(Locale.getDefault()).formatY(Locale.getDefault()), "2018")
-        assertEquals("2018-06".toMillisecondYM().formatYM(), "2018-06")
-        assertEquals("2018-06".toMillisecondYM(Locale.getDefault()).formatYM(Locale.getDefault()), "2018-06")
-        assertEquals("201806".toMillisecondYMCompact().formatYMCompact(), "201806")
-        assertEquals("201806".toMillisecondYMCompact(Locale.getDefault()).formatYMCompact(Locale.getDefault()), "201806")
-        assertEquals("2018-06-23".toMillisecondYMD().formatYMD(), "2018-06-23")
-        assertEquals("2018-06-23".toMillisecondYMD(Locale.getDefault()).formatYMD(Locale.getDefault()), "2018-06-23")
-        assertEquals("20180623".toMillisecondYMDCompact().formatYMDCompact(), "20180623")
-        assertEquals("20180623".toMillisecondYMDCompact(Locale.getDefault()).formatYMDCompact(Locale.getDefault()), "20180623")
-        assertEquals("2018-06-23 21".toMillisecondYMDH().formatYMDH(), "2018-06-23 21")
-        assertEquals("2018-06-23 21".toMillisecondYMDH(Locale.getDefault()).formatYMDH(Locale.getDefault()), "2018-06-23 21")
-        assertEquals("2018-06-23 21:59".toMillisecondYMDHM().formatYMDHM(), "2018-06-23 21:59")
-        assertEquals("2018-06-23 21:59".toMillisecondYMDHM(Locale.getDefault()).formatYMDHM(Locale.getDefault()), "2018-06-23 21:59")
-        assertEquals("2018-06-23 21:59:01".toMillisecondYMDHMS().formatYMDHMS(), "2018-06-23 21:59:01")
-        assertEquals("2018-06-23 21:59:01".toMillisecondYMDHMS(Locale.getDefault()).formatYMDHMS(Locale.getDefault()), "2018-06-23 21:59:01")
-        assertEquals("2018-06-23 21:59:01 999".toMillisecondYMDHMSM().formatYMDHMSM(), "2018-06-23 21:59:01 999")
-        assertEquals("2018-06-23 21:59:01 999".toMillisecondYMDHMSM(Locale.getDefault()).formatYMDHMSM(Locale.getDefault()), "2018-06-23 21:59:01 999")
-
-        assertEquals("2016-02-29".toMillisecondYMD().formatYMD(), "2016-02-29")
-        assertEquals("2017-02-29".toMillisecondYMD().formatYMD(), "2017-03-01")
     }
 
     @Test
@@ -163,72 +132,6 @@ class DatexTest {
         assertEquals("2016-02-29 15:59:34 897".toDateYMDHMSM().getCalendarField(Calendar.MILLISECOND, defaultFirstDayOfWeek), 897)
         assertEquals("2016-02-29 15:59:34 897".toDateYMDHMSM().getCalendarField(Calendar.MILLISECOND, Locale.getDefault()), 897)
         assertEquals("2016-02-29 15:59:34 897".toDateYMDHMSM().getCalendarField(Calendar.MILLISECOND), 897)
-
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getYear(), 2016)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarYear(), 2016)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarYear(Locale.getDefault()), 2016)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getMonth(), 1)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMonth(), 1)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMonth(Locale.getDefault()), 1)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getWeekOfYear(), 10)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfYear(), 10)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfYear(defaultFirstDayOfWeek), 10)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfYear(Locale.getDefault()), 10)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfYear(defaultFirstDayOfWeek, Locale.getDefault()), 10)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getWeekOfMonth(), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfMonth(), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfMonth(defaultFirstDayOfWeek), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfMonth(Locale.getDefault()), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarWeekOfMonth(defaultFirstDayOfWeek, Locale.getDefault()), 5)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getDayOfYear(), 60)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfYear(), 60)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfYear(Locale.getDefault()), 60)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getDayOfMonth(), 29)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfMonth(), 29)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfMonth(Locale.getDefault()), 29)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getDayOfWeekInMonth(), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeekInMonth(), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeekInMonth(defaultFirstDayOfWeek), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeekInMonth(Locale.getDefault()), 5)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeekInMonth(defaultFirstDayOfWeek, Locale.getDefault()), 5)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getDayOfWeek(), 2)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeek(), 2)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeek(defaultFirstDayOfWeek), 2)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeek(Locale.getDefault()), 2)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarDayOfWeek(defaultFirstDayOfWeek, Locale.getDefault()), 2)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getHourOfDay(), 15)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarHourOfDay(), 15)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarHourOfDay(Locale.getDefault()), 15)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getHour(), 3)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarHour(), 3)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarHour(Locale.getDefault()), 3)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getMinute(), 59)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMinute(), 59)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMinute(Locale.getDefault()), 59)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getSecond(), 34)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarSecond(), 34)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarSecond(Locale.getDefault()), 34)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().createCalendar().getMillisecond(), 897)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMillisecond(), 897)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarMillisecond(Locale.getDefault()), 897)
-
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarField(Calendar.MILLISECOND, defaultFirstDayOfWeek, Locale.getDefault()), 897)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarField(Calendar.MILLISECOND, defaultFirstDayOfWeek), 897)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarField(Calendar.MILLISECOND, Locale.getDefault()), 897)
-        assertEquals("2016-02-29 15:59:34 897".toMillisecondYMDHMSM().getCalendarField(Calendar.MILLISECOND), 897)
     }
 
     @Test
@@ -313,88 +216,6 @@ class DatexTest {
         assertEquals("2016-02-29 15:59:59 999".toDateYMDHMSM().addMillisecond(1).formatYMDHMSM(), "2016-02-29 16:00:00 000")
         assertEquals("2016-02-29 16:00:00 000".toDateYMDHMSM().addMillisecond(-1).formatYMDHMSM(), "2016-02-29 15:59:59 999")
         assertEquals("2016-02-29 15:59:59 999".toDateYMDHMSM().addMillisecond(1, Locale.getDefault()).formatYMDHMSM(), "2016-02-29 16:00:00 000")
-        assertEquals("2016-02-29 16:00:00 000".toDateYMDHMSM().addMillisecond(-1, Locale.getDefault()).formatYMDHMSM(), "2016-02-29 15:59:59 999")
-
-
-        assertEquals("2016-02-29".toMillisecondYMD().createCalendar().addToDate(Calendar.YEAR, 1).formatYMD(), "2017-02-28")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addCalendarField(Calendar.YEAR, 1).formatYMD(), "2017-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addCalendarField(Calendar.YEAR, 1, defaultFirstDayOfWeek).formatYMD(), "2017-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addCalendarField(Calendar.YEAR, 1, Locale.getDefault()).formatYMD(), "2017-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addCalendarField(Calendar.YEAR, 1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2017-02-28")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addYear(1).formatYMD(), "2017-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addYear(-1).formatYMD(), "2015-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addYear(1, Locale.getDefault()).formatYMD(), "2017-02-28")
-        assertEquals("2016-02-29".toMillisecondYMD().addYear(-1, Locale.getDefault()).formatYMD(), "2015-02-28")
-
-        assertEquals("2017-01-29".toMillisecondYMD().addMonth(1).formatYMD(), "2017-02-28")
-        assertEquals("2017-03-29".toMillisecondYMD().addMonth(-1).formatYMD(), "2017-02-28")
-        assertEquals("2017-01-29".toMillisecondYMD().addMonth(1, Locale.getDefault()).formatYMD(), "2017-02-28")
-        assertEquals("2017-03-29".toMillisecondYMD().addMonth(-1, Locale.getDefault()).formatYMD(), "2017-02-28")
-
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(1, defaultFirstDayOfWeek).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(1).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(-1, defaultFirstDayOfWeek).formatYMD(), "2016-02-03")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(1, Locale.getDefault()).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfMonth(-1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-03")
-
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(1).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(1, defaultFirstDayOfWeek).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(-1, defaultFirstDayOfWeek).formatYMD(), "2016-02-03")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(1, Locale.getDefault()).formatYMD(), "2016-02-17")
-        assertEquals("2016-02-10".toMillisecondYMD().addWeekOfYear(-1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-03")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeek(1).formatYMD(), "2016-03-01")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeek(1, defaultFirstDayOfWeek).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfWeek(-1, defaultFirstDayOfWeek).formatYMD(), "2016-02-29")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeek(1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-03-01")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeek(1, Locale.getDefault()).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfWeek(-1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-29")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeekInMonth(1).formatYMD(), "2016-03-07")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeekInMonth(1, defaultFirstDayOfWeek).formatYMD(), "2016-03-07")
-        assertEquals("2016-03-07".toMillisecondYMD().addDayOfWeekInMonth(-1, defaultFirstDayOfWeek).formatYMD(), "2016-02-29")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeekInMonth(1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-03-07")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfWeekInMonth(1, Locale.getDefault()).formatYMD(), "2016-03-07")
-        assertEquals("2016-03-07".toMillisecondYMD().addDayOfWeekInMonth(-1, defaultFirstDayOfWeek, Locale.getDefault()).formatYMD(), "2016-02-29")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfMonth(1).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfMonth(-1).formatYMD(), "2016-02-29")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfMonth(1, Locale.getDefault()).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfMonth(-1, Locale.getDefault()).formatYMD(), "2016-02-29")
-
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfYear(1).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfYear(-1).formatYMD(), "2016-02-29")
-        assertEquals("2016-02-29".toMillisecondYMD().addDayOfYear(1, Locale.getDefault()).formatYMD(), "2016-03-01")
-        assertEquals("2016-03-01".toMillisecondYMD().addDayOfYear(-1, Locale.getDefault()).formatYMD(), "2016-02-29")
-
-        assertEquals("2016-02-29 23:26:33".toMillisecondYMDHMS().addHour(1).formatYMDHMS(), "2016-03-01 00:26:33")
-        assertEquals("2016-03-01 00:26:33".toMillisecondYMDHMS().addHour(-1).formatYMDHMS(), "2016-02-29 23:26:33")
-        assertEquals("2016-02-29 23:26:33".toMillisecondYMDHMS().addHour(1, Locale.getDefault()).formatYMDHMS(), "2016-03-01 00:26:33")
-        assertEquals("2016-03-01 00:26:33".toMillisecondYMDHMS().addHour(-1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 23:26:33")
-
-        assertEquals("2016-02-29 23:26:33".toMillisecondYMDHMS().addHourOfDay(1).formatYMDHMS(), "2016-03-01 00:26:33")
-        assertEquals("2016-03-01 00:26:33".toMillisecondYMDHMS().addHourOfDay(-1).formatYMDHMS(), "2016-02-29 23:26:33")
-        assertEquals("2016-02-29 23:26:33".toMillisecondYMDHMS().addHourOfDay(1, Locale.getDefault()).formatYMDHMS(), "2016-03-01 00:26:33")
-        assertEquals("2016-03-01 00:26:33".toMillisecondYMDHMS().addHourOfDay(-1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 23:26:33")
-
-        assertEquals("2016-02-29 15:59:33".toMillisecondYMDHMS().addMinute(1).formatYMDHMS(), "2016-02-29 16:00:33")
-        assertEquals("2016-02-29 16:00:33".toMillisecondYMDHMS().addMinute(-1).formatYMDHMS(), "2016-02-29 15:59:33")
-        assertEquals("2016-02-29 15:59:33".toMillisecondYMDHMS().addMinute(1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 16:00:33")
-        assertEquals("2016-02-29 16:00:33".toMillisecondYMDHMS().addMinute(-1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 15:59:33")
-
-        assertEquals("2016-02-29 15:59:59".toMillisecondYMDHMS().addSecond(1).formatYMDHMS(), "2016-02-29 16:00:00")
-        assertEquals("2016-02-29 16:00:00".toMillisecondYMDHMS().addSecond(-1).formatYMDHMS(), "2016-02-29 15:59:59")
-        assertEquals("2016-02-29 15:59:59".toMillisecondYMDHMS().addSecond(1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 16:00:00")
-        assertEquals("2016-02-29 16:00:00".toMillisecondYMDHMS().addSecond(-1, Locale.getDefault()).formatYMDHMS(), "2016-02-29 15:59:59")
-
-        assertEquals("2016-02-29 15:59:59 999".toMillisecondYMDHMSM().addMillisecond(1).formatYMDHMSM(), "2016-02-29 16:00:00 000")
-        assertEquals("2016-02-29 16:00:00 000".toMillisecondYMDHMSM().addMillisecond(-1).formatYMDHMSM(), "2016-02-29 15:59:59 999")
-        assertEquals("2016-02-29 15:59:59 999".toMillisecondYMDHMSM().addMillisecond(1, Locale.getDefault()).formatYMDHMSM(), "2016-02-29 16:00:00 000")
-        assertEquals("2016-02-29 16:00:00 000".toMillisecondYMDHMSM().addMillisecond(-1, Locale.getDefault()).formatYMDHMSM(), "2016-02-29 15:59:59 999")
     }
 
     @Test
@@ -545,145 +366,25 @@ class DatexTest {
         assertFalse("2018-08-07 13:01:25 333".toDateYMDHMSM().isSameMillisecondOfSecond("2018-08-07 13:01:26 334".toDateYMDHMSM()))
         assertFalse(eraNoSameCalendar1.isSameMillisecondOfSecond(eraNoSameCalendar2))
 
-
-        assertTrue("2018".toMillisecondY().createCalendar().isSameYear("2018".toMillisecondY().createCalendar()))
-        assertFalse("2018".toMillisecondY().isSameYear("2017".toMillisecondY()))
-        assertFalse("2018".toMillisecondY().isSameYear("2019".toMillisecondY(), Locale.getDefault()))
         assertFalse(eraNoSameCalendar1.isSameYear(eraNoSameCalendar2))
-
-        assertTrue("2018-08".toMillisecondYM().createCalendar().isSameMonth("2018-08".toMillisecondYM().createCalendar()))
-        assertTrue("2018-08".toMillisecondYM().isSameMonth("2018-08-01".toMillisecondYMD(), Locale.getDefault()))
-        assertTrue("2018-08".toMillisecondYM().isSameMonth("2018-08-31".toMillisecondYMD()))
-        assertFalse("2018-08".toMillisecondYM().isSameMonth("2018-09".toMillisecondYM()))
-        assertFalse("2018-08".toMillisecondYM().isSameMonth("2017-08".toMillisecondYM()))
-        assertFalse("2018-08".toMillisecondYM().isSameMonth("2019-08".toMillisecondYM()))
         assertFalse(eraNoSameCalendar1.isSameMonth(eraNoSameCalendar2))
-
-        assertTrue("2018-08".toMillisecondYM().createCalendar().isSameMonthOfYear("2019-08".toMillisecondYM().createCalendar()))
-        assertTrue("2018-08".toMillisecondYM().isSameMonthOfYear("2019-08".toMillisecondYM(), Locale.getDefault()))
-        assertFalse("2018-08".toMillisecondYM().isSameMonthOfYear("2019-07".toMillisecondYM()))
         assertFalse(eraNoSameCalendar1.isSameMonthOfYear(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameWeek("2018-08-05".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-12-31".toMillisecondYMD().isSameWeek("2019-01-01".toMillisecondYMD(), defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-08-31".toMillisecondYMD().isSameWeek("2018-09-01".toMillisecondYMD(), defaultFirstDayOfWeek))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameWeek("2018-08-11".toMillisecondYMD(), Locale.getDefault()))
-        assertTrue("2019-01-01".toMillisecondYMD().isSameWeek("2018-12-31".toMillisecondYMD()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeek("2018-08-04".toMillisecondYMD()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeek("2018-08-12".toMillisecondYMD()))
-        assertFalse("2019-12-31".toMillisecondYMD().isSameWeek("2018-12-31".toMillisecondYMD()))
-        assertFalse("2018-12-31".toMillisecondYMD().isSameWeek("2019-01-06".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameWeek(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameWeekOfYear("2019-08-04".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameWeekOfYear("2019-08-10".toMillisecondYMD(), defaultFirstDayOfWeek, Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfYear("2019-08-03".toMillisecondYMD(), defaultFirstDayOfWeek))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfYear("2019-08-11".toMillisecondYMD(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfYear("2019-08-11".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameWeekOfYear(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameWeekOfMonth("2018-07-08".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameWeekOfMonth("2018-07-14".toMillisecondYMD(), defaultFirstDayOfWeek, Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfMonth("2018-07-07".toMillisecondYMD(), defaultFirstDayOfWeek))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfMonth("2018-07-15".toMillisecondYMD(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameWeekOfMonth("2018-07-15".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameWeekOfMonth(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameDay("2018-08-07 01".toMillisecondYMDH().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDay("2018-08-07 23".toMillisecondYMDH(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDay("2018-08-08".toMillisecondYMD()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDay("2018-08-06".toMillisecondYMD()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDay("2019-08-07".toMillisecondYMD()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDay("2018-09-07".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameDay(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameDayOfYear("2016-08-06".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfYear("2016-08-06 01".toMillisecondYMDH(), Locale.getDefault()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfYear("2016-08-06 23".toMillisecondYMDH()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDayOfYear("2016-08-07".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameDayOfYear(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameDayOfMonth("2018-07-07".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfMonth("2019-08-07".toMillisecondYMD(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDayOfMonth("2018-08-06".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameDayOfMonth(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameDayOfWeek("2018-08-14".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfWeek("2018-08-21".toMillisecondYMD(), defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfWeek("2018-08-14".toMillisecondYMD(), defaultFirstDayOfWeek))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDayOfWeek("2018-08-08".toMillisecondYMD(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDayOfWeek("2018-08-15".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameDayOfWeek(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07".toMillisecondYMD().createCalendar().isSameDayOfWeekInMonth("2018-08-01".toMillisecondYMD().createCalendar()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfWeekInMonth("2018-08-01".toMillisecondYMD(), defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfWeekInMonth("2018-08-01".toMillisecondYMD(), defaultFirstDayOfWeek))
-        assertTrue("2018-08-07".toMillisecondYMD().isSameDayOfWeekInMonth("2018-08-07".toMillisecondYMD(), Locale.getDefault()))
-        assertFalse("2018-08-07".toMillisecondYMD().isSameDayOfWeekInMonth("2018-07-08".toMillisecondYMD()))
         assertFalse(eraNoSameCalendar1.isSameDayOfWeekInMonth(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13".toMillisecondYMDH().createCalendar().isSameHour("2018-08-07 13:01".toMillisecondYMDHM().createCalendar()))
-        assertTrue("2018-08-07 13".toMillisecondYMDH().isSameHour("2018-08-07 13:59".toMillisecondYMDHM(), Locale.getDefault()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHour("2018-08-07 14:00".toMillisecondYMDHM()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHour("2018-08-07 12:59".toMillisecondYMDHM()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHour("2019-08-07 12:59".toMillisecondYMDHM()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHour("2018-09-07 12:59".toMillisecondYMDHM()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHour("2018-08-06 12:59".toMillisecondYMDHM()))
         assertFalse(eraNoSameCalendar1.isSameHour(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13".toMillisecondYMDH().createCalendar().isSameHourOf24H("2018-08-06 13".toMillisecondYMDH().createCalendar()))
-        assertTrue("2018-08-07 13".toMillisecondYMDH().isSameHourOf24H("2018-08-06 13".toMillisecondYMDH(), Locale.getDefault()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHourOf24H("2018-08-06 14".toMillisecondYMDH()))
         assertFalse(eraNoSameCalendar1.isSameHourOf24H(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13".toMillisecondYMDH().createCalendar().isSameHourOf12H("2018-08-07 01".toMillisecondYMDH().createCalendar()))
-        assertTrue("2018-08-07 13".toMillisecondYMDH().isSameHourOf12H("2018-08-07 01".toMillisecondYMDH(), Locale.getDefault()))
-        assertFalse("2018-08-07 13".toMillisecondYMDH().isSameHourOf12H("2018-08-07 02".toMillisecondYMDH()))
         assertFalse(eraNoSameCalendar1.isSameHourOf12H(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01".toMillisecondYMDHM().createCalendar().isSameMinute("2018-08-07 13:01:01".toMillisecondYMDHMS().createCalendar()))
-        assertTrue("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-08-07 13:01:59".toMillisecondYMDHMS(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-08-07 13:02:00".toMillisecondYMDHMS()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-08-07 13:00:59".toMillisecondYMDHMS()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2019-08-07 13:00:59".toMillisecondYMDHMS()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-09-07 13:00:59".toMillisecondYMDHMS()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-08-06 13:00:59".toMillisecondYMDHMS()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinute("2018-08-07 14:00:59".toMillisecondYMDHMS()))
         assertFalse(eraNoSameCalendar1.isSameMinute(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01".toMillisecondYMDHM().createCalendar().isSameMinuteOfHour("2018-08-07 14:01".toMillisecondYMDHM().createCalendar()))
-        assertTrue("2018-08-07 13:01".toMillisecondYMDHM().isSameMinuteOfHour("2018-08-07 14:01".toMillisecondYMDHM(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01".toMillisecondYMDHM().isSameMinuteOfHour("2018-08-07 14:02".toMillisecondYMDHM()))
         assertFalse(eraNoSameCalendar1.isSameMinuteOfHour(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01:25".toMillisecondYMDHMS().createCalendar().isSameSecond("2018-08-07 13:01:25 001".toMillisecondYMDHMSM().createCalendar()))
-        assertTrue("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-07 13:01:25 999".toMillisecondYMDHMSM(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-07 13:01:26 000".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-07 13:01:24 999".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2019-08-07 13:01:26 999".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-09-07 13:01:26 999".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-06 13:01:26 999".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-07 14:01:26 999".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecond("2018-08-07 13:02:26 999".toMillisecondYMDHMSM()))
         assertFalse(eraNoSameCalendar1.isSameSecond(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01:25".toMillisecondYMDHMS().createCalendar().isSameSecondOfMinute("2018-08-07 13:02:25".toMillisecondYMDHMS().createCalendar()))
-        assertTrue("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecondOfMinute("2018-08-07 13:02:25".toMillisecondYMDHMS(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01:25".toMillisecondYMDHMS().isSameSecondOfMinute("2018-08-07 13:02:26".toMillisecondYMDHMS()))
         assertFalse(eraNoSameCalendar1.isSameSecondOfMinute(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().createCalendar().isSameMillisecond("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().createCalendar()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2018-08-07 13:01:25 332".toMillisecondYMDHMSM(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2019-08-07 13:01:26 332".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2018-09-07 13:01:26 332".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2018-08-06 13:01:26 332".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2018-08-07 14:01:26 332".toMillisecondYMDHMSM()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecond("2018-08-07 13:02:26 332".toMillisecondYMDHMSM()))
         assertFalse(eraNoSameCalendar1.isSameMillisecond(eraNoSameCalendar2))
-
-        assertTrue("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().createCalendar().isSameMillisecondOfSecond("2018-08-07 13:01:26 333".toMillisecondYMDHMSM().createCalendar()))
-        assertTrue("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecondOfSecond("2018-08-07 13:01:26 333".toMillisecondYMDHMSM(), Locale.getDefault()))
-        assertFalse("2018-08-07 13:01:25 333".toMillisecondYMDHMSM().isSameMillisecondOfSecond("2018-08-07 13:01:26 334".toMillisecondYMDHMSM()))
         assertFalse(eraNoSameCalendar1.isSameMillisecondOfSecond(eraNoSameCalendar2))
     }
 
@@ -770,86 +471,5 @@ class DatexTest {
         assertTrue("2018-05-28 08:58:58 888".toDateYMDHMSM().differMillisecond("2018-05-28 08:58:58 881".toDateYMDHMSM(), 7, Locale.getDefault()))
         assertFalse("2018-05-28 08:58:58 888".toDateYMDHMSM().differMillisecond("2018-05-28 08:58:58 896".toDateYMDHMSM(), 7))
         assertFalse("2018-05-28 08:58:58 888".toDateYMDHMSM().differMillisecond("2018-05-28 08:58:58 850".toDateYMDHMSM(), 7))
-
-
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differField("2018-05-28 08:58:58 895".toMillisecondYMDHMSM().createCalendar(), Calendar.MILLISECOND, 7))
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differField("2018-05-28 08:58:58 881".toMillisecondYMDHMSM().createCalendar(), Calendar.MILLISECOND, 7))
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differField("2018-05-28 08:58:58 881".toMillisecondYMDHMSM().createCalendar(), Calendar.MILLISECOND, 0))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differField("2018-05-28 08:58:58 896".toMillisecondYMDHMSM().createCalendar(), Calendar.MILLISECOND, 7))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differField("2018-05-28 08:58:58 850".toMillisecondYMDHMSM().createCalendar(), Calendar.MILLISECOND, 7))
-
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differCalendarField("2018-05-28 08:58:58 895".toMillisecondYMDHMSM(), Calendar.MILLISECOND, 7, defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differCalendarField("2018-05-28 08:58:58 881".toMillisecondYMDHMSM(), Calendar.MILLISECOND, 7, defaultFirstDayOfWeek))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differCalendarField("2018-05-28 08:58:58 896".toMillisecondYMDHMSM(), Calendar.MILLISECOND, 7, Locale.getDefault()))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differCalendarField("2018-05-28 08:58:58 850".toMillisecondYMDHMSM(), Calendar.MILLISECOND, 7))
-
-        assertTrue("2018".toMillisecondY().createCalendar().differYear("2011".toMillisecondY().createCalendar(), 7))
-        assertTrue("2018".toMillisecondY().differYear("2025".toMillisecondY(), 7, Locale.getDefault()))
-        assertFalse("2018".toMillisecondY().differYear("2010".toMillisecondY(), 7))
-        assertFalse("2018".toMillisecondY().differYear("2026".toMillisecondY(), 7))
-
-        assertTrue("2018-05".toMillisecondYM().createCalendar().differMonth("2018-12".toMillisecondYM().createCalendar(), 7))
-        assertTrue("2018-05".toMillisecondYM().differMonth("2017-10".toMillisecondYM(), 7, Locale.getDefault()))
-        assertFalse("2018-05".toMillisecondYM().differMonth("2019-01".toMillisecondYM(), 7))
-        assertFalse("2018-05".toMillisecondYM().differMonth("2017-09".toMillisecondYM(), 7))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differWeekOfYear("2018-06-25".toMillisecondYMD().createCalendar(), 4))
-        assertTrue("2018-05-28".toMillisecondYMD().differWeekOfYear("2018-04-30".toMillisecondYMD(), 4, defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-05-28".toMillisecondYMD().differWeekOfYear("2018-04-30".toMillisecondYMD(), 4, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differWeekOfYear("2018-06-26".toMillisecondYMD(), 4, defaultFirstDayOfWeek))
-        assertFalse("2018-05-28".toMillisecondYMD().differWeekOfYear("2018-04-29".toMillisecondYMD(), 4))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differWeekOfMonth("2018-06-25".toMillisecondYMD().createCalendar(), 4))
-        assertTrue("2018-05-28".toMillisecondYMD().differWeekOfMonth("2018-04-30".toMillisecondYMD(), 4, defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-05-28".toMillisecondYMD().differWeekOfMonth("2018-04-30".toMillisecondYMD(), 4, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differWeekOfMonth("2018-06-26".toMillisecondYMD(), 4, defaultFirstDayOfWeek))
-        assertFalse("2018-05-28".toMillisecondYMD().differWeekOfMonth("2018-04-29".toMillisecondYMD(), 4))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differDayOfYear("2018-06-04".toMillisecondYMD().createCalendar(), 7))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfYear("2018-05-21".toMillisecondYMD(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfYear("2018-06-05".toMillisecondYMD(), 7))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfYear("2018-05-20".toMillisecondYMD(), 7))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differDayOfMonth("2018-06-04".toMillisecondYMD().createCalendar(), 7))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfMonth("2018-05-21".toMillisecondYMD(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfMonth("2018-06-05".toMillisecondYMD(), 7))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfMonth("2018-05-20".toMillisecondYMD(), 7))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differDayOfWeek("2018-06-04".toMillisecondYMD().createCalendar(), 7))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfWeek("2018-05-21".toMillisecondYMD(), 7, defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfWeek("2018-05-21".toMillisecondYMD(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfWeek("2018-06-05".toMillisecondYMD(), 7, defaultFirstDayOfWeek))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfWeek("2018-05-20".toMillisecondYMD(), 7))
-
-        assertTrue("2018-05-28".toMillisecondYMD().createCalendar().differDayOfWeekInMonth("2018-06-25".toMillisecondYMD().createCalendar(), 4))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfWeekInMonth("2018-04-30".toMillisecondYMD(), 4, defaultFirstDayOfWeek, Locale.getDefault()))
-        assertTrue("2018-05-28".toMillisecondYMD().differDayOfWeekInMonth("2018-04-30".toMillisecondYMD(), 4, Locale.getDefault()))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfWeekInMonth("2018-06-26".toMillisecondYMD(), 4, defaultFirstDayOfWeek))
-        assertFalse("2018-05-28".toMillisecondYMD().differDayOfWeekInMonth("2018-04-29".toMillisecondYMD(), 4))
-
-        assertTrue("2018-05-28 20".toMillisecondYMDH().createCalendar().differHourOfDay("2018-05-29 3".toMillisecondYMDH().createCalendar(), 7))
-        assertTrue("2018-05-28 20".toMillisecondYMDH().differHourOfDay("2018-05-28 13".toMillisecondYMDH(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28 20".toMillisecondYMDH().differHourOfDay("2018-05-29 4".toMillisecondYMDH(), 7))
-        assertFalse("2018-05-28 20".toMillisecondYMDH().differHourOfDay("2018-05-28 12".toMillisecondYMDH(), 7))
-
-        assertTrue("2018-05-28 08".toMillisecondYMDH().createCalendar().differHour("2018-05-28 15".toMillisecondYMDH().createCalendar(), 7))
-        assertTrue("2018-05-28 08".toMillisecondYMDH().differHour("2018-05-28 01".toMillisecondYMDH(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28 08".toMillisecondYMDH().differHour("2018-05-28 16".toMillisecondYMDH(), 7))
-        assertFalse("2018-05-28 08".toMillisecondYMDH().differHour("2018-05-28 00".toMillisecondYMDH(), 7))
-
-        assertTrue("2018-05-28 08:58".toMillisecondYMDHM().createCalendar().differMinute("2018-05-28 09:05".toMillisecondYMDHM().createCalendar(), 7))
-        assertTrue("2018-05-28 08:58".toMillisecondYMDHM().differMinute("2018-05-28 08:51".toMillisecondYMDHM(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28 08:58".toMillisecondYMDHM().differMinute("2018-05-28 09:06".toMillisecondYMDHM(), 7))
-        assertFalse("2018-05-28 08:58".toMillisecondYMDHM().differMinute("2018-05-28 08:50".toMillisecondYMDHM(), 7))
-
-        assertTrue("2018-05-28 08:58:58".toMillisecondYMDHMS().createCalendar().differSecond("2018-05-28 08:59:05".toMillisecondYMDHMS().createCalendar(), 7))
-        assertTrue("2018-05-28 08:58:58".toMillisecondYMDHMS().differSecond("2018-05-28 08:58:51".toMillisecondYMDHMS(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28 08:58:58".toMillisecondYMDHMS().differSecond("2018-05-28 08:59:06".toMillisecondYMDHMS(), 7))
-        assertFalse("2018-05-28 08:58:58".toMillisecondYMDHMS().differSecond("2018-05-28 08:58:50".toMillisecondYMDHMS(), 7))
-
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().createCalendar().differMillisecond("2018-05-28 08:58:58 895".toMillisecondYMDHMSM().createCalendar(), 7))
-        assertTrue("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differMillisecond("2018-05-28 08:58:58 881".toMillisecondYMDHMSM(), 7, Locale.getDefault()))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differMillisecond("2018-05-28 08:58:58 896".toMillisecondYMDHMSM(), 7))
-        assertFalse("2018-05-28 08:58:58 888".toMillisecondYMDHMSM().differMillisecond("2018-05-28 08:58:58 850".toMillisecondYMDHMSM(), 7))
     }
 }
