@@ -28,6 +28,7 @@ dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
     api(project(":tools4j-crypto"))
+    api(project(":tools4j-base64-ktx"))
 
     testImplementation("junit:junit:${property("JUNIT_VERSION")}")
 }
