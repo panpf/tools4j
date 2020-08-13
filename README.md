@@ -41,6 +41,7 @@ implementation "com.github.panpf.tools4j:tools4j-annotation:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-base64:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-collections:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-compare:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-crypto:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-grouping:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
@@ -52,7 +53,7 @@ implementation "com.github.panpf.tools4j:tools4j-ranges:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-ranges-date:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-reflect:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-regex:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-security:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-messagedigest:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
 
@@ -60,6 +61,7 @@ implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-annotation-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-base64-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-collections-ktx:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-lang-ktx:$LAST_VERSION"
@@ -69,7 +71,7 @@ implementation "com.github.panpf.tools4j:tools4j-ranges-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-ranges-date-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-reflect-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-regex-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-messagedigest-ktx:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION"
 ```
 
@@ -158,6 +160,21 @@ Dependencies：
 * Comparex: [Comparex.java] ([Test][ComparexTest.kt])
     * areEqual, compareValues, compareValuesBy, compareBy, 
     * compareByDescending, naturalOrder, reverseOrder, maxOf, minOf
+
+### tools4j-crypto
+* Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxTest.kt])
+    * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt, 
+    * encryptToBase64, decrypt, decryptFromBase64, decryptToString, 
+    * decryptToStringFromBase64
+* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxTest.kt])
+    * createKeyByPassword, encrypt, encryptToBase64,
+    * decrypt, decryptFromBase64, decryptToString, decryptToStringFromBase64
+* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxTest.kt])
+    * toBase64, toBytes
+* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxTest.kt])
+    * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64, 
+    * verify, verifyFromBase64, encrypt, encryptToBase64, decrypt, 
+    * decryptFromBase64, decryptToString, decryptToStringFromBase64
 
 ### tools4j-date
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexTest.kt])
@@ -250,6 +267,10 @@ Dependencies：
     * divide, divideToInt, divideToLong, scale, proportion, percent, 
     * format, formatPercentWith
 
+### tools4j-messagedigest
+* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
+    * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
+
 ### tools4j-net
 * Netx: [Netx.java] ([Test][NetxTest.kt])
     * isIPV4, isIPV6, isMacAddress, getLocalIPAddress, getLocalIPV4Address, 
@@ -285,23 +306,6 @@ Dependencies：
     * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup, 
     * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE, 
     * CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
-
-### tools4j-security
-* Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxTest.kt])
-    * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt, 
-    * encryptToBase64, decrypt, decryptFromBase64, decryptToString, 
-    * decryptToStringFromBase64
-* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxTest.kt])
-    * createKeyByPassword, encrypt, encryptToBase64,
-    * decrypt, decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxTest.kt])
-    * toBase64, toBytes
-* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
-    * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
-* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxTest.kt])
-    * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64, 
-    * verify, verifyFromBase64, encrypt, encryptToBase64, decrypt, 
-    * decryptFromBase64, decryptToString, decryptToStringFromBase64
 
 ### tools4j-sequences
 * Sequencex: [Sequencex.java] | [Sequencex.kt]

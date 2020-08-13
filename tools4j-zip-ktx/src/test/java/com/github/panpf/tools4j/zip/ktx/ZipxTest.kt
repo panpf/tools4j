@@ -22,7 +22,7 @@ import com.github.panpf.tools4j.io.Filex
 import com.github.panpf.tools4j.io.ktx.createFileTree
 import com.github.panpf.tools4j.io.ktx.createNewFileOrThrow
 import com.github.panpf.tools4j.io.ktx.listFilesRecursively
-import com.github.panpf.tools4j.security.ktx.getMD5Digest
+import com.github.panpf.tools4j.messagedigest.ktx.getMD5Digest
 import com.github.panpf.tools4j.zip.ZipEntryNameTransformer
 import com.github.panpf.tools4j.zip.ZipListener
 import org.junit.Assert

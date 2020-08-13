@@ -16,7 +16,7 @@
 
 package com.github.panpf.tools4j.io
 
-import com.github.panpf.tools4j.security.MessageDigestx
+import com.github.panpf.tools4j.messagedigest.MessageDigestx
 import org.junit.Assert.*
 import org.junit.Test
 import java.io.File

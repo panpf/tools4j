@@ -18,13 +18,13 @@ package com.github.panpf.tools4j.base64.ktx
 import com.github.panpf.tools4j.base64.Base64x
 import org.junit.Assert
 import org.junit.Test
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 
 class Base64xTest {
 
     companion object {
         private const val SOURCE = "上山打老虎"
-        private val SOURCE_BYTES = SOURCE.toByteArray(Charset.forName("UTF-8"))
+        private val SOURCE_BYTES = SOURCE.toByteArray(StandardCharsets.UTF_8)
     }
 
     @Test
