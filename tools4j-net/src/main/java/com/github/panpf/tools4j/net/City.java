@@ -14,28 +14,37 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.lang;
+package com.github.panpf.tools4j.net;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-/**
- * Object tool method
- */
-public class Objectx {
+public class City {
 
-    /**
-     * Returns a simple string representation of the object.
-     * value of:
-     * <blockquote>
-     * <pre>
-     * getClass().getSimpleName() + '@' + Integer.toHexString(hashCode())
-     * </pre></blockquote>
-     *
-     * @return a string representation of the object.
-     */
     @NotNull
-    public static String toSimpleString(@Nullable Object object) {
-        return object != null ? object.getClass().getSimpleName() + "@" + Integer.toHexString(object.hashCode()) : "null";
+    private final String id;
+    @NotNull
+    private final String name;
+    @NotNull
+    private final String ip;
+
+    public City(@NotNull String id, @NotNull String name, @NotNull String ip) {
+        this.id = id;
+        this.name = name;
+        this.ip = ip;
+    }
+
+    @NotNull
+    public String getId() {
+        return id;
+    }
+
+    @NotNull
+    public String getName() {
+        return name;
+    }
+
+    @NotNull
+    public String getIp() {
+        return ip;
     }
 }

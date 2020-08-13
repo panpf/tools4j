@@ -137,20 +137,6 @@ public class Sequencex {
     }
 
     /**
-     * Creates an [Iterable] instance that wraps the original sequence returning its elements when being iterated.
-     */
-    @NotNull
-    public static <T> Iterable<T> asIterable(@NotNull final Sequence<T> sequence) {
-        return new Iterable<T>() {
-            @NotNull
-            @Override
-            public Iterator<T> iterator() {
-                return sequence.iterator();
-            }
-        };
-    }
-
-    /**
      * Creates a [Sequence] instance that wraps the original map returning its entries when being iterated.
      */
     @NotNull
@@ -281,6 +267,20 @@ public class Sequencex {
             @Override
             public Iterator<Character> iterator() {
                 return new ArrayCharIterator(elements);
+            }
+        };
+    }
+
+    /**
+     * Creates an [Iterable] instance that wraps the original sequence returning its elements when being iterated.
+     */
+    @NotNull
+    public static <T> Iterable<T> asIterable(@NotNull final Sequence<T> sequence) {
+        return new Iterable<T>() {
+            @NotNull
+            @Override
+            public Iterator<T> iterator() {
+                return sequence.iterator();
             }
         };
     }
@@ -2192,6 +2192,108 @@ public class Sequencex {
         return sum;
     }
 
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static int sumOfByte(@Nullable Sequence<Byte> sequence) {
+        int sum = 0;
+        if (sequence != null) {
+            Iterator<Byte> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Byte element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static int sumOfShort(@Nullable Sequence<Short> sequence) {
+        int sum = 0;
+        if (sequence != null) {
+            Iterator<Short> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Short element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static int sumOfInt(@Nullable Sequence<Integer> sequence) {
+        int sum = 0;
+        if (sequence != null) {
+            Iterator<Integer> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Integer element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static long sum(@Nullable Sequence<Long> sequence) {
+        long sum = 0L;
+        if (sequence != null) {
+            Iterator<Long> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Long element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static float sumOfFloat(@Nullable Sequence<Float> sequence) {
+        float sum = 0.0f;
+        if (sequence != null) {
+            Iterator<Float> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Float element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static double sumOfDouble(@Nullable Sequence<Double> sequence) {
+        double sum = 0.0;
+        if (sequence != null) {
+            Iterator<Double> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                Double element = iterator.next();
+                sum += element;
+            }
+        }
+        return sum;
+    }
+
 
     /* ******************************************* require ******************************************* */
 
@@ -2880,112 +2982,6 @@ public class Sequencex {
             }
         }
         return count == 0 ? Double.NaN : sum / count;
-    }
-
-
-    /* ******************************************* sum ******************************************* */
-
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static int sumOfByte(@Nullable Sequence<Byte> sequence) {
-        int sum = 0;
-        if (sequence != null) {
-            Iterator<Byte> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Byte element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
-    }
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static int sumOfShort(@Nullable Sequence<Short> sequence) {
-        int sum = 0;
-        if (sequence != null) {
-            Iterator<Short> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Short element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
-    }
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static int sumOfInt(@Nullable Sequence<Integer> sequence) {
-        int sum = 0;
-        if (sequence != null) {
-            Iterator<Integer> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Integer element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
-    }
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static long sum(@Nullable Sequence<Long> sequence) {
-        long sum = 0L;
-        if (sequence != null) {
-            Iterator<Long> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Long element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
-    }
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static float sumOfFloat(@Nullable Sequence<Float> sequence) {
-        float sum = 0.0f;
-        if (sequence != null) {
-            Iterator<Float> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Float element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
-    }
-
-    /**
-     * Returns the sum of all elements in the sequence.
-     * <p>
-     * The operation is _terminal_.
-     */
-    public static double sumOfDouble(@Nullable Sequence<Double> sequence) {
-        double sum = 0.0;
-        if (sequence != null) {
-            Iterator<Double> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                Double element = iterator.next();
-                sum += element;
-            }
-        }
-        return sum;
     }
 
     private static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {

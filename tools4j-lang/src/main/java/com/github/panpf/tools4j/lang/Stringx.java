@@ -35,7 +35,6 @@ import static java.lang.Character.isUpperCase;
 /**
  * String tool method
  */
-@SuppressWarnings({"WeakerAccess"})
 public class Stringx {
 
     private Stringx() {
@@ -4680,6 +4679,7 @@ public class Stringx {
      * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
      * The last char sequence may have less characters than the given [size].
      */
+    @NotNull
     public static <R> Iterable<R> chunkedIterable(@Nullable CharSequence charSequence, int size, @NotNull Transformer<CharSequence, R> transform) {
         return windowedIterable(charSequence, size, size, true, transform);
     }
@@ -4691,6 +4691,7 @@ public class Stringx {
      *
      * @param size the number of elements to take in each string, must be positive and can be greater than the number of elements in this char sequence.
      */
+    @NotNull
     public static Iterable<String> chunkedIterable(@Nullable CharSequence charSequence, int size) {
         return chunkedIterable(charSequence, size, new Transformer<CharSequence, String>() {
             @NotNull
@@ -4710,6 +4711,7 @@ public class Stringx {
      * where *first* char sequence contains characters for which [predicate] yielded `true`,
      * while *second* char sequence contains characters for which [predicate] yielded `false`.
      */
+    @NotNull
     public static Pair<CharSequence, CharSequence> partition(@Nullable CharSequence charSequence, @NotNull Predicate<Character> predicate) {
         StringBuilder first = new StringBuilder();
         StringBuilder second = new StringBuilder();
@@ -4728,6 +4730,7 @@ public class Stringx {
      * where *first* string contains characters for which [predicate] yielded `true`,
      * while *second* string contains characters for which [predicate] yielded `false`.
      */
+    @NotNull
     public static Pair<String, String> partition(@Nullable String string, @NotNull Predicate<Character> predicate) {
         StringBuilder first = new StringBuilder();
         StringBuilder second = new StringBuilder();

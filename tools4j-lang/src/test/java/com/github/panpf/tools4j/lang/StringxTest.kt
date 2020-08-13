@@ -1629,13 +1629,27 @@ class StringxTest {
                 , "8" to listOf("8", "8", "8")
                 , "9" to listOf("9", "9"))
 
-        Assertx.assertThreeEquals(map, Stringx.groupBy(source) { it.toString() }.toSortedMap(), source.groupBy { it.toString() }.toSortedMap())
-        Assertx.assertThreeEquals(map2, Stringx.groupBy(source, { it.toString() }) { it.toString() }.toSortedMap(), source.groupBy({ it.toString() }) { it.toString() }.toSortedMap())
+        Assertx.assertThreeEquals(
+                map,
+                Stringx.groupBy(source) { it.toString() }.toSortedMap(),
+                source.groupBy { it.toString() }.toSortedMap()
+        )
+        Assertx.assertThreeEquals(
+                map2,
+                Stringx.groupBy(source, { it.toString() }) { it.toString() }.toSortedMap(),
+                source.groupBy({ it.toString() }) { it.toString() }.toSortedMap()
+        )
 
-        Assertx.assertThreeEquals(map, Stringx.groupByTo(source, LinkedHashMap<String, List<Char>>()) { it.toString() }.toSortedMap(),
-                source.groupByTo(LinkedHashMap()) { it.toString() }.toSortedMap())
-        Assertx.assertThreeEquals(map2, Stringx.groupByTo(source, LinkedHashMap<String, List<String>>(), { it.toString() }) { it.toString() }.toSortedMap(),
-                source.groupByTo(LinkedHashMap(), { it.toString() }) { it.toString() }.toSortedMap())
+        Assertx.assertThreeEquals(
+                map,
+                Stringx.groupByTo(source, LinkedHashMap<String, List<Char>>()) { it.toString() }.toSortedMap(),
+                source.groupByTo(LinkedHashMap()) { it.toString() }.toSortedMap()
+        )
+        Assertx.assertThreeEquals(
+                map2,
+                Stringx.groupByTo(source, LinkedHashMap<String, List<String>>(), { it.toString() }) { it.toString() }.toSortedMap(),
+                source.groupByTo(LinkedHashMap(), { it.toString() }) { it.toString() }.toSortedMap()
+        )
     }
 
     @Test
@@ -1643,33 +1657,74 @@ class StringxTest {
         val source = "1365268945336"
         val result = listOf("1", "3", "6", "5", "2", "6", "8", "9", "4", "5", "3", "3", "6")
 
-        Assertx.assertThreeEquals(result, Stringx.map(source) { it.toString() }, source.map { it.toString() })
-        Assertx.assertThreeEquals(result, Stringx.mapTo(source, ArrayList(source.length)) { it.toString() },
-                source.mapTo(ArrayList(source.length)) { it.toString() })
+        Assertx.assertThreeEquals(
+                result,
+                Stringx.map(source) { it.toString() },
+                source.map { it.toString() }
+        )
+        Assertx.assertThreeEquals(
+                result,
+                Stringx.mapTo(source, ArrayList(source.length)) { it.toString() },
+                source.mapTo(ArrayList(source.length)) { it.toString() }
+        )
 
         val indexPair1 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(result, Stringx.mapIndexed(source) { index, it -> indexPair1.first.append(index);it.toString() },
-                source.mapIndexed { index, it -> indexPair1.second.append(index); it.toString() })
-        Assertx.assertThreeEquals("0123456789101112", indexPair1.first.toString(), indexPair1.second.toString())
+        Assertx.assertThreeEquals(
+                result,
+                Stringx.mapIndexed(source) { index, it -> indexPair1.first.append(index);it.toString() },
+                source.mapIndexed { index, it -> indexPair1.second.append(index); it.toString() }
+        )
+        Assertx.assertThreeEquals(
+                "0123456789101112",
+                indexPair1.first.toString(),
+                indexPair1.second.toString()
+        )
         val indexPair2 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(result, Stringx.mapIndexedTo(source, ArrayList(source.length)) { index, it -> indexPair2.first.append(index);it.toString() },
-                source.mapIndexedTo(ArrayList(source.length)) { index, it -> indexPair2.second.append(index); it.toString() })
-        Assertx.assertThreeEquals("0123456789101112", indexPair2.first.toString(), indexPair2.second.toString())
+        Assertx.assertThreeEquals(
+                result,
+                Stringx.mapIndexedTo(source, ArrayList(source.length)) { index, it -> indexPair2.first.append(index);it.toString() },
+                source.mapIndexedTo(ArrayList(source.length)) { index, it -> indexPair2.second.append(index); it.toString() }
+        )
+        Assertx.assertThreeEquals(
+                "0123456789101112",
+                indexPair2.first.toString(),
+                indexPair2.second.toString()
+        )
 
         val resultNotNull = listOf("1", "6", "5", "2", "6", "8", "9", "4", "5", "6")
-        Assertx.assertThreeEquals(resultNotNull, Stringx.mapNotNull(source) { if (it != '3') it.toString() else null },
-                source.mapNotNull { if (it != '3') it.toString() else null })
-        Assertx.assertThreeEquals(resultNotNull, Stringx.mapNotNullTo(source, ArrayList(source.length)) { if (it != '3') it.toString() else null },
-                source.mapNotNullTo(ArrayList(source.length)) { if (it != '3') it.toString() else null })
+        Assertx.assertThreeEquals(
+                resultNotNull,
+                Stringx.mapNotNull(source) { if (it != '3') it.toString() else null },
+                source.mapNotNull { if (it != '3') it.toString() else null }
+        )
+        Assertx.assertThreeEquals(
+                resultNotNull,
+                Stringx.mapNotNullTo(source, ArrayList(source.length)) { if (it != '3') it.toString() else null },
+                source.mapNotNullTo(ArrayList(source.length)) { if (it != '3') it.toString() else null }
+        )
 
         val indexPair3 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(resultNotNull, Stringx.mapIndexedNotNull(source) { index, it -> indexPair3.first.append(index);if (it != '3') it.toString() else null },
-                source.mapIndexedNotNull { index, it -> indexPair3.second.append(index);if (it != '3') it.toString() else null })
-        Assertx.assertThreeEquals("0123456789101112", indexPair3.first.toString(), indexPair3.second.toString())
+        Assertx.assertThreeEquals(
+                resultNotNull,
+                Stringx.mapIndexedNotNull(source) { index, it -> indexPair3.first.append(index);if (it != '3') it.toString() else null },
+                source.mapIndexedNotNull { index, it -> indexPair3.second.append(index);if (it != '3') it.toString() else null }
+        )
+        Assertx.assertThreeEquals(
+                "0123456789101112",
+                indexPair3.first.toString(),
+                indexPair3.second.toString()
+        )
         val indexPair4 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(resultNotNull, Stringx.mapIndexedNotNullTo(source, ArrayList(source.length)) { index, it -> indexPair4.first.append(index);if (it != '3') it.toString() else null },
-                source.mapIndexedNotNullTo(ArrayList(source.length)) { index, it -> indexPair4.second.append(index);if (it != '3') it.toString() else null })
-        Assertx.assertThreeEquals("0123456789101112", indexPair4.first.toString(), indexPair4.second.toString())
+        Assertx.assertThreeEquals(
+                resultNotNull,
+                Stringx.mapIndexedNotNullTo(source, ArrayList(source.length)) { index, it -> indexPair4.first.append(index);if (it != '3') it.toString() else null },
+                source.mapIndexedNotNullTo(ArrayList(source.length)) { index, it -> indexPair4.second.append(index);if (it != '3') it.toString() else null }
+        )
+        Assertx.assertThreeEquals(
+                "0123456789101112",
+                indexPair4.first.toString(),
+                indexPair4.second.toString()
+        )
     }
 
     @Test
@@ -1720,27 +1775,58 @@ class StringxTest {
     fun testFold() {
         val source = "1365268945336"
 
-        Assertx.assertThreeEquals(61, Stringx.fold(source, 0) { accumulator, it -> accumulator + it.toString().toInt() },
-                source.fold(0) { accumulator, it -> accumulator + it.toString().toInt() })
-        Assertx.assertThreeEquals(63, Stringx.fold(source, 2) { accumulator, it -> accumulator + it.toString().toInt() },
-                source.fold(2) { accumulator, it -> accumulator + it.toString().toInt() })
+        Assertx.assertThreeEquals(
+                61,
+                Stringx.fold(source, 0) { accumulator, it -> accumulator + it.toString().toInt() },
+                source.fold(0) { accumulator, it -> accumulator + it.toString().toInt() }
+        )
+        Assertx.assertThreeEquals(
+                63,
+                Stringx.fold(source, 2) { accumulator, it -> accumulator + it.toString().toInt() },
+                source.fold(2) { accumulator, it -> accumulator + it.toString().toInt() }
+        )
 
         val indexPair1 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(61, Stringx.foldIndexed(source, 0) { index, accumulator, it -> indexPair1.first.append(index);accumulator + it.toString().toInt() },
-                source.foldIndexed(0) { index, accumulator, it -> indexPair1.second.append(index);accumulator + it.toString().toInt() })
-        Assertx.assertThreeEquals("0123456789101112", indexPair1.first.toString(), indexPair1.second.toString())
+        Assertx.assertThreeEquals(
+                61,
+                Stringx.foldIndexed(source, 0) { index, accumulator, it -> indexPair1.first.append(index);accumulator + it.toString().toInt() },
+                source.foldIndexed(0) { index, accumulator, it -> indexPair1.second.append(index);accumulator + it.toString().toInt() }
+        )
+        Assertx.assertThreeEquals(
+                "0123456789101112",
+                indexPair1.first.toString(),
+                indexPair1.second.toString()
+        )
 
-        Assertx.assertThreeEquals(61, Stringx.foldRight(source, 0) { it, accumulator -> accumulator + it.toString().toInt() },
-                source.foldRight(0) { it, accumulator -> accumulator + it.toString().toInt() })
-        Assertx.assertThreeEquals(63, Stringx.foldRight(source, 2) { it, accumulator -> accumulator + it.toString().toInt() },
-                source.foldRight(2) { it, accumulator -> accumulator + it.toString().toInt() })
-        assertEquals(3, Stringx.foldRight(null, 3) { it, accumulator -> accumulator + it.toString().toInt() })
+        Assertx.assertThreeEquals(
+                61,
+                Stringx.foldRight(source, 0) { it, accumulator -> accumulator + it.toString().toInt() },
+                source.foldRight(0) { it, accumulator -> accumulator + it.toString().toInt() }
+        )
+        Assertx.assertThreeEquals(
+                63,
+                Stringx.foldRight(source, 2) { it, accumulator -> accumulator + it.toString().toInt() },
+                source.foldRight(2) { it, accumulator -> accumulator + it.toString().toInt() }
+        )
+        assertEquals(
+                3,
+                Stringx.foldRight(null, 3) { it, accumulator -> accumulator + it.toString().toInt() }
+        )
 
         val indexPair2 = Pair(StringBuilder(), StringBuilder())
-        Assertx.assertThreeEquals(61, Stringx.foldRightIndexed(source, 0) { index, it, accumulator -> indexPair2.first.append(index);accumulator + it.toString().toInt() },
-                source.foldRightIndexed(0) { index, it, accumulator -> indexPair2.second.append(index);accumulator + it.toString().toInt() })
-        Assertx.assertThreeEquals("1211109876543210", indexPair2.first.toString(), indexPair2.second.toString())
-        assertEquals(3, Stringx.foldRightIndexed(null, 3) { _, it, accumulator -> accumulator + it.toString().toInt() })
+        Assertx.assertThreeEquals(
+                61,
+                Stringx.foldRightIndexed(source, 0) { index, it, accumulator -> indexPair2.first.append(index);accumulator + it.toString().toInt() },
+                source.foldRightIndexed(0) { index, it, accumulator -> indexPair2.second.append(index);accumulator + it.toString().toInt() }
+        )
+        Assertx.assertThreeEquals(
+                "1211109876543210",
+                indexPair2.first.toString(), indexPair2.second.toString()
+        )
+        assertEquals(
+                3,
+                Stringx.foldRightIndexed(null, 3) { _, it, accumulator -> accumulator + it.toString().toInt() }
+        )
     }
 
     @Test

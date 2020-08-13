@@ -19,8 +19,6 @@ package com.github.panpf.tools4j.lang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.math.RoundingMode;
-
 /**
  * Number tool method
  */
@@ -148,6 +146,7 @@ public class Numberx {
     /**
      * Converts the given number to a string of a given length. If the number of digits is not enough, it is added 0 in front.
      */
+    @NotNull
     public static String pad(int digit, int stringLength) {
         return String.format("%0" + stringLength + "d", digit);
     }
@@ -155,13 +154,13 @@ public class Numberx {
     /**
      * Converts the given number to a string of a given length. If the number of digits is not enough, it is added 0 in front.
      */
+    @NotNull
     public static String pad(long digit, int stringLength) {
         return String.format("%0" + stringLength + "d", digit);
     }
 
 
     /* ******************************************* orZero *******************************************/
-
 
 
     public static byte orZero(@Nullable Byte aByte) {

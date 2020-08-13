@@ -27,7 +27,6 @@ import java.util.*;
 /**
  * Array tool method
  */
-@SuppressWarnings({"WeakerAccess"})
 public class Arrayx2 {
 
     private Arrayx2() {

@@ -450,34 +450,4 @@ public class Netx {
         return new String(urlContentBytes, StandardCharsets.UTF_8);
     }
 
-    public static class City {
-
-        @NotNull
-        private final String id;
-        @NotNull
-        private final String name;
-        @NotNull
-        private final String ip;
-
-        public City(@NotNull String id, @NotNull String name, @NotNull String ip) {
-            this.id = id;
-            this.name = name;
-            this.ip = ip;
-        }
-
-        @NotNull
-        public String getId() {
-            return id;
-        }
-
-        @NotNull
-        public String getName() {
-            return name;
-        }
-
-        @NotNull
-        public String getIp() {
-            return ip;
-        }
-    }
 }

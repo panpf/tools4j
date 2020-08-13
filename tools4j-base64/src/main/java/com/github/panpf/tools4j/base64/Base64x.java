@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.base64;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Base64 tool method
@@ -175,7 +175,7 @@ public class Base64x {
      */
     @NotNull
     public static byte[] encode(@NotNull String input, int flags) {
-        return encode(input.getBytes(Charset.forName("UTF-8")), flags);
+        return encode(input.getBytes(StandardCharsets.UTF_8), flags);
     }
 
     /**
@@ -204,7 +204,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int offset, int len, int flags) {
-        return new String(encode(input, offset, len, flags), Charset.forName("UTF-8"));
+        return new String(encode(input, offset, len, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -218,7 +218,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int offset, int len) {
-        return new String(encode(input, offset, len), Charset.forName("UTF-8"));
+        return new String(encode(input, offset, len), StandardCharsets.UTF_8);
     }
 
     /**
@@ -232,7 +232,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int flags) {
-        return new String(encode(input, flags), Charset.forName("UTF-8"));
+        return new String(encode(input, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -243,7 +243,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input) {
-        return new String(encode(input), Charset.forName("UTF-8"));
+        return new String(encode(input), StandardCharsets.UTF_8);
     }
 
     /**
@@ -257,7 +257,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull String input, int flags) {
-        return new String(encode(input, flags), Charset.forName("UTF-8"));
+        return new String(encode(input, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -268,7 +268,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull String input) {
-        return new String(encode(input), Charset.forName("UTF-8"));
+        return new String(encode(input), StandardCharsets.UTF_8);
     }
 
     //  --------------------------------------------------------
@@ -377,7 +377,7 @@ public class Base64x {
      */
     @NotNull
     public static byte[] decode(@NotNull String input, int flags) {
-        return decode(input.getBytes(Charset.forName("UTF-8")), flags);
+        return decode(input.getBytes(StandardCharsets.UTF_8), flags);
     }
 
     /**
@@ -415,7 +415,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int offset, int len, int flags) {
-        return new String(decode(input, offset, len, flags), Charset.forName("UTF-8"));
+        return new String(decode(input, offset, len, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -432,7 +432,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int offset, int len) {
-        return new String(decode(input, offset, len), Charset.forName("UTF-8"));
+        return new String(decode(input, offset, len), StandardCharsets.UTF_8);
     }
 
     /**
@@ -449,7 +449,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int flags) {
-        return new String(decode(input, flags), Charset.forName("UTF-8"));
+        return new String(decode(input, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -464,7 +464,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input) {
-        return new String(decode(input), Charset.forName("UTF-8"));
+        return new String(decode(input), StandardCharsets.UTF_8);
     }
 
     /**
@@ -483,7 +483,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull String input, int flags) {
-        return new String(decode(input, flags), Charset.forName("UTF-8"));
+        return new String(decode(input, flags), StandardCharsets.UTF_8);
     }
 
     /**
@@ -500,7 +500,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull String input) {
-        return new String(decode(input), Charset.forName("UTF-8"));
+        return new String(decode(input), StandardCharsets.UTF_8);
     }
 
     //  --------------------------------------------------------
@@ -562,7 +562,7 @@ public class Base64x {
          * Decode lookup table for the "web safe" variant (RFC 3548
          * sec. 4) where - and _ replace + and /.
          */
-        private static final int DECODE_WEBSAFE[] = {
+        private static final int[] DECODE_WEBSAFE = {
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1,
@@ -813,7 +813,7 @@ public class Base64x {
          * Lookup table for turning Base64 alphabet positions (6 bits)
          * into output bytes.
          */
-        private static final byte ENCODE[] = {
+        private static final byte[] ENCODE = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -824,7 +824,7 @@ public class Base64x {
          * Lookup table for turning Base64 alphabet positions (6 bits)
          * into output bytes.
          */
-        private static final byte ENCODE_WEBSAFE[] = {
+        private static final byte[] ENCODE_WEBSAFE = {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
