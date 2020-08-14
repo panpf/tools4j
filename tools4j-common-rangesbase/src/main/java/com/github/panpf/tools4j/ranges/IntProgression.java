@@ -16,7 +16,6 @@
 
 package com.github.panpf.tools4j.ranges;
 
-import com.github.panpf.tools4j.iterable.IterableUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +33,7 @@ public class IntProgression implements Iterable<Integer> {
     public IntProgression(int first, int last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
         this.first = first;
-        this.last = IterableUtil.getProgressionLastElement(first, last, step);
+        this.last = ProgressionUtil.getProgressionLastElement(first, last, step);
         this.step = step;
     }
 

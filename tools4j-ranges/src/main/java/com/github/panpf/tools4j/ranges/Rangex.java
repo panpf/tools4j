@@ -413,6 +413,16 @@ public class Rangex {
      * *****************************************************************************************************************
      */
 
+    /**
+     * Creates a range from this [Comparable] value to the specified [that] value.
+     *
+     * This value needs to be smaller than [that] value, otherwise the returned range will be empty.
+     */
+    @NotNull
+    public static <T extends Comparable<T>> ComparableRange<T> rangeTo(@NotNull T start, @NotNull T endInclusive){
+        return new ComparableRange<>(start, endInclusive);
+    }
+
 
     /* ******************************************* Byte Range *******************************************/
 
@@ -906,7 +916,7 @@ public class Rangex {
      *
      * @return this value if it's in the [range], or `range.start` if this value is less than `range.start`, or `range.endInclusive` if this value is greater than `range.endInclusive`.
      */
-    public static <T extends Comparable<T>> T coerceIn(@NotNull T self, ClosedFloatingPointRange<T> range) {
+    public static <T extends Comparable<T>> T coerceIn(@NotNull T self, @NotNull ClosedFloatingPointRange<T> range) {
         if (range.isEmpty())
             throw new IllegalArgumentException("Cannot coerce value to an empty range: " + range + ".");
         if (range.lessThanOrEquals(self, range.getStart()) && !range.lessThanOrEquals(range.getStart(), self)) {
@@ -945,7 +955,7 @@ public class Rangex {
      *
      * @return this value if it's in the [range], or `range.start` if this value is less than `range.start`, or `range.endInclusive` if this value is greater than `range.endInclusive`.
      */
-    public static int coerceIn(int self, ClosedRange<Integer> range) {
+    public static int coerceIn(int self, @NotNull ClosedRange<Integer> range) {
 //        if (range instanceof ClosedFloatingPointRange) {
 //            return coerceIn(self, (ClosedFloatingPointRange<Integer>) range);
 //        }
@@ -965,7 +975,7 @@ public class Rangex {
      *
      * @return this value if it's in the [range], or `range.start` if this value is less than `range.start`, or `range.endInclusive` if this value is greater than `range.endInclusive`.
      */
-    public static long coerceIn(long self, ClosedRange<Long> range) {
+    public static long coerceIn(long self, @NotNull ClosedRange<Long> range) {
 //        if (range instanceof ClosedFloatingPointRange) {
 //            return coerceIn(self, (ClosedFloatingPointRange<Long>) range);
 //        }

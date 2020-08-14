@@ -21,13 +21,12 @@ import org.junit.Test
 
 class RangexTest {
 
-    // todo 测试 reversed 和 step
-
     @Test
     fun testByteRange() {
         Assert.assertEquals(1.toByte().rangeTo(10.toByte(), 4).count().toLong(), 3)
         Assert.assertEquals(10.toByte().rangeTo(1.toByte(), (-4)).count().toLong(), 3)
         Assert.assertEquals(1.toByte().until(11.toByte(), 4).count().toLong(), 3)
+        Assert.assertEquals(11.toByte().until(1.toByte(), -4).count().toLong(), 3)
     }
 
     @Test
@@ -35,6 +34,7 @@ class RangexTest {
         Assert.assertEquals(1.toShort().rangeTo(10.toShort(), 4).count().toLong(), 3)
         Assert.assertEquals(10.toShort().rangeTo(1.toShort(), (-4)).count().toLong(), 3)
         Assert.assertEquals(1.toShort().until(11.toShort(), 4).count().toLong(), 3)
+        Assert.assertEquals(11.toShort().until(1.toShort(), -4).count().toLong(), 3)
     }
 
     @Test
@@ -42,6 +42,7 @@ class RangexTest {
         Assert.assertEquals(1.rangeTo(10, 4).count().toLong(), 3)
         Assert.assertEquals(10.rangeTo(1, (-4)).count().toLong(), 3)
         Assert.assertEquals(1.until(11, 4).count().toLong(), 3)
+        Assert.assertEquals(11.until(1, -4).count().toLong(), 3)
     }
 
     @Test
@@ -49,6 +50,7 @@ class RangexTest {
         Assert.assertEquals(1L.rangeTo(10L, 4).count().toLong(), 3)
         Assert.assertEquals(10L.rangeTo(1L, (-4)).count().toLong(), 3)
         Assert.assertEquals(1L.until(11L, 4).count().toLong(), 3)
+        Assert.assertEquals(11L.until(1L, -4).count().toLong(), 3)
     }
 
     @Test
@@ -56,5 +58,6 @@ class RangexTest {
         Assert.assertEquals(1.toChar().rangeTo(10.toChar(), 4).count().toLong(), 3)
         Assert.assertEquals(10.toChar().rangeTo(1.toChar(), (-4)).count().toLong(), 3)
         Assert.assertEquals(1.toChar().until(11.toChar(), 4).count().toLong(), 3)
+        Assert.assertEquals(11.toChar().until(1.toChar(), -4).count().toLong(), 3)
     }
 }

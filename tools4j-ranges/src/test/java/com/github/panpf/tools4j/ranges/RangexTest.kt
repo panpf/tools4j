@@ -21,62 +21,6 @@ import org.junit.Test
 
 class RangexTest {
 
-    // todo 测试 reversed 和 step
-
-    @Test
-    fun testIn() {
-        assertTrue(Rangex.`in`(9.toByte(), 3.toByte(), 10.toByte()))
-        assertFalse(Rangex.`in`(2.toByte(), 3.toByte(), 10.toByte()))
-        assertFalse(Rangex.`in`(11.toByte(), 3.toByte(), 10.toByte()))
-
-        assertTrue(Rangex.`in`(9.toShort(), 3.toShort(), 10.toShort()))
-        assertFalse(Rangex.`in`(2.toShort(), 3.toShort(), 10.toShort()))
-        assertFalse(Rangex.`in`(11.toShort(), 3.toShort(), 10.toShort()))
-
-        assertTrue(Rangex.`in`(9, 3, 10))
-        assertFalse(Rangex.`in`(2, 3, 10))
-        assertFalse(Rangex.`in`(11, 3, 10))
-
-        assertTrue(Rangex.`in`(9L, 3L, 10L))
-        assertFalse(Rangex.`in`(2L, 3L, 10L))
-        assertFalse(Rangex.`in`(11L, 3L, 10L))
-
-        assertTrue(Rangex.`in`(9f, 3f, 10f))
-        assertFalse(Rangex.`in`(2f, 3f, 10f))
-        assertFalse(Rangex.`in`(11f, 3f, 10f))
-
-        assertTrue(Rangex.`in`(9.0, 3.0, 10.0))
-        assertFalse(Rangex.`in`(2.0, 3.0, 10.0))
-        assertFalse(Rangex.`in`(11.0, 3.0, 10.0))
-    }
-
-    @Test
-    fun testNotIn() {
-        assertFalse(Rangex.notIn(9.toByte(), 3.toByte(), 10.toByte()))
-        assertTrue(Rangex.notIn(2.toByte(), 3.toByte(), 10.toByte()))
-        assertTrue(Rangex.notIn(11.toByte(), 3.toByte(), 10.toByte()))
-
-        assertFalse(Rangex.notIn(9.toShort(), 3.toShort(), 10.toShort()))
-        assertTrue(Rangex.notIn(2.toShort(), 3.toShort(), 10.toShort()))
-        assertTrue(Rangex.notIn(11.toShort(), 3.toShort(), 10.toShort()))
-
-        assertFalse(Rangex.notIn(9, 3, 10))
-        assertTrue(Rangex.notIn(2, 3, 10))
-        assertTrue(Rangex.notIn(11, 3, 10))
-
-        assertFalse(Rangex.notIn(9L, 3L, 10L))
-        assertTrue(Rangex.notIn(2L, 3L, 10L))
-        assertTrue(Rangex.notIn(11L, 3L, 10L))
-
-        assertFalse(Rangex.notIn(9f, 3f, 10f))
-        assertTrue(Rangex.notIn(2f, 3f, 10f))
-        assertTrue(Rangex.notIn(11f, 3f, 10f))
-
-        assertFalse(Rangex.notIn(9.0, 3.0, 10.0))
-        assertTrue(Rangex.notIn(2.0, 3.0, 10.0))
-        assertTrue(Rangex.notIn(11.0, 3.0, 10.0))
-    }
-
     @Test
     fun testByteRange() {
         assertEquals(Rangex.rangeTo(1.toByte(), 10.toByte()).count().toLong(), 10)
@@ -91,6 +35,7 @@ class RangexTest {
         assertEquals(Rangex.until(1.toByte(), 0.toByte()).count().toLong(), 0)
         assertEquals(Rangex.until(0.toByte(), 1.toByte()).count().toLong(), 1)
         assertEquals(Rangex.until(1.toByte(), 11.toByte(), 4).count().toLong(), 3)
+        assertEquals(Rangex.until(11.toByte(), 1.toByte(), -4).count().toLong(), 3)
 
         assertEquals(Rangex.downTo(10.toByte(), 1.toByte()).count().toLong(), 10)
         assertEquals(Rangex.downTo(1.toByte(), 1.toByte()).count().toLong(), 1)
@@ -112,6 +57,7 @@ class RangexTest {
         assertEquals(Rangex.until(1.toShort(), 0.toShort()).count().toLong(), 0)
         assertEquals(Rangex.until(0.toShort(), 1.toShort()).count().toLong(), 1)
         assertEquals(Rangex.until(1.toShort(), 11.toShort(), 4).count().toLong(), 3)
+        assertEquals(Rangex.until(11.toShort(), 1.toShort(), -4).count().toLong(), 3)
 
         assertEquals(Rangex.downTo(10.toShort(), 1.toShort()).count().toLong(), 10)
         assertEquals(Rangex.downTo(1.toShort(), 1.toShort()).count().toLong(), 1)
@@ -133,6 +79,7 @@ class RangexTest {
         assertEquals(Rangex.until(1, 0).count().toLong(), 0)
         assertEquals(Rangex.until(0, 1).count().toLong(), 1)
         assertEquals(Rangex.until(1, 11, 4).count().toLong(), 3)
+        assertEquals(Rangex.until(11, 1, -4).count().toLong(), 3)
 
         assertEquals(Rangex.downTo(10, 1).count().toLong(), 10)
         assertEquals(Rangex.downTo(1, 1).count().toLong(), 1)
@@ -153,12 +100,35 @@ class RangexTest {
         assertEquals(Rangex.until(1L, 0L).count().toLong(), 0)
         assertEquals(Rangex.until(0L, 1L).count().toLong(), 1)
         assertEquals(Rangex.until(1L, 11L, 4L).count().toLong(), 3)
+        assertEquals(Rangex.until(11L, 1L, -4L).count().toLong(), 3)
 
         assertEquals(Rangex.downTo(10L, 1L).count().toLong(), 10)
         assertEquals(Rangex.downTo(1L, 1L).count().toLong(), 1)
         assertEquals(Rangex.downTo(0L, 1L).count().toLong(), 0)
         assertEquals(Rangex.downTo(1L, 0L).count().toLong(), 2)
         assertEquals(Rangex.rangeTo(10L, 1L, -4L).count().toLong(), 3)
+    }
+
+    @Test
+    fun testCharRange() {
+        assertEquals(Rangex.rangeTo(1.toChar(), 10.toChar()).count().toLong(), 10)
+        assertEquals(Rangex.rangeTo(1.toChar(), 1.toChar()).count().toLong(), 1)
+        assertEquals(Rangex.rangeTo(0.toChar(), 1.toChar()).count().toLong(), 2)
+        assertEquals(Rangex.rangeTo(1.toChar(), 0.toChar()).count().toLong(), 0)
+        assertEquals(Rangex.rangeTo(1.toChar(), 10.toChar(), 4).count().toLong(), 3)
+
+        assertEquals(Rangex.until(1.toChar(), 10.toChar()).count().toLong(), 9)
+        assertEquals(Rangex.until(1.toChar(), 1.toChar()).count().toLong(), 0)
+        assertEquals(Rangex.until(1.toChar(), 0.toChar()).count().toLong(), 0)
+        assertEquals(Rangex.until(0.toChar(), 1.toChar()).count().toLong(), 1)
+        assertEquals(Rangex.until(1.toChar(), 11.toChar(), 4).count().toLong(), 3)
+        assertEquals(Rangex.until(11.toChar(), 1.toChar(), -4).count().toLong(), 3)
+
+        assertEquals(Rangex.downTo(10.toChar(), 1.toChar()).count().toLong(), 10)
+        assertEquals(Rangex.downTo(1.toChar(), 1.toChar()).count().toLong(), 1)
+        assertEquals(Rangex.downTo(0.toChar(), 1.toChar()).count().toLong(), 0)
+        assertEquals(Rangex.downTo(1.toChar(), 0.toChar()).count().toLong(), 2)
+        assertEquals(Rangex.rangeTo(10.toChar(), 0.toChar(), -4).count().toLong(), 3)
     }
 
     @Test
@@ -178,27 +148,6 @@ class RangexTest {
         assertTrue(Rangex.rangeTo(1.toDouble(), 10.toDouble()).contains(5.toDouble()))
         assertFalse(Rangex.rangeTo(1.toDouble(), 10.toDouble()).contains(0.toDouble()))
         assertFalse(Rangex.rangeTo(1.toDouble(), 10.toDouble()).contains(11.toDouble()))
-    }
-
-    @Test
-    fun testCharRange() {
-        assertEquals(Rangex.rangeTo(1.toChar(), 10.toChar()).count().toLong(), 10)
-        assertEquals(Rangex.rangeTo(1.toChar(), 1.toChar()).count().toLong(), 1)
-        assertEquals(Rangex.rangeTo(0.toChar(), 1.toChar()).count().toLong(), 2)
-        assertEquals(Rangex.rangeTo(1.toChar(), 0.toChar()).count().toLong(), 0)
-        assertEquals(Rangex.rangeTo(1.toChar(), 10.toChar(), 4).count().toLong(), 3)
-
-        assertEquals(Rangex.until(1.toChar(), 10.toChar()).count().toLong(), 9)
-        assertEquals(Rangex.until(1.toChar(), 1.toChar()).count().toLong(), 0)
-        assertEquals(Rangex.until(1.toChar(), 0.toChar()).count().toLong(), 0)
-        assertEquals(Rangex.until(0.toChar(), 1.toChar()).count().toLong(), 1)
-        assertEquals(Rangex.until(1.toChar(), 11.toChar(), 4).count().toLong(), 3)
-
-        assertEquals(Rangex.downTo(10.toChar(), 1.toChar()).count().toLong(), 10)
-        assertEquals(Rangex.downTo(1.toChar(), 1.toChar()).count().toLong(), 1)
-        assertEquals(Rangex.downTo(0.toChar(), 1.toChar()).count().toLong(), 0)
-        assertEquals(Rangex.downTo(1.toChar(), 0.toChar()).count().toLong(), 2)
-        assertEquals(Rangex.rangeTo(10.toChar(), 0.toChar(), -4).count().toLong(), 3)
     }
 
     @Test
@@ -317,12 +266,109 @@ class RangexTest {
         }
     }
 
+    @Test
+    fun testReversed() {
+        assertEquals((1..10).reversed().joinToString(), Rangex.reversed(Rangex.rangeTo(1, 10)).joinToString())
+        assertEquals((1L..10L).reversed().joinToString(), Rangex.reversed(Rangex.rangeTo(1L, 10L)).joinToString())
+        assertEquals((1.toChar()..10.toChar()).reversed().joinToString(), Rangex.reversed(Rangex.rangeTo(1.toChar(), 10.toChar())).joinToString())
+    }
+
+    @Test
+    fun testStep() {
+        assertEquals((1..10).step(3).joinToString(), Rangex.step(Rangex.rangeTo(1, 10), 3).joinToString())
+        assertEquals((1L..10L).step(3).joinToString(), Rangex.step(Rangex.rangeTo(1L, 10L), 3).joinToString())
+        assertEquals((1.toChar()..10.toChar()).step(3).joinToString(), Rangex.step(Rangex.rangeTo(1.toChar(), 10.toChar()), 3).joinToString())
+
+        assertEquals(kotlin.ranges.IntProgression.fromClosedRange(10, 1, -3).step(3).joinToString(), Rangex.step(IntProgression.fromClosedRange(10, 1, -3), 3).joinToString())
+        assertEquals(kotlin.ranges.LongProgression.fromClosedRange(10L, 1L, -3).step(3).joinToString(), Rangex.step(LongProgression.fromClosedRange(10L, 1L, -3), 3).joinToString())
+        assertEquals(kotlin.ranges.CharProgression.fromClosedRange(10.toChar(), 1.toChar(), -3).step(3).joinToString(), Rangex.step(CharProgression.fromClosedRange(10.toChar(), 1.toChar(), -3), 3).joinToString())
+
+        try {
+            Rangex.step(IntProgression.fromClosedRange(10, 1, -3), 0)
+            fail()
+        } catch (e: Exception) {
+            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+                fail()
+            }
+        }
+        try {
+            Rangex.step(LongProgression.fromClosedRange(10L, 1L, -3), 0)
+            fail()
+        } catch (e: Exception) {
+            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+                fail()
+            }
+        }
+        try {
+            Rangex.step(CharProgression.fromClosedRange(10.toChar(), 1.toChar(), -3), 0)
+            fail()
+        } catch (e: Exception) {
+            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+                fail()
+            }
+        }
+    }
+
 
     /*
      * *****************************************************************************************************************
      * From kotlin standard library
      * *****************************************************************************************************************
      */
+
+    @Test
+    fun testIn() {
+        assertTrue(Rangex.`in`(9.toByte(), 3.toByte(), 10.toByte()))
+        assertFalse(Rangex.`in`(2.toByte(), 3.toByte(), 10.toByte()))
+        assertFalse(Rangex.`in`(11.toByte(), 3.toByte(), 10.toByte()))
+
+        assertTrue(Rangex.`in`(9.toShort(), 3.toShort(), 10.toShort()))
+        assertFalse(Rangex.`in`(2.toShort(), 3.toShort(), 10.toShort()))
+        assertFalse(Rangex.`in`(11.toShort(), 3.toShort(), 10.toShort()))
+
+        assertTrue(Rangex.`in`(9, 3, 10))
+        assertFalse(Rangex.`in`(2, 3, 10))
+        assertFalse(Rangex.`in`(11, 3, 10))
+
+        assertTrue(Rangex.`in`(9L, 3L, 10L))
+        assertFalse(Rangex.`in`(2L, 3L, 10L))
+        assertFalse(Rangex.`in`(11L, 3L, 10L))
+
+        assertTrue(Rangex.`in`(9f, 3f, 10f))
+        assertFalse(Rangex.`in`(2f, 3f, 10f))
+        assertFalse(Rangex.`in`(11f, 3f, 10f))
+
+        assertTrue(Rangex.`in`(9.0, 3.0, 10.0))
+        assertFalse(Rangex.`in`(2.0, 3.0, 10.0))
+        assertFalse(Rangex.`in`(11.0, 3.0, 10.0))
+    }
+
+    @Test
+    fun testNotIn() {
+        assertFalse(Rangex.notIn(9.toByte(), 3.toByte(), 10.toByte()))
+        assertTrue(Rangex.notIn(2.toByte(), 3.toByte(), 10.toByte()))
+        assertTrue(Rangex.notIn(11.toByte(), 3.toByte(), 10.toByte()))
+
+        assertFalse(Rangex.notIn(9.toShort(), 3.toShort(), 10.toShort()))
+        assertTrue(Rangex.notIn(2.toShort(), 3.toShort(), 10.toShort()))
+        assertTrue(Rangex.notIn(11.toShort(), 3.toShort(), 10.toShort()))
+
+        assertFalse(Rangex.notIn(9, 3, 10))
+        assertTrue(Rangex.notIn(2, 3, 10))
+        assertTrue(Rangex.notIn(11, 3, 10))
+
+        assertFalse(Rangex.notIn(9L, 3L, 10L))
+        assertTrue(Rangex.notIn(2L, 3L, 10L))
+        assertTrue(Rangex.notIn(11L, 3L, 10L))
+
+        assertFalse(Rangex.notIn(9f, 3f, 10f))
+        assertTrue(Rangex.notIn(2f, 3f, 10f))
+        assertTrue(Rangex.notIn(11f, 3f, 10f))
+
+        assertFalse(Rangex.notIn(9.0, 3.0, 10.0))
+        assertTrue(Rangex.notIn(2.0, 3.0, 10.0))
+        assertTrue(Rangex.notIn(11.0, 3.0, 10.0))
+    }
 
 
     @Test
@@ -475,14 +521,17 @@ class RangexTest {
         } catch (e: Exception) {
         }
 
-        assertEquals("5", Rangex.coerceIn("5", "4", "6"))
         assertEquals("5".coerceIn("4", "6"), Rangex.coerceIn("5", "4", "6"))
-        assertEquals("4", Rangex.coerceIn("3", "4", "6"))
+        assertEquals("5".coerceIn("4", "6"), Rangex.coerceIn("5", "4", "6"))
         assertEquals("3".coerceIn("4", "6"), Rangex.coerceIn("3", "4", "6"))
-        assertEquals("6", Rangex.coerceIn("7", "4", "6"))
+        assertEquals("3".coerceIn("4", "6"), Rangex.coerceIn("3", "4", "6"))
         assertEquals("7".coerceIn("4", "6"), Rangex.coerceIn("7", "4", "6"))
-        assertEquals("3", Rangex.coerceIn("3", null, "6"))
-        assertEquals("7", Rangex.coerceIn("7", "4", null))
+        assertEquals("7".coerceIn("4", "6"), Rangex.coerceIn("7", "4", "6"))
+        assertEquals("3".coerceIn(null, "6"), Rangex.coerceIn("3", null, "6"))
+        assertEquals("3".coerceIn(null, "2"), Rangex.coerceIn("3", null, "2"))
+        assertEquals("7".coerceIn("4", null), Rangex.coerceIn("7", "4", null))
+        assertEquals("7".coerceIn("8", null), Rangex.coerceIn("7", "8", null))
+        assertEquals("7".coerceIn(null, null), Rangex.coerceIn("7", null, null))
         try {
             Rangex.coerceIn("7", "4", "3")
             fail()
@@ -514,6 +563,8 @@ class RangexTest {
         }
 
         assertEquals(5f, Rangex.coerceIn(5f, Rangex.rangeTo(4f, 6f)))
+        assertEquals(5f, Rangex.coerceIn(5f, Rangex.rangeTo(5f, 10f)))
+        assertEquals(10f, Rangex.coerceIn(10f, Rangex.rangeTo(5f, 10f)))
         assertEquals(5f.coerceIn(4f..6f), Rangex.coerceIn(5f, Rangex.rangeTo(4f, 6f)))
         assertEquals(4f, Rangex.coerceIn(3f, Rangex.rangeTo(4f, 6f)))
         assertEquals(3f.coerceIn(4f..6f), Rangex.coerceIn(3f, Rangex.rangeTo(4f, 6f)))
@@ -523,8 +574,22 @@ class RangexTest {
             Rangex.coerceIn(7f, Rangex.rangeTo(4f, 3f))
             fail()
         } catch (e: Exception) {
+            if (!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Cannot coerce value to an empty range:"))) {
+                fail()
+            }
         }
 
-        assertEquals(5f, Rangex.coerceIn(5f, Rangex.rangeTo(4f, 6f) as ClosedRange<Float>))
+        assertEquals(5f.coerceIn(4f..6f), Rangex.coerceIn(5f, Rangex.rangeTo(4f, 6f) as ClosedRange<Float>))
+        assertEquals("5".coerceIn("4".."6"), Rangex.coerceIn("5", Rangex.rangeTo("4", "6") as ClosedRange<String>))
+        try {
+            Rangex.coerceIn("5", Rangex.rangeTo("4", "3") as ClosedRange<String>)
+            fail()
+        } catch (e: Exception) {
+            if (!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Cannot coerce value to an empty range:"))) {
+                fail()
+            }
+        }
+        assertEquals("5".coerceIn("6".."7"), Rangex.coerceIn("5", Rangex.rangeTo("6", "7") as ClosedRange<String>))
+        assertEquals("8".coerceIn("6".."7"), Rangex.coerceIn("8", Rangex.rangeTo("6", "7") as ClosedRange<String>))
     }
 }
