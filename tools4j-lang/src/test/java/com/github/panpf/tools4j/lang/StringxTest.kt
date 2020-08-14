@@ -18,10 +18,8 @@
 
 package com.github.panpf.tools4j.lang
 
-import com.github.panpf.tools4j.base64.ktx.base64EncodeToString
 import com.github.panpf.tools4j.common.Pair
-import com.github.panpf.tools4j.ranges.Rangex
-import com.github.panpf.tools4j.regex.Regexx
+import com.github.panpf.tools4j.ranges.IntRange as MyIntRange
 import org.junit.Assert.*
 import org.junit.Test
 import java.nio.charset.Charset
@@ -31,6 +29,16 @@ import java.util.regex.Pattern
 class StringxTest {
 
     companion object {
+
+        /**
+         * Email address
+         */
+        val EMAIL = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
+
+        /**
+         * IP v4
+         */
+        val IPV4 = Pattern.compile("((?:(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d))\\.){3}(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d)))")
         private const val BLANK = "     "
         private val BLANK_CHAR_SEQUENCE: CharSequence = "     "
         private const val SPACE = " "
@@ -549,11 +557,11 @@ class StringxTest {
     @Test
     fun testRemoveRange() {
         Assertx.assertThreeEquals("0126789", Stringx.removeRange("0123456789", 3, 6), "0123456789".removeRange(3, 6))
-        Assertx.assertThreeEquals("0126789", Stringx.removeRange("0123456789", Rangex.rangeTo(3, 5)), "0123456789".removeRange(3..5))
-        assertEquals("0123456789", Stringx.removeRange("0123456789", Rangex.rangeTo(3, 2)))
-        assertEquals("", Stringx.removeRange(null, Rangex.rangeTo(3, 5)))
+        Assertx.assertThreeEquals("0126789", Stringx.removeRange("0123456789", MyIntRange(3, 5)), "0123456789".removeRange(3..5))
+        assertEquals("0123456789", Stringx.removeRange("0123456789", MyIntRange(3, 2)))
+        assertEquals("", Stringx.removeRange(null, MyIntRange(3, 5)))
         try {
-            Stringx.removeRange("0123456789", Rangex.rangeTo(3, 1))
+            Stringx.removeRange("0123456789", MyIntRange(3, 1))
             fail()
         } catch (e: Exception) {
         }
@@ -632,10 +640,10 @@ class StringxTest {
 
     @Test
     fun testMatches() {
-        Assertx.assertThreeEquals(true, Stringx.matches("hello@gmai.com", Regexx.EMAIL), "hello@gmai.com".matches(Regex(Regexx.EMAIL.pattern())))
-        Assertx.assertThreeEquals(false, Stringx.matches("hello@gmai", Regexx.EMAIL), "hello@gmai".matches(Regex(Regexx.EMAIL.pattern())))
-        Assertx.assertThreeEquals(false, Stringx.matches("", Regexx.EMAIL), "".matches(Regex(Regexx.EMAIL.pattern())))
-        Assertx.assertThreeEquals(false, Stringx.matches(null, Regexx.EMAIL), "".matches(Regex(Regexx.EMAIL.pattern())))
+        Assertx.assertThreeEquals(true, Stringx.matches("hello@gmai.com", EMAIL), "hello@gmai.com".matches(Regex(EMAIL.pattern())))
+        Assertx.assertThreeEquals(false, Stringx.matches("hello@gmai", EMAIL), "hello@gmai".matches(Regex(EMAIL.pattern())))
+        Assertx.assertThreeEquals(false, Stringx.matches("", EMAIL), "".matches(Regex(EMAIL.pattern())))
+        Assertx.assertThreeEquals(false, Stringx.matches(null, EMAIL), "".matches(Regex(EMAIL.pattern())))
 
         Assertx.assertThreeEquals(true, Stringx.regionMatches("onlyOne", 0, "onlyYou", 0, 4), "onlyOne".regionMatches(0, "onlyYou", 0, 4))
         Assertx.assertThreeEquals(false, Stringx.regionMatches("onlyOne", 0, "OnlyYou", 0, 4), "onlyOne".regionMatches(0, "OnlyYou", 0, 4))
@@ -904,11 +912,11 @@ class StringxTest {
 
     @Test
     fun testSubstring() {
-        Assertx.assertThreeEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), Rangex.rangeTo(3, 8)).toString(), StringBuilder("0123456789").subSequence(3..8).toString())
+        Assertx.assertThreeEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), MyIntRange(3, 8)).toString(), StringBuilder("0123456789").subSequence(3..8).toString())
 
-        Assertx.assertThreeEquals("345678", Stringx.substring("0123456789", Rangex.rangeTo(3, 8)), "0123456789".substring(3..8))
+        Assertx.assertThreeEquals("345678", Stringx.substring("0123456789", MyIntRange(3, 8)), "0123456789".substring(3..8))
         Assertx.assertThreeEquals("345678", Stringx.substring(StringBuilder("0123456789"), 3, 9), StringBuilder("0123456789").substring(3, 9))
-        Assertx.assertThreeEquals("345678", Stringx.substring(StringBuilder("0123456789"), Rangex.rangeTo(3, 8)), StringBuilder("0123456789").substring(3..8))
+        Assertx.assertThreeEquals("345678", Stringx.substring(StringBuilder("0123456789"), MyIntRange(3, 8)), StringBuilder("0123456789").substring(3..8))
 
         Assertx.assertThreeEquals("test", Stringx.substringBefore("test.txt.zip", '.', "test.txt.zip"), "test.txt.zip".substringBefore('.', "test.txt.zip"))
         Assertx.assertThreeEquals("test", Stringx.substringBefore("testtxtzip", '.', "test"), "testtxtzip".substringBefore('.', "test"))
@@ -937,7 +945,7 @@ class StringxTest {
 
     @Test
     fun testToByteArray() {
-        val sourceText = "abcdefg".base64EncodeToString()
+        val sourceText = "abcdefg"
         val charset = Charset.defaultCharset()
 
         Assertx.assertThreeEquals(sourceText, String(Stringx.toByteArray(sourceText, charset), charset), String(sourceText.toByteArray(charset), charset))
@@ -1057,8 +1065,8 @@ class StringxTest {
         val resultTextRange = "01aaaaaa89"
         Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(StringBuilder(sourceTextRange), 2, 8, "aaaaaa").toString(), StringBuilder(sourceTextRange).replaceRange(2, 8, "aaaaaa").toString())
         Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(sourceTextRange, 2, 8, "aaaaaa"), sourceTextRange.replaceRange(2, 8, "aaaaaa"))
-        Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(StringBuilder(sourceTextRange), Rangex.rangeTo(2, 7), "aaaaaa").toString(), StringBuilder(sourceTextRange).replaceRange(2..7, "aaaaaa").toString())
-        Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(sourceTextRange, Rangex.rangeTo(2, 7), "aaaaaa"), sourceTextRange.replaceRange(2..7, "aaaaaa"))
+        Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(StringBuilder(sourceTextRange), MyIntRange(2, 7), "aaaaaa").toString(), StringBuilder(sourceTextRange).replaceRange(2..7, "aaaaaa").toString())
+        Assertx.assertThreeEquals(resultTextRange, Stringx.replaceRange(sourceTextRange, MyIntRange(2, 7), "aaaaaa"), sourceTextRange.replaceRange(2..7, "aaaaaa"))
         try {
             Stringx.replaceRange(sourceTextRange, 2, 1, "aaaa")
             fail()
@@ -1115,13 +1123,13 @@ class StringxTest {
 
         val sourceTextPattern = "fasfjs hello@gmail.com fasf hello@outlook.com"
         val resultTextPattern = "fasfjs http://google.com fasf http://google.com"
-        Assertx.assertThreeEquals(resultTextPattern, Stringx.replace(sourceTextPattern, Regexx.EMAIL, "http://google.com"), sourceTextPattern.replace(Regex(Regexx.EMAIL.pattern()), "http://google.com"))
-        Assertx.assertThreeEquals("", Stringx.replace(null, Regexx.EMAIL, "http://google.com"), "".replace(Regex(Regexx.EMAIL.pattern()), "http://google.com"))
+        Assertx.assertThreeEquals(resultTextPattern, Stringx.replace(sourceTextPattern, EMAIL, "http://google.com"), sourceTextPattern.replace(Regex(EMAIL.pattern()), "http://google.com"))
+        Assertx.assertThreeEquals("", Stringx.replace(null, EMAIL, "http://google.com"), "".replace(Regex(EMAIL.pattern()), "http://google.com"))
 
         val sourceTextFirstPattern = "fasfjs hello@gmail.com fasf hello@outlook.com"
         val resultTextFirstPattern = "fasfjs http://google.com fasf hello@outlook.com"
-        Assertx.assertThreeEquals(resultTextFirstPattern, Stringx.replaceFirst(sourceTextFirstPattern, Regexx.EMAIL, "http://google.com"), sourceTextFirstPattern.replaceFirst(Regex(Regexx.EMAIL.pattern()), "http://google.com"))
-        Assertx.assertThreeEquals("", Stringx.replaceFirst(null, Regexx.EMAIL, "http://google.com"), "".replaceFirst(Regex(Regexx.EMAIL.pattern()), "http://google.com"))
+        Assertx.assertThreeEquals(resultTextFirstPattern, Stringx.replaceFirst(sourceTextFirstPattern, EMAIL, "http://google.com"), sourceTextFirstPattern.replaceFirst(Regex(EMAIL.pattern()), "http://google.com"))
+        Assertx.assertThreeEquals("", Stringx.replaceFirst(null, EMAIL, "http://google.com"), "".replaceFirst(Regex(EMAIL.pattern()), "http://google.com"))
     }
 
     @Test
@@ -1163,9 +1171,9 @@ class StringxTest {
 
         val self2 = "abc hello@gmail.com defg"
 
-        Assertx.assertThreeEquals(true, Stringx.contains(self2, Regexx.EMAIL), self2.contains(Regex(Regexx.EMAIL.pattern())))
-        Assertx.assertThreeEquals(false, Stringx.contains(self2, Regexx.IPV4), self2.contains(Regex(Regexx.IPV4.pattern())))
-        assertFalse(Stringx.contains(null, Regexx.IPV4))
+        Assertx.assertThreeEquals(true, Stringx.contains(self2, EMAIL), self2.contains(Regex(EMAIL.pattern())))
+        Assertx.assertThreeEquals(false, Stringx.contains(self2, IPV4), self2.contains(Regex(IPV4.pattern())))
+        assertFalse(Stringx.contains(null, IPV4))
     }
 
     @Test
@@ -1464,12 +1472,12 @@ class StringxTest {
     fun testSlice() {
         val source = "0123456789"
 
-        Assertx.assertThreeEquals("34567", Stringx.slice(source, Rangex.rangeTo(3, 7)), source.slice(3..7))
+        Assertx.assertThreeEquals("34567", Stringx.slice(source, MyIntRange(3, 7)), source.slice(3..7))
         @Suppress("EmptyRange")
-        Assertx.assertThreeEquals("", Stringx.slice(source, Rangex.rangeTo(3, 2)), source.slice(3..2))
-        Assertx.assertThreeEquals("34567", Stringx.slice(StringBuilder(source), Rangex.rangeTo(3, 7)).toString(), StringBuilder(source).slice(3..7).toString())
+        Assertx.assertThreeEquals("", Stringx.slice(source, MyIntRange(3, 2)), source.slice(3..2))
+        Assertx.assertThreeEquals("34567", Stringx.slice(StringBuilder(source), MyIntRange(3, 7)).toString(), StringBuilder(source).slice(3..7).toString())
         @Suppress("EmptyRange")
-        Assertx.assertThreeEquals("", Stringx.slice(StringBuilder(source), Rangex.rangeTo(3, 2)).toString(), StringBuilder(source).slice(3..2).toString())
+        Assertx.assertThreeEquals("", Stringx.slice(StringBuilder(source), MyIntRange(3, 2)).toString(), StringBuilder(source).slice(3..2).toString())
 
         Assertx.assertThreeEquals("158", Stringx.slice(source, mutableListOf(1, 5, 8)), source.slice(listOf(1, 5, 8)))
         Assertx.assertThreeEquals("", Stringx.slice(source, mutableListOf()), source.slice(listOf()))
