@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.github.panpf.tools4j.ranges.ktx
+package com.github.panpf.tools4j.ranges.date.ktx
 
 import com.github.panpf.tools4j.ranges.date.*
 import java.util.*
