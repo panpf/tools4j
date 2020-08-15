@@ -214,6 +214,8 @@ Dependencies：
     * readLines, readBytes, readText, lineIterable, useLines, forEachLine
 
 ### tools4j-lang
+* Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxTest.kt])
+    * isTrue, isFalse, isNullOrTrue, isNullOrFalse
 * Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxTest.kt])
     * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr, 
     * isNotDigit, digitOr, isNotLetter, letterOr, isNotLetterOrDigit, 
@@ -438,6 +440,11 @@ Please view the [CHANGELOG.md] file
 [IOxTest.kt]: tools4j-io/src/test/java/com/github/panpf/tools4j/io/IOxTest.kt
 [IOx.kt]: tools4j-io-ktx/src/main/java/com/github/panpf/tools4j/io/ktx/IOx.kt
 [IOxTest.kt]: tools4j-io-ktx/src/test/java/com/github/panpf/tools4j/io/ktx/IOxTest.kt
+
+[Booleanx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Booleanx.java
+[BooleanxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/BooleanxTest.kt
+[Booleanx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Booleanx.kt
+[BooleanxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/BooleanxTest.kt
 
 [Charx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Charx.java
 [CharxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/CharxTest.kt
