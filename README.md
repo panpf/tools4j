@@ -178,10 +178,8 @@ Dependencies：
 
 ### tools4j-date
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexTest.kt])
-    * createCalendar, toDate\*, toMillisecond\*, format\*, get\[Year, Month...\], 
-    * getCalendar\[Year, Month...\], getCalendarField, addToDate, 
-    * add\[Year, Month...\], addCalendarField, isSame\[Year, Month...\], 
-    * differField, differ\[Year, Month...\]
+    * createCalendar, toDate, format, getCalendarField, addToDate, 
+    * addCalendarField, isSame\[Year, Month...\], differField,
 
 ### tools4j-grouping
 * Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
