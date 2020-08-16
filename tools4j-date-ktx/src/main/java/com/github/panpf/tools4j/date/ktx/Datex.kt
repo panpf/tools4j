@@ -19,6 +19,7 @@
 package com.github.panpf.tools4j.date.ktx
 
 import com.github.panpf.tools4j.date.Datex
+import org.jetbrains.annotations.NotNull
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -136,6 +137,70 @@ inline fun Long.formatDate(pattern: String, locale: Locale): String = Datex.form
  * Convert Date to a formatted string
  */
 inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern)
+
+/**
+ * Format the length of time according to the specified 'pattern'
+ *
+ * @param pattern Formatting pattern，The following types are supported:
+ *
+ *                <blockquote>
+ *                <table>
+ *                  <tr>
+ *                      <td>%d、%d?、%D、%D?</td>
+ *                      <td>Day，</td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td>%h、%h?、%H、%H?</td>
+ *                      <td>Hour</td>
+ *                  </tr>
+ *                  </tr>
+ *                  <tr>
+ *                      <td>%m、%m?、%M、%M?</td>
+ *                      <td>Minute</td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td>%s、%s?、%S、%S?</td>
+ *                      <td>Second</td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td>%ms、%ms?、%MS、%MS?</td>
+ *                      <td>Millisecond</td>
+ *                  </tr>
+ *                </table>
+ *                </blockquote>
+ *                As shown in the table above, each type has several variants. The variant containing'?' means that if the result of this item is 0, then it can be ignored in the output；Uppercase means, if the result of this item is less than 10, then add '0' in front of the output
+ *
+ *                for example:
+ *                <blockquote>
+ *                <table>
+ *                  <tr>
+ *                      <th> Example </th>
+ *                      <th> Result </th>
+ *                  </tr>
+ *                  <tr>
+ *                      <td> formatTimeLength(3623000, "%hh%mm%ss") </td>
+ *                      <td> "1h0m23s" </td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td> formatTimeLength(3623000, "%h?h%m?m%s?s") </td>
+ *                      <td> "1h23s" </td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td> formatTimeLength(4684000, "%h:%m:%s") </td>
+ *                      <td> "1:18:4" </td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td> formatTimeLength(4684000, "%H:%M:%S") </td>
+ *                      <td> "01:18:04" </td>
+ *                  </tr>
+ *                  <tr>
+ *                      <td> formatTimeLength(91403467, "%dDay %hHour %mMinute %sSecond %msMillisecond") </td>
+ *                      <td> "1Day 1Hour 23Minute 23Second 467Millisecond" </td>
+ *                  </tr>
+ *                </table>
+ *                </blockquote>
+ */
+inline fun Long.formatTimeLength(pattern: String) = Datex.formatTimeLength(this, pattern)
 
 
 

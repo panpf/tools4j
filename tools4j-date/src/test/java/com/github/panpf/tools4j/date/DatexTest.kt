@@ -87,6 +87,109 @@ class DatexTest {
     }
 
     @Test
+    fun testFormatTimeLength() {
+        val oneSecondMilliseconds = 1000.toLong()
+        val oneMinuteMilliseconds = oneSecondMilliseconds * 60
+        val oneHourMilliseconds = oneMinuteMilliseconds * 60
+        val oneDayMilliseconds = oneHourMilliseconds * 24
+
+        Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms?毫秒"))
+        Assert.assertEquals("0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒"))
+        Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s秒"))
+        Assert.assertEquals("0分钟", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟"))
+        Assert.assertEquals("0分钟", Datex.formatTimeLength(0L, "%d?天%h?小时%m分钟"))
+        Assert.assertEquals("0小时", Datex.formatTimeLength(0L, "%d?天%h?小时"))
+        Assert.assertEquals("0小时", Datex.formatTimeLength(0L, "%d?天%h小时"))
+        Assert.assertEquals("0天", Datex.formatTimeLength(0L, "%d?天"))
+        Assert.assertEquals("0天", Datex.formatTimeLength(0L, "%d天"))
+
+        Assert.assertEquals("0天0小时0分钟0秒0毫秒", Datex.formatTimeLength(0L, "%d天%h小时%m分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0分钟0秒", Datex.formatTimeLength(0L, "%d天%h小时%m分钟%s秒"))
+        Assert.assertEquals("0天0小时0分钟", Datex.formatTimeLength(0L, "%d天%h小时%m分钟"))
+        Assert.assertEquals("0天0小时", Datex.formatTimeLength(0L, "%d天%h小时"))
+        Assert.assertEquals("0天", Datex.formatTimeLength(0L, "%d天"))
+
+        Assert.assertEquals("0小时0分钟0秒0毫秒", Datex.formatTimeLength(0L, "%d?天%h小时%m分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0分钟0秒0毫秒", Datex.formatTimeLength(0L, "%d天%h?小时%m分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0秒0毫秒", Datex.formatTimeLength(0L, "%d天%h小时%m?分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0分钟0毫秒", Datex.formatTimeLength(0L, "%d天%h小时%m分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0分钟0秒", Datex.formatTimeLength(0L, "%d天%h小时%m分钟%s秒%ms?毫秒"))
+
+        Assert.assertEquals("0分钟0秒0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0秒0毫秒", Datex.formatTimeLength(0L, "%d天%h?小时%m?分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0毫秒", Datex.formatTimeLength(0L, "%d天%h小时%m?分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0天0小时0分钟", Datex.formatTimeLength(0L, "%d天%h小时%m分钟%s?秒%ms?毫秒"))
+
+        Assert.assertEquals("0秒0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s秒%ms毫秒"))
+        Assert.assertEquals("0天0毫秒", Datex.formatTimeLength(0L, "%d天%h?小时%m?分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0天0小时", Datex.formatTimeLength(0L, "%d天%h小时%m?分钟%s?秒%ms?毫秒"))
+
+        Assert.assertEquals("0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0天", Datex.formatTimeLength(0L, "%d天%h?小时%m?分钟%s?秒%ms?毫秒"))
+
+        Assert.assertEquals("0 天 0 小时 0 分钟 0 秒 0 毫秒", Datex.formatTimeLength(0L, "%d 天 %h 小时 %m 分钟 %s 秒 %ms 毫秒"))
+
+        // millisecond
+        Assert.assertEquals("0s", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s"))
+        Assert.assertEquals("0s", Datex.formatTimeLength(-10L, "%d?d %h?h %m?m %s?s"))
+        Assert.assertEquals("590ms", Datex.formatTimeLength(590L, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("0s", Datex.formatTimeLength(590L, "%d?d %h?h %m?m %s?s"))
+
+        // second
+        Assert.assertEquals("3s", Datex.formatTimeLength(oneSecondMilliseconds * 3, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3s 590ms", Datex.formatTimeLength(oneSecondMilliseconds * 3 + 590, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3s", Datex.formatTimeLength(oneSecondMilliseconds * 3 + 590, "%d?d %h?h %m?m %s?s"))
+
+        // minute
+        Assert.assertEquals("3m", Datex.formatTimeLength(oneMinuteMilliseconds * 3, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3m 23s", Datex.formatTimeLength(oneMinuteMilliseconds * 3 + oneSecondMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3m 23s 467ms", Datex.formatTimeLength(oneMinuteMilliseconds * 3 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3m 467ms", Datex.formatTimeLength(oneMinuteMilliseconds * 3 + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("3m", Datex.formatTimeLength(oneMinuteMilliseconds * 3 + 467, "%d?d %h?h %m?m %s?s"))
+
+        // hour
+        Assert.assertEquals("1h", Datex.formatTimeLength(oneHourMilliseconds, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h 23m", Datex.formatTimeLength(oneHourMilliseconds + oneMinuteMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h 23m 23s", Datex.formatTimeLength(oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h 23s", Datex.formatTimeLength(oneHourMilliseconds + oneSecondMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h 23m 23s 467ms", Datex.formatTimeLength(oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h 467ms", Datex.formatTimeLength(oneHourMilliseconds + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1h", Datex.formatTimeLength(oneHourMilliseconds + 467, "%d?d %h?h %m?m %s?s"))
+
+        // day
+        Assert.assertEquals("1d", Datex.formatTimeLength(oneDayMilliseconds, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 23m", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 23m 23s", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 23s", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneSecondMilliseconds * 23, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 23m 23s 467ms", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 467ms", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 467ms", Datex.formatTimeLength(oneDayMilliseconds + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d", Datex.formatTimeLength(oneDayMilliseconds + 467, "%d?d %h?h %m?m %s?s"))
+
+        Assert.assertEquals("1d 1h 23m 23s 467ms", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("1d 1h 23m 23s", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m %s?s"))
+        Assert.assertEquals("1d 1h 23m", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m"))
+        Assert.assertEquals("1d 1h", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h"))
+        Assert.assertEquals("1d", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d"))
+        Assert.assertEquals("0s", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("0s", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s"))
+        Assert.assertEquals("0m", Datex.formatTimeLength(0L, "%d?d %h?h %m?m"))
+        Assert.assertEquals("0h", Datex.formatTimeLength(0L, "%d?d %h?h"))
+        Assert.assertEquals("0d", Datex.formatTimeLength(0L, "%d?d"))
+
+        Assert.assertEquals("00:00:00", Datex.formatTimeLength(0L, "%H:%M:%S"))
+        Assert.assertEquals("00:00:05", Datex.formatTimeLength(oneSecondMilliseconds * 5.toLong(), "%H:%M:%S"))
+        Assert.assertEquals("00:00:59", Datex.formatTimeLength(oneSecondMilliseconds * 59.toLong(), "%H:%M:%S"))
+        Assert.assertEquals("00:01:00", Datex.formatTimeLength(oneMinuteMilliseconds, "%H:%M:%S"))
+        Assert.assertEquals("00:01:04", Datex.formatTimeLength(oneMinuteMilliseconds + (oneSecondMilliseconds * 4), "%H:%M:%S"))
+        Assert.assertEquals("01:00:00", Datex.formatTimeLength(oneHourMilliseconds, "%H:%M:%S"))
+        Assert.assertEquals("01:00:04", Datex.formatTimeLength(oneHourMilliseconds + (oneSecondMilliseconds * 4), "%H:%M:%S"))
+        Assert.assertEquals("01:18:04", Datex.formatTimeLength(oneHourMilliseconds + oneMinuteMilliseconds * 18 + (oneSecondMilliseconds * 4), "%H:%M:%S"))
+        Assert.assertEquals("100:18:04", Datex.formatTimeLength(oneHourMilliseconds * 100 + oneMinuteMilliseconds * 18 + (oneSecondMilliseconds * 4), "%H:%M:%S"))
+    }
+
+    @Test
     @Throws(ParseException::class)
     fun testGet() {
         val defaultFirstDayOfWeek = Calendar.getInstance().firstDayOfWeek
