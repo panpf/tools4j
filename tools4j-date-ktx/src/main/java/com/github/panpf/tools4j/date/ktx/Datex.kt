@@ -144,7 +144,7 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  * @param pattern Formatting pattern，The following types are supported:
  *
  *                <blockquote>
- *                <table>
+ *                <table summary="Time length formatting pattern desc">
  *                  <tr>
  *                      <td>%d、%d?、%D、%D?</td>
  *                      <td>Day，</td>
@@ -152,7 +152,6 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  *                  <tr>
  *                      <td>%h、%h?、%H、%H?</td>
  *                      <td>Hour</td>
- *                  </tr>
  *                  </tr>
  *                  <tr>
  *                      <td>%m、%m?、%M、%M?</td>
@@ -172,7 +171,7 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  *
  *                for example:
  *                <blockquote>
- *                <table>
+ *                <table summary="Time length formatting pattern example">
  *                  <tr>
  *                      <th> Example </th>
  *                      <th> Result </th>

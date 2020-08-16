@@ -246,7 +246,7 @@ public class Datex {
      *
      * @param pattern Formatting pattern，The following types are supported:
      *                <blockquote>
-     *                <table>
+     *                <table summary="Time length formatting pattern desc">
      *                  <tr>
      *                      <td>%d、%d?、%D、%D?</td>
      *                      <td>Day，</td>
@@ -254,7 +254,6 @@ public class Datex {
      *                  <tr>
      *                      <td>%h、%h?、%H、%H?</td>
      *                      <td>Hour</td>
-     *                  </tr>
      *                  </tr>
      *                  <tr>
      *                      <td>%m、%m?、%M、%M?</td>
@@ -274,7 +273,7 @@ public class Datex {
      *
      *                for example:
      *                <blockquote>
-     *                <table>
+     *                <table summary="Time length formatting pattern example">
      *                  <tr>
      *                      <th> Example </th>
      *                      <th> Result </th>

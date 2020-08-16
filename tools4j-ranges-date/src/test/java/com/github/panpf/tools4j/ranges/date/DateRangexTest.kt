@@ -16,6 +16,7 @@
 
 package com.github.panpf.tools4j.ranges.date
 
+import com.github.panpf.tools4j.date.Datex
 import com.github.panpf.tools4j.date.ktx.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -27,147 +28,147 @@ class DateRangexTest {
 
     @Test
     fun testYearIterator() {
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2021".toDateY()).joinToString { it.formatY() }, "2018, 2019, 2020, 2021")
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2021".toDateY(), 2).joinToString { it.formatY() }, "2018, 2020")
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2015".toDateY(), -2).joinToString { it.formatY() }, "2018, 2016")
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2015".toDateY()).joinToString { it.formatY() }, "")
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2021".toDateY(), -2).joinToString { it.formatY() }, "")
-        assertEquals(DateRangex.yearRangeTo("2018".toDateY(), "2015".toDateY(), 2).joinToString { it.formatY() }, "")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2021".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "2018, 2019, 2020, 2021")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2021".toDate(Datex.y), 2).joinToString { it.format(Datex.y) }, "2018, 2020")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2015".toDate(Datex.y), -2).joinToString { it.format(Datex.y) }, "2018, 2016")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2015".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2021".toDate(Datex.y), -2).joinToString { it.format(Datex.y) }, "")
+        assertEquals(DateRangex.yearRangeTo("2018".toDate(Datex.y), "2015".toDate(Datex.y), 2).joinToString { it.format(Datex.y) }, "")
 
-        assertEquals(DateRangex.yearUntil("2018".toDateY(), "2022".toDateY()).joinToString { it.formatY() }, "2018, 2019, 2020, 2021")
-        assertEquals(DateRangex.yearUntil("2018".toDateY(), "2022".toDateY(), 2).joinToString { it.formatY() }, "2018, 2020")
-        assertEquals(DateRangex.yearUntil("2018".toDateY(), "2015".toDateY()).joinToString { it.formatY() }, "")
-        assertEquals(DateRangex.yearUntil("2018".toDateY(), "2022".toDateY(), -2).joinToString { it.formatY() }, "")
+        assertEquals(DateRangex.yearUntil("2018".toDate(Datex.y), "2022".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "2018, 2019, 2020, 2021")
+        assertEquals(DateRangex.yearUntil("2018".toDate(Datex.y), "2022".toDate(Datex.y), 2).joinToString { it.format(Datex.y) }, "2018, 2020")
+        assertEquals(DateRangex.yearUntil("2018".toDate(Datex.y), "2015".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "")
+        assertEquals(DateRangex.yearUntil("2018".toDate(Datex.y), "2022".toDate(Datex.y), -2).joinToString { it.format(Datex.y) }, "")
 
-        assertEquals(DateRangex.yearDownTo("2018".toDateY(), "2015".toDateY()).joinToString { it.formatY() }, "2018, 2017, 2016, 2015")
-        assertEquals(DateRangex.yearDownTo("2018".toDateY(), "2021".toDateY()).joinToString { it.formatY() }, "")
+        assertEquals(DateRangex.yearDownTo("2018".toDate(Datex.y), "2015".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "2018, 2017, 2016, 2015")
+        assertEquals(DateRangex.yearDownTo("2018".toDate(Datex.y), "2021".toDate(Datex.y)).joinToString { it.format(Datex.y) }, "")
     }
 
     @Test
     fun testMonthIterator() {
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-11".toDateYM()).joinToString { it.formatYM() }, "2018-08, 2018-09, 2018-10, 2018-11")
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-11".toDateYM(), 2).joinToString { it.formatYM() }, "2018-08, 2018-10")
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-05".toDateYM(), -2).joinToString { it.formatYM() }, "2018-08, 2018-06")
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-05".toDateYM()).joinToString { it.formatYM() }, "")
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-11".toDateYM(), -2).joinToString { it.formatYM() }, "")
-        assertEquals(DateRangex.monthRangeTo("2018-08".toDateYM(), "2018-05".toDateYM(), 2).joinToString { it.formatYM() }, "")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-11".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "2018-08, 2018-09, 2018-10, 2018-11")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-11".toDate(Datex.yM), 2).joinToString { it.format(Datex.yM) }, "2018-08, 2018-10")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-05".toDate(Datex.yM), -2).joinToString { it.format(Datex.yM) }, "2018-08, 2018-06")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-05".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-11".toDate(Datex.yM), -2).joinToString { it.format(Datex.yM) }, "")
+        assertEquals(DateRangex.monthRangeTo("2018-08".toDate(Datex.yM), "2018-05".toDate(Datex.yM), 2).joinToString { it.format(Datex.yM) }, "")
 
-        assertEquals(DateRangex.monthUntil("2018-08".toDateYM(), "2018-12".toDateYM()).joinToString { it.formatYM() }, "2018-08, 2018-09, 2018-10, 2018-11")
-        assertEquals(DateRangex.monthUntil("2018-08".toDateYM(), "2018-12".toDateYM(), 2).joinToString { it.formatYM() }, "2018-08, 2018-10")
-        assertEquals(DateRangex.monthUntil("2018-08".toDateYM(), "2018-04".toDateYM()).joinToString { it.formatYM() }, "")
-        assertEquals(DateRangex.monthUntil("2018-08".toDateYM(), "2018-12".toDateYM(), -2).joinToString { it.formatYM() }, "")
+        assertEquals(DateRangex.monthUntil("2018-08".toDate(Datex.yM), "2018-12".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "2018-08, 2018-09, 2018-10, 2018-11")
+        assertEquals(DateRangex.monthUntil("2018-08".toDate(Datex.yM), "2018-12".toDate(Datex.yM), 2).joinToString { it.format(Datex.yM) }, "2018-08, 2018-10")
+        assertEquals(DateRangex.monthUntil("2018-08".toDate(Datex.yM), "2018-04".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "")
+        assertEquals(DateRangex.monthUntil("2018-08".toDate(Datex.yM), "2018-12".toDate(Datex.yM), -2).joinToString { it.format(Datex.yM) }, "")
 
-        assertEquals(DateRangex.monthDownTo("2018-08".toDateYM(), "2018-05".toDateYM()).joinToString { it.formatYM() }, "2018-08, 2018-07, 2018-06, 2018-05")
-        assertEquals(DateRangex.monthDownTo("2018-08".toDateYM(), "2018-11".toDateYM()).joinToString { it.formatYM() }, "")
+        assertEquals(DateRangex.monthDownTo("2018-08".toDate(Datex.yM), "2018-05".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "2018-08, 2018-07, 2018-06, 2018-05")
+        assertEquals(DateRangex.monthDownTo("2018-08".toDate(Datex.yM), "2018-11".toDate(Datex.yM)).joinToString { it.format(Datex.yM) }, "")
     }
 
     @Test
     fun testDayIterator() {
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-09".toDateYMD()).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-09".toDateYMD(), 2).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-08")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-03".toDateYMD(), -2).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-04")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-02".toDateYMD()).joinToString { it.formatYMD() }, "")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-09".toDateYMD(), -2).joinToString { it.formatYMD() }, "")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDateYMD(), "2018-08-03".toDateYMD(), 2).joinToString { it.formatYMD() }, "")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-04")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-02".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "")
 
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDateYMD(), "2018-08-10".toDateYMD()).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDateYMD(), "2018-08-10".toDateYMD(), 2).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-08")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDateYMD(), "2018-08-03".toDateYMD()).joinToString { it.formatYMD() }, "")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDateYMD(), "2018-08-10".toDateYMD(), -2).joinToString { it.formatYMD() }, "")
+        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
+        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
+        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
 
-        assertEquals(DateRangex.dayDownTo("2018-08-06".toDateYMD(), "2018-08-03".toDateYMD()).joinToString { it.formatYMD() }, "2018-08-06, 2018-08-05, 2018-08-04, 2018-08-03")
-        assertEquals(DateRangex.dayDownTo("2018-08-06".toDateYMD(), "2018-08-10".toDateYMD()).joinToString { it.formatYMD() }, "")
+        assertEquals(DateRangex.dayDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-05, 2018-08-04, 2018-08-03")
+        assertEquals(DateRangex.dayDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
     }
 
     @Test
     fun testHourIterator() {
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 21".toDateYMDH()).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 21".toDateYMDH(), 2).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 20")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 15".toDateYMDH(), -2).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 16")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 14".toDateYMDH()).joinToString { it.formatYMDH() }, "")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 21".toDateYMDH(), -2).joinToString { it.formatYMDH() }, "")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDateYMDH(), "2018-08-06 15".toDateYMDH(), 2).joinToString { it.formatYMDH() }, "")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 16")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 14".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "")
 
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDateYMDH(), "2018-08-06 22".toDateYMDH()).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDateYMDH(), "2018-08-06 22".toDateYMDH(), 2).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 20")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDateYMDH(), "2018-08-06 15".toDateYMDH()).joinToString { it.formatYMDH() }, "")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDateYMDH(), "2018-08-06 22".toDateYMDH(), -2).joinToString { it.formatYMDH() }, "")
+        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
+        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
+        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
 
-        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDateYMDH(), "2018-08-06 15".toDateYMDH()).joinToString { it.formatYMDH() }, "2018-08-06 18, 2018-08-06 17, 2018-08-06 16, 2018-08-06 15")
-        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDateYMDH(), "2018-08-06 22".toDateYMDH()).joinToString { it.formatYMDH() }, "")
+        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 17, 2018-08-06 16, 2018-08-06 15")
+        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
     }
 
     @Test
     fun testMinuteIterator() {
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:25".toDateYMDHM()).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:23, 2018-08-06 18:24, 2018-08-06 18:25")
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:25".toDateYMDHM(), 2).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:24")
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:19".toDateYMDHM(), -2).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:20")
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:18".toDateYMDHM()).joinToString { it.formatYMDHM() }, "")
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:25".toDateYMDHM(), -2).joinToString { it.formatYMDHM() }, "")
-        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:19".toDateYMDHM(), 2).joinToString { it.formatYMDHM() }, "")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:25".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:23, 2018-08-06 18:24, 2018-08-06 18:25")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:25".toDate(Datex.yMdHm), 2).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:24")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:19".toDate(Datex.yMdHm), -2).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:20")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:18".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:25".toDate(Datex.yMdHm), -2).joinToString { it.format(Datex.yMdHm) }, "")
+        assertEquals(DateRangex.minuteRangeTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:19".toDate(Datex.yMdHm), 2).joinToString { it.format(Datex.yMdHm) }, "")
 
-        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:26".toDateYMDHM()).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:23, 2018-08-06 18:24, 2018-08-06 18:25")
-        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:26".toDateYMDHM(), 2).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:24")
-        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:19".toDateYMDHM()).joinToString { it.formatYMDHM() }, "")
-        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:26".toDateYMDHM(), -2).joinToString { it.formatYMDHM() }, "")
+        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:26".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:23, 2018-08-06 18:24, 2018-08-06 18:25")
+        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:26".toDate(Datex.yMdHm), 2).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:24")
+        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:19".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "")
+        assertEquals(DateRangex.minuteUntil("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:26".toDate(Datex.yMdHm), -2).joinToString { it.format(Datex.yMdHm) }, "")
 
-        assertEquals(DateRangex.minuteDownTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:19".toDateYMDHM()).joinToString { it.formatYMDHM() }, "2018-08-06 18:22, 2018-08-06 18:21, 2018-08-06 18:20, 2018-08-06 18:19")
-        assertEquals(DateRangex.minuteDownTo("2018-08-06 18:22".toDateYMDHM(), "2018-08-06 18:26".toDateYMDHM()).joinToString { it.formatYMDHM() }, "")
+        assertEquals(DateRangex.minuteDownTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:19".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "2018-08-06 18:22, 2018-08-06 18:21, 2018-08-06 18:20, 2018-08-06 18:19")
+        assertEquals(DateRangex.minuteDownTo("2018-08-06 18:22".toDate(Datex.yMdHm), "2018-08-06 18:26".toDate(Datex.yMdHm)).joinToString { it.format(Datex.yMdHm) }, "")
     }
 
     @Test
     fun testSecondIterator() {
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:18".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:16, 2018-08-06 18:22:17, 2018-08-06 18:22:18")
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:18".toDateYMDHMS(), 2).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:17")
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:12".toDateYMDHMS(), -2).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:13")
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:11".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "")
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:18".toDateYMDHMS(), -2).joinToString { it.formatYMDHMS() }, "")
-        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:12".toDateYMDHMS(), 2).joinToString { it.formatYMDHMS() }, "")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:18".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:16, 2018-08-06 18:22:17, 2018-08-06 18:22:18")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:18".toDate(Datex.yMdHms), 2).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:17")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:12".toDate(Datex.yMdHms), -2).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:13")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:11".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:18".toDate(Datex.yMdHms), -2).joinToString { it.format(Datex.yMdHms) }, "")
+        assertEquals(DateRangex.secondRangeTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:12".toDate(Datex.yMdHms), 2).joinToString { it.format(Datex.yMdHms) }, "")
 
-        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:19".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:16, 2018-08-06 18:22:17, 2018-08-06 18:22:18")
-        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:19".toDateYMDHMS(), 2).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:17")
-        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:12".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "")
-        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:19".toDateYMDHMS(), -2).joinToString { it.formatYMDHMS() }, "")
+        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:19".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:16, 2018-08-06 18:22:17, 2018-08-06 18:22:18")
+        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:19".toDate(Datex.yMdHms), 2).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:17")
+        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:12".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "")
+        assertEquals(DateRangex.secondUntil("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:19".toDate(Datex.yMdHms), -2).joinToString { it.format(Datex.yMdHms) }, "")
 
-        assertEquals(DateRangex.secondDownTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:12".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "2018-08-06 18:22:15, 2018-08-06 18:22:14, 2018-08-06 18:22:13, 2018-08-06 18:22:12")
-        assertEquals(DateRangex.secondDownTo("2018-08-06 18:22:15".toDateYMDHMS(), "2018-08-06 18:22:19".toDateYMDHMS()).joinToString { it.formatYMDHMS() }, "")
+        assertEquals(DateRangex.secondDownTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:12".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "2018-08-06 18:22:15, 2018-08-06 18:22:14, 2018-08-06 18:22:13, 2018-08-06 18:22:12")
+        assertEquals(DateRangex.secondDownTo("2018-08-06 18:22:15".toDate(Datex.yMdHms), "2018-08-06 18:22:19".toDate(Datex.yMdHms)).joinToString { it.format(Datex.yMdHms) }, "")
     }
 
     @Test
     fun testMillisecondIterator() {
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 667, 2018-08-06 18:22:15 668, 2018-08-06 18:22:15 669")
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM(), 2).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 668")
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 663".toDateYMDHMSM(), -2).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 664")
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 662".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "")
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM(), -2).joinToString { it.formatYMDHMSM() }, "")
-        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 663".toDateYMDHMSM(), 2).joinToString { it.formatYMDHMSM() }, "")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 667, 2018-08-06 18:22:15 668, 2018-08-06 18:22:15 669")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS), 2).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 668")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 663".toDate(Datex.yMdHmsS), -2).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 664")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 662".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS), -2).joinToString { it.format(Datex.yMdHmsS) }, "")
+        assertEquals(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 663".toDate(Datex.yMdHmsS), 2).joinToString { it.format(Datex.yMdHmsS) }, "")
 
-        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 670".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 667, 2018-08-06 18:22:15 668, 2018-08-06 18:22:15 669")
-        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 670".toDateYMDHMSM(), 2).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 668")
-        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 663".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "")
-        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 670".toDateYMDHMSM(), -2).joinToString { it.formatYMDHMSM() }, "")
+        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 670".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 667, 2018-08-06 18:22:15 668, 2018-08-06 18:22:15 669")
+        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 670".toDate(Datex.yMdHmsS), 2).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 668")
+        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 663".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "")
+        assertEquals(DateRangex.millisecondUntil("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 670".toDate(Datex.yMdHmsS), -2).joinToString { it.format(Datex.yMdHmsS) }, "")
 
-        assertEquals(DateRangex.millisecondDownTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 663".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 665, 2018-08-06 18:22:15 664, 2018-08-06 18:22:15 663")
-        assertEquals(DateRangex.millisecondDownTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 670".toDateYMDHMSM()).joinToString { it.formatYMDHMSM() }, "")
+        assertEquals(DateRangex.millisecondDownTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 663".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "2018-08-06 18:22:15 666, 2018-08-06 18:22:15 665, 2018-08-06 18:22:15 664, 2018-08-06 18:22:15 663")
+        assertEquals(DateRangex.millisecondDownTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 670".toDate(Datex.yMdHmsS)).joinToString { it.format(Datex.yMdHmsS) }, "")
     }
 
     @Test
     @Throws(ParseException::class)
     fun testContains() {
-        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 666".toDateYMDHMSM()))
-        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 669".toDateYMDHMSM()))
-        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 667".toDateYMDHMSM()))
-        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 668".toDateYMDHMSM()))
+        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS)))
+        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)))
+        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 667".toDate(Datex.yMdHmsS)))
+        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 668".toDate(Datex.yMdHmsS)))
 
-        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 665".toDateYMDHMSM()))
-        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).contains("2018-08-06 18:22:15 670".toDateYMDHMSM()))
+        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 665".toDate(Datex.yMdHmsS)))
+        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).contains("2018-08-06 18:22:15 670".toDate(Datex.yMdHmsS)))
     }
 
     @Test
     @Throws(ParseException::class)
     fun testEmpty() {
-        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 665".toDateYMDHMSM()).isEmpty)
-        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 669".toDateYMDHMSM()).isEmpty)
-        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDateYMDHMSM(), "2018-08-06 18:22:15 666".toDateYMDHMSM()).isEmpty)
+        assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 665".toDate(Datex.yMdHmsS)).isEmpty)
+        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).isEmpty)
+        assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS)).isEmpty)
     }
 }
