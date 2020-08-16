@@ -135,8 +135,29 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
+    @NotNull
+    public static <T extends Comparable<T>> T requireInRange(@NotNull T value, @NotNull T minValue, @NotNull T maxValue, @Nullable String paramName) {
+        if (value.compareTo(minValue) >= 0 && value.compareTo(maxValue) <= 0) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is '%s', must be >= '%s' && <= '%s'",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
+        }
+    }
+
+    /**
+     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     */
+    @NotNull
+    public static <T extends Comparable<T>> T requireInRange(@NotNull T value, @NotNull T minValue, @NotNull T maxValue) {
+        return requireInRange(value, minValue, maxValue, null);
+    }
+
+    /**
+     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     */
     public static byte requireInRange(byte value, byte minValue, byte maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be >= %d && <= %d",
@@ -148,14 +169,14 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static byte requireInRange(byte value, byte minValue, byte maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static short requireInRange(short value, short minValue, short maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be >= %d && <= %d",
@@ -167,14 +188,14 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static short requireInRange(short value, short minValue, short maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static int requireInRange(int value, int minValue, int maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be >= %d && <= %d",
@@ -186,14 +207,14 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static int requireInRange(int value, int minValue, int maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static long requireInRange(long value, long minValue, long maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be >= %d && <= %d",
@@ -205,14 +226,14 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static long requireInRange(long value, long minValue, long maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static float requireInRange(float value, float minValue, float maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be >= %s && <= %s",
@@ -224,14 +245,14 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static float requireInRange(float value, float minValue, float maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static double requireInRange(double value, double minValue, double maxValue, @Nullable String paramName) {
-        if (Rangex.in(value, minValue, maxValue)) {
+        if (value >= minValue && value <= maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be >= %s && <= %s",
@@ -243,15 +264,36 @@ public class Rangex {
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static double requireInRange(double value, double minValue, double maxValue) {
-        return requireInRange(value, minValue, maxValue, "unknown");
+        return requireInRange(value, minValue, maxValue, null);
     }
 
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
+    @NotNull
+    public static <T extends Comparable<T>> T requireNotInRange(@NotNull T value, @NotNull T minValue, @NotNull T maxValue, @Nullable String paramName) {
+        if (value.compareTo(minValue) < 0 || value.compareTo(maxValue) > 0) {
+            return value;
+        } else {
+            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is '%s', must be < '%s' || > '%s'",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
+        }
+    }
+
+    /**
+     * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     */
+    @NotNull
+    public static <T extends Comparable<T>> T requireNotInRange(@NotNull T value, @NotNull T minValue, @NotNull T maxValue) {
+        return requireNotInRange(value, minValue, maxValue, null);
+    }
+
+    /**
+     * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     */
     public static byte requireNotInRange(byte value, byte minValue, byte maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be < %d || > %d",
@@ -263,14 +305,14 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static byte requireNotInRange(byte value, byte minValue, byte maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static short requireNotInRange(short value, short minValue, short maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be < %d || > %d",
@@ -282,14 +324,14 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static short requireNotInRange(short value, short minValue, short maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static int requireNotInRange(int value, int minValue, int maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be < %d || > %d",
@@ -301,14 +343,14 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static int requireNotInRange(int value, int minValue, int maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static long requireNotInRange(long value, long minValue, long maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be < %d || > %d",
@@ -320,14 +362,14 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static long requireNotInRange(long value, long minValue, long maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static float requireNotInRange(float value, float minValue, float maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be < %s || > %s",
@@ -339,14 +381,14 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static float requireNotInRange(float value, float minValue, float maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static double requireNotInRange(double value, double minValue, double maxValue, @Nullable String paramName) {
-        if (Rangex.notIn(value, minValue, maxValue)) {
+        if (value < minValue || value > maxValue) {
             return value;
         } else {
             throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be < %s || > %s",
@@ -358,7 +400,7 @@ public class Rangex {
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
     public static double requireNotInRange(double value, double minValue, double maxValue) {
-        return requireNotInRange(value, minValue, maxValue, "unknown");
+        return requireNotInRange(value, minValue, maxValue, null);
     }
 
 
@@ -548,6 +590,13 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
+    public static <T extends Comparable<T>> boolean in(@NotNull T value, @NotNull T minValue, @NotNull T maxValue) {
+        return value.compareTo(minValue) >= 0 && value.compareTo(maxValue) <= 0;
+    }
+
+    /**
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
+     */
     public static boolean in(byte value, byte minValue, byte maxValue) {
         return value >= minValue && value <= maxValue;
     }
@@ -589,6 +638,13 @@ public class Rangex {
 
 
     /* ******************************************* notIn *******************************************/
+
+    /**
+     * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     */
+    public static <T extends Comparable<T>> boolean notIn(@NotNull T value, @NotNull T minValue, @NotNull T maxValue) {
+        return value.compareTo(minValue) < 0 || value.compareTo(maxValue) > 0;
+    }
 
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException

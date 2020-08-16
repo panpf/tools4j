@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.ranges.ktx
 
 import org.junit.Assert
 import org.junit.Test
+import java.util.*
 
 class RangexTest {
 
@@ -63,6 +64,23 @@ class RangexTest {
 
     @Test
     fun testRequireInRange() {
+        Date(2).requireInRange(Date(0), Date(5))
+        try {
+            Date((-1)).requireInRange(Date(0), Date(5))
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Date(6).requireInRange(Date(0), Date(5))
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Date(6).requireInRange(Date(0), Date(5), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2.toByte().requireInRange(0.toByte(), 5.toByte())
         try {
             (-1).toByte().requireInRange(0.toByte(), 5.toByte())
@@ -74,6 +92,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6.toByte().requireInRange(0.toByte(), 5.toByte(), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2.toShort().requireInRange(0.toShort(), 5.toShort())
         try {
             (-1).toShort().requireInRange(0.toShort(), 5.toShort())
@@ -85,6 +109,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6.toShort().requireInRange(0.toShort(), 5.toShort(), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2.requireInRange(0, 5)
         try {
             (-1).requireInRange(0, 5)
@@ -96,6 +126,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6.requireInRange(0, 5, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2L.requireInRange(0L, 5L)
         try {
             (-1L).requireInRange(0L, 5L)
@@ -107,6 +143,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6L.requireInRange(0L, 5L, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2f.requireInRange(0f, 5f)
         try {
             (-1f).requireInRange(0f, 5f)
@@ -118,6 +160,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6f.requireInRange(0f, 5f, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         2.0.requireInRange(0.0, 5.0)
         try {
             (-1.0).requireInRange(0.0, 5.0)
@@ -129,10 +177,28 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            6.0.requireInRange(0.0, 5.0, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
     }
 
     @Test
     fun testRequireNotInRange() {
+        Date(6).requireNotInRange(Date(0), Date(5))
+        Date((-1)).requireNotInRange(Date(0), Date(5))
+        try {
+            Date(2).requireNotInRange(Date(0), Date(5))
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Date(2).requireNotInRange(Date(0), Date(5), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6.toByte().requireNotInRange(0.toByte(), 5.toByte())
         (-1).toByte().requireNotInRange(0.toByte(), 5.toByte())
         try {
@@ -140,6 +206,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            2.toByte().requireNotInRange(0.toByte(), 5.toByte(), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6.toShort().requireNotInRange(0.toShort(), 5.toShort())
         (-1).toShort().requireNotInRange(0.toShort(), 5.toShort())
         try {
@@ -147,6 +219,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            2.toShort().requireNotInRange(0.toShort(), 5.toShort(), "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6.requireNotInRange(0, 5)
         (-1).requireNotInRange(0, 5)
         try {
@@ -154,6 +232,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            2.requireNotInRange(0, 5, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6L.requireNotInRange(0L, 5L)
         (-1L).requireNotInRange(0L, 5L)
         try {
@@ -161,6 +245,12 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            2L.requireNotInRange(0L, 5L, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6f.requireNotInRange(0f, 5f)
         (-1f).requireNotInRange(0f, 5f)
         try {
@@ -168,10 +258,21 @@ class RangexTest {
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            2f.requireNotInRange(0f, 5f, "paramSample")
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         6.0.requireNotInRange(0.0, 5.0)
         (-1.0).requireNotInRange(0.0, 5.0)
         try {
             2.0.requireNotInRange(0.0, 5.0)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            2.0.requireNotInRange(0.0, 5.0, "paramSample")
             Assert.fail()
         } catch (ignored: java.lang.Exception) {
         }

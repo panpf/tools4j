@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.ranges
 
 import org.junit.Assert.*
 import org.junit.Test
+import java.util.*
 
 class RangexTest {
 
@@ -152,6 +153,23 @@ class RangexTest {
 
     @Test
     fun testRequireInRange() {
+        Rangex.requireInRange(Date(2), Date(0), Date(5))
+        try {
+            Rangex.requireInRange(Date(-1), Date(0), Date(5))
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Rangex.requireInRange(Date(6), Date(0), Date(5))
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Rangex.requireInRange(Date(6), Date(0), Date(5), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2.toByte(), 0.toByte(), 5.toByte())
         try {
             Rangex.requireInRange((-1).toByte(), 0.toByte(), 5.toByte())
@@ -163,6 +181,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6.toByte(), 0.toByte(), 5.toByte(), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2.toShort(), 0.toShort(), 5.toShort())
         try {
             Rangex.requireInRange((-1).toShort(), 0.toShort(), 5.toShort())
@@ -174,6 +198,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6.toShort(), 0.toShort(), 5.toShort(), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2, 0, 5)
         try {
             Rangex.requireInRange(-1, 0, 5)
@@ -185,6 +215,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6, 0, 5, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2L, 0L, 5L)
         try {
             Rangex.requireInRange(-1L, 0L, 5L)
@@ -196,6 +232,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6L, 0L, 5L, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2f, 0f, 5f)
         try {
             Rangex.requireInRange(-1f, 0f, 5f)
@@ -207,6 +249,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6f, 0f, 5f, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireInRange(2.0, 0.0, 5.0)
         try {
             Rangex.requireInRange(-1.0, 0.0, 5.0)
@@ -218,10 +266,28 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireInRange(6.0, 0.0, 5.0, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
     }
 
     @Test
     fun testRequireNotInRange() {
+        Rangex.requireNotInRange(Date(6), Date(0), Date(5))
+        Rangex.requireNotInRange(Date((-1)), Date(0), Date(5))
+        try {
+            Rangex.requireNotInRange(Date(2), Date(0), Date(5))
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Rangex.requireNotInRange(Date(2), Date(0), Date(5), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6.toByte(), 0.toByte(), 5.toByte())
         Rangex.requireNotInRange((-1).toByte(), 0.toByte(), 5.toByte())
         try {
@@ -229,6 +295,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireNotInRange(2.toByte(), 0.toByte(), 5.toByte(), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6.toShort(), 0.toShort(), 5.toShort())
         Rangex.requireNotInRange((-1).toShort(), 0.toShort(), 5.toShort())
         try {
@@ -236,6 +308,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireNotInRange(2.toShort(), 0.toShort(), 5.toShort(), "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6, 0, 5)
         Rangex.requireNotInRange(-1, 0, 5)
         try {
@@ -243,6 +321,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireNotInRange(2, 0, 5, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6L, 0L, 5L)
         Rangex.requireNotInRange(-1L, 0L, 5L)
         try {
@@ -250,6 +334,12 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireNotInRange(2L, 0L, 5L, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6f, 0f, 5f)
         Rangex.requireNotInRange(-1f, 0f, 5f)
         try {
@@ -257,10 +347,21 @@ class RangexTest {
             fail()
         } catch (ignored: java.lang.Exception) {
         }
+        try {
+            Rangex.requireNotInRange(2f, 0f, 5f, "paramSample")
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+
         Rangex.requireNotInRange(6.0, 0.0, 5.0)
         Rangex.requireNotInRange(-1.0, 0.0, 5.0)
         try {
             Rangex.requireNotInRange(2.0, 0.0, 5.0)
+            fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            Rangex.requireNotInRange(2.0, 0.0, 5.0, "paramSample")
             fail()
         } catch (ignored: java.lang.Exception) {
         }
@@ -287,7 +388,7 @@ class RangexTest {
             Rangex.step(IntProgression.fromClosedRange(10, 1, -3), 0)
             fail()
         } catch (e: Exception) {
-            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+            if (!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))) {
                 fail()
             }
         }
@@ -295,7 +396,7 @@ class RangexTest {
             Rangex.step(LongProgression.fromClosedRange(10L, 1L, -3), 0)
             fail()
         } catch (e: Exception) {
-            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+            if (!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))) {
                 fail()
             }
         }
@@ -303,7 +404,7 @@ class RangexTest {
             Rangex.step(CharProgression.fromClosedRange(10.toChar(), 1.toChar(), -3), 0)
             fail()
         } catch (e: Exception) {
-            if(!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))){
+            if (!(e is IllegalArgumentException && e.message.orEmpty().startsWith("Step must be positive, was:"))) {
                 fail()
             }
         }
@@ -318,6 +419,10 @@ class RangexTest {
 
     @Test
     fun testIn() {
+        assertTrue(Rangex.`in`(Date(9), Date(3), Date(10)))
+        assertFalse(Rangex.`in`(Date(2), Date(3), Date(10)))
+        assertFalse(Rangex.`in`(Date(11), Date(3), Date(10)))
+
         assertTrue(Rangex.`in`(9.toByte(), 3.toByte(), 10.toByte()))
         assertFalse(Rangex.`in`(2.toByte(), 3.toByte(), 10.toByte()))
         assertFalse(Rangex.`in`(11.toByte(), 3.toByte(), 10.toByte()))
@@ -345,6 +450,10 @@ class RangexTest {
 
     @Test
     fun testNotIn() {
+        assertFalse(Rangex.notIn(Date(9), Date(3), Date(10)))
+        assertTrue(Rangex.notIn(Date(2), Date(3), Date(10)))
+        assertTrue(Rangex.notIn(Date(11), Date(3), Date(10)))
+
         assertFalse(Rangex.notIn(9.toByte(), 3.toByte(), 10.toByte()))
         assertTrue(Rangex.notIn(2.toByte(), 3.toByte(), 10.toByte()))
         assertTrue(Rangex.notIn(11.toByte(), 3.toByte(), 10.toByte()))

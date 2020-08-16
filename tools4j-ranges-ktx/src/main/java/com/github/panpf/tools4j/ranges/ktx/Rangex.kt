@@ -105,6 +105,11 @@ inline fun Char.until(end: Char, step: Int): CharProgression = Rangex.until(this
 /**
  * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
+inline fun <T : Comparable<T>> T.requireInRange(minValue: T, maxValue: T, paramName: String? = null): T = Rangex.requireInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
 inline fun Byte.requireInRange(minValue: Byte, maxValue: Byte, paramName: String? = null): Byte = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
@@ -132,6 +137,11 @@ inline fun Float.requireInRange(minValue: Float, maxValue: Float, paramName: Str
  */
 inline fun Double.requireInRange(minValue: Double, maxValue: Double, paramName: String? = null): Double = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun <T : Comparable<T>> T.requireNotInRange(minValue: T, maxValue: T, paramName: String? = null): T = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
 
 /**
  * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
