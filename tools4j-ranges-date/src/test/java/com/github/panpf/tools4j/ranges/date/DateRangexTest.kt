@@ -17,14 +17,13 @@
 package com.github.panpf.tools4j.ranges.date
 
 import com.github.panpf.tools4j.date.Datex
-import com.github.panpf.tools4j.date.ktx.*
+import com.github.panpf.tools4j.date.ktx.format
+import com.github.panpf.tools4j.date.ktx.toDate
 import org.junit.Assert.*
 import org.junit.Test
 import java.text.ParseException
 
 class DateRangexTest {
-
-    // todo 测试 reversed 和 step
 
     @Test
     fun testYearIterator() {
@@ -63,39 +62,39 @@ class DateRangexTest {
     }
 
     @Test
-    fun testDayIterator() {
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-04")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-02".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
-        assertEquals(DateRangex.dayRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "")
+    fun testDayOfMonthIterator() {
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-04")
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-02".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-09".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayOfMonthRangeTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "")
 
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
-        assertEquals(DateRangex.dayUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayOfMonthUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-07, 2018-08-08, 2018-08-09")
+        assertEquals(DateRangex.dayOfMonthUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), 2).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-08")
+        assertEquals(DateRangex.dayOfMonthUntil("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayOfMonthUntil("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd), -2).joinToString { it.format(Datex.yMd) }, "")
 
-        assertEquals(DateRangex.dayDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-05, 2018-08-04, 2018-08-03")
-        assertEquals(DateRangex.dayDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
+        assertEquals(DateRangex.dayOfMonthDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-03".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "2018-08-06, 2018-08-05, 2018-08-04, 2018-08-03")
+        assertEquals(DateRangex.dayOfMonthDownTo("2018-08-06".toDate(Datex.yMd), "2018-08-10".toDate(Datex.yMd)).joinToString { it.format(Datex.yMd) }, "")
     }
 
     @Test
-    fun testHourIterator() {
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 16")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 14".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
-        assertEquals(DateRangex.hourRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "")
+    fun testHourOfDayIterator() {
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 16")
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 14".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 21".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourOfDayRangeTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "")
 
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
-        assertEquals(DateRangex.hourUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourOfDayUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 19, 2018-08-06 20, 2018-08-06 21")
+        assertEquals(DateRangex.hourOfDayUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), 2).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 20")
+        assertEquals(DateRangex.hourOfDayUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourOfDayUntil("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH), -2).joinToString { it.format(Datex.yMdH) }, "")
 
-        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 17, 2018-08-06 16, 2018-08-06 15")
-        assertEquals(DateRangex.hourDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
+        assertEquals(DateRangex.hourOfDayDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 15".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "2018-08-06 18, 2018-08-06 17, 2018-08-06 16, 2018-08-06 15")
+        assertEquals(DateRangex.hourOfDayDownTo("2018-08-06 18".toDate(Datex.yMdH), "2018-08-06 22".toDate(Datex.yMdH)).joinToString { it.format(Datex.yMdH) }, "")
     }
 
     @Test
@@ -170,5 +169,69 @@ class DateRangexTest {
         assertTrue(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 665".toDate(Datex.yMdHmsS)).isEmpty)
         assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 669".toDate(Datex.yMdHmsS)).isEmpty)
         assertFalse(DateRangex.millisecondRangeTo("2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS), "2018-08-06 18:22:15 666".toDate(Datex.yMdHmsS)).isEmpty)
+    }
+
+    @Test
+    fun testReversed() {
+        assertEquals(
+                "2022, 2021, 2020",
+                DateRangex.reversed(DateRangex.yearRangeTo("2020".toDate(Datex.y), "2022".toDate(Datex.y))).joinToString { it.format(Datex.y) }
+        )
+        assertEquals(
+                "2022-10, 2022-09, 2022-08",
+                DateRangex.reversed(DateRangex.monthRangeTo("2022-08".toDate(Datex.yM), "2022-10".toDate(Datex.yM))).joinToString { it.format(Datex.yM) }
+        )
+        assertEquals(
+                "2022-10-07, 2022-10-06, 2022-10-05",
+                DateRangex.reversed(DateRangex.dayOfMonthRangeTo("2022-10-05".toDate(Datex.yMd), "2022-10-07".toDate(Datex.yMd))).joinToString { it.format(Datex.yMd) }
+        )
+        assertEquals(
+                "2022-10-07 13, 2022-10-07 12, 2022-10-07 11",
+                DateRangex.reversed(DateRangex.hourOfDayRangeTo("2022-10-07 11".toDate(Datex.yMdH), "2022-10-07 13".toDate(Datex.yMdH))).joinToString { it.format(Datex.yMdH) }
+        )
+        assertEquals(
+                "2022-10-07 13:34, 2022-10-07 13:33, 2022-10-07 13:32",
+                DateRangex.reversed(DateRangex.minuteRangeTo("2022-10-07 13:32".toDate(Datex.yMdHm), "2022-10-07 13:34".toDate(Datex.yMdHm))).joinToString { it.format(Datex.yMdHm) }
+        )
+        assertEquals(
+                "2022-10-07 13:34:12, 2022-10-07 13:34:11, 2022-10-07 13:34:10",
+                DateRangex.reversed(DateRangex.secondRangeTo("2022-10-07 13:34:10".toDate(Datex.yMdHms), "2022-10-07 13:34:12".toDate(Datex.yMdHms))).joinToString { it.format(Datex.yMdHms) }
+        )
+        assertEquals(
+                "2022-10-07 13:34:12 555, 2022-10-07 13:34:12 554, 2022-10-07 13:34:12 553",
+                DateRangex.reversed(DateRangex.millisecondRangeTo("2022-10-07 13:34:12 553".toDate(Datex.yMdHmsS), "2022-10-07 13:34:12 555".toDate(Datex.yMdHmsS))).joinToString { it.format(Datex.yMdHmsS) }
+        )
+    }
+
+    @Test
+    fun testStep() {
+        assertEquals(
+                "2022, 2020",
+                DateRangex.step(DateRangex.yearDownTo("2022".toDate(Datex.y), "2020".toDate(Datex.y)), 2).joinToString { it.format(Datex.y) }
+        )
+        assertEquals(
+                "2022-10, 2022-08",
+                DateRangex.step(DateRangex.monthDownTo("2022-10".toDate(Datex.yM), "2022-08".toDate(Datex.yM)), 2).joinToString { it.format(Datex.yM) }
+        )
+        assertEquals(
+                "2022-10-07, 2022-10-05",
+                DateRangex.step(DateRangex.dayOfMonthDownTo("2022-10-07".toDate(Datex.yMd), "2022-10-05".toDate(Datex.yMd)), 2).joinToString { it.format(Datex.yMd) }
+        )
+        assertEquals(
+                "2022-10-07 13, 2022-10-07 11",
+                DateRangex.step(DateRangex.hourOfDayDownTo("2022-10-07 13".toDate(Datex.yMdH), "2022-10-07 11".toDate(Datex.yMdH)), 2).joinToString { it.format(Datex.yMdH) }
+        )
+        assertEquals(
+                "2022-10-07 13:34, 2022-10-07 13:32",
+                DateRangex.step(DateRangex.minuteDownTo("2022-10-07 13:34".toDate(Datex.yMdHm), "2022-10-07 13:32".toDate(Datex.yMdHm)), 2).joinToString { it.format(Datex.yMdHm) }
+        )
+        assertEquals(
+                "2022-10-07 13:34:12, 2022-10-07 13:34:10",
+                DateRangex.step(DateRangex.secondDownTo("2022-10-07 13:34:12".toDate(Datex.yMdHms), "2022-10-07 13:34:10".toDate(Datex.yMdHms)), 2).joinToString { it.format(Datex.yMdHms) }
+        )
+        assertEquals(
+                "2022-10-07 13:34:12 555, 2022-10-07 13:34:12 553",
+                DateRangex.step(DateRangex.millisecondDownTo("2022-10-07 13:34:12 555".toDate(Datex.yMdHmsS), "2022-10-07 13:34:12 553".toDate(Datex.yMdHmsS)), 2).joinToString { it.format(Datex.yMdHmsS) }
+        )
     }
 }

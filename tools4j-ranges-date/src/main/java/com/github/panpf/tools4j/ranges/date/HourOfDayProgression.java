@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class HourProgression extends DateProgression {
+public class HourOfDayProgression extends DateProgression {
 
-    public HourProgression(@NotNull Date first, @NotNull Date last, int step) {
+    public HourOfDayProgression(@NotNull Date first, @NotNull Date last, int step) {
         super(first, last, step);
     }
 
@@ -33,5 +33,10 @@ public final class HourProgression extends DateProgression {
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.HOUR_OF_DAY, this.getStep());
         return new Date(calendar.getTimeInMillis());
+    }
+
+    @NotNull
+    public static HourOfDayProgression fromClosedRange(@NotNull Date first, @NotNull Date last, int step) {
+        return new HourOfDayProgression(first, last, step);
     }
 }

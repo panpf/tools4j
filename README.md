@@ -282,11 +282,12 @@ Dependencies：
 ### tools4j-ranges
 * Rangex: [Rangex.java] ([Test][RangexTest.kt]) | [Rangex.kt] ([Test][RangexTest.kt])
     * rangeTo, until, downTo, requireInRange, requireNotInRange, in, notIn, 
-    * coerceAtLeast, coerceAtMost, coerceIn
+    * reversed, step, coerceAtLeast, coerceAtMost, coerceIn
 
 ### tools4j-ranges-date
 * DateRangex: [DateRangex.java] ([Test][DateRangexTest.kt]) | [DateRangex.kt] ([Test][DateRangexTest.kt])
-    * \[Year, Month...\]RangeTo, \[Year, Month...\]Until, \[Year, Month...\]DownTo
+    * \[Year, Month...\]RangeTo, \[Year, Month...\]Until, 
+    * \[Year, Month...\]DownTo, reversed, step
 
 ### tools4j-reflect
 * Reflectx: [Reflectx.java] ([Test][ReflectxTest.kt]) | [Reflectx.kt] ([Test][ReflectxTest.kt])

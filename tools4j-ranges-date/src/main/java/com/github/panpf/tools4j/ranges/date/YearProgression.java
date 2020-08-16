@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class YearProgression extends DateProgression {
+public class YearProgression extends DateProgression {
 
     public YearProgression(@NotNull Date first, @NotNull Date last, int step) {
         super(first, last, step);
@@ -33,5 +33,10 @@ public final class YearProgression extends DateProgression {
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.YEAR, this.getStep());
         return new Date(calendar.getTimeInMillis());
+    }
+
+    @NotNull
+    public static YearProgression fromClosedRange(@NotNull Date first, @NotNull Date last, int step) {
+        return new YearProgression(first, last, step);
     }
 }

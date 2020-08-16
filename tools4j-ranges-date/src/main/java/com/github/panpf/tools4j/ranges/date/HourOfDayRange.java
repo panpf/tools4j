@@ -17,51 +17,43 @@
 package com.github.panpf.tools4j.ranges.date;
 
 import com.github.panpf.tools4j.ranges.ClosedRange;
-import com.github.panpf.tools4j.ranges.LongProgression;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * A range of values of type `Long`.
- */
-public class LongRange extends LongProgression implements ClosedRange<Long> {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    /**
-     * An empty range of values of type Char.
-     */
-    public static final LongRange EMPTY = new LongRange(1, 0);
+public class HourOfDayRange extends HourOfDayProgression implements ClosedRange<Date> {
 
-    public LongRange(long start, long endInclusive) {
+    public HourOfDayRange(@NotNull Date start, @NotNull Date endInclusive) {
         super(start, endInclusive, 1);
     }
 
     @NotNull
     @Override
-    public Long getStart() {
+    public Date getStart() {
         return getFirst();
     }
 
     @NotNull
     @Override
-    public Long getEndInclusive() {
+    public Date getEndInclusive() {
         return getLast();
     }
 
     @Override
-    public boolean contains(@NotNull Long value) {
-        return getFirst() <= value && value <= getLast();
-    }
-
-    public boolean isEmpty() {
-        return getFirst() > getLast();
+    public boolean contains(@NotNull Date value) {
+        return getFirst().compareTo(value) <= 0 && value.compareTo(getLast()) <= 0;
     }
 
     @Override
-    public int hashCode() {
-        return this.isEmpty() ? -1 : (int) (31 * (31 * this.getFirst() + this.getLast()));
+    public boolean isEmpty() {
+        return getFirst().compareTo(getLast()) > 0;
     }
 
     @NotNull
+    @Override
     public String toString() {
-        return this.getFirst() + ".." + this.getLast();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+        return dateFormat.format(getFirst()) + ".." + dateFormat.format(getLast());
     }
 }

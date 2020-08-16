@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
 public class DateProgressionIterator implements Iterator<Date> {
 
     @NotNull
-    private final DateProgression range;
+    private final DateProgression progression;
     @NotNull
     private final Date last;
     private final int step;
@@ -34,9 +34,9 @@ public class DateProgressionIterator implements Iterator<Date> {
     private Date next;
     private boolean hasNext;
 
-    public DateProgressionIterator(@NotNull DateProgression range, @NotNull Date first, @NotNull Date last, int step) {
+    public DateProgressionIterator(@NotNull DateProgression progression, @NotNull Date first, @NotNull Date last, int step) {
         if (step == 0) throw new IllegalArgumentException("Step must be non-zero");
-        this.range = range;
+        this.progression = progression;
         this.last = last;
         this.step = step;
         this.hasNext = this.step > 0 ? first.compareTo(this.last) <= 0 : first.compareTo(this.last) >= 0;
@@ -53,7 +53,7 @@ public class DateProgressionIterator implements Iterator<Date> {
             throw (new NoSuchElementException());
         } else {
             Date result = this.next;
-            this.next = this.range.nextDate(this.next);
+            this.next = this.progression.nextDate(this.next);
             this.hasNext = this.step > 0 ? this.next.compareTo(this.last) <= 0 : (this.step < 0 && this.next.compareTo(this.last) >= 0);
             return result;
         }

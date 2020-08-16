@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class DayProgression extends DateProgression {
+public class DayOfMonthProgression extends DateProgression {
 
-    public DayProgression(@NotNull Date first, @NotNull Date last, int step) {
+    public DayOfMonthProgression(@NotNull Date first, @NotNull Date last, int step) {
         super(first, last, step);
     }
 
@@ -33,5 +33,10 @@ public final class DayProgression extends DateProgression {
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, this.getStep());
         return new Date(calendar.getTimeInMillis());
+    }
+
+    @NotNull
+    public static DayOfMonthProgression fromClosedRange(@NotNull Date first, @NotNull Date last, int step) {
+        return new DayOfMonthProgression(first, last, step);
     }
 }

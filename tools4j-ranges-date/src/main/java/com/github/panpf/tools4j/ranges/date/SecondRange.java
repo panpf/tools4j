@@ -20,21 +20,12 @@ import com.github.panpf.tools4j.ranges.ClosedRange;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-public final class SecondRange extends DateProgression implements ClosedRange<Date> {
+public class SecondRange extends SecondProgression implements ClosedRange<Date> {
 
     public SecondRange(@NotNull Date start, @NotNull Date endInclusive) {
         super(start, endInclusive, 1);
-    }
-
-    @NotNull
-    public Date nextDate(@NotNull Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(date.getTime());
-        calendar.add(Calendar.SECOND, this.getStep());
-        return new Date(calendar.getTimeInMillis());
     }
 
     @NotNull
@@ -54,11 +45,13 @@ public final class SecondRange extends DateProgression implements ClosedRange<Da
         return getFirst().compareTo(value) <= 0 && value.compareTo(getLast()) <= 0;
     }
 
+    @Override
     public boolean isEmpty() {
         return getFirst().compareTo(getLast()) > 0;
     }
 
     @NotNull
+    @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
         return dateFormat.format(getFirst()) + ".." + dateFormat.format(getLast());

@@ -30,8 +30,6 @@ public class DateRangex {
     }
 
 
-    // todo 支持 reversed、step, requireInRange, requireNotInRange, in, notIn, coerceAtLeast, coerceAtMost, coerceIn
-
     /* ******************************************* Year Range *******************************************/
 
     /**
@@ -142,48 +140,48 @@ public class DateRangex {
      * Create a positive-order day ranges
      */
     @NotNull
-    public static DayRange dayRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return new DayRange(date, endInclusive);
+    public static DayOfMonthRange dayOfMonthRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new DayOfMonthRange(date, endInclusive);
     }
 
     /**
      * Create a positive-order day range that does not contain [end]
      */
     @NotNull
-    public static DayRange dayUntil(@NotNull Date date, @NotNull Date end) {
+    public static DayOfMonthRange dayOfMonthUntil(@NotNull Date date, @NotNull Date end) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new DayRange(date, endInclusiveDate);
+        return new DayOfMonthRange(date, endInclusiveDate);
     }
 
     /**
      * Create a reversed day range
      */
     @NotNull
-    public static DayProgression dayDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return new DayProgression(date, endInclusive, -1);
+    public static DayOfMonthProgression dayOfMonthDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new DayOfMonthProgression(date, endInclusive, -1);
     }
 
     /**
      * Create a positive-order day ranges
      */
     @NotNull
-    public static DayProgression dayRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new DayProgression(date, endInclusive, step);
+    public static DayOfMonthProgression dayOfMonthRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new DayOfMonthProgression(date, endInclusive, step);
     }
 
     /**
      * Create a positive-order day range that does not contain [end]
      */
     @NotNull
-    public static DayProgression dayUntil(@NotNull Date date, @NotNull Date end, int step) {
+    public static DayOfMonthProgression dayOfMonthUntil(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, step > 0 ? -1 : 1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new DayProgression(date, endInclusiveDate, step);
+        return new DayOfMonthProgression(date, endInclusiveDate, step);
     }
 
 
@@ -194,48 +192,48 @@ public class DateRangex {
      * Create a positive-order hour ranges
      */
     @NotNull
-    public static HourRange hourRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return new HourRange(date, endInclusive);
+    public static HourOfDayRange hourOfDayRangeTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new HourOfDayRange(date, endInclusive);
     }
 
     /**
      * Create a positive-order hour range that does not contain [end]
      */
     @NotNull
-    public static HourRange hourUntil(@NotNull Date date, @NotNull Date end) {
+    public static HourOfDayRange hourOfDayUntil(@NotNull Date date, @NotNull Date end) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
         calendar.add(Calendar.HOUR_OF_DAY, -1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new HourRange(date, endInclusiveDate);
+        return new HourOfDayRange(date, endInclusiveDate);
     }
 
     /**
      * Create a reversed hour range
      */
     @NotNull
-    public static HourProgression hourDownTo(@NotNull Date date, @NotNull Date endInclusive) {
-        return new HourProgression(date, endInclusive, -1);
+    public static HourOfDayProgression hourOfDayDownTo(@NotNull Date date, @NotNull Date endInclusive) {
+        return new HourOfDayProgression(date, endInclusive, -1);
     }
 
     /**
      * Create a positive-order hour ranges
      */
     @NotNull
-    public static HourProgression hourRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
-        return new HourProgression(date, endInclusive, step);
+    public static HourOfDayProgression hourOfDayRangeTo(@NotNull Date date, @NotNull Date endInclusive, int step) {
+        return new HourOfDayProgression(date, endInclusive, step);
     }
 
     /**
      * Create a positive-order hour range that does not contain [end]
      */
     @NotNull
-    public static HourProgression hourUntil(@NotNull Date date, @NotNull Date end, int step) {
+    public static HourOfDayProgression hourOfDayUntil(@NotNull Date date, @NotNull Date end, int step) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(end.getTime());
         calendar.add(Calendar.HOUR_OF_DAY, step > 0 ? -1 : 1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
-        return new HourProgression(date, endInclusiveDate, step);
+        return new HourOfDayProgression(date, endInclusiveDate, step);
     }
 
 
@@ -391,5 +389,131 @@ public class DateRangex {
         calendar.add(Calendar.MILLISECOND, step > 0 ? -1 : 1);
         Date endInclusiveDate = new Date(calendar.getTimeInMillis());
         return new MillisecondProgression(date, endInclusiveDate, step);
+    }
+
+
+    /* ******************************************* reversed *******************************************/
+
+
+    /**
+     * Returns a year progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static YearProgression reversed(@NotNull YearProgression progression) {
+        return YearProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a month progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static MonthProgression reversed(@NotNull MonthProgression progression) {
+        return MonthProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a day of month progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static DayOfMonthProgression reversed(@NotNull DayOfMonthProgression progression) {
+        return DayOfMonthProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a hour of day progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static HourOfDayProgression reversed(@NotNull HourOfDayProgression progression) {
+        return HourOfDayProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a minute progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static MinuteProgression reversed(@NotNull MinuteProgression progression) {
+        return MinuteProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a second progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static SecondProgression reversed(@NotNull SecondProgression progression) {
+        return SecondProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a millisecond progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static MillisecondProgression reversed(@NotNull MillisecondProgression progression) {
+        return MillisecondProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+
+    /* ******************************************* step *******************************************/
+
+    /**
+     * Returns a year progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static YearProgression step(@NotNull YearProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return YearProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a month progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static MonthProgression step(@NotNull MonthProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return MonthProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a day of month progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static DayOfMonthProgression step(@NotNull DayOfMonthProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return DayOfMonthProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a hour of day progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static HourOfDayProgression step(@NotNull HourOfDayProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return HourOfDayProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a minute progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static MinuteProgression step(@NotNull MinuteProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return MinuteProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a second progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static SecondProgression step(@NotNull SecondProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return SecondProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a millisecond progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static MillisecondProgression step(@NotNull MillisecondProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return MillisecondProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
     }
 }

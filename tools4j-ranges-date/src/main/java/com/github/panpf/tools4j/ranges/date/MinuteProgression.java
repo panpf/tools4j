@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
-public final class MinuteProgression extends DateProgression {
+public class MinuteProgression extends DateProgression {
 
     public MinuteProgression(@NotNull Date first, @NotNull Date last, int step) {
         super(first, last, step);
@@ -33,5 +33,10 @@ public final class MinuteProgression extends DateProgression {
         calendar.setTimeInMillis(date.getTime());
         calendar.add(Calendar.MINUTE, this.getStep());
         return new Date(calendar.getTimeInMillis());
+    }
+
+    @NotNull
+    public static MinuteProgression fromClosedRange(@NotNull Date first, @NotNull Date last, int step) {
+        return new MinuteProgression(first, last, step);
     }
 }
