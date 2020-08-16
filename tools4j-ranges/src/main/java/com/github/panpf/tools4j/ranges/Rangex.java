@@ -129,74 +129,18 @@ public class Rangex {
     }
 
 
-    /* ******************************************* reversed *******************************************/
-
-    /**
-     * Returns a progression that goes over the same range in the opposite direction with the same step.
-     */
-    @NotNull
-    public static IntProgression reversed(@NotNull IntProgression progression) {
-        return IntProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
-    }
-
-    /**
-     * Returns a progression that goes over the same range in the opposite direction with the same step.
-     */
-    @NotNull
-    public static LongProgression reversed(@NotNull LongProgression progression) {
-        return LongProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
-    }
-
-    /**
-     * Returns a progression that goes over the same range in the opposite direction with the same step.
-     */
-    @NotNull
-    public static CharProgression reversed(@NotNull CharProgression progression) {
-        return CharProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
-    }
-
-
-    /* ******************************************* step *******************************************/
-
-    /**
-     * Returns a progression that goes over the same range with the given step.
-     */
-    @NotNull
-    public static IntProgression step(@NotNull IntProgression progression, int step) {
-        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
-        return IntProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
-    }
-
-    /**
-     * Returns a progression that goes over the same range with the given step.
-     */
-    @NotNull
-    public static LongProgression step(@NotNull LongProgression progression, long step) {
-        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
-        return LongProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
-    }
-
-    /**
-     * Returns a progression that goes over the same range with the given step.
-     */
-    @NotNull
-    public static CharProgression step(@NotNull CharProgression progression, int step) {
-        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
-        return CharProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
-    }
-
-
     /* ******************************************* require *******************************************/
 
 
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static byte requireInRange(byte value, byte minValue, byte maxValue, @NotNull String paramName) {
+    public static byte requireInRange(byte value, byte minValue, byte maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be >= %d && <= %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be >= %d && <= %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -210,11 +154,12 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static short requireInRange(short value, short minValue, short maxValue, @NotNull String paramName) {
+    public static short requireInRange(short value, short minValue, short maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be >= %d && <= %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be >= %d && <= %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -228,11 +173,12 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static int requireInRange(int value, int minValue, int maxValue, @NotNull String paramName) {
+    public static int requireInRange(int value, int minValue, int maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be >= %d && <= %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be >= %d && <= %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -246,11 +192,12 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static long requireInRange(long value, long minValue, long maxValue, @NotNull String paramName) {
+    public static long requireInRange(long value, long minValue, long maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be >= %d && <= %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be >= %d && <= %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -264,11 +211,12 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static float requireInRange(float value, float minValue, float maxValue, @NotNull String paramName) {
+    public static float requireInRange(float value, float minValue, float maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be >= %s && <= %s", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be >= %s && <= %s",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -282,11 +230,12 @@ public class Rangex {
     /**
      * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static double requireInRange(double value, double minValue, double maxValue, @NotNull String paramName) {
+    public static double requireInRange(double value, double minValue, double maxValue, @Nullable String paramName) {
         if (Rangex.in(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be >= %s && <= %s", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be >= %s && <= %s",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -301,11 +250,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static byte requireNotInRange(byte value, byte minValue, byte maxValue, @NotNull String paramName) {
+    public static byte requireNotInRange(byte value, byte minValue, byte maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be < %d || > %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The byte parameter '%s' value is %d, must be < %d || > %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -319,11 +269,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static short requireNotInRange(short value, short minValue, short maxValue, @NotNull String paramName) {
+    public static short requireNotInRange(short value, short minValue, short maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be < %d || > %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The short parameter '%s' value is %d, must be < %d || > %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -337,11 +288,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static int requireNotInRange(int value, int minValue, int maxValue, @NotNull String paramName) {
+    public static int requireNotInRange(int value, int minValue, int maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be < %d || > %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The int parameter '%s' value is %d, must be < %d || > %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -355,11 +307,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static long requireNotInRange(long value, long minValue, long maxValue, @NotNull String paramName) {
+    public static long requireNotInRange(long value, long minValue, long maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be < %d || > %d", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The long parameter '%s' value is %d, must be < %d || > %d",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -373,11 +326,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static float requireNotInRange(float value, float minValue, float maxValue, @NotNull String paramName) {
+    public static float requireNotInRange(float value, float minValue, float maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be < %s || > %s", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The float parameter '%s' value is %s, must be < %s || > %s",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -391,11 +345,12 @@ public class Rangex {
     /**
      * If [value] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
      */
-    public static double requireNotInRange(double value, double minValue, double maxValue, @NotNull String paramName) {
+    public static double requireNotInRange(double value, double minValue, double maxValue, @Nullable String paramName) {
         if (Rangex.notIn(value, minValue, maxValue)) {
             return value;
         } else {
-            throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be < %s || > %s", paramName, value, minValue, maxValue));
+            throw new IllegalArgumentException(String.format("The double parameter '%s' value is %s, must be < %s || > %s",
+                    paramName != null ? paramName : "unknown", value, minValue, maxValue));
         }
     }
 
@@ -591,42 +546,42 @@ public class Rangex {
     /* ******************************************* in *******************************************/
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(byte value, byte minValue, byte maxValue) {
         return value >= minValue && value <= maxValue;
     }
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(short value, short minValue, short maxValue) {
         return value >= minValue && value <= maxValue;
     }
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(int value, int minValue, int maxValue) {
         return value >= minValue && value <= maxValue;
     }
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(long value, long minValue, long maxValue) {
         return value >= minValue && value <= maxValue;
     }
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(float value, float minValue, float maxValue) {
         return value >= minValue && value <= maxValue;
     }
 
     /**
-     * If [value] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+     * If [value] is within the range of [minValue] and [maxValue], it returns true, otherwise it return false
      */
     public static boolean in(double value, double minValue, double maxValue) {
         return value >= minValue && value <= maxValue;
@@ -988,5 +943,63 @@ public class Rangex {
         } else {
             return self;
         }
+    }
+
+
+    /* ******************************************* reversed *******************************************/
+
+    /**
+     * Returns a progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static IntProgression reversed(@NotNull IntProgression progression) {
+        return IntProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static LongProgression reversed(@NotNull LongProgression progression) {
+        return LongProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+    /**
+     * Returns a progression that goes over the same range in the opposite direction with the same step.
+     */
+    @NotNull
+    public static CharProgression reversed(@NotNull CharProgression progression) {
+        return CharProgression.fromClosedRange(progression.getLast(), progression.getFirst(), -progression.getStep());
+    }
+
+
+    /* ******************************************* step *******************************************/
+
+
+    /**
+     * Returns a progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static IntProgression step(@NotNull IntProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return IntProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static LongProgression step(@NotNull LongProgression progression, long step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return LongProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
+    }
+
+    /**
+     * Returns a progression that goes over the same range with the given step.
+     */
+    @NotNull
+    public static CharProgression step(@NotNull CharProgression progression, int step) {
+        if (step <= 0) throw new IllegalArgumentException("Step must be positive, was: " + step + ".");
+        return CharProgression.fromClosedRange(progression.getFirst(), progression.getLast(), progression.getStep() > 0 ? step : -step);
     }
 }

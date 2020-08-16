@@ -60,4 +60,120 @@ class RangexTest {
         Assert.assertEquals(1.toChar().until(11.toChar(), 4).count().toLong(), 3)
         Assert.assertEquals(11.toChar().until(1.toChar(), -4).count().toLong(), 3)
     }
+
+    @Test
+    fun testRequireInRange() {
+        2.toByte().requireInRange(0.toByte(), 5.toByte())
+        try {
+            (-1).toByte().requireInRange(0.toByte(), 5.toByte())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6.toByte().requireInRange(0.toByte(), 5.toByte())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        2.toShort().requireInRange(0.toShort(), 5.toShort())
+        try {
+            (-1).toShort().requireInRange(0.toShort(), 5.toShort())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6.toShort().requireInRange(0.toShort(), 5.toShort())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        2.requireInRange(0, 5)
+        try {
+            (-1).requireInRange(0, 5)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6.requireInRange(0, 5)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        2L.requireInRange(0L, 5L)
+        try {
+            (-1L).requireInRange(0L, 5L)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6L.requireInRange(0L, 5L)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        2f.requireInRange(0f, 5f)
+        try {
+            (-1f).requireInRange(0f, 5f)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6f.requireInRange(0f, 5f)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        2.0.requireInRange(0.0, 5.0)
+        try {
+            (-1.0).requireInRange(0.0, 5.0)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        try {
+            6.0.requireInRange(0.0, 5.0)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+    }
+
+    @Test
+    fun testRequireNotInRange() {
+        6.toByte().requireNotInRange(0.toByte(), 5.toByte())
+        (-1).toByte().requireNotInRange(0.toByte(), 5.toByte())
+        try {
+            2.toByte().requireNotInRange(0.toByte(), 5.toByte())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        6.toShort().requireNotInRange(0.toShort(), 5.toShort())
+        (-1).toShort().requireNotInRange(0.toShort(), 5.toShort())
+        try {
+            2.toShort().requireNotInRange(0.toShort(), 5.toShort())
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        6.requireNotInRange(0, 5)
+        (-1).requireNotInRange(0, 5)
+        try {
+            2.requireNotInRange(0, 5)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        6L.requireNotInRange(0L, 5L)
+        (-1L).requireNotInRange(0L, 5L)
+        try {
+            2L.requireNotInRange(0L, 5L)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        6f.requireNotInRange(0f, 5f)
+        (-1f).requireNotInRange(0f, 5f)
+        try {
+            2f.requireNotInRange(0f, 5f)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+        6.0.requireNotInRange(0.0, 5.0)
+        (-1.0).requireNotInRange(0.0, 5.0)
+        try {
+            2.0.requireNotInRange(0.0, 5.0)
+            Assert.fail()
+        } catch (ignored: java.lang.Exception) {
+        }
+    }
 }

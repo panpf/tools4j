@@ -96,37 +96,69 @@ inline fun Char.rangeTo(endInclusive: Char, step: Int): CharProgression = Rangex
 /**
  * Create a positive-order char ranges that does not contain [end]
  */
-inline fun Char.until(end: Char, step: Int): CharProgression = Rangex.until(this, end, step) /* ******************************************* reversed *******************************************/
+inline fun Char.until(end: Char, step: Int): CharProgression = Rangex.until(this, end, step)
+
+
+/* ******************************************* require *******************************************/
+
 
 /**
- * Returns a progression that goes over the same range in the opposite direction with the same step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun IntProgression.reversed(): IntProgression = Rangex.reversed(this)
+inline fun Byte.requireInRange(minValue: Byte, maxValue: Byte, paramName: String? = null): Byte = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
- * Returns a progression that goes over the same range in the opposite direction with the same step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun LongProgression.reversed(): LongProgression = Rangex.reversed(this)
+inline fun Short.requireInRange(minValue: Short, maxValue: Short, paramName: String? = null): Short = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
- * Returns a progression that goes over the same range in the opposite direction with the same step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun CharProgression.reversed(): CharProgression = Rangex.reversed(this)
-
-
-/* ******************************************* step *******************************************/
+inline fun Int.requireInRange(minValue: Int, maxValue: Int, paramName: String? = null): Int = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
- * Returns a progression that goes over the same range with the given step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun IntProgression.step(step: Int): IntProgression = Rangex.step(this, step)
+inline fun Long.requireInRange(minValue: Long, maxValue: Long, paramName: String? = null): Long = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
- * Returns a progression that goes over the same range with the given step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun LongProgression.step(step: Long): LongProgression = Rangex.step(this, step)
+inline fun Float.requireInRange(minValue: Float, maxValue: Float, paramName: String? = null): Float = Rangex.requireInRange(this, minValue, maxValue, paramName)
 
 /**
- * Returns a progression that goes over the same range with the given step.
+ * If [this] is within the range of [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
  */
-inline fun CharProgression.step(step: Int): CharProgression = Rangex.step(this, step)
+inline fun Double.requireInRange(minValue: Double, maxValue: Double, paramName: String? = null): Double = Rangex.requireInRange(this, minValue, maxValue, paramName)
+
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Byte.requireNotInRange(minValue: Byte, maxValue: Byte, paramName: String? = null): Byte = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Short.requireNotInRange(minValue: Short, maxValue: Short, paramName: String? = null): Short = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Int.requireNotInRange(minValue: Int, maxValue: Int, paramName: String? = null): Int = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Long.requireNotInRange(minValue: Long, maxValue: Long, paramName: String? = null): Long = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Float.requireNotInRange(minValue: Float, maxValue: Float, paramName: String? = null): Float = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
+
+/**
+ * If [this] is not in the range [minValue] and [maxValue], it returns itself, otherwise it throws an IllegalArgumentException
+ */
+inline fun Double.requireNotInRange(minValue: Double, maxValue: Double, paramName: String? = null): Double = Rangex.requireNotInRange(this, minValue, maxValue, paramName)
