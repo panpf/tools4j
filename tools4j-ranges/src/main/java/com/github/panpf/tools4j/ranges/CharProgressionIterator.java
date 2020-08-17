@@ -16,14 +16,13 @@
 
 package com.github.panpf.tools4j.ranges;
 
-import com.github.panpf.tools4j.iterable.CharIterator;
-
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Char`.
  */
-public class CharProgressionIterator extends CharIterator {
+public class CharProgressionIterator implements Iterator<Character> {
 
     private final int step;
     private final char finalElement;
@@ -50,7 +49,7 @@ public class CharProgressionIterator extends CharIterator {
     }
 
     @Override
-    public Character nextChar() {
+    public final Character next() {
         char value = next;
         if (value == finalElement) {
             if (!hasNext()) throw new NoSuchElementException();

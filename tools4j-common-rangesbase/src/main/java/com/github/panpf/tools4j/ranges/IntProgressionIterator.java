@@ -16,14 +16,13 @@
 
 package com.github.panpf.tools4j.ranges;
 
-import com.github.panpf.tools4j.iterable.IntIterator;
-
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Int`.
  */
-public class IntProgressionIterator extends IntIterator {
+public class IntProgressionIterator implements Iterator<Integer> {
 
     private final int step;
     private final int finalElement;
@@ -44,12 +43,7 @@ public class IntProgressionIterator extends IntIterator {
     }
 
     @Override
-    public boolean hasNext() {
-        return hasNext;
-    }
-
-    @Override
-    public Integer nextInt() {
+    public final Integer next() {
         int value = next;
         if (value == finalElement) {
             if (!hasNext()) throw new NoSuchElementException();
@@ -58,6 +52,11 @@ public class IntProgressionIterator extends IntIterator {
             next += step;
         }
         return value;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return hasNext;
     }
 
     @Override

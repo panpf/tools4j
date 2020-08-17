@@ -16,14 +16,13 @@
 
 package com.github.panpf.tools4j.ranges;
 
-import com.github.panpf.tools4j.iterable.LongIterator;
-
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator over a progression of values of type `Long`.
  */
-public class LongProgressionIterator extends LongIterator {
+public class LongProgressionIterator implements Iterator<Long> {
 
     private final long step;
     private final long finalElement;
@@ -50,7 +49,7 @@ public class LongProgressionIterator extends LongIterator {
     }
 
     @Override
-    public Long nextLong() {
+    public final Long next() {
         long value = next;
         if (value == finalElement) {
             if (!hasNext()) throw new NoSuchElementException();
