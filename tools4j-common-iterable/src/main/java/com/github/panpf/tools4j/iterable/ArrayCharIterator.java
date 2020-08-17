@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayCharIterator extends CharIterator {
+public class ArrayCharIterator implements Iterator<Character> {
 
     @Nullable
     private final char[] elements;
@@ -37,7 +38,7 @@ public class ArrayCharIterator extends CharIterator {
     }
 
     @Override
-    public Character nextChar() {
+    public final Character next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

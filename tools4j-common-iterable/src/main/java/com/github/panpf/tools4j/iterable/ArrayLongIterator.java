@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayLongIterator extends LongIterator {
+public class ArrayLongIterator implements Iterator<Long> {
 
     @Nullable
     private final long[] elements;
@@ -37,7 +38,7 @@ public class ArrayLongIterator extends LongIterator {
     }
 
     @Override
-    public Long nextLong() {
+    public final Long next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

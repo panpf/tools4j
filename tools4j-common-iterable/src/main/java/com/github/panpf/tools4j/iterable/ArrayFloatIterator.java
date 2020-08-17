@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayFloatIterator extends FloatIterator {
+public class ArrayFloatIterator implements Iterator<Float> {
 
     @Nullable
     private final float[] elements;
@@ -37,7 +38,7 @@ public class ArrayFloatIterator extends FloatIterator {
     }
 
     @Override
-    public Float nextFloat() {
+    public final Float next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

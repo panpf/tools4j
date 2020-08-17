@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.iterable;
+package com.github.panpf.tools4j.io;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayByteIterator extends ByteIterator {
+public class ArrayByteIterator implements Iterator<Byte> {
 
     @Nullable
     private final byte[] elements;
@@ -37,7 +38,7 @@ public class ArrayByteIterator extends ByteIterator {
     }
 
     @Override
-    public Byte nextByte() {
+    public final Byte next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

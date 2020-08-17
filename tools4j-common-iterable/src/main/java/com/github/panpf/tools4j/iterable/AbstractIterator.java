@@ -88,4 +88,11 @@ public abstract class AbstractIterator<T> implements Iterator<T> {
     protected void done() {
         state = State.Done;
     }
+
+    public enum State {
+        Ready,
+        NotReady,
+        Done,
+        Failed
+    }
 }

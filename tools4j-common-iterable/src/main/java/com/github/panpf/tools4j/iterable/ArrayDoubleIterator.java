@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayDoubleIterator extends DoubleIterator {
+public class ArrayDoubleIterator implements Iterator<Double> {
 
     @Nullable
     private final double[] elements;
@@ -37,7 +38,7 @@ public class ArrayDoubleIterator extends DoubleIterator {
     }
 
     @Override
-    public Double nextDouble() {
+    public final Double next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

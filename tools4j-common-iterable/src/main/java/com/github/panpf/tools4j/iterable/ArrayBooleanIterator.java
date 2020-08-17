@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayBooleanIterator extends BooleanIterator {
+public class ArrayBooleanIterator implements Iterator<Boolean> {
 
     @Nullable
     private final boolean[] elements;
@@ -37,7 +38,7 @@ public class ArrayBooleanIterator extends BooleanIterator {
     }
 
     @Override
-    public Boolean nextBoolean() {
+    public final Boolean next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];

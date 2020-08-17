@@ -18,9 +18,10 @@ package com.github.panpf.tools4j.iterable;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayShortIterator extends ShortIterator {
+public class ArrayShortIterator implements Iterator<Short> {
 
     @Nullable
     private final short[] elements;
@@ -37,7 +38,7 @@ public class ArrayShortIterator extends ShortIterator {
     }
 
     @Override
-    public Short nextShort() {
+    public final Short next() {
         if (elements == null) throw new NoSuchElementException("elements is null");
         try {
             return elements[index++];
