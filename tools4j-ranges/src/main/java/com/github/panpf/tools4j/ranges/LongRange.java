@@ -55,10 +55,11 @@ public class LongRange extends LongProgression implements ClosedRange<Long> {
 
     @Override
     public int hashCode() {
-        return this.isEmpty() ? -1 : (int) (31 * (31 * this.getFirst() + this.getLast()));
+        return isEmpty() ? -1 : (int) (31 * (getFirst() ^ (getFirst() >>> 32)) + (getLast() ^ (getLast() >>> 32)));
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.getFirst() + ".." + this.getLast();
     }

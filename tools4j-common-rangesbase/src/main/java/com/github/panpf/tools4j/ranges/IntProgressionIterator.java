@@ -27,9 +27,9 @@ public class IntProgressionIterator extends IntIterator {
 
     private final int step;
     private final int finalElement;
+
     private boolean hasNext;
     private int next;
-
 
     /**
      * An iterator over a progression of values of type `Int`.

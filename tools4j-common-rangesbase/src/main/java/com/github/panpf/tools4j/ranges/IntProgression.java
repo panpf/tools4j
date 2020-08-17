@@ -17,7 +17,6 @@
 package com.github.panpf.tools4j.ranges;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 
@@ -47,12 +46,12 @@ public class IntProgression implements Iterable<Integer> {
     }
 
     @Override
-    public boolean equals(@Nullable Object other) {
-        return other instanceof IntProgression && (
-                this.isEmpty() && ((IntProgression) other).isEmpty()
-                        || this.first == ((IntProgression) other).first
-                        && this.last == ((IntProgression) other).last
-                        && this.step == ((IntProgression) other).step);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IntProgression o1 = (IntProgression) o;
+        if (this.isEmpty() && o1.isEmpty()) return true;
+        return first == o1.first && last == o1.last && step == o1.step;
     }
 
     @Override
@@ -61,6 +60,7 @@ public class IntProgression implements Iterable<Integer> {
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.step > 0 ? this.first + ".." + this.last + " step " + this.step : this.first + " downTo " + this.last + " step " + -this.step;
     }

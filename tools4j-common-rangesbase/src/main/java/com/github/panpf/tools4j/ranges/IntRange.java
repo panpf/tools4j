@@ -44,16 +44,18 @@ public class IntRange extends IntProgression implements ClosedRange<Integer> {
         return getFirst() <= value && value <= getLast();
     }
 
+    @Override
     public boolean isEmpty() {
         return getFirst() > getLast();
     }
 
     @Override
     public int hashCode() {
-        return (this.isEmpty() ? -1 : 31 * (31 * this.getFirst() + this.getLast()));
+        return this.isEmpty() ? -1 : 31 * this.getFirst() + this.getLast();
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.getFirst() + ".." + this.getLast();
     }

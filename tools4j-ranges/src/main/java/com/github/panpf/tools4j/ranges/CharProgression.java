@@ -47,12 +47,12 @@ public class CharProgression implements Iterable<Character> {
     }
 
     @Override
-    public boolean equals(@Nullable Object other) {
-        return other instanceof CharProgression && (
-                this.isEmpty() && ((CharProgression) other).isEmpty()
-                        || this.first == ((CharProgression) other).first
-                        && this.last == ((CharProgression) other).last
-                        && this.step == ((CharProgression) other).step);
+    public boolean equals(@Nullable Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CharProgression o1 = (CharProgression) o;
+        if (this.isEmpty() && o1.isEmpty()) return true;
+        return first == o1.first && last == o1.last && step == o1.step;
     }
 
     @Override
@@ -61,6 +61,7 @@ public class CharProgression implements Iterable<Character> {
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.step > 0 ? this.first + ".." + this.last + " step " + this.step : this.first + " downTo " + this.last + " step " + -this.step;
     }

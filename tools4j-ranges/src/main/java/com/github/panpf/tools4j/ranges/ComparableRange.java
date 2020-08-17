@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.ranges;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ComparableRange<T extends Comparable<T>> implements ClosedRange<T> {
 
@@ -47,17 +48,28 @@ public class ComparableRange<T extends Comparable<T>> implements ClosedRange<T> 
         return start.compareTo(value) <= 0 && value.compareTo(endInclusive) <= 0;
     }
 
+    @Override
     public boolean isEmpty() {
         return start.compareTo(endInclusive) > 0;
     }
 
     @Override
     public int hashCode() {
-        return (this.isEmpty() ? -1 : 31 * (31 * this.start.hashCode() + this.endInclusive.hashCode()));
+        return this.isEmpty() ? -1 : 31 * start.hashCode() + endInclusive.hashCode();
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.start + ".." + this.endInclusive;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ComparableRange<?> o1 = (ComparableRange<?>) o;
+        if (this.isEmpty() && o1.isEmpty()) return true;
+        return start.equals(o1.start) && endInclusive.equals(o1.endInclusive);
     }
 }

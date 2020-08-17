@@ -47,20 +47,21 @@ public class LongProgression implements Iterable<Long> {
     }
 
     @Override
-    public boolean equals(@Nullable Object other) {
-        return other instanceof LongProgression && (
-                this.isEmpty() && ((LongProgression) other).isEmpty()
-                        || this.first == ((LongProgression) other).first
-                        && this.last == ((LongProgression) other).last
-                        && this.step == ((LongProgression) other).step);
+    public boolean equals(@Nullable Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LongProgression o1 = (LongProgression) o;
+        if (this.isEmpty() && o1.isEmpty()) return true;
+        return first == o1.first && last == o1.last && step == o1.step;
     }
 
     @Override
     public int hashCode() {
-        return this.isEmpty() ? -1 : (int) (31 * (31 * this.first + this.last) + this.step);
+        return isEmpty() ? -1 : (int) (31 * (31 * (first ^ (first >>> 32)) + (last ^ (last >>> 32))) + (step ^ (step >>> 32)));
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.step > 0 ? this.first + ".." + this.last + " step " + this.step : this.first + " downTo " + this.last + " step " + -this.step;
     }

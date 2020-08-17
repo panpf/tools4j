@@ -30,30 +30,26 @@ public class ClosedDoubleRange extends ClosedFloatingPointRange<Double> {
     }
 
     @Override
-    public boolean contains(@NotNull Double value) {
-        return start <= value && value <= endInclusive;
-    }
-
-    public boolean isEmpty() {
-        return this.start > this.endInclusive;
-    }
-
-    @Override
     public boolean lessThanOrEquals(@NotNull Double a, @NotNull Double b) {
         return a <= b;
     }
 
     @Override
-    public boolean equals(@Nullable Object other) {
-        return other instanceof ClosedDoubleRange && (this.isEmpty() && ((ClosedDoubleRange) other).isEmpty() || this.start == ((ClosedDoubleRange) other).start && this.endInclusive == ((ClosedDoubleRange) other).endInclusive);
+    public boolean equals(@Nullable Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClosedDoubleRange o1 = (ClosedDoubleRange) o;
+        if (this.isEmpty() && o1.isEmpty()) return true;
+        return start == o1.start && endInclusive == o1.endInclusive;
     }
 
     @Override
     public int hashCode() {
-        return (int) (this.isEmpty() ? -1 : 31 * (31 * this.start + this.endInclusive));
+        return this.isEmpty() ? -1 : 31 * ((Double) start).hashCode() + ((Double) endInclusive).hashCode();
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.start + ".." + this.endInclusive;
     }

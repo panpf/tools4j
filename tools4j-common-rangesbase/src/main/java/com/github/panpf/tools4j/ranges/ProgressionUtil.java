@@ -18,6 +18,9 @@ package com.github.panpf.tools4j.ranges;
 
 public class ProgressionUtil {
 
+    private ProgressionUtil() {
+    }
+
     public static int getProgressionLastElement(int start, int end, int step) {
         if (step > 0) {
             return end - differenceModulo(end, start, step);
@@ -37,7 +40,6 @@ public class ProgressionUtil {
             throw new IllegalArgumentException("Step is zero.");
         }
     }
-
 
     private static int differenceModulo(int a, int b, int c) {
         return mod(mod(a, c) - mod(b, c), c);

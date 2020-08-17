@@ -16,6 +16,48 @@
 
 package com.github.panpf.tools4j.ranges
 
-class LongRangeTest{
-    // todo Complete test
+import org.junit.Assert
+import org.junit.Test
+
+class LongRangeTest {
+
+    @Test
+    fun testGet() {
+        val range = LongRange(10, 15)
+        Assert.assertEquals(10, range.start)
+        Assert.assertEquals(15, range.endInclusive)
+        Assert.assertEquals(1, range.step)
+
+        val range1 = LongRange(99, 40)
+        Assert.assertEquals(99, range1.start)
+        Assert.assertEquals(40, range1.endInclusive)
+        Assert.assertEquals(1, range1.step)
+    }
+
+    @Test
+    fun testContains() {
+        Assert.assertTrue(LongRange(10, 15).contains(10))
+        Assert.assertTrue(LongRange(10, 15).contains(11))
+        Assert.assertTrue(LongRange(10, 15).contains(15))
+        Assert.assertFalse(LongRange(10, 15).contains(9))
+        Assert.assertFalse(LongRange(10, 15).contains(16))
+    }
+
+    @Test
+    fun testIsEmpty() {
+        Assert.assertTrue(LongRange(15, 10).isEmpty)
+        Assert.assertFalse(LongRange(10, 15).isEmpty)
+    }
+
+    @Test
+    fun testHashCode() {
+        Assert.assertEquals(kotlin.ranges.LongRange(10, 15).hashCode(), LongRange(10, 15).hashCode())
+        Assert.assertEquals(kotlin.ranges.LongRange(99, 40).hashCode(), LongRange(99, 40).hashCode())
+    }
+
+    @Test
+    fun testToString() {
+        Assert.assertEquals(kotlin.ranges.LongRange(10, 15).toString(), LongRange(10, 15).toString())
+        Assert.assertEquals(kotlin.ranges.LongRange(99, 40).toString(), LongRange(99, 40).toString())
+    }
 }

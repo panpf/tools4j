@@ -50,10 +50,11 @@ public class CharRange extends CharProgression implements ClosedRange<Character>
 
     @Override
     public int hashCode() {
-        return (this.isEmpty() ? -1 : 31 * (31 * this.getFirst() + this.getLast()));
+        return this.isEmpty() ? -1 : (31 * (int) getFirst() + (int) getLast());
     }
 
     @NotNull
+    @Override
     public String toString() {
         return this.getFirst() + ".." + this.getLast();
     }
