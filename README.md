@@ -27,52 +27,65 @@ allprojects {
 Add the following dependencies to your module `build.gradle` file ：
 ```grovvy
 implementation "com.github.panpf.tools4j:tools4j:$LAST_VERSION"
-
-// If you use kotlin extension, please add the following dependencies
-implementation "com.github.panpf.tools4j:tools4j-ktx:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-ktx:$LAST_VERSION" // Kotlin extension, not required
 ```
 
 Please replace `$LAST_VERSION` with the latest version: [![Download][version_icon]][version_link]
 
 The "com.github.panpf.tools4j:tools4j:$LAST_VERSION" dependency will add all the modules included in tools4j to your project. If you only need of one of the modules, you can just add it to your project, all supported modules as follows:
 ```groovy
-// Optionally add the following dependencies according to your needs
 implementation "com.github.panpf.tools4j:tools4j-annotation:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-base64:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-collections:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-compare:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-crypto:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-grouping:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-lang:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-math:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-net:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-premise:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges-date:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-reflect:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-regex:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-security:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-annotation-ktx:$LAST_VERSION" // Kotlin extension, not required
 
-// If you use kotlin extension, please optionally add the following dependencies
-implementation "com.github.panpf.tools4j:tools4j-annotation-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-base64-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-collections-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-lang-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-math-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-premise-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges-date-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-reflect-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-regex-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-base64:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-base64-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-collections:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-collections-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-compare:$LAST_VERSION"
+
+implementation "com.github.panpf.tools4j:tools4j-crypto:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-grouping:$LAST_VERSION"
+
+implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-lang:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-lang-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-math:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-math-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-net:$LAST_VERSION"
+
+implementation "com.github.panpf.tools4j:tools4j-premise:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-premise-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-ranges:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-ranges-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-ranges-date:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-ranges-date-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-reflect:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-reflect-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-regex:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-regex-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-security:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION" // Kotlin extension, not required
+
+implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
+
+implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
+implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION" // Kotlin extension, not required
 ```
 
 Dependencies：
@@ -93,78 +106,78 @@ Dependencies：
 
 ### tools4j-collections
 * Arrayx: [Arrayx.java] | [Arrayx.kt]
-    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, arrayOf, 
-    * isEmpty, isNotEmpty, orEmpty, toTypedArray, toCollection, 
-    * toList, toSet, toHashSet, asList, map, mapTo, mapIndexed, 
-    * mapIndexedTo, mapNotNull, mapNotNullTo, mapIndexedNotNull, 
+    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, arrayOf,
+    * isEmpty, isNotEmpty, orEmpty, toTypedArray, toCollection,
+    * toList, toSet, toHashSet, asList, map, mapTo, mapIndexed,
+    * mapIndexedTo, mapNotNull, mapNotNullTo, mapIndexedNotNull,
     * reverse, reversed, sort, sortDescending, sortWith, sortBy,
-    * sortByDescending, sorted, sortedDescending, sortedWith, 
-    * sortedBy, sortedByDescending, sortedArray, sortedArrayDescending, 
-    * sortedArrayWith, single, singleOrNull, any, all, iterator, 
-    * asIterable, groupBy, groupByTo, count, max, maxBy, maxWith, 
-    * min, minBy, minWith, joinTo, joinToString, sum, sumBy, 
+    * sortByDescending, sorted, sortedDescending, sortedWith,
+    * sortedBy, sortedByDescending, sortedArray, sortedArrayDescending,
+    * sortedArrayWith, single, singleOrNull, any, all, iterator,
+    * asIterable, groupBy, groupByTo, count, max, maxBy, maxWith,
+    * min, minBy, minWith, joinTo, joinToString, sum, sumBy,
     * sumByDouble, plus, plusElement, indices, indexOf, indexOfFirst
-    * lastIndexOf, contains, forEach, forEachIndexed, filter, 
-    * filterIndexed, filterIndexedTo, filterIsInstance, 
-    * filterIsInstanceTo, filterNot, filterNotNullTo, filterNotTo, 
+    * lastIndexOf, contains, forEach, forEachIndexed, filter,
+    * filterIndexed, filterIndexedTo, filterIsInstance,
+    * filterIsInstanceTo, filterNot, filterNotNullTo, filterNotTo,
     * filterTo, zip, partition, first, firstOrNull, last, lastOrNull
-    * find, findLast, getOrElse, getOrNull, elementAt, elementAtOrElse, 
-    * elementAtOrNull, flatMap, flatMapTo, averageOf average, none, 
-    * reduce, reduceIndexed, reduceRight, reduceRightIndexed, fold, 
-    * foldIndexed, foldRight, foldRightIndexed, intersect, subtract, 
-    * drop, dropLast, dropLastWhile, dropWhile, take, takeLast, 
+    * find, findLast, getOrElse, getOrNull, elementAt, elementAtOrElse,
+    * elementAtOrNull, flatMap, flatMapTo, averageOf average, none,
+    * reduce, reduceIndexed, reduceRight, reduceRightIndexed, fold,
+    * foldIndexed, foldRight, foldRightIndexed, intersect, subtract,
+    * drop, dropLast, dropLastWhile, dropWhile, take, takeLast,
     * takeLastWhile, takeWhile, distinct, distinctBy, withIndex
 * Arrayx2: [Arrayx2.java]
-    * contentHashCode, contentDeepEquals, contentDeepHashCode, 
-    * contentDeepToString, contentToString, contentEquals, 
-    * binarySearch, copyOf, copyOfRange, slice, sliceArray, 
+    * contentHashCode, contentDeepEquals, contentDeepHashCode,
+    * contentDeepToString, contentToString, contentEquals,
+    * binarySearch, copyOf, copyOfRange, slice, sliceArray,
     * associate, associateBy, associateByTo, associateTo
 * Collectionx: [Collectionx.java] | [Collectionx.kt]
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf,
-    * collectionSizeOrDefault, isEmpty, isNotEmpty, orEmpty, 
-    * immutableListOf, mutableListOf, arrayListOf, immutableSetOf, 
-    * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, 
+    * collectionSizeOrDefault, isEmpty, isNotEmpty, orEmpty,
+    * immutableListOf, mutableListOf, arrayListOf, immutableSetOf,
+    * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo,
     * filterNotTo, filterNotNullTo, filterIndexedTo, filterIsInstanceTo,
     * filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
-    * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo, 
-    * mapNotNull, mapIndexedNotNullTo, mapIndexedNotNull, flatMapTo, 
-    * flatMap, joinTo, joinToString, count, averageOf, sumOf, sumBy, 
-    * first, firstOrNull, last, lastOrNull, find, findLast, getOrElse, 
-    * getOrNull, maxOf, max, maxBy, maxWith, minOf, min, minBy, minWith, 
-    * addAll, removeAll, partition, toCollection, toList, toSet, 
-    * toSortedSet, toHashSet, safeToConvertToSet, 
-    * convertToSetForSetOperationWith, convertToSetForSetOperation, 
-    * union, all, any, contains, forEach, forEachIndexed, chunked, minus, 
-    * minusElement, plus, plusElement, indices, groupByTo, groupBy, 
-    * sort, sortWith, sortBy, sortedDescending, sortByDescending, 
-    * sortedWith, sortedBy, sorted, sortedByDescending, reverse, 
+    * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo,
+    * mapNotNull, mapIndexedNotNullTo, mapIndexedNotNull, flatMapTo,
+    * flatMap, joinTo, joinToString, count, averageOf, sumOf, sumBy,
+    * first, firstOrNull, last, lastOrNull, find, findLast, getOrElse,
+    * getOrNull, maxOf, max, maxBy, maxWith, minOf, min, minBy, minWith,
+    * addAll, removeAll, partition, toCollection, toList, toSet,
+    * toSortedSet, toHashSet, safeToConvertToSet,
+    * convertToSetForSetOperationWith, convertToSetForSetOperation,
+    * union, all, any, contains, forEach, forEachIndexed, chunked, minus,
+    * minusElement, plus, plusElement, indices, groupByTo, groupBy,
+    * sort, sortWith, sortBy, sortedDescending, sortByDescending,
+    * sortedWith, sortedBy, sorted, sortedByDescending, reverse,
     * indexOf, indexOfFirst, indexOfLast, lastIndexOf, fold, foldIndexed,
     * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight,
     * reduceRightIndexed, slice, take, takeLast, takeLastWhile, takeWhile,
-    * distinct, distinctBy, intersect, retainAll, associateTo, associate, 
+    * distinct, distinctBy, intersect, retainAll, associateTo, associate,
     * associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile,
     * single, singleOrNull, elementAtOrElse, elementAt, elementAtOrNull,
     * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxTest.kt])
-    * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf, 
-    * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty, 
-    * putAll, plus, plusAssign, remove, minus, minusAssign, set, 
-    * get, getOrElse, getValue, getOrPut, contains, containsKey, 
-    * containsValue, all, any, count, forEach, onEach, maxBy, maxWith, 
-    * minBy, minWith, none, filterKeys, filterValues, filterTo, filter, 
-    * filterNotTo, filterNot, iterator, toPair, toMap, toList, asIterable, 
-    * mapValuesTo, mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo, 
+    * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf,
+    * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty,
+    * putAll, plus, plusAssign, remove, minus, minusAssign, set,
+    * get, getOrElse, getValue, getOrPut, contains, containsKey,
+    * containsValue, all, any, count, forEach, onEach, maxBy, maxWith,
+    * minBy, minWith, none, filterKeys, filterValues, filterTo, filter,
+    * filterNotTo, filterNot, iterator, toPair, toMap, toList, asIterable,
+    * mapValuesTo, mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo,
     * mapNotNull, flatMapTo, flatMap, capacity
 
 ### tools4j-compare
 * Comparex: [Comparex.java] ([Test][ComparexTest.kt])
-    * areEqual, compareValues, compareValuesBy, compareBy, 
+    * areEqual, compareValues, compareValuesBy, compareBy,
     * compareByDescending, naturalOrder, reverseOrder, maxOf, minOf
 
 ### tools4j-crypto
 * Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxTest.kt])
-    * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt, 
-    * encryptToBase64, decrypt, decryptFromBase64, decryptToString, 
+    * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt,
+    * encryptToBase64, decrypt, decryptFromBase64, decryptToString,
     * decryptToStringFromBase64
 * Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxTest.kt])
     * createKeyByPassword, encrypt, encryptToBase64,
@@ -172,13 +185,13 @@ Dependencies：
 * Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxTest.kt])
     * toBase64, toBytes
 * Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxTest.kt])
-    * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64, 
-    * verify, verifyFromBase64, encrypt, encryptToBase64, decrypt, 
+    * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64,
+    * verify, verifyFromBase64, encrypt, encryptToBase64, decrypt,
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
 
 ### tools4j-date
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexTest.kt])
-    * createCalendar, toDate, format, formatTimeLength, getCalendarField, 
+    * createCalendar, toDate, format, formatTimeLength, getCalendarField,
     * addToDate, addCalendarField, isSame\[Year, Month...\], differField,
 
 ### tools4j-grouping
@@ -188,26 +201,26 @@ Dependencies：
 
 ### tools4j-io
 * Filex: [Filex.java] ([Test][FilexTest.kt]) | [Filex.kt] ([Test][FilexTest.kt])
-    * mkdirsOrThrow, mkdirsOrCheck, createNewFileOrThrow, createNewFileOrCheck, 
-    * ensureFileNotExist, ensureDirNotExist, clean, cleanRecursively, 
-    * lengthRecursively, listRecursively, listFilesRecursively, listCount, 
-    * listCountRecursively, getAllExtension, getNameWithoutAllExtension, 
+    * mkdirsOrThrow, mkdirsOrCheck, createNewFileOrThrow, createNewFileOrCheck,
+    * ensureFileNotExist, ensureDirNotExist, clean, cleanRecursively,
+    * lengthRecursively, listRecursively, listFilesRecursively, listCount,
+    * listCountRecursively, getAllExtension, getNameWithoutAllExtension,
     * createFileTree, compareFilePath, formatFileSize, formatMediumFileSize
     * formatShortFileSize, formatCompactFileSize, formatMediumCompactFileSize
-    * formatShortCompactFileSize, requireExist, requireIsDir, requireIsFile, 
-    * copyTo, copyRecursively, deleteRecursively, startsWith, endsWith, 
+    * formatShortCompactFileSize, requireExist, requireIsDir, requireIsFile,
+    * copyTo, copyRecursively, deleteRecursively, startsWith, endsWith,
     * normalize, resolve, resolveSibling, createTempDir, createTempFile,
     * getExtension, getNameWithoutExtension, toRelativeString, relativeTo,
-    * relativeToOrSelf, relativeToOrNull, isRooted, toComponents, 
-    * getInvariantSeparatorsPath, subPath, inputStream, bufferedInputStream, 
-    * reader, bufferedReader, readBytes, readText, readLines, useLines, 
+    * relativeToOrSelf, relativeToOrNull, isRooted, toComponents,
+    * getInvariantSeparatorsPath, subPath, inputStream, bufferedInputStream,
+    * reader, bufferedReader, readBytes, readText, readLines, useLines,
     * forEachBlock, forEachLine, outputStream, bufferedOutputStream, writer,
-    * bufferedWriter, printWriter, writeBytes, appendBytes, writeText, 
+    * bufferedWriter, printWriter, writeBytes, appendBytes, writeText,
     * appendText, walk, walkTopDown, walkBottomUp
 * IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxTest.kt])
-    * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose, 
-    * writeBytesAndClose, writeTextAndClose, writeCharAndClose, 
-    * writeCharsAndClose, copyTo, inputStream, byteInputStream, 
+    * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose,
+    * writeBytesAndClose, writeTextAndClose, writeCharAndClose,
+    * writeCharsAndClose, copyTo, inputStream, byteInputStream,
     * reader, writer, buffered, bufferedReader, bufferedWriter,
     * readLines, readBytes, readText, lineIterable, useLines, forEachLine
 
@@ -215,64 +228,64 @@ Dependencies：
 * Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxTest.kt])
     * isTrue, isFalse, isNullOrTrue, isNullOrFalse
 * Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxTest.kt])
-    * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr, 
-    * isNotDigit, digitOr, isNotLetter, letterOr, isNotLetterOrDigit, 
+    * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr,
+    * isNotDigit, digitOr, isNotLetter, letterOr, isNotLetterOrDigit,
     * letterOrDigitOr, isDigit, isLetter, isLetterOrDigit, equals
 * Numberx: [Numberx.java] ([Test][NumberxTest.kt]) | [Numberx.kt] ([Test][NumberxTest.kt])
-    * requireNotZero, pad, orZero, to\*OrDefault, to\*OrZero, toHexString, 
-    * toHexStringOr, toHexStringOrNull, toBinaryString, toBinaryStringOr, 
+    * requireNotZero, pad, orZero, to\*OrDefault, to\*OrZero, toHexString,
+    * toHexStringOr, toHexStringOrNull, toBinaryString, toBinaryStringOr,
     * toBinaryStringOrNull, toOctalString, toOctalStringOr, toOctalStringOrNull
 * Objectx: [Objectx.java] ([Test][ObjectxTest.kt]) | [Objectx.kt] ([Test][ObjectxTest.kt])
     * toSimpleString
 * Stringx: [Stringx.java] ([Test][StringxTest.kt]) | [Stringx.kt] ([Test][StringxTest.kt])
-    * isSafe, isNotSafe, safeOr, safeOrNull, requireSafe, requireNotSafe, 
-    * notBlankOr, isNotNullOrBlank, notNullOrBlankOr, notEmptyOr, 
+    * isSafe, isNotSafe, safeOr, safeOrNull, requireSafe, requireNotSafe,
+    * notBlankOr, isNotNullOrBlank, notNullOrBlankOr, notEmptyOr,
     * isNotNullOrEmpty, notNullOrEmptyOr, isChinese, isNotChinese, chineseOr,
     * isDigit, isNotDigit, digitOr, isLetter, isNotLetter, letterOr,
-    * isLetterOrDigit, isNotLetterOrDigit, letterOrDigitOr, containsAny, 
-    * containsAll, orEmpty, orDefault, emptyToNull, blankToNull, 
-    * filterBlank, removeChar, removeFirstChar, removeLastChar, removeIndex, 
+    * isLetterOrDigit, isNotLetterOrDigit, letterOrDigitOr, containsAny,
+    * containsAll, orEmpty, orDefault, emptyToNull, blankToNull,
+    * filterBlank, removeChar, removeFirstChar, removeLastChar, removeIndex,
     * limit, replaceNoRepeat, firstLetterUpperCase, firstLetterUpperCase
-    * hiddenStartChars, hiddenMiddleChars, hiddenEndChars, 
-    * isBlank, isNotBlank, isNullOrBlank, isEmpty, isNotEmpty, isNullOrEmpty, 
+    * hiddenStartChars, hiddenMiddleChars, hiddenEndChars,
+    * isBlank, isNotBlank, isNullOrBlank, isEmpty, isNotEmpty, isNullOrEmpty,
     * indices, lastIndex, hasSurrogatePairAt, startsWith, endsWith, equals,
-    * removeRange, removePrefix, removeSuffix, removeSurrounding, 
-    * capitalize, decapitalize, padStart, padEnd, matches, regionMatches, 
-    * regionMatchesImpl, find, findLast, findAnyOf, findLastAnyOf, 
-    * first, firstOrNull, last, lastOrNull, getOrElse, getOrNull, indexOf, 
-    * indexOfAny, indexOfFirst, indexOfLast, lastIndexOf, lastIndexOfAny, 
-    * subSequence, substring, substringBefore, substringAfter, 
-    * substringBeforeLast, substringAfterLast, toByteArray, reversed, 
-    * filterTo, filter, filterIndexedTo, filterIndexed, filterNotTo, filterNot, 
-    * trim, trimStart, trimEnd, iterator, iterable, replaceRange, 
-    * replaceBefore, replaceBeforeLast, replaceAfter, replaceAfterLast, 
-    * replace, replaceFirst, commonPrefixWith, commonSuffixWith, contains, 
+    * removeRange, removePrefix, removeSuffix, removeSurrounding,
+    * capitalize, decapitalize, padStart, padEnd, matches, regionMatches,
+    * regionMatchesImpl, find, findLast, findAnyOf, findLastAnyOf,
+    * first, firstOrNull, last, lastOrNull, getOrElse, getOrNull, indexOf,
+    * indexOfAny, indexOfFirst, indexOfLast, lastIndexOf, lastIndexOfAny,
+    * subSequence, substring, substringBefore, substringAfter,
+    * substringBeforeLast, substringAfterLast, toByteArray, reversed,
+    * filterTo, filter, filterIndexedTo, filterIndexed, filterNotTo, filterNot,
+    * trim, trimStart, trimEnd, iterator, iterable, replaceRange,
+    * replaceBefore, replaceBeforeLast, replaceAfter, replaceAfterLast,
+    * replace, replaceFirst, commonPrefixWith, commonSuffixWith, contains,
     * splitToIterable, split, lineIterable, lines, elementAt, elementAtOrElse,
     * elementAtOrNull, single, singleOrNull, drop, dropLast, dropLastWhile,
-    * dropWhile, slice, take, takeLast, takeLastWhile, takeWhile, 
-    * associateTo, associate, associateByTo, associateBy, 
-    * toCollection, toHashSet, toList, toSet, toSortedSet, 
-    * flatMap, flatMapTo, groupBy, groupByTo, mapTo, map, mapIndexedTo, 
-    * mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo, 
-    * mapIndexedNotNull, withIndex, all, any, count, fold, foldIndexed, 
-    * foldRight, foldRightIndexed, forEach, forEachIndexed, max, maxBy, maxWith, 
-    * min, minBy, minWith, none, onEach, reduce, reduceIndexed, reduceRight, 
-    * reduceRightIndexed, sumBy, sumByDouble, chunked, chunkedIterable, 
+    * dropWhile, slice, take, takeLast, takeLastWhile, takeWhile,
+    * associateTo, associate, associateByTo, associateBy,
+    * toCollection, toHashSet, toList, toSet, toSortedSet,
+    * flatMap, flatMapTo, groupBy, groupByTo, mapTo, map, mapIndexedTo,
+    * mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo,
+    * mapIndexedNotNull, withIndex, all, any, count, fold, foldIndexed,
+    * foldRight, foldRightIndexed, forEach, forEachIndexed, max, maxBy, maxWith,
+    * min, minBy, minWith, none, onEach, reduce, reduceIndexed, reduceRight,
+    * reduceRightIndexed, sumBy, sumByDouble, chunked, chunkedIterable,
     * partition, windowed, windowedIterable, zip, zipWithNext, asIterable
 * Throwablex: [Throwablex.java] ([Test][ThrowablexTest.kt]) | [Throwablex.kt] ([Test][ThrowablexTest.kt])
     * stackTraceToString
 
 ### tools4j-math
 * Mathx: [Mathx.java] ([Test][MathxTest.kt]) | [Mathx.kt] ([Test][MathxTest.kt])
-    * divide, divideToInt, divideToLong, scale, proportion, percent, 
+    * divide, divideToInt, divideToLong, scale, proportion, percent,
     * format, formatPercentWith
 
 ### tools4j-net
 * Netx: [Netx.java] ([Test][NetxTest.kt])
-    * isIPV4, isIPV6, isMacAddress, getLocalIPAddress, getLocalIPV4Address, 
-    * getExternalIPV4AddressFrom, getExternalIPV4AddressFromSohu, 
-    * getExternalIPV4Address, getCityFromSohu, getCity, ipStringToLong, 
-    * ipLongToString, matchMimeType, guessFileName, 
+    * isIPV4, isIPV6, isMacAddress, getLocalIPAddress, getLocalIPV4Address,
+    * getExternalIPV4AddressFrom, getExternalIPV4AddressFromSohu,
+    * getExternalIPV4Address, getCityFromSohu, getCity, ipStringToLong,
+    * ipLongToString, matchMimeType, guessFileName,
     * guessFileNameFromContentDisposition, guessFileNameFromUrl
 
 ### tools4j-premise
@@ -281,27 +294,27 @@ Dependencies：
 
 ### tools4j-ranges
 * Rangex: [Rangex.java] ([Test][RangexTest.kt]) | [Rangex.kt] ([Test][RangexTest.kt])
-    * rangeTo, until, downTo, requireInRange, requireNotInRange, in, notIn, 
+    * rangeTo, until, downTo, requireInRange, requireNotInRange, in, notIn,
     * reversed, step, coerceAtLeast, coerceAtMost, coerceIn
 
 ### tools4j-ranges-date
 * DateRangex: [DateRangex.java] ([Test][DateRangexTest.kt]) | [DateRangex.kt] ([Test][DateRangexTest.kt])
-    * \[Year, Month...\]RangeTo, \[Year, Month...\]Until, 
+    * \[Year, Month...\]RangeTo, \[Year, Month...\]Until,
     * \[Year, Month...\]DownTo, reversed, step
 
 ### tools4j-reflect
 * Reflectx: [Reflectx.java] ([Test][ReflectxTest.kt]) | [Reflectx.kt] ([Test][ReflectxTest.kt])
-    * getDeclaredFieldRecursive, getDeclaredFieldsRecursive, getFieldValue, 
-    * getStaticFieldValue, setFieldValue, setStaticFieldValue, 
-    * getDeclaredMethodRecursive, getDeclaredMethodsRecursive, callMethod, 
-    * callStaticMethod, getDeclaredConstructorRecursive, 
-    * getDeclaredConstructorsRecursive, getClassHierarchy, 
+    * getDeclaredFieldRecursive, getDeclaredFieldsRecursive, getFieldValue,
+    * getStaticFieldValue, setFieldValue, setStaticFieldValue,
+    * getDeclaredMethodRecursive, getDeclaredMethodsRecursive, callMethod,
+    * callStaticMethod, getDeclaredConstructorRecursive,
+    * getDeclaredConstructorsRecursive, getClassHierarchy,
     * isTypeArray, isTypeCollection
 
 ### tools4j-regex
 * Regexx: [Regexx.java] ([Test][RegexxTest.kt]) | [Regexx.kt] ([Test][RegexxTest.kt])
-    * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup, 
-    * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE, 
+    * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup,
+    * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE,
     * CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
 
 ### tools4j-security
@@ -310,30 +323,30 @@ Dependencies：
 
 ### tools4j-sequences
 * Sequencex: [Sequencex.java] | [Sequencex.kt]
-    * joinToArrayString, asSequence, asIterable, sequenceOf, emptySequence, 
-    * constrainOnce, generateSequence, flatten, contains, elementAt, 
-    * elementAtOrElse, elementAtOrNull, find, findLast, first, firstOrNull, 
-    * indexOf, indexOfFirst, indexOfLast, last, lastIndexOf, lastOrNull, 
-    * single, singleOrNull, drop, dropWhile, filter, filterIndexed, 
-    * filterIndexedTo, filterIsInstance, filterIsInstanceTo, filterNot, 
-    * filterNotNull, filterNotNullTo, filterNotTo, filterTo, take, takeWhile, 
-    * sorted, sortedBy, sortedByDescending, sortedWith, associate, 
-    * associateBy, associateByTo, associateTo, toCollection, toMutableList, 
-    * toMutableSet, toHashSet, toSortedSet, toMap, flatMap, flatMapTo, 
-    * groupBy, groupByTo, map, withIndex, mapIndexedNotNull, 
-    * mapIndexedNotNullTo, mapIndexedTo, mapNotNull, mapNotNullTo, mapTo, 
-    * withIndex, distinct, distinctBy, all, any, count, fold, foldIndexed, 
-    * forEach, forEachIndexed, onEach, maxByDouble, maxByFloat, max, maxBy, 
+    * joinToArrayString, asSequence, asIterable, sequenceOf, emptySequence,
+    * constrainOnce, generateSequence, flatten, contains, elementAt,
+    * elementAtOrElse, elementAtOrNull, find, findLast, first, firstOrNull,
+    * indexOf, indexOfFirst, indexOfLast, last, lastIndexOf, lastOrNull,
+    * single, singleOrNull, drop, dropWhile, filter, filterIndexed,
+    * filterIndexedTo, filterIsInstance, filterIsInstanceTo, filterNot,
+    * filterNotNull, filterNotNullTo, filterNotTo, filterTo, take, takeWhile,
+    * sorted, sortedBy, sortedByDescending, sortedWith, associate,
+    * associateBy, associateByTo, associateTo, toCollection, toMutableList,
+    * toMutableSet, toHashSet, toSortedSet, toMap, flatMap, flatMapTo,
+    * groupBy, groupByTo, map, withIndex, mapIndexedNotNull,
+    * mapIndexedNotNullTo, mapIndexedTo, mapNotNull, mapNotNullTo, mapTo,
+    * withIndex, distinct, distinctBy, all, any, count, fold, foldIndexed,
+    * forEach, forEachIndexed, onEach, maxByDouble, maxByFloat, max, maxBy,
     * maxWith, minByDouble, minByFloat, min, minBy, minWith, none, reduce,
-    * reduceIndexed, sumBy, sumByDouble, sumOf, requireNoNulls, minus, 
-    * minusElement, partition, plus, plusElement, zip, unzip, 
+    * reduceIndexed, sumBy, sumByDouble, sumOf, requireNoNulls, minus,
+    * minusElement, partition, plus, plusElement, zip, unzip,
     * joinTo, joinToString, averageOf
 
 ### tools4j-zip
 * Zipx: [Zipx.java] ([Test][ZipxTest.kt]) | [Zipx.kt] ([Test][ZipxTest.kt])
-    * compress, decompress, gzipCompress, gzipDecompress, compressFilesTo, 
-    * compressFilesTo, compressFileTo, compressFile, compressChildFileTo, 
-    * compressChildFile, decompressTo, decompress, getCompressDstFile, 
+    * compress, decompress, gzipCompress, gzipDecompress, compressFilesTo,
+    * compressFilesTo, compressFileTo, compressFile, compressChildFileTo,
+    * compressChildFile, decompressTo, decompress, getCompressDstFile,
     * getDecompressDstDir, getTrueSize, listEntry, listEntryName, size
 
 ## Change Log
