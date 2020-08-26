@@ -329,8 +329,9 @@ public class Filex {
 
         while (true) {
             File currentDir = dirQueue.poll();
-            if (currentDir == null || !currentDir.exists()) break;
+            if (currentDir == null) break;
 
+            if (!currentDir.exists()) continue;
             String[] childPaths = currentDir.list();
             if (childPaths == null) continue;
 
