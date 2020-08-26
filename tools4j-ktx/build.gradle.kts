@@ -35,6 +35,7 @@ dependencies {
     api(project(":tools4j-io-ktx"))
     api(project(":tools4j-lang-ktx"))
     api(project(":tools4j-math-ktx"))
+    api(project(":tools4j-net"))
     api(project(":tools4j-premise-ktx"))
     api(project(":tools4j-ranges-ktx"))
     api(project(":tools4j-ranges-date-ktx"))
