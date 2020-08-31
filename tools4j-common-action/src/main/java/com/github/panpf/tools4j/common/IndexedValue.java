@@ -18,6 +18,8 @@ package com.github.panpf.tools4j.common;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class IndexedValue<T> {
 
     public final int index;
@@ -27,5 +29,27 @@ public class IndexedValue<T> {
     public IndexedValue(int index, @NotNull T value) {
         this.index = index;
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IndexedValue<?> that = (IndexedValue<?>) o;
+        return index == that.index &&
+                value.equals(that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, value);
+    }
+
+    @Override
+    public String toString() {
+        return "IndexedValue{" +
+                "index=" + index +
+                ", value=" + value +
+                '}';
     }
 }

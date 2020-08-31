@@ -40,11 +40,12 @@ public class CharSequenceIterator implements Iterator<Character> {
     @Override
     public Character next() {
         if (charSequence == null) throw new NoSuchElementException("elements is null");
+        final int nextIndex = index++;
         try {
-            return charSequence.charAt(index++);
-        } catch (ArrayIndexOutOfBoundsException e) {
+            return charSequence.charAt(nextIndex);
+        } catch (StringIndexOutOfBoundsException e) {
             index -= 1;
-            throw new NoSuchElementException(e.getMessage());
+            throw new NoSuchElementException(String.valueOf(nextIndex));
         }
     }
 

@@ -28,7 +28,7 @@ import java.util.Iterator;
 public class IndexingSequence<T> implements Sequence<IndexedValue<T>> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
 
     public IndexingSequence(@NotNull Sequence<T> sequence) {
         this.sequence = sequence;
@@ -39,7 +39,7 @@ public class IndexingSequence<T> implements Sequence<IndexedValue<T>> {
     public Iterator<IndexedValue<T>> iterator() {
         return new Iterator<IndexedValue<T>>() {
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
 
             int index = 0;
 

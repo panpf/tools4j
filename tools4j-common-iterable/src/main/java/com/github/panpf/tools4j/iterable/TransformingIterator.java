@@ -25,21 +25,30 @@ import java.util.Iterator;
  * A iterable which returns the results of applying the given [transformer] function to the values
  * in the underlying [Iterable].
  */
-public class TransformingIterable<T, R> implements Iterable<R> {
+public class TransformingIterator<T, R> implements Iterator<R> {
 
     @NotNull
-    private final Iterable<T> iterable;
+    private final Iterator<T> iterator;
     @NotNull
     private final Transformer<T, R> transformer;
 
-    public TransformingIterable(@NotNull Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
-        this.iterable = iterable;
+    public TransformingIterator(@NotNull Iterator<T> iterator, @NotNull Transformer<T, R> transformer) {
+        this.iterator = iterator;
         this.transformer = transformer;
     }
 
-    @NotNull
     @Override
-    public Iterator<R> iterator() {
-        return new TransformingIterator<>(iterable.iterator(), transformer);
+    public R next() {
+        return transformer.transform(iterator.next());
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public void remove() {
+        iterator.remove();
     }
 }

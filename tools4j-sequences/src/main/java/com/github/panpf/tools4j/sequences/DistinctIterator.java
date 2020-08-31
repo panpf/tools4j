@@ -26,10 +26,11 @@ import java.util.Iterator;
 public class DistinctIterator<T, K> extends AbstractIterator<T> {
 
     @NotNull
-    private Iterator<T> source;
+    private final Iterator<T> source;
     @NotNull
-    private Transformer<T, K> keySelector;
-    private HashSet<K> observed = new HashSet<K>();
+    private final Transformer<T, K> keySelector;
+    @NotNull
+    private final HashSet<K> observed = new HashSet<>();
 
     public DistinctIterator(@NotNull Iterator<T> source, @NotNull Transformer<T, K> keySelector) {
         this.source = source;

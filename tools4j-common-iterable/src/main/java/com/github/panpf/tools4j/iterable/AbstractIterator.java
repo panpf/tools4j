@@ -47,8 +47,8 @@ public abstract class AbstractIterator<T> implements Iterator<T> {
         }
     }
 
-    @Override
     @NotNull
+    @Override
     public T next() {
         if (!hasNext()) throw new NoSuchElementException();
         state = State.NotReady;
@@ -56,6 +56,7 @@ public abstract class AbstractIterator<T> implements Iterator<T> {
         return nextValue;
     }
 
+    @NotNull
     private Boolean tryToComputeNext() {
         state = State.Failed;
         computeNext();
