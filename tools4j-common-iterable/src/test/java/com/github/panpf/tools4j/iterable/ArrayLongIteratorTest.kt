@@ -16,6 +16,66 @@
 
 package com.github.panpf.tools4j.iterable
 
+import org.junit.Assert
+import org.junit.Test
+
 class ArrayLongIteratorTest {
-    // todo Complete test
+
+    private val normalLongArray = longArrayOf(4L, 6L, 2L, 0L)
+    private val normalLongArrayToString = "4, 6, 2, 0"
+    private val nullLongArray = null as LongArray?
+    private val nullLongArrayToString = ""
+    private val emptyLongArray = longArrayOf()
+    private val emptyLongArrayToString = ""
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals(normalLongArrayToString, ArrayLongIterator(normalLongArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayLongIterator(normalLongArray).next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testNull() {
+        Assert.assertEquals(nullLongArrayToString, ArrayLongIterator(nullLongArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayLongIterator(nullLongArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (!(e is NoSuchElementException && e.message == "elements is null")) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testEmpty() {
+        Assert.assertEquals(emptyLongArrayToString, ArrayLongIterator(emptyLongArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayLongIterator(emptyLongArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            ArrayLongIterator(normalLongArray).remove()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
+        }
+    }
 }

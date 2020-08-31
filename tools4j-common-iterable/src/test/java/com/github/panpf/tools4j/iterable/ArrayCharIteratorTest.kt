@@ -16,6 +16,66 @@
 
 package com.github.panpf.tools4j.iterable
 
+import org.junit.Assert
+import org.junit.Test
+
 class ArrayCharIteratorTest {
-    // todo Complete test
+
+    private val normalCharArray = charArrayOf('a', 't', 'g', '7')
+    private val normalCharArrayToString = "a, t, g, 7"
+    private val nullCharArray = null as CharArray?
+    private val nullCharArrayToString = ""
+    private val emptyCharArray = charArrayOf()
+    private val emptyCharArrayToString = ""
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals(normalCharArrayToString, ArrayCharIterator(normalCharArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayCharIterator(normalCharArray).next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testNull() {
+        Assert.assertEquals(nullCharArrayToString, ArrayCharIterator(nullCharArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayCharIterator(nullCharArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (!(e is NoSuchElementException && e.message == "elements is null")) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testEmpty() {
+        Assert.assertEquals(emptyCharArrayToString, ArrayCharIterator(emptyCharArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayCharIterator(emptyCharArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            ArrayCharIterator(normalCharArray).remove()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
+        }
+    }
 }

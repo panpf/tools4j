@@ -19,21 +19,21 @@ package com.github.panpf.tools4j.iterable
 import org.junit.Assert
 import org.junit.Test
 
-class ArrayDoubleIteratorTest {
+class CharSequenceIterableTest {
 
-    private val normalDoubleArray = doubleArrayOf(4.5, 6.8, 2.3, 0.6)
-    private val normalDoubleArrayToString = "4.5, 6.8, 2.3, 0.6"
-    private val nullDoubleArray = null as DoubleArray?
-    private val nullDoubleArrayToString = ""
-    private val emptyDoubleArray = doubleArrayOf()
-    private val emptyDoubleArrayToString = ""
+    private val normalCharSequence = "faf54c32"
+    private val normalCharSequenceToString = "f, a, f, 5, 4, c, 3, 2"
+    private val nullCharSequence = null as CharSequence?
+    private val nullCharSequenceToString = ""
+    private val emptyCharSequence = ""
+    private val emptyCharSequenceToString = ""
 
     @Test
     fun testNormal() {
-        Assert.assertEquals(normalDoubleArrayToString, ArrayDoubleIterator(normalDoubleArray).asSequence().joinToString { it.toString() })
+        Assert.assertEquals(normalCharSequenceToString, CharSequenceIterable(normalCharSequence).iterator().asSequence().joinToString { it.toString() })
 
         try {
-            ArrayDoubleIterator(normalDoubleArray).next()
+            CharSequenceIterable(normalCharSequence).iterator().next()
         } catch (e: Exception) {
             Assert.fail()
         }
@@ -41,10 +41,10 @@ class ArrayDoubleIteratorTest {
 
     @Test
     fun testNull() {
-        Assert.assertEquals(nullDoubleArrayToString, ArrayDoubleIterator(nullDoubleArray).asSequence().joinToString { it.toString() })
+        Assert.assertEquals(nullCharSequenceToString, CharSequenceIterable(nullCharSequence).iterator().asSequence().joinToString { it.toString() })
 
         try {
-            ArrayDoubleIterator(nullDoubleArray).next()
+            CharSequenceIterable(nullCharSequence).iterator().next()
             Assert.fail()
         } catch (e: Exception) {
             if (!(e is NoSuchElementException && e.message == "elements is null")) {
@@ -55,10 +55,10 @@ class ArrayDoubleIteratorTest {
 
     @Test
     fun testEmpty() {
-        Assert.assertEquals(emptyDoubleArrayToString, ArrayDoubleIterator(emptyDoubleArray).asSequence().joinToString { it.toString() })
+        Assert.assertEquals(emptyCharSequenceToString, CharSequenceIterable(emptyCharSequence).iterator().asSequence().joinToString { it.toString() })
 
         try {
-            ArrayDoubleIterator(emptyDoubleArray).next()
+            CharSequenceIterable(emptyCharSequence).iterator().next()
             Assert.fail()
         } catch (e: Exception) {
             if (e !is NoSuchElementException) {
@@ -70,7 +70,7 @@ class ArrayDoubleIteratorTest {
     @Test
     fun testRemove() {
         try {
-            ArrayDoubleIterator(normalDoubleArray).remove()
+            CharSequenceIterable(normalCharSequence).iterator().remove()
             Assert.fail()
         } catch (e: Exception) {
             if (e !is UnsupportedOperationException) {

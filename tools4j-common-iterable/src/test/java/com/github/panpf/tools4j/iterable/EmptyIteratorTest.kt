@@ -16,6 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-class CharSequenceIteratorTest {
-    // todo Complete test
+import org.junit.Assert
+import org.junit.Test
+
+class EmptyIteratorTest {
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals("", EmptyIterator.INSTANCE.asSequence().joinToString { it.toString() })
+
+        try {
+            EmptyIterator.INSTANCE.next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            EmptyIterator.INSTANCE.remove()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
 }

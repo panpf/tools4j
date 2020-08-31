@@ -16,6 +16,50 @@
 
 package com.github.panpf.tools4j.iterable
 
+import org.junit.Assert
+import org.junit.Test
+
 class TransformingIterableTest {
-    // todo Complete test
+
+    private val normalArray = arrayOf("faf54c32", "faf54ce", "fa32")
+    private val normalArrayToString = "8, 7, 4"
+    private val emptyArray = arrayOf<String>()
+    private val emptyArrayToString = ""
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals(normalArrayToString, TransformingIterable(normalArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
+
+        try {
+            TransformingIterable(normalArray.asIterable()) { it.length }.iterator().next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testEmpty() {
+        Assert.assertEquals(emptyArrayToString, TransformingIterable(emptyArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
+
+        try {
+            TransformingIterable(emptyArray.asIterable()) { it.length }.iterator().next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            TransformingIterable(normalArray.asIterable()) { it.length }.iterator().remove()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
+        }
+    }
 }

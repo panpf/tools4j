@@ -16,6 +16,66 @@
 
 package com.github.panpf.tools4j.iterable
 
+import org.junit.Assert
+import org.junit.Test
+
 class ArrayBooleanIteratorTest {
-    // todo Complete test
+
+    private val normalBooleanArray = booleanArrayOf(true, false, false, true)
+    private val normalBooleanArrayToString = "true, false, false, true"
+    private val nullBooleanArray = null as BooleanArray?
+    private val nullBooleanArrayToString = ""
+    private val emptyBooleanArray = booleanArrayOf()
+    private val emptyBooleanArrayToString = ""
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals(normalBooleanArrayToString, ArrayBooleanIterator(normalBooleanArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayBooleanIterator(normalBooleanArray).next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testNull() {
+        Assert.assertEquals(nullBooleanArrayToString, ArrayBooleanIterator(nullBooleanArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayBooleanIterator(nullBooleanArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (!(e is NoSuchElementException && e.message == "elements is null")) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testEmpty() {
+        Assert.assertEquals(emptyBooleanArrayToString, ArrayBooleanIterator(emptyBooleanArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayBooleanIterator(emptyBooleanArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            ArrayBooleanIterator(booleanArrayOf(true, false, false, true)).remove()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
+        }
+    }
 }

@@ -16,6 +16,66 @@
 
 package com.github.panpf.tools4j.iterable
 
+import org.junit.Assert
+import org.junit.Test
+
 class ArrayIteratorTest {
-    // todo Complete test
+
+    private val normalArray = arrayOf("faf", "54", "c", "32")
+    private val normalArrayToString = "faf, 54, c, 32"
+    private val nullArray = null as Array<*>?
+    private val nullArrayToString = ""
+    private val emptyArray = arrayOf<Any>()
+    private val emptyArrayToString = ""
+
+    @Test
+    fun testNormal() {
+        Assert.assertEquals(normalArrayToString, ArrayIterator(normalArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayIterator(normalArray).next()
+        } catch (e: Exception) {
+            Assert.fail()
+        }
+    }
+
+    @Test
+    fun testNull() {
+        Assert.assertEquals(nullArrayToString, ArrayIterator(nullArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayIterator(nullArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (!(e is NoSuchElementException && e.message == "elements is null")) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testEmpty() {
+        Assert.assertEquals(emptyArrayToString, ArrayIterator(emptyArray).asSequence().joinToString { it.toString() })
+
+        try {
+            ArrayIterator(emptyArray).next()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
+        }
+    }
+
+    @Test
+    fun testRemove() {
+        try {
+            ArrayIterator(normalArray).remove()
+            Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
+        }
+    }
 }
