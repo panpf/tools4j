@@ -97,11 +97,11 @@ Dependencies：
 `Representatives with the (Test) tag have passed the test and can be used with confidence.`
 
 ### tools4j-annotation
-* Annotation: [Annotationx.java] ([Test][AnnotationxTest.kt]) | [Annotationx.kt] ([Test][AnnotationxTest.kt])
+* Annotationx: [Annotationx.java] ([Test][AnnotationxTest.kt]) | [Annotationx.kt] ([Test][AnnotationxTest.kt])
     * getAnnotationFromEnum
 
 ### tools4j-base64
-* Base64: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xTest.kt])
+* Base64x: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xTest.kt])
     * encode, encodeToString, decode, decodeToString
 
 ### tools4j-collections
