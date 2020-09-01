@@ -36,11 +36,6 @@ import com.github.panpf.tools4j.premise.Premisex
 inline fun Boolean?.require(lazyMessage: LazyValue<String>) = Premisex.require(this ?: false, lazyMessage)
 
 /**
- * Throws an [IllegalArgumentException] with the result of calling [lazyMessage] if the [this] is false.
- */
-inline fun Boolean?.require(crossinline lazyMessage: () -> String) = Premisex.require(this ?: false) { lazyMessage() }
-
-/**
  * Throws an [IllegalArgumentException] if the [this] is false.
  */
 inline fun Boolean?.require() = Premisex.require(this ?: false)
@@ -51,11 +46,6 @@ inline fun Boolean?.require() = Premisex.require(this ?: false)
  */
 inline fun Boolean?.check(lazyMessage: LazyValue<String>) = Premisex.check(this ?: false, lazyMessage)
 
-
-/**
- * Throws an [IllegalStateException] with the result of calling [lazyMessage] if the [this] is false.
- */
-inline fun Boolean?.check(crossinline lazyMessage: () -> String) = Premisex.check(this ?: false) { lazyMessage() }
 
 /**
  * Throws an [IllegalStateException] if the [this] is false.
@@ -72,11 +62,6 @@ inline fun Boolean?.check() = Premisex.check(this ?: false)
 inline fun <T> T?.requireNotNull(lazyMessage: LazyValue<String>): T = Premisex.requireNotNull(this, lazyMessage)
 
 /**
- * If the self is not null, it returns itself, otherwise it throws an IllegalArgumentException with the result of calling [lazyMessage]
- */
-inline fun <T> T?.requireNotNull(crossinline lazyMessage: () -> String): T = Premisex.requireNotNull(this) { lazyMessage() }
-
-/**
  * If the self is not null, it returns itself, otherwise it throws an IllegalArgumentException
  */
 inline fun <T> T?.requireNotNull(): T = Premisex.requireNotNull(this)
@@ -91,11 +76,6 @@ inline fun <T> T?.requireNotNull(paramName: String): T = Premisex.requireNotNull
  * If the self is not null, it returns itself, otherwise it throws an IllegalStateException with the result of calling [lazyMessage]
  */
 inline fun <T> T?.checkNotNull(lazyMessage: LazyValue<String>): T = Premisex.requireNotNull(this, lazyMessage)
-
-/**
- * If the self is not null, it returns itself, otherwise it throws an IllegalStateException with the result of calling [lazyMessage]
- */
-inline fun <T> T?.checkNotNull(crossinline lazyMessage: () -> String): T = Premisex.requireNotNull(this) { lazyMessage() }
 
 /**
  * If the self is not null, it returns itself, otherwise it throws an IllegalStateException

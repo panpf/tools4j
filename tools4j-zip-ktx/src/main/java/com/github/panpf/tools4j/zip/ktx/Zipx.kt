@@ -77,36 +77,11 @@ inline fun Array<File>?.zipCompressFilesTo(destinationFile: File, zipEntryNameTr
  * @receiver           The file to be compressed
  * @param destinationFile       Output file
  * @param zipEntryNameTransform Get the name of the file compressed into the zip package
- * @param listener              Progress listener
- * @return Output file
- * @throws IOException IO exceptions
- */
-@Throws(IOException::class)
-inline fun Array<File>?.zipCompressFilesTo(destinationFile: File, crossinline zipEntryNameTransform: (File) -> String, listener: ZipListener?): File = Zipx.compressFilesTo(this, destinationFile, { t -> zipEntryNameTransform(t) }, listener)
-
-/**
- * Compress the specified files
- *
- * @receiver           The file to be compressed
- * @param destinationFile       Output file
- * @param zipEntryNameTransform Get the name of the file compressed into the zip package
  * @return Output file
  * @throws IOException IO exceptions
  */
 @Throws(IOException::class)
 inline fun Array<File>?.zipCompressFilesTo(destinationFile: File, zipEntryNameTransform: Transformer<File, String>): File = Zipx.compressFilesTo(this, destinationFile, zipEntryNameTransform)
-
-/**
- * Compress the specified files
- *
- * @receiver           The file to be compressed
- * @param destinationFile       Output file
- * @param zipEntryNameTransform Get the name of the file compressed into the zip package
- * @return Output file
- * @throws IOException IO exceptions
- */
-@Throws(IOException::class)
-inline fun Array<File>?.zipCompressFilesTo(destinationFile: File, crossinline zipEntryNameTransform: (File) -> String): File = Zipx.compressFilesTo(this, destinationFile) { t -> zipEntryNameTransform(t) }
 
 
 /**

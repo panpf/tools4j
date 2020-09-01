@@ -1,6 +1,5 @@
 package com.github.panpf.tools4j.premise.ktx
 
-import com.github.panpf.tools4j.premise.LazyValue
 import org.junit.Assert.fail
 import org.junit.Test
 
@@ -12,31 +11,21 @@ class PremisexTest {
         try {
             false.require()
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
             (null as Boolean?).require()
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
-        }
-        try {
-            false.require(LazyValue { "is false" })
-            fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
             false.require { "is false" }
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
-            true.require(LazyValue { "is true" })
-        } catch (e: Exception) {
-            // e.printStackTrace();
+            true.require { "is true" }
+        } catch (ignored: Exception) {
         }
     }
 
@@ -46,31 +35,21 @@ class PremisexTest {
         try {
             false.check()
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
             (null as Boolean?).check()
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
-        }
-        try {
-            false.check(LazyValue { "is false" })
-            fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
             false.check { "is false" }
             fail()
-        } catch (e: Exception) {
-            // e.printStackTrace();
+        } catch (ignored: Exception) {
         }
         try {
-            true.check(LazyValue { "is true" })
-        } catch (e: Exception) {
-            // e.printStackTrace();
+            true.check { "is true" }
+        } catch (ignored: Exception) {
         }
     }
 
@@ -79,15 +58,13 @@ class PremisexTest {
         "".requireNotNull()
         "".requireNotNull("param")
         "".requireNotNull { "param is null" }
-        "".requireNotNull(LazyValue { "param is null" })
 
         try {
             @Suppress("IMPLICIT_NOTHING_AS_TYPE_PARAMETER")
-            null.requireNotNull("param")
+            (null as String?).requireNotNull("param")
             @Suppress("UNREACHABLE_CODE")
             fail()
-        } catch (e: Exception) {
-            // // e.printStackTrace();;
+        } catch (ignored: Exception) {
         }
     }
 
@@ -96,15 +73,13 @@ class PremisexTest {
         "".checkNotNull()
         "".checkNotNull("param")
         "".checkNotNull { "param is null" }
-        "".checkNotNull(LazyValue { "param is null" })
 
         try {
             @Suppress("IMPLICIT_NOTHING_AS_TYPE_PARAMETER")
-            null.checkNotNull("param")
+            (null as String?).checkNotNull("param")
             @Suppress("UNREACHABLE_CODE")
             fail()
-        } catch (e: Exception) {
-            // // e.printStackTrace();;
+        } catch (ignored: Exception) {
         }
     }
 }

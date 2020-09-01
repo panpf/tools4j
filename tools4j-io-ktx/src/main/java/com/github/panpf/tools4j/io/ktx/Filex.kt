@@ -153,17 +153,7 @@ inline fun File.listRecursively(fileFilter: FileFilter): Array<String>? = Filex.
 /**
  * Return the path to the file under this directory and all its subdirectories
  */
-inline fun File.listRecursively(crossinline fileFilter: (pathname: File) -> Boolean): Array<String>? = listRecursively(FileFilter { fileFilter(it) })
-
-/**
- * Return the path to the file under this directory and all its subdirectories
- */
 inline fun File.listRecursively(filenameFilter: FilenameFilter): Array<String>? = Filex.listRecursively(this, filenameFilter)
-
-/**
- * Return the path to the file under this directory and all its subdirectories
- */
-inline fun File.listRecursively(crossinline filenameFilter: (dir: File, name: String) -> Boolean): Array<String>? = listRecursively(FilenameFilter { dir, name -> filenameFilter(dir, name) })
 
 /**
  * Return the path to the file under this directory and all its subdirectories
@@ -178,17 +168,7 @@ inline fun File.listFilesRecursively(fileFilter: FileFilter): Array<File>? = Fil
 /**
  * Return files in this directory and all its subdirectories
  */
-inline fun File.listFilesRecursively(crossinline fileFilter: (pathname: File) -> Boolean): Array<File>? = listFilesRecursively(FileFilter { fileFilter(it) })
-
-/**
- * Return files in this directory and all its subdirectories
- */
 inline fun File.listFilesRecursively(filenameFilter: FilenameFilter): Array<File>? = Filex.listFilesRecursively(this, filenameFilter)
-
-/**
- * Return files in this directory and all its subdirectories
- */
-inline fun File.listFilesRecursively(crossinline filenameFilter: (dir: File, name: String) -> Boolean): Array<File>? = listFilesRecursively(FilenameFilter { dir, name -> filenameFilter(dir, name) })
 
 /**
  * Return files in this directory and all its subdirectories
@@ -207,17 +187,7 @@ inline fun File.listCount(fileFilter: FileFilter): Int = Filex.listCount(this, f
 /**
  * Returns the number of files in the specified folder, excluding subfiles and subfolders
  */
-inline fun File.listCount(crossinline fileFilter: (pathname: File) -> Boolean): Int = listCount(FileFilter { fileFilter(it) })
-
-/**
- * Returns the number of files in the specified folder, excluding subfiles and subfolders
- */
 inline fun File.listCount(filenameFilter: FilenameFilter): Int = Filex.listCount(this, filenameFilter)
-
-/**
- * Returns the number of files in the specified folder, excluding subfiles and subfolders
- */
-inline fun File.listCount(crossinline filenameFilter: (dir: File, name: String) -> Boolean): Int = listCount(FilenameFilter { dir, name -> filenameFilter(dir, name) })
 
 /**
  * Returns the number of files in the specified folder, excluding subfiles and subfolders
@@ -232,17 +202,7 @@ inline fun File.listCountRecursively(fileFilter: FileFilter): Int = Filex.listCo
 /**
  * Returns the number of files in the specified directory and all its subdirectories
  */
-inline fun File.listCountRecursively(crossinline fileFilter: (pathname: File) -> Boolean): Int = listCountRecursively(FileFilter { fileFilter(it) })
-
-/**
- * Returns the number of files in the specified directory and all its subdirectories
- */
 inline fun File.listCountRecursively(filenameFilter: FilenameFilter): Int = Filex.listCountRecursively(this, filenameFilter)
-
-/**
- * Returns the number of files in the specified directory and all its subdirectories
- */
-inline fun File.listCountRecursively(crossinline filenameFilter: (dir: File, name: String) -> Boolean): Int = listCountRecursively(FilenameFilter { dir, name -> filenameFilter(dir, name) })
 
 /**
  * Returns the number of files in the specified directory and all its subdirectories

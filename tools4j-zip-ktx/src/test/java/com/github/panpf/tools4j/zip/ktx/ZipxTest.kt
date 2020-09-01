@@ -18,7 +18,6 @@ package com.github.panpf.tools4j.zip.ktx
 
 import com.github.panpf.tools4j.collections.Collectionx
 import com.github.panpf.tools4j.collections.ktx.joinToArrayString
-import com.github.panpf.tools4j.io.Filex
 import com.github.panpf.tools4j.io.ktx.compareFilePath
 import com.github.panpf.tools4j.io.ktx.createFileTree
 import com.github.panpf.tools4j.io.ktx.createNewFileOrThrow
@@ -420,7 +419,7 @@ class ZipxTest {
 
         private val progress = ArrayList<String>()
 
-        internal val log: String
+        val log: String
             get() = Collectionx.joinToArrayString(progress)
 
         override fun onEntryStart(zipEntry: ZipEntry) {
