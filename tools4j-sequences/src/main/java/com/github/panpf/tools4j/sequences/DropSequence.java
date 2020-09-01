@@ -80,7 +80,7 @@ public class DropSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

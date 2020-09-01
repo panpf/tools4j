@@ -81,7 +81,7 @@ public class FlatteningSequence<T, R, E> implements Sequence<E> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

@@ -53,7 +53,9 @@ public class IndexingSequence<T> implements Sequence<IndexedValue<T>> {
                 return iterator.hasNext();
             }
 
+            @Override
             public void remove() {
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.iterable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class EmptyIterator implements Iterator<Object> {
 
@@ -32,11 +33,11 @@ public class EmptyIterator implements Iterator<Object> {
 
     @Override
     public Object next() {
-        return null;
+        throw new NoSuchElementException();
     }
 
     @Override
     public void remove() {
-
+        throw new UnsupportedOperationException("remove");
     }
 }

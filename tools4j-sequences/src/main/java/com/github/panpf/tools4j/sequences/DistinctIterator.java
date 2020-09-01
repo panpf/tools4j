@@ -54,6 +54,6 @@ public class DistinctIterator<T, K> extends AbstractIterator<T> {
 
     @Override
     public void remove() {
-
+        throw new UnsupportedOperationException("remove");
     }
 }

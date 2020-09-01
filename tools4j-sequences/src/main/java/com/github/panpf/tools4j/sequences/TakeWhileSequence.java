@@ -30,9 +30,9 @@ import java.util.NoSuchElementException;
 public class TakeWhileSequence<T> implements Sequence<T> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private Predicate<T> predicate;
+    private final Predicate<T> predicate;
 
     public TakeWhileSequence(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         this.sequence = sequence;
@@ -45,7 +45,7 @@ public class TakeWhileSequence<T> implements Sequence<T> {
         return new Iterator<T>() {
 
             @NotNull
-            Iterator<T> iterator = sequence.iterator();
+            final Iterator<T> iterator = sequence.iterator();
             int nextState = -1; // -1 for unknown, 0 for done, 1 for continue
             @Nullable
             T nextItem = null;
@@ -85,7 +85,7 @@ public class TakeWhileSequence<T> implements Sequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

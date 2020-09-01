@@ -84,7 +84,7 @@ public class DropWhileSequence<T> implements Sequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

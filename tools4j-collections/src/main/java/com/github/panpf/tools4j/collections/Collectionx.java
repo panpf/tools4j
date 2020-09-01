@@ -3484,7 +3484,7 @@ public class Collectionx {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

@@ -28,9 +28,9 @@ import java.util.Iterator;
 public class TransformingSequence<T, R> implements Sequence<R> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private Transformer<T, R> transformer;
+    private final Transformer<T, R> transformer;
 
     public TransformingSequence(@NotNull Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
         this.sequence = sequence;
@@ -42,7 +42,7 @@ public class TransformingSequence<T, R> implements Sequence<R> {
     public Iterator<R> iterator() {
         return new Iterator<R>() {
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
 
             @Override
             public R next() {
@@ -56,11 +56,12 @@ public class TransformingSequence<T, R> implements Sequence<R> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }
 
+    @NotNull
     public <E> Sequence<E> flatten(@NotNull Transformer<R, Iterator<E>> iterator) {
         return new FlatteningSequence<>(sequence, transformer, iterator);
     }

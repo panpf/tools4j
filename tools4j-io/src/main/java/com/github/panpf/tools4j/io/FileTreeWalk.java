@@ -158,7 +158,7 @@ public class FileTreeWalk implements Iterable<File> {
 
         @Override
         public void remove() {
-
+            throw new UnsupportedOperationException("remove");
         }
 
         /**

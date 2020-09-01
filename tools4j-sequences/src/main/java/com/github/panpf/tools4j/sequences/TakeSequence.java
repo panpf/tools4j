@@ -56,13 +56,9 @@ public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            @Override
-            public void remove() {
 
-            }
-
-            int left = count;
             final Iterator<T> iterator = sequence.iterator();
+            int left = count;
 
             @Override
             public T next() {
@@ -74,6 +70,11 @@ public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
             @Override
             public boolean hasNext() {
                 return left > 0 && iterator.hasNext();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

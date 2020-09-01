@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 class ConstrainedOnceSequence<T> implements Sequence<T> {
 
-    private AtomicReference<Sequence<T>> sequenceRef;
+    private final AtomicReference<Sequence<T>> sequenceRef;
 
     ConstrainedOnceSequence(Sequence<T> sequence) {
         this.sequenceRef = new AtomicReference<>(sequence);

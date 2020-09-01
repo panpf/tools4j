@@ -68,6 +68,7 @@ public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
+
             @NotNull
             private final Iterator<T> iterator = sequence.iterator();
             private int position = 0;
@@ -97,7 +98,7 @@ public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

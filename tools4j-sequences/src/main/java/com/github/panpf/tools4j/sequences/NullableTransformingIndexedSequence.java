@@ -29,9 +29,9 @@ import java.util.Iterator;
 public class NullableTransformingIndexedSequence<T, R> implements Sequence<R> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private NullableIndexedTransformer<T, R> transformer;
+    private final NullableIndexedTransformer<T, R> transformer;
 
     public NullableTransformingIndexedSequence(@NotNull Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transformer) {
         this.sequence = sequence;
@@ -42,9 +42,9 @@ public class NullableTransformingIndexedSequence<T, R> implements Sequence<R> {
     @Override
     public Iterator<R> iterator() {
         return new Iterator<R>() {
-            @NotNull
-            private Iterator<T> iterator = sequence.iterator();
 
+            @NotNull
+            private final Iterator<T> iterator = sequence.iterator();
             int index = 0;
 
             @Override
@@ -59,7 +59,7 @@ public class NullableTransformingIndexedSequence<T, R> implements Sequence<R> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

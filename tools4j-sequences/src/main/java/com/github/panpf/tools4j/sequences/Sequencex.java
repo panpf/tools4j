@@ -81,24 +81,10 @@ public class Sequencex {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         });
     }
-
-
-//    /**
-//     * Given an [iterator] function constructs a [Sequence] that returns values through the [Iterator]
-//     * provided by that function.
-//     * The values are evaluated lazily, and the sequence is potentially infinite.
-//     *
-//     * @sample samples.collections.Sequences.Building.sequenceFromIterator
-//     */
-//    @kotlin.internal.InlineOnly
-//    public static <T> Sequence(crossinline iterator: () -> Iterator<T>): Sequence<T> = object : Sequence<T> {
-//        override fun iterator(): Iterator<T> = iterator()
-//    }
-
 
     /**
      * Creates a sequence that returns all elements from this iterator. The sequence is constrained to be iterated only once.
@@ -328,7 +314,7 @@ public class Sequencex {
      * @see #constrainOnce
      */
     @NotNull
-    public static <T> Sequence<T> generateSequence(@NotNull final NullableDefaultValue<T> nextFunction) {
+    public static <T> Sequence<T> generateSequence(@NotNull final InitialValue<T> nextFunction) {
         return constrainOnce(new GeneratorSequence<>(nextFunction, new NextValue<T>() {
             @Nullable
             @Override
@@ -350,7 +336,7 @@ public class Sequencex {
     @NotNull
     public static <T> Sequence<T> generateSequence(@Nullable final T seed, @NotNull NextValue<T> nextFunction) {
         //noinspection unchecked
-        return seed == null ? (Sequence<T>) EmptySequence.INSTANCE : new GeneratorSequence<>(new NullableDefaultValue<T>() {
+        return seed == null ? (Sequence<T>) EmptySequence.INSTANCE : new GeneratorSequence<>(new InitialValue<T>() {
             @NotNull
             @Override
             public T get() {
@@ -369,7 +355,7 @@ public class Sequencex {
      * The sequence can be iterated multiple times.
      */
     @NotNull
-    public static <T> Sequence<T> generateSequence(@NotNull NullableDefaultValue<T> seedFunction, @NotNull NextValue<T> nextFunction) {
+    public static <T> Sequence<T> generateSequence(@NotNull InitialValue<T> seedFunction, @NotNull NextValue<T> nextFunction) {
         return new GeneratorSequence<>(seedFunction, nextFunction);
     }
 

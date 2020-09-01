@@ -27,8 +27,11 @@ class EmptyIteratorTest {
 
         try {
             EmptyIterator.INSTANCE.next()
-        } catch (e: Exception) {
             Assert.fail()
+        } catch (e: Exception) {
+            if (e !is NoSuchElementException) {
+                Assert.fail()
+            }
         }
     }
 
@@ -36,8 +39,11 @@ class EmptyIteratorTest {
     fun testRemove() {
         try {
             EmptyIterator.INSTANCE.remove()
-        } catch (e: Exception) {
             Assert.fail()
+        } catch (e: Exception) {
+            if (e !is UnsupportedOperationException) {
+                Assert.fail()
+            }
         }
     }
 }

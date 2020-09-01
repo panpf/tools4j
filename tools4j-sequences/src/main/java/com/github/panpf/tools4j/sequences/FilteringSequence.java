@@ -92,7 +92,7 @@ public class FilteringSequence<T> implements Sequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
 
             @Override

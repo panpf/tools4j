@@ -25,11 +25,11 @@ import java.util.NoSuchElementException;
 public class GeneratorSequence<T> implements Sequence<T> {
 
     @NotNull
-    private final NullableDefaultValue<T> getInitialValue;
+    private final InitialValue<T> getInitialValue;
     @NotNull
     private final NextValue<T> getNextValue;
 
-    public GeneratorSequence(@NotNull NullableDefaultValue<T> getInitialValue, @NotNull NextValue<T> getNextValue) {
+    public GeneratorSequence(@NotNull InitialValue<T> getInitialValue, @NotNull NextValue<T> getNextValue) {
         this.getInitialValue = getInitialValue;
         this.getNextValue = getNextValue;
     }
@@ -77,7 +77,7 @@ public class GeneratorSequence<T> implements Sequence<T> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

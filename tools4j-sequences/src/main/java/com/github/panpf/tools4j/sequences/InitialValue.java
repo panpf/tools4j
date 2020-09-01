@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.sequences;
 
 import org.jetbrains.annotations.Nullable;
 
-public interface NullableDefaultValue<R> {
+public interface InitialValue<R> {
     @Nullable
     R get();
 }

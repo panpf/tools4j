@@ -29,11 +29,11 @@ import java.util.Iterator;
 public class MergingSequence<T1, T2, V> implements Sequence<V> {
 
     @NotNull
-    private Sequence<T1> sequence1;
+    private final Sequence<T1> sequence1;
     @NotNull
-    private Sequence<T2> sequence2;
+    private final Sequence<T2> sequence2;
     @NotNull
-    private Transformer2<T1, T2, V> transform;
+    private final Transformer2<T1, T2, V> transform;
 
     public MergingSequence(@NotNull Sequence<T1> sequence1, @NotNull Sequence<T2> sequence2, @NotNull Transformer2<T1, T2, V> transform) {
         this.sequence1 = sequence1;
@@ -45,10 +45,11 @@ public class MergingSequence<T1, T2, V> implements Sequence<V> {
     @Override
     public Iterator<V> iterator() {
         return new Iterator<V>() {
+
             @NotNull
-            private Iterator<T1> iterator1 = sequence1.iterator();
+            private final Iterator<T1> iterator1 = sequence1.iterator();
             @NotNull
-            private Iterator<T2> iterator2 = sequence2.iterator();
+            private final Iterator<T2> iterator2 = sequence2.iterator();
 
             @Override
             public V next() {
@@ -62,7 +63,7 @@ public class MergingSequence<T1, T2, V> implements Sequence<V> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

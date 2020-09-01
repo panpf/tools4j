@@ -27,11 +27,11 @@ import java.util.NoSuchElementException;
 public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private NullableTransformer<T, R> transformer;
+    private final NullableTransformer<T, R> transformer;
     @NotNull
-    private Transformer<R, Iterator<E>> iteratorTransformer;
+    private final Transformer<R, Iterator<E>> iteratorTransformer;
 
     public NullableFlatteningSequence(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iterator) {
         this.sequence = sequence;
@@ -45,7 +45,7 @@ public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
         return new Iterator<E>() {
 
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
             @Nullable
             private Iterator<E> itemIterator = null;
 
@@ -83,7 +83,7 @@ public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
 
             @Override
             public void remove() {
-
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

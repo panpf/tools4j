@@ -16,6 +16,7 @@
 
 package com.github.panpf.tools4j.sequences;
 
+import com.github.panpf.tools4j.iterable.EmptyIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -43,28 +44,5 @@ public class EmptySequence implements Sequence<Object>, DropTakeSequence<Object>
     @Override
     public Sequence<Object> take(int n) {
         return EmptySequence.INSTANCE;
-    }
-
-    private static class EmptyIterator implements Iterator<Object> {
-
-        public static final EmptyIterator INSTANCE = new EmptyIterator();
-
-        private EmptyIterator() {
-        }
-
-        @Override
-        public boolean hasNext() {
-            return false;
-        }
-
-        @Override
-        public Object next() {
-            return null;
-        }
-
-        @Override
-        public void remove() {
-
-        }
     }
 }
