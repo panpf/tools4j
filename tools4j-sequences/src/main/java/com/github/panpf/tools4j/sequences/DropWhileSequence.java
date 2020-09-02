@@ -29,9 +29,9 @@ import java.util.Iterator;
 public class DropWhileSequence<T> implements Sequence<T> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private Predicate<T> predicate;
+    private final Predicate<T> predicate;
 
     public DropWhileSequence(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         this.sequence = sequence;
@@ -44,7 +44,7 @@ public class DropWhileSequence<T> implements Sequence<T> {
         return new Iterator<T>() {
 
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
             private int dropState = -1; // -1 for not dropping, 1 for nextItem, 0 for normal iteration
             @Nullable
             private T nextItem = null;

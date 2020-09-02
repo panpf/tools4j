@@ -26,11 +26,11 @@ import java.util.NoSuchElementException;
 public class FlatteningSequence<T, R, E> implements Sequence<E> {
 
     @NotNull
-    private Sequence<T> sequence;
+    private final Sequence<T> sequence;
     @NotNull
-    private Transformer<T, R> transformer;
+    private final Transformer<T, R> transformer;
     @NotNull
-    private Transformer<R, Iterator<E>> iteratorTransformer;
+    private final Transformer<R, Iterator<E>> iteratorTransformer;
 
     public FlatteningSequence(@NotNull Sequence<T> sequence, @NotNull Transformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iterator) {
         this.sequence = sequence;
@@ -44,7 +44,7 @@ public class FlatteningSequence<T, R, E> implements Sequence<E> {
         return new Iterator<E>() {
 
             @NotNull
-            private Iterator<T> iterator = sequence.iterator();
+            private final Iterator<T> iterator = sequence.iterator();
             @Nullable
             private Iterator<E> itemIterator = null;
 

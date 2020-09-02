@@ -26,10 +26,10 @@ import java.util.NoSuchElementException;
 public class FilteringSequence<T> implements Sequence<T> {
 
     @NotNull
-    private Sequence<T> sequence;
-    private boolean sendWhen;
+    private final Sequence<T> sequence;
+    private final boolean sendWhen;
     @NotNull
-    private Predicate<T> predicate;
+    private final Predicate<T> predicate;
 
     /**
      * A sequence that returns the values from the underlying [sequence] that either match or do not match
