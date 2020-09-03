@@ -395,9 +395,9 @@ public class Sequencex {
     }
 
     @NotNull
-    private static <T, R> Sequence<R> flatten(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterator<R>> iterator) {
+    private static <T, R> Sequence<R> flatten(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterator<R>> transformer) {
         if (sequence instanceof TransformingSequence) {
-            return flatten(sequence, iterator);
+            return ((TransformingSequence<?, T>) sequence).flatten(transformer);
         }
         return new FlatteningSequence<>(sequence, new Transformer<T, T>() {
             @NotNull
@@ -405,7 +405,7 @@ public class Sequencex {
             public T transform(@NotNull T t) {
                 return t;
             }
-        }, iterator);
+        }, transformer);
     }
 
 
