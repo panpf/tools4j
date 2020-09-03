@@ -384,7 +384,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> flattenSequenceOfIterable(@NotNull Sequence<Iterable<T>> sequence) {
+    public static <T> Sequence<T> flattenOfIterable(@NotNull Sequence<Iterable<T>> sequence) {
         return flatten(sequence, new Transformer<Iterable<T>, Iterator<T>>() {
             @NotNull
             @Override
