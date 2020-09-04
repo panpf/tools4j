@@ -592,6 +592,120 @@ class SequencexTest {
                 Sequencex.joinToString(Sequencex.take(Sequencex.takeWhile(sequence1) { !it.startsWith("d") }, 2)))
     }
 
+    @Test
+    fun testFilter() {
+        val sequence0 = sequenceOf("aj", "bo", "cj", "do")
+        val sequence1 = Sequencex.sequenceOf("aj", "bo", "cj", "do")
+
+        assertTwoEquals("aj, cj",
+                sequence0.filter { it.endsWith("j") }.joinToString(),
+                Sequencex.joinToString(Sequencex.filter(sequence1) { it.endsWith("j") }))
+
+        val filterToDestination = ArrayList<String>()
+        val filterToDestination1 = ArrayList<String>()
+        val filterToDestinationResult = sequence0.filterTo(filterToDestination) { it.endsWith("j") }
+        val filterToDestinationResult1 = Sequencex.filterTo(sequence1, filterToDestination1) { it.endsWith("j") }
+        assertTwoEquals("aj, cj",
+                filterToDestinationResult.asSequence().joinToString(),
+                Sequencex.joinToString(Sequencex.asSequence(filterToDestinationResult1)))
+        assertTrue(filterToDestination === filterToDestinationResult)
+        assertTrue(filterToDestination1 === filterToDestinationResult1)
+
+        assertTwoEquals("bo, do",
+                sequence0.filterIndexed { index, _ -> (index % 2) != 0 }.joinToString(),
+                Sequencex.joinToString(Sequencex.filterIndexed(sequence1) { index, _ -> (index % 2) != 0 }))
+
+        val filterIndexedToDestination = ArrayList<String>()
+        val filterIndexedToDestination1 = ArrayList<String>()
+        val filterIndexedToDestinationResult = sequence0.filterIndexedTo(filterIndexedToDestination) { index, _ -> (index % 2) != 0 }
+        val filterIndexedToDestinationResult1 = Sequencex.filterIndexedTo(sequence1, filterIndexedToDestination1) { index, _ -> (index % 2) != 0 }
+        assertTwoEquals("bo, do",
+                filterIndexedToDestinationResult.asSequence().joinToString(),
+                Sequencex.joinToString(Sequencex.asSequence(filterIndexedToDestinationResult1)))
+        assertTrue(filterIndexedToDestination === filterIndexedToDestinationResult)
+        assertTrue(filterIndexedToDestination1 === filterIndexedToDestinationResult1)
+
+
+        val anySequence0 = sequenceOf(4, "f", 76, "gsdg")
+        val anySequence1 = Sequencex.sequenceOf(4, "f", 76, "gsdg")
+
+        assertTwoEquals("4, 76",
+                anySequence0.filterIsInstance(Integer::class.java).joinToString(),
+                Sequencex.joinToString(Sequencex.filterIsInstance(anySequence1, Integer::class.java)))
+        assertTwoEquals("f, gsdg",
+                anySequence0.filterIsInstance(String::class.java).joinToString(),
+                Sequencex.joinToString(Sequencex.filterIsInstance(anySequence1, String::class.java)))
+
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination = ArrayList<Integer>()
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination1 = arrayListOf<Integer>()
+        val filterIsInstanceToDestinationResult = anySequence0.filterIsInstanceTo(filterIsInstanceToDestination, Integer::class.java)
+        val filterIsInstanceToDestinationResult1 = Sequencex.filterIsInstanceTo(anySequence1, filterIsInstanceToDestination1, Integer::class.java)
+        assertTwoEquals("4, 76",
+                filterIsInstanceToDestinationResult.asSequence().joinToString(),
+                Sequencex.joinToString(Sequencex.asSequence(filterIsInstanceToDestinationResult1)))
+        assertTrue(filterIsInstanceToDestination === filterIsInstanceToDestinationResult)
+        assertTrue(filterIsInstanceToDestination1 === filterIsInstanceToDestinationResult1)
+
+        assertTwoEquals("bo, do",
+                sequence0.filterNot { it.endsWith("j") }.joinToString(),
+                Sequencex.joinToString(Sequencex.filterNot(sequence1) { it.endsWith("j") }))
+
+        val filterNotToDestination = ArrayList<String>()
+        val filterNotToDestination1 = ArrayList<String>()
+        val filterNotToDestinationResult = sequence0.filterNotTo(filterNotToDestination) { it.endsWith("j") }
+        val filterNotToDestinationResult1 = Sequencex.filterNotTo(sequence1, filterNotToDestination1) { it.endsWith("j") }
+        assertTwoEquals("bo, do",
+                filterNotToDestinationResult.asSequence().joinToString(),
+                Sequencex.joinToString(Sequencex.asSequence(filterNotToDestinationResult1)))
+        assertTrue(filterNotToDestination === filterNotToDestinationResult)
+        assertTrue(filterNotToDestination1 === filterNotToDestinationResult1)
+
+
+        val notNullSequence0 = sequenceOf(null, "f", null, "gsdg")
+        val notNullSequence1 = Sequencex.sequenceOf(null, "f", null, "gsdg")
+
+        assertTwoEquals("f, gsdg",
+                notNullSequence0.filterNotNull().joinToString(),
+                Sequencex.joinToString(Sequencex.filterNotNull(notNullSequence1)))
+
+        val filterNotNullToDestination = ArrayList<String>()
+        val filterNotNullToDestination1 = ArrayList<String>()
+        val filterNotNullToDestinationResult = notNullSequence0.filterNotNullTo(filterNotNullToDestination)
+        val filterNotNullToDestinationResult1 = Sequencex.filterNotNullTo(notNullSequence1, filterNotNullToDestination1)
+        assertTwoEquals("f, gsdg",
+                filterNotNullToDestinationResult.asSequence().joinToString(),
+                Sequencex.joinToString(Sequencex.asSequence(filterNotNullToDestinationResult1)))
+        assertTrue(filterNotNullToDestination === filterNotNullToDestinationResult)
+        assertTrue(filterNotNullToDestination1 === filterNotNullToDestinationResult1)
+    }
+
+    @Test
+    fun testSort() {
+        val sequence0 = sequenceOf("aaa", "h", "uuuu", "gg")
+        val sequence1 = Sequencex.sequenceOf("aaa", "h", "uuuu", "gg")
+
+        assertTwoEquals("aaa, gg, h, uuuu",
+                sequence0.sorted().joinToString(),
+                Sequencex.joinToString(Sequencex.sorted(sequence1)))
+
+        assertTwoEquals("uuuu, h, gg, aaa",
+                sequence0.sortedDescending().joinToString(),
+                Sequencex.joinToString(Sequencex.sortedDescending(sequence1)))
+
+        assertTwoEquals("h, gg, aaa, uuuu",
+                sequence0.sortedBy { it.length }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedBy(sequence1) { it.length }))
+
+        assertTwoEquals("uuuu, aaa, gg, h",
+                sequence0.sortedByDescending { it.length }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedByDescending(sequence1) { it.length }))
+
+        assertTwoEquals("aaa, gg, h, uuuu",
+                sequence0.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedWith(sequence1) { it1, it2 -> it1.compareTo(it2) }))
+    }
+
+
     class IntInitialValue(private val end: Int) : InitialValue<Int> {
         private var next = 0
 
