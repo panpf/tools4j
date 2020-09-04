@@ -33,6 +33,8 @@ dependencies {
     api(project(":tools4j-ranges-date"))
     api(project(":tools4j-reflect"))
     api(project(":tools4j-regex"))
+    api(project(":tools4j-resources"))
+    api(project(":tools4j-run"))
     api(project(":tools4j-security"))
     api(project(":tools4j-sequences"))
     api(project(":tools4j-zip"))

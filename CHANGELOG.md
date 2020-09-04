@@ -1,6 +1,7 @@
 ## new
 * change: Sequencex.flattenSequenceOfIterable() rename to flattenOfIterable
 * fix: Fix the stack overflow bug when Sequencex.flatten() is passed into TransformingSequence
+* new: Added 'tools4j-resources' module and 'tools4j-run' module
 
 ## v1.0.0-beta02
 improve: Improve code

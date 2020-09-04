@@ -317,6 +317,14 @@ Dependencies：
     * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE,
     * CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
 
+### tools4j-resources
+* ResourcesCacheHelper: [ResourcesCacheHelper.java] ([Test][ResourcesCacheHelperTest.kt])
+    * getFile, getDir, getResourcesDir
+
+### tools4j-run
+* Runx: [Runx.java] ([Test][RunxTest.kt])
+    * getWorkspaceDir, isClassInJar, getClassInDir, getClassInJarFile
+
 ### tools4j-security
 * MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
     * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
@@ -515,6 +523,12 @@ Please view the [CHANGELOG.md] file
 [RegexxTest.kt]: tools4j-regex/src/test/java/com/github/panpf/tools4j/regex/RegexxTest.kt
 [Regexx.kt]: tools4j-regex-ktx/src/main/java/com/github/panpf/tools4j/regex/ktx/Regexx.kt
 [RegexxTest.kt]: tools4j-regex-ktx/src/test/java/com/github/panpf/tools4j/regex/ktx/RegexxTest.kt
+
+[ResourcesCacheHelper.java]: tools4j-resources/src/main/java/com/github/panpf/tools4j/resources/ResourcesCacheHelper.java
+[ResourcesCacheHelperTest.kt]: tools4j-resources/src/test/java/com/github/panpf/tools4j/resources/ResourcesCacheHelperTest.kt
+
+[Runx.java]: tools4j-run/src/main/java/com/github/panpf/tools4j/run/Runx.java
+[RunxTest.kt]: tools4j-run/src/test/java/com/github/panpf/tools4j/run/RunxTest.kt
 
 [MessageDigestx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/MessageDigestx.java
 [MessageDigestxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/MessageDigestxTest.kt
