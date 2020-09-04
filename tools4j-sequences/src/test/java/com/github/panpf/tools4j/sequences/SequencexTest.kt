@@ -497,6 +497,10 @@ class SequencexTest {
                 sequence0.drop(5).joinToString(),
                 Sequencex.joinToString(Sequencex.drop(sequence1, 5)))
 
+        assertTwoEquals("",
+                sequence0.drop(5).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(Sequencex.drop(sequence1, 5), 5)))
+
         // dropWhile 方法的意思是从不符合条件的元素开始往后遍历
 
         assertTwoEquals("aj, bj, cj, dj",
@@ -563,6 +567,10 @@ class SequencexTest {
         assertTwoEquals("aj, bj, cj, dj",
                 sequence0.take(5).joinToString(),
                 Sequencex.joinToString(Sequencex.take(sequence1, 5)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                sequence0.take(5).joinToString(),
+                Sequencex.joinToString(Sequencex.take(Sequencex.take(sequence1, 5), 5)))
 
         // takeWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
 
