@@ -883,6 +883,21 @@ public class Sequencex {
     }
 
     /**
+     * Appends all elements matching the given [predicate] to the given [destination].
+     * <p>
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, C extends Collection<T>> C filterTo(@NotNull Sequence<T> sequence, @NotNull C destination, Predicate<T> predicate) {
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            if (predicate.accept(element)) destination.add(element);
+        }
+        return destination;
+    }
+
+    /**
      * Returns a sequence containing only elements matching the given [predicate].
      *
      * @param predicate function that takes the index of an element and the element itself
@@ -952,11 +967,11 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <R> Sequence<R> filterIsInstance(@NotNull Sequence<Object> sequence, @NotNull final Class<R> clazz) {
+    public static <T, R> Sequence<R> filterIsInstance(@NotNull Sequence<T> sequence, @NotNull final Class<R> clazz) {
         //noinspection unchecked
-        return (Sequence<R>) filter(sequence, new Predicate<Object>() {
+        return (Sequence<R>) filter(sequence, new Predicate<T>() {
             @Override
-            public boolean accept(@NotNull Object it) {
+            public boolean accept(@NotNull T it) {
                 return clazz.isInstance(it);
             }
         });
@@ -968,10 +983,11 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <C extends Collection<R>, R> C filterIsInstanceTo(@NotNull Sequence<Object> sequence, @NotNull C destination, @NotNull final Class<R> klass) {
-        Iterator<Object> iterator = sequence.iterator();
+    public static <T, C extends Collection<R>, R> C filterIsInstanceTo(
+            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull final Class<R> klass) {
+        Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
-            Object element = iterator.next();
+            T element = iterator.next();
             if (klass.isInstance(element)) //noinspection unchecked
                 destination.add((R) element);
         }
@@ -986,6 +1002,21 @@ public class Sequencex {
     @NotNull
     public static <T> Sequence<T> filterNot(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new FilteringSequence<>(sequence, false, predicate);
+    }
+
+    /**
+     * Appends all elements not matching the given [predicate] to the given [destination].
+     * <p>
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, C extends Collection<T>> C filterNotTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            if (!predicate.accept(element)) destination.add(element);
+        }
+        return destination;
     }
 
     /**
@@ -1019,36 +1050,6 @@ public class Sequencex {
         return destination;
     }
 
-    /**
-     * Appends all elements not matching the given [predicate] to the given [destination].
-     * <p>
-     * The operation is _terminal_.
-     */
-    @NotNull
-    public static <T, C extends Collection<T>> C filterNotTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (!predicate.accept(element)) destination.add(element);
-        }
-        return destination;
-    }
-
-    /**
-     * Appends all elements matching the given [predicate] to the given [destination].
-     * <p>
-     * The operation is _terminal_.
-     */
-    @NotNull
-    public static <T, C extends Collection<T>> C filterTo(@NotNull Sequence<T> sequence, @NotNull C destination, Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) destination.add(element);
-        }
-        return destination;
-    }
-
 
     /* ******************************************* sorted ******************************************* */
 
@@ -1069,6 +1070,21 @@ public class Sequencex {
                 return sortedList.iterator();
             }
         };
+    }
+
+    /**
+     * Returns a sequence that yields elements of this sequence sorted descending according to their natural sort order.
+     * <p>
+     * The operation is _intermediate_ and _stateful_.
+     */
+    @NotNull
+    public static <T extends Comparable<T>> Sequence<T> sortedDescending(@NotNull Sequence<T> sequence) {
+        return sortedWith(sequence, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return o2.compareTo(o1);
+            }
+        });
     }
 
     /**
@@ -1106,28 +1122,12 @@ public class Sequencex {
     }
 
     /**
-     * Returns a sequence that yields elements of this sequence sorted descending according to their natural sort order.
-     * <p>
-     * The operation is _intermediate_ and _stateful_.
-     */
-    @NotNull
-    public static <T extends Comparable<T>> Sequence<T> sortedDescending(@NotNull Sequence<T> sequence) {
-        return sortedWith(sequence, new Comparator<T>() {
-            @Override
-            public int compare(T o1, T o2) {
-                return o2.compareTo(o1);
-            }
-        });
-    }
-
-    /**
      * Returns a sequence that yields elements of this sequence sorted according to the specified [comparator].
      * <p>
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
     public static <T> Sequence<T> sortedWith(@NotNull final Sequence<T> sequence, @NotNull final Comparator<T> comparator) {
-        //noinspection NullableProblems
         return new Sequence<T>() {
             @NotNull
             @Override
