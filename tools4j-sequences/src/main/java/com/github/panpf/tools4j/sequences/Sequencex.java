@@ -808,6 +808,8 @@ public class Sequencex {
      * Returns a sequence containing all elements except first [n] elements.
      * <p>
      * The operation is _intermediate_ and _stateless_.
+     *
+     * @throws IllegalArgumentException if [n] is negative.
      */
     @NotNull
     public static <T> Sequence<T> drop(@NotNull Sequence<T> sequence, final int n) {
@@ -831,6 +833,39 @@ public class Sequencex {
     @NotNull
     public static <T> Sequence<T> dropWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new DropWhileSequence<>(sequence, predicate);
+    }
+
+
+    /* ******************************************* take ******************************************* */
+
+
+    /**
+     * Returns a sequence containing first [n] elements.
+     * <p>
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T> Sequence<T> take(@NotNull Sequence<T> sequence, final int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Param 'n' is less than to zero.");
+        }
+        if (n == 0) {
+            return emptySequence();
+        } else if (sequence instanceof DropTakeSequence) {
+            return ((DropTakeSequence<T>) sequence).take(n);
+        } else {
+            return new TakeSequence<>(sequence, n);
+        }
+    }
+
+    /**
+     * Returns a sequence containing first elements satisfying the given [predicate].
+     * <p>
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T> Sequence<T> takeWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        return new TakeWhileSequence<>(sequence, predicate);
     }
 
 
@@ -917,12 +952,12 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <R> Sequence<R> filterIsInstance(@NotNull Sequence<Object> sequence, @NotNull final Class<R> klass) {
+    public static <R> Sequence<R> filterIsInstance(@NotNull Sequence<Object> sequence, @NotNull final Class<R> clazz) {
         //noinspection unchecked
         return (Sequence<R>) filter(sequence, new Predicate<Object>() {
             @Override
             public boolean accept(@NotNull Object it) {
-                return klass.isInstance(it);
+                return clazz.isInstance(it);
             }
         });
     }
@@ -1012,39 +1047,6 @@ public class Sequencex {
             if (predicate.accept(element)) destination.add(element);
         }
         return destination;
-    }
-
-
-    /* ******************************************* take ******************************************* */
-
-
-    /**
-     * Returns a sequence containing first [n] elements.
-     * <p>
-     * The operation is _intermediate_ and _stateless_.
-     */
-    @NotNull
-    public static <T> Sequence<T> take(@NotNull Sequence<T> sequence, final int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("Param 'n' is less than to zero.");
-        }
-        if (n == 0) {
-            return emptySequence();
-        } else if (sequence instanceof DropTakeSequence) {
-            return ((DropTakeSequence<T>) sequence).take(n);
-        } else {
-            return new TakeSequence<>(sequence, n);
-        }
-    }
-
-    /**
-     * Returns a sequence containing first elements satisfying the given [predicate].
-     * <p>
-     * The operation is _intermediate_ and _stateless_.
-     */
-    @NotNull
-    public static <T> Sequence<T> takeWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        return new TakeWhileSequence<>(sequence, predicate);
     }
 
 

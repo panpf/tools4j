@@ -100,6 +100,10 @@ fun assertThrow(message: String? = null, block: () -> Unit) {
     assertThrow(message = message, expectedTrowType = null, block)
 }
 
+fun assertThrow(block: () -> Unit) {
+    assertThrow(message = null, expectedTrowType = null, block)
+}
+
 fun assertTwoThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit, block1: () -> Unit) {
     assertThrow(message, expectedTrowType, block)
     assertThrow(message, expectedTrowType, block1)
@@ -113,4 +117,9 @@ fun assertTwoThrow(expectedTrowType: KClass<out Throwable>? = null, block: () ->
 fun assertTwoThrow(message: String? = null, block: () -> Unit, block1: () -> Unit) {
     assertThrow(message, expectedTrowType = null, block)
     assertThrow(message, expectedTrowType = null, block1)
+}
+
+fun assertTwoThrow(block: () -> Unit, block1: () -> Unit) {
+    assertThrow(message = null, expectedTrowType = null, block)
+    assertThrow(message = null, expectedTrowType = null, block1)
 }

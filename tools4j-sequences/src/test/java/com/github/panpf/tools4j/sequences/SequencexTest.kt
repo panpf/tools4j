@@ -458,6 +458,140 @@ class SequencexTest {
                 Sequencex.singleOrNull(multiSequence1) { it.startsWith("b") })
     }
 
+    @Test
+    fun testDrop() {
+        val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
+
+        /*
+         * drop 系列的方法表示从列表头部开始跳过部分元素
+         */
+
+        // drop 方法的意思是从列表头部开始跳过多少个元素
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { sequence0.drop(-1) },
+                { Sequencex.drop(sequence1, -1) }
+        )
+
+        assertTrue(sequence0 === sequence0.drop(0))
+        assertTrue(sequence1 === Sequencex.drop(sequence1, 0))
+
+        assertTwoEquals("bj, cj, dj",
+                sequence0.drop(1).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(sequence1, 1)))
+
+        assertTwoEquals("cj, dj",
+                sequence0.drop(2).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(sequence1, 2)))
+
+        assertTwoEquals("dj",
+                sequence0.drop(3).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(sequence1, 3)))
+
+        assertTwoEquals("",
+                sequence0.drop(4).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(sequence1, 4)))
+
+        assertTwoEquals("",
+                sequence0.drop(5).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(sequence1, 5)))
+
+        // dropWhile 方法的意思是从不符合条件的元素开始往后遍历
+
+        assertTwoEquals("aj, bj, cj, dj",
+                sequence0.dropWhile { !it.startsWith("a") }.joinToString(),
+                Sequencex.joinToString(Sequencex.dropWhile(sequence1) { !it.startsWith("a") }))
+
+        assertTwoEquals("bj, cj, dj",
+                sequence0.dropWhile { !it.startsWith("b") }.joinToString(),
+                Sequencex.joinToString(Sequencex.dropWhile(sequence1) { !it.startsWith("b") }))
+
+        assertTwoEquals("cj, dj",
+                sequence0.dropWhile { !it.startsWith("c") }.joinToString(),
+                Sequencex.joinToString(Sequencex.dropWhile(sequence1) { !it.startsWith("c") }))
+
+        assertTwoEquals("dj",
+                sequence0.dropWhile { !it.startsWith("d") }.joinToString(),
+                Sequencex.joinToString(Sequencex.dropWhile(sequence1) { !it.startsWith("d") }))
+
+        assertTwoEquals("",
+                sequence0.dropWhile { !it.startsWith("e") }.joinToString(),
+                Sequencex.joinToString(Sequencex.dropWhile(sequence1) { !it.startsWith("e") }))
+
+
+        assertTwoEquals("dj",
+                sequence0.dropWhile { !it.startsWith("b") }.drop(2).joinToString(),
+                Sequencex.joinToString(Sequencex.drop(Sequencex.dropWhile(sequence1) { !it.startsWith("b") }, 2)))
+    }
+
+    @Test
+    fun testTake() {
+        val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
+
+        /*
+         * take 系列的方法表示从列表头部开始取部分元素
+         */
+
+        // take 方法的意思是从列表头部开始取多少个元素
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { sequence0.take(-1) },
+                { Sequencex.take(sequence1, -1) }
+        )
+
+        assertTrue(emptySequence<String>() === sequence0.take(0))
+        assertTrue(Sequencex.emptySequence<String>() === Sequencex.take(sequence1, 0))
+
+        assertTwoEquals("aj",
+                sequence0.take(1).joinToString(),
+                Sequencex.joinToString(Sequencex.take(sequence1, 1)))
+
+        assertTwoEquals("aj, bj",
+                sequence0.take(2).joinToString(),
+                Sequencex.joinToString(Sequencex.take(sequence1, 2)))
+
+        assertTwoEquals("aj, bj, cj",
+                sequence0.take(3).joinToString(),
+                Sequencex.joinToString(Sequencex.take(sequence1, 3)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                sequence0.take(4).joinToString(),
+                Sequencex.joinToString(Sequencex.take(sequence1, 4)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                sequence0.take(5).joinToString(),
+                Sequencex.joinToString(Sequencex.take(sequence1, 5)))
+
+        // takeWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
+
+        assertTwoEquals("",
+                sequence0.takeWhile { !it.startsWith("a") }.joinToString(),
+                Sequencex.joinToString(Sequencex.takeWhile(sequence1) { !it.startsWith("a") }))
+
+        assertTwoEquals("aj",
+                sequence0.takeWhile { !it.startsWith("b") }.joinToString(),
+                Sequencex.joinToString(Sequencex.takeWhile(sequence1) { !it.startsWith("b") }))
+
+        assertTwoEquals("aj, bj",
+                sequence0.takeWhile { !it.startsWith("c") }.joinToString(),
+                Sequencex.joinToString(Sequencex.takeWhile(sequence1) { !it.startsWith("c") }))
+
+        assertTwoEquals("aj, bj, cj",
+                sequence0.takeWhile { !it.startsWith("d") }.joinToString(),
+                Sequencex.joinToString(Sequencex.takeWhile(sequence1) { !it.startsWith("d") }))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                sequence0.takeWhile { !it.startsWith("e") }.joinToString(),
+                Sequencex.joinToString(Sequencex.takeWhile(sequence1) { !it.startsWith("e") }))
+
+
+        assertTwoEquals("aj, bj",
+                sequence0.takeWhile { !it.startsWith("d") }.take(2).joinToString(),
+                Sequencex.joinToString(Sequencex.take(Sequencex.takeWhile(sequence1) { !it.startsWith("d") }, 2)))
+    }
+
     class IntInitialValue(private val end: Int) : InitialValue<Int> {
         private var next = 0
 
