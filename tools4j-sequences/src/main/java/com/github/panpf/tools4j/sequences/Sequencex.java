@@ -1188,6 +1188,26 @@ public class Sequencex {
     }
 
     /**
+     * Populates and returns the [destination] mutable map with key-value pairs
+     * provided by [transform] function applied to each element of the given sequence.
+     * <p>
+     * If any of two pairs would have the same key the last one gets added to the map.
+     * <p>
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, K, V, M extends Map<K, V>> M associateTo(@NotNull Sequence<T> sequence, @NotNull M destination,
+                                                               @NotNull Transformer<T, Pair<K, V>> transform) {
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            Pair<K, V> pair = transform.transform(element);
+            destination.put(pair.first, pair.second);
+        }
+        return destination;
+    }
+
+    /**
      * Populates and returns the [destination] mutable map with key-value pairs,
      * where key is provided by the [keySelector] function applied to each element of the given sequence
      * and value is the element itself.
@@ -1225,28 +1245,6 @@ public class Sequencex {
         return destination;
     }
 
-    /**
-     * Populates and returns the [destination] mutable map with key-value pairs
-     * provided by [transform] function applied to each element of the given sequence.
-     * <p>
-     * If any of two pairs would have the same key the last one gets added to the map.
-     * <p>
-     * The operation is _terminal_.
-     */
-    @NotNull
-    public static <T, K, V, M extends Map<K, V>> M associateTo(@NotNull Sequence<T> sequence, @NotNull M destination,
-                                                               @NotNull Transformer<T, Pair<K, V>> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Pair<K, V> pair = transform.transform(element);
-            if (pair != null) {
-                destination.put(pair.first, pair.second);
-            }
-        }
-        return destination;
-    }
-
 
     /* ******************************************* to ******************************************* */
 
@@ -1256,6 +1254,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
+    @NotNull
     public static <T, C extends Collection<T>> C toCollection(@Nullable Sequence<T> sequence, @NotNull C destination) {
         if (sequence != null) {
             Iterator<T> iterator = sequence.iterator();
@@ -1281,6 +1280,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
+    @NotNull
     public static <T> List<T> toMutableList(@NotNull Sequence<T> sequence) {
         return toCollection(sequence, new ArrayList<T>());
     }
@@ -1320,6 +1320,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
+    @NotNull
     public static <T> HashSet<T> toHashSet(@Nullable Sequence<T> sequence) {
         return toCollection(sequence, new HashSet<T>());
     }
@@ -1350,6 +1351,7 @@ public class Sequencex {
     /**
      * Populates and returns the [destination] mutable map with key-value pairs from the given sequence of pairs.
      */
+    @NotNull
     public static <K, V, M extends Map<K, V>> M toMap(@Nullable Sequence<Pair<K, V>> pairs, @NotNull M destination) {
         if (pairs != null) {
             Iterator<Pair<K, V>> iterator = pairs.iterator();
@@ -1366,6 +1368,7 @@ public class Sequencex {
      * <p>
      * The returned map preserves the entry iteration order of the original sequence.
      */
+    @NotNull
     public static <K, V> Map<K, V> toMap(@Nullable Sequence<Pair<K, V>> pairs) {
         return toMap(pairs, new LinkedHashMap<K, V>());
     }
