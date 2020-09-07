@@ -20,6 +20,8 @@ import com.github.panpf.tools4j.iterable.EmptyIterator
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
+import kotlin.collections.HashMap
+import com.github.panpf.tools4j.common.Pair as Pair2
 
 class SequencexTest {
     // todo Complete test
@@ -711,6 +713,161 @@ class SequencexTest {
         assertTwoEquals("aaa, gg, h, uuuu",
                 sequence0.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
                 Sequencex.joinToString(Sequencex.sortedWith(sequence1) { it1, it2 -> it1.compareTo(it2) }))
+    }
+
+    @Test
+    fun testAssociate() {
+        val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                sequence0.associate { it.first().toString() to it },
+                Sequencex.associate(sequence1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) },
+        )
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                sequence0.associateBy { it.first().toString() },
+                Sequencex.associateBy(sequence1) { it.first().toString() },
+        )
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                sequence0.associateBy({ it.first().toString() }, { it }),
+                Sequencex.associateBy(sequence1, { it.first().toString() }, { it }),
+        )
+
+        val associateToMap0 = HashMap<String, String>()
+        val associateToMap1 = HashMap<String, String>()
+        val associateToMapResult0 = sequence0.associateTo(associateToMap0) { it.first().toString() to it }
+        val associateToMapResult1 = Sequencex.associateTo(sequence1, associateToMap1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateToMap0,
+                associateToMap1,
+        )
+        assertTrue(associateToMap0 === associateToMapResult0)
+        assertTrue(associateToMap1 === associateToMapResult1)
+
+        val associateByTo1Map0 = HashMap<String, String>()
+        val associateByTo1Map1 = HashMap<String, String>()
+        val associateByTo1MapResult0 = sequence0.associateByTo(associateByTo1Map0) { it.first().toString() }
+        val associateByTo1MapResult1 = Sequencex.associateByTo(sequence1, associateByTo1Map1) { it.first().toString() }
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateByTo1Map0,
+                associateByTo1Map1,
+        )
+        assertTrue(associateByTo1Map0 === associateByTo1MapResult0)
+        assertTrue(associateByTo1Map1 === associateByTo1MapResult1)
+
+        val associateByTo2Map0 = HashMap<String, String>()
+        val associateByTo2Map1 = HashMap<String, String>()
+        val associateByTo2MapResult0 = sequence0.associateByTo(associateByTo2Map0, { it.first().toString() }, { it })
+        val associateByTo2MapResult1 = Sequencex.associateByTo(sequence1, associateByTo2Map1, { it.first().toString() }, { it })
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateByTo2Map0,
+                associateByTo2Map1,
+        )
+        assertTrue(associateByTo2Map0 === associateByTo2MapResult0)
+        assertTrue(associateByTo2Map1 === associateByTo2MapResult1)
+    }
+
+    @Test
+    fun testTo() {
+        val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+
+        assertTwoEquals(
+                listOf("aj", "bj", "ao", "bo"),
+                sequence0.toCollection(LinkedList()),
+                Sequencex.toCollection(sequence1, LinkedList()),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toCollection(LinkedList()) is LinkedList,
+                Sequencex.toCollection(sequence1, LinkedList()) is LinkedList
+        )
+
+        assertTwoEquals(
+                listOf("aj", "bj", "ao", "bo"),
+                sequence0.toMutableList(),
+                Sequencex.toMutableList(sequence1),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toMutableList() is ArrayList,
+                Sequencex.toMutableList(sequence1) is ArrayList
+        )
+
+        assertTwoEquals(
+                linkedSetOf("aj", "bj", "ao", "bo"),
+                sequence0.toMutableSet(),
+                Sequencex.toMutableSet(sequence1),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toMutableSet() is LinkedHashSet,
+                Sequencex.toMutableSet(sequence1) is LinkedHashSet
+        )
+
+        assertTwoEquals(
+                hashSetOf("aj", "bj", "ao", "bo"),
+                sequence0.toHashSet(),
+                Sequencex.toHashSet(sequence1),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toHashSet() is HashSet,
+                Sequencex.toHashSet(sequence1) is HashSet
+        )
+
+        assertTwoEquals(
+                sortedSetOf("aj", "ao", "bj", "bo"),
+                sequence0.toSortedSet(),
+                Sequencex.toSortedSet(sequence1),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toSortedSet() is TreeSet,
+                Sequencex.toSortedSet(sequence1) is TreeSet
+        )
+
+        assertTwoEquals(
+                sortedSetOf("bo", "bj", "ao", "aj"),
+                sequence0.toSortedSet { o1, o2 -> o1.compareTo(o2) * -1 },
+                Sequencex.toSortedSet(sequence1) { o1, o2 -> o1.compareTo(o2) * -1 },
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(true,
+                sequence0.toSortedSet { o1, o2 -> o1.compareTo(o2) * -1 } is TreeSet,
+                Sequencex.toSortedSet(sequence1) { o1, o2 -> o1.compareTo(o2) * -1 } is TreeSet
+        )
+
+        assertTwoEquals(
+                mapOf(1 to "a", 3 to "c", 8 to "h"),
+                sequenceOf(1 to "a", 3 to "c", 8 to "h").toMap(),
+                Sequencex.toMap(Sequencex.sequenceOf(Pair2.of(1, "a"), Pair2.of(3, "c"), Pair2.of(8, "h"))),
+        )
+        assertTwoEquals(
+                true,
+                sequenceOf(1 to "a", 3 to "c", 8 to "h").toMap() is LinkedHashMap,
+                Sequencex.toMap(Sequencex.sequenceOf(Pair2.of(1, "a"), Pair2.of(3, "c"), Pair2.of(8, "h"))) is LinkedHashMap,
+        )
+
+        assertTwoEquals(
+                mapOf(1 to "a", 3 to "c", 8 to "h"),
+                sequenceOf(1 to "a", 3 to "c", 8 to "h").toMap(HashMap()),
+                Sequencex.toMap(Sequencex.sequenceOf(Pair2.of(1, "a"), Pair2.of(3, "c"), Pair2.of(8, "h")), HashMap()),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                sequenceOf(1 to "a", 3 to "c", 8 to "h").toMap(HashMap()) is HashMap,
+                Sequencex.toMap(Sequencex.sequenceOf(Pair2.of(1, "a"), Pair2.of(3, "c"), Pair2.of(8, "h")), HashMap()) is HashMap,
+        )
     }
 
 
