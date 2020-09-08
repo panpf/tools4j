@@ -18,6 +18,9 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.*;
+import kotlin.OptIn;
+import kotlin.OverloadResolutionByLambdaReturnType;
+import kotlin.SinceKotlin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -1306,7 +1309,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Set<T> toMutableSet(@NotNull Sequence<T> sequence) {
-        Set<T> set = new LinkedHashSet<T>();
+        Set<T> set = new LinkedHashSet<>();
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
@@ -1344,7 +1347,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> SortedSet<T> toSortedSet(@NotNull Sequence<T> sequence, @NotNull Comparator<T> comparator) {
-        return toCollection(sequence, new TreeSet<T>(comparator));
+        return toCollection(sequence, new TreeSet<>(comparator));
     }
 
 
@@ -1387,8 +1390,25 @@ public class Sequencex {
         return new FlatteningSequence<>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
-            public Iterator<R> transform(@NotNull Sequence<R> rSequence) {
-                return rSequence.iterator();
+            public Iterator<R> transform(@NotNull Sequence<R> sequence) {
+                return sequence.iterator();
+            }
+        });
+    }
+
+
+    /**
+     * Returns a single sequence of all elements from results of [transform] function being invoked on each element of original sequence.
+     * <p>
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T, R> Sequence<R> flatMapOfIterable(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterable<R>> transform) {
+        return new FlatteningSequence<>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
+            @NotNull
+            @Override
+            public Iterator<R> transform(@NotNull Iterable<R> iterable) {
+                return iterable.iterator();
             }
         });
     }
@@ -1404,6 +1424,100 @@ public class Sequencex {
         while (iterator.hasNext()) {
             T element = iterator.next();
             Sequence<R> list = transform.transform(element);
+            Iterator<R> listIterator = list.iterator();
+            while (listIterator.hasNext()) {
+                R item = listIterator.next();
+                destination.add(item);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original sequence, to the given [destination].
+     * <p>
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C flatMapOfIterableTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Iterable<R>> transform) {
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            Iterable<R> list = transform.transform(element);
+            for (R item : list) {
+                destination.add(item);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Returns a single sequence of all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original sequence.
+     *
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T, R> Sequence<R> flatMapIndexedOfIterable(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        return new IndexedFlatteningSequence<>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
+            @NotNull
+            @Override
+            public Iterator<R> transform(@NotNull Iterable<R> iterable) {
+                return iterable.iterator();
+            }
+        });
+    }
+
+    /**
+     * Returns a single sequence of all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original sequence.
+     *
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T, R> Sequence<R> flatMapIndexed(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+        return new IndexedFlatteningSequence<>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
+            @NotNull
+            @Override
+            public Iterator<R> transform(@NotNull Sequence<R> iterable) {
+                return iterable.iterator();
+            }
+        });
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original sequence, to the given [destination].
+     *
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C flatMapIndexedOfIterableTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        int index = 0;
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            Iterable<R> list = transform.transform(index++, element);
+            for (R item : list) {
+                destination.add(item);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original sequence, to the given [destination].
+     *
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+        int index = 0;
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T element = iterator.next();
+            Sequence<R> list = transform.transform(index++, element);
             Iterator<R> listIterator = list.iterator();
             while (listIterator.hasNext()) {
                 R item = listIterator.next();
