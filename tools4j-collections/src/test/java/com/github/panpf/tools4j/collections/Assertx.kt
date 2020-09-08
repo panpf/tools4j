@@ -16,45 +16,110 @@
 package com.github.panpf.tools4j.collections
 
 import org.junit.Assert
+import kotlin.reflect.KClass
 
-class Assertx {
-    companion object{
-        /**
-         * Asserts that two objects are equal. If they are not, an
-         * [AssertionError] without a message is thrown. If
-         * `expected` and `actual` are `null`,
-         * they are considered equal.
-         *
-         * @param expected expected value
-         * @param actual1  the value to check against `expected`
-         * @param actual2  the value to check against `expected`
-         */
-        @JvmStatic
-        fun assertThreeEquals(expected: Any?, actual1: Any?, actual2: Any?) {
-            Assert.assertEquals("actual1", expected, actual1)
-            Assert.assertEquals("actual2", expected, actual2)
-        }
+/**
+ * Asserts that two objects are equal. If they are not, an
+ * [AssertionError] without a message is thrown. If
+ * `expected` and `actual` are `null`,
+ * they are considered equal.
+ *
+ * @param expected expected value
+ * @param actual1  the value to check against `expected`
+ * @param actual2  the value to check against `expected`
+ */
+fun assertTwoEquals(expected: Any?, actual1: Any?, actual2: Any?) {
+    Assert.assertEquals("actual1", expected, actual1)
+    Assert.assertEquals("actual2", expected, actual2)
+}
 
-        @JvmStatic
-        fun assertAllNotNull(vararg values: Any?) {
-            var index = 0
-            for (value in values) {
-                if (value == null) {
-                    Assert.fail("The index is $index value is null")
-                }
-                index++
-            }
-        }
-
-        @JvmStatic
-        fun assertAllNull(vararg values: Any?) {
-            var index = 0
-            for (value in values) {
-                if (value != null) {
-                    Assert.fail("The index is $index value is not null")
-                }
-                index++
-            }
+fun assertAllNotNull(vararg values: Any?) {
+    for ((index, value) in values.withIndex()) {
+        if (value == null) {
+            Assert.fail("The index is $index value is null")
         }
     }
+}
+
+fun assertAllNull(vararg values: Any?) {
+    for ((index, value) in values.withIndex()) {
+        if (value != null) {
+            Assert.fail("The index is $index value is not null")
+        }
+    }
+}
+
+fun assertNoThrow(message: String? = null, block: () -> Unit) {
+    try {
+        block()
+    } catch (ignored: Throwable) {
+        ignored.printStackTrace()
+        Assert.fail(buildString {
+            append("Throw. ")
+            append(ignored.toString())
+            if (message != null) {
+                append("message='$message'")
+            }
+        })
+    }
+}
+
+fun assertThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit) {
+    try {
+        block()
+        Assert.fail(buildString {
+            append("No throw. ")
+            if (expectedTrowType != null) {
+                if (length > 10) append(", ")
+                append("expectedThrow='${expectedTrowType.qualifiedName}'")
+            }
+            if (message != null) {
+                if (length > 10) append(", ")
+                append("message='$message'")
+            }
+        })
+    } catch (e: Throwable) {
+        if (expectedTrowType != null && e::class != expectedTrowType) {
+            Assert.fail(buildString {
+                append("Throw type error. ")
+                append("expectedThrow='${expectedTrowType.qualifiedName}'")
+                append(", actualThrow='$e'")
+                if (message != null) {
+                    append(", message='$message'")
+                }
+            })
+        }
+    }
+}
+
+fun assertThrow(expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit) {
+    assertThrow(message = null, expectedTrowType, block)
+}
+
+fun assertThrow(message: String? = null, block: () -> Unit) {
+    assertThrow(message = message, expectedTrowType = null, block)
+}
+
+fun assertThrow(block: () -> Unit) {
+    assertThrow(message = null, expectedTrowType = null, block)
+}
+
+fun assertTwoThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit, block1: () -> Unit) {
+    assertThrow(message, expectedTrowType, block)
+    assertThrow(message, expectedTrowType, block1)
+}
+
+fun assertTwoThrow(expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit, block1: () -> Unit) {
+    assertThrow(message = null, expectedTrowType, block)
+    assertThrow(message = null, expectedTrowType, block1)
+}
+
+fun assertTwoThrow(message: String? = null, block: () -> Unit, block1: () -> Unit) {
+    assertThrow(message, expectedTrowType = null, block)
+    assertThrow(message, expectedTrowType = null, block1)
+}
+
+fun assertTwoThrow(block: () -> Unit, block1: () -> Unit) {
+    assertThrow(message = null, expectedTrowType = null, block)
+    assertThrow(message = null, expectedTrowType = null, block1)
 }
