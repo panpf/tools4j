@@ -597,6 +597,9 @@ public class Collectionx {
     }
 
 
+    /* ******************************************* flatMap ******************************************* */
+
+
     /**
      * Appends all elements yielded from results of [transform] function being invoked on each element of original collection, to the given [destination].
      */
@@ -617,6 +620,35 @@ public class Collectionx {
     @NotNull
     public static <T, R> List<R> flatMap(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Iterable<R>> transform) {
         return flatMapTo(iterable, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original collection, to the given [destination].
+     *
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@NotNull Iterable<T> iterable, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        int index = 0;
+        for (T element : iterable) {
+            Iterable<R> list = transform.transform(index++, element);
+            for (R item : list) {
+                destination.add(item);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Returns a single collection of all elements yielded from results of [transform] function being invoked on each element
+     * and its index in the original collection.
+     *
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T, R> List<R> flatMapIndexed(@NotNull Iterable<T> iterable, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        return flatMapIndexedTo(iterable, new ArrayList<R>(), transform);
     }
 
 

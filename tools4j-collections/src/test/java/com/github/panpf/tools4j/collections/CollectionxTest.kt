@@ -274,4 +274,62 @@ class CollectionxTest {
         assertArrayEquals(charArrayOf(), Collectionx.toCharArray(null))
         assertArrayEquals(charArrayOf(), Collectionx.toCharArray(listOf<Char>()))
     }
+
+
+
+    @Test
+    fun testFlatMap(){
+        val list0 = listOf("aj", "bj", "ao", "bo")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "ao", "bo")
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                list0.flatMap { it -> it.toCharArray().map { it.toString() } }.joinToString(),
+                Collectionx.joinToString(Collectionx.flatMap(list1) { it -> it.toCharArray().map { it.toString() } }),
+        )
+
+        val flatMapToList0 = java.util.ArrayList<String>()
+        val flatMapToListResult0 = list0.flatMapTo(flatMapToList0) { it -> it.toCharArray().map { it.toString() } }
+        val flatMapToList1 = java.util.ArrayList<String>()
+        val flatMapToListResult1 = Collectionx.flatMapTo(list1, flatMapToList1) { it -> it.toCharArray().map { it.toString() } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                flatMapToListResult0.joinToString(),
+                flatMapToListResult1.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapToList0 === flatMapToListResult0,
+                flatMapToList1 === flatMapToListResult1,
+        )
+
+
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                list0.flatMapIndexed { index, it -> it.toCharArray().map { "${index}-$it" } }.joinToString(),
+                Collectionx.joinToString(Collectionx.flatMapIndexed(list1) {index, it -> it.toCharArray().map { "${index}-$it" } }),
+        )
+
+        val flatMapIndexedToList0 = java.util.ArrayList<String>()
+        val flatMapIndexedToListResult0 = list0.flatMapIndexedTo(flatMapIndexedToList0) {index, it ->  it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToList1 = java.util.ArrayList<String>()
+        val flatMapIndexedToListResult1 = Collectionx.flatMapIndexedTo(list1, flatMapIndexedToList1) {index, it ->  it.toCharArray().map { "${index}-$it" } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                flatMapIndexedToListResult0.joinToString(),
+                flatMapIndexedToListResult1.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapIndexedToList0 === flatMapIndexedToListResult0,
+                flatMapIndexedToList1 === flatMapIndexedToListResult1,
+        )
+    }
 }
