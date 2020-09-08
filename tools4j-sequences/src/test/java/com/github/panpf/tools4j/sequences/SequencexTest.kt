@@ -870,6 +870,110 @@ class SequencexTest {
         )
     }
 
+    @Test
+    fun testFlatMap(){
+        val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                sequence0.flatMap { it.toCharArray().map { it.toString() } }.joinToString(),
+                Sequencex.joinToString(Sequencex.flatMapOfIterable(sequence1) { it.toCharArray().map { it.toString() } }),
+        )
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                sequence0.flatMap { it.toCharArray().asSequence().map { it.toString() } }.joinToString(),
+                Sequencex.joinToString(Sequencex.flatMap(sequence1) { Sequencex.map(Sequencex.asSequence(it.toCharArray())) { it.toString() } }),
+        )
+
+        val flatMapToList0 = ArrayList<String>()
+        val flatMapToListResult0 = sequence0.flatMapTo(flatMapToList0) { it.toCharArray().map { it.toString() } }
+        val flatMapToList1 = ArrayList<String>()
+        val flatMapToListResult1 = Sequencex.flatMapOfIterableTo(sequence1, flatMapToList1) { it.toCharArray().map { it.toString() } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                flatMapToListResult0.joinToString(),
+                flatMapToListResult1.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapToList0 === flatMapToListResult0,
+                flatMapToList1 === flatMapToListResult1,
+        )
+
+        val flatMapToList2 = ArrayList<String>()
+        val flatMapToListResult2 = sequence0.flatMapTo(flatMapToList2) { it.toCharArray().asSequence().map { it.toString() } }
+        val flatMapToList3 = ArrayList<String>()
+        val flatMapToListResult3 = Sequencex.flatMapTo(sequence1, flatMapToList3) { Sequencex.map(Sequencex.asSequence(it.toCharArray())) { it.toString() } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "a, j, b, j, a, o, b, o",
+                flatMapToListResult2.joinToString(),
+                flatMapToListResult3.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapToList2 === flatMapToListResult2,
+                flatMapToList3 === flatMapToListResult3,
+        )
+
+
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                sequence0.flatMapIndexed { index, it -> it.toCharArray().map { "${index}-$it" } }.joinToString(),
+                Sequencex.joinToString(Sequencex.flatMapIndexedOfIterable(sequence1) {index, it -> it.toCharArray().map { "${index}-$it" } }),
+        )
+
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                sequence0.flatMapIndexed {index, it -> it.toCharArray().asSequence().map { "${index}-$it" } }.joinToString(),
+                Sequencex.joinToString(Sequencex.flatMapIndexed(sequence1) {index, it -> Sequencex.map(Sequencex.asSequence(it.toCharArray())) { "${index}-$it" } }),
+        )
+
+        val flatMapIndexedToList0 = ArrayList<String>()
+        val flatMapIndexedToListResult0 = sequence0.flatMapIndexedTo(flatMapIndexedToList0) {index, it ->  it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToList1 = ArrayList<String>()
+        val flatMapIndexedToListResult1 = Sequencex.flatMapIndexedOfIterableTo(sequence1, flatMapIndexedToList1) {index, it ->  it.toCharArray().map { "${index}-$it" } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                flatMapIndexedToListResult0.joinToString(),
+                flatMapIndexedToListResult1.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapIndexedToList0 === flatMapIndexedToListResult0,
+                flatMapIndexedToList1 === flatMapIndexedToListResult1,
+        )
+
+        val flatMapIndexedToList2 = ArrayList<String>()
+        val flatMapIndexedToListResult2 = sequence0.flatMapIndexedTo(flatMapIndexedToList2) {index, it ->  it.toCharArray().asSequence().map { "${index}-$it" } }
+        val flatMapIndexedToList3 = ArrayList<String>()
+        val flatMapIndexedToListResult3 = Sequencex.flatMapIndexedTo(sequence1, flatMapIndexedToList3) {index, it ->  Sequencex.map(Sequencex.asSequence(it.toCharArray())) { "${index}-$it" } }
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
+                flatMapIndexedToListResult2.joinToString(),
+                flatMapIndexedToListResult3.joinToString(),
+        )
+        @Suppress("USELESS_IS_CHECK")
+        assertTwoEquals(
+                true,
+                flatMapIndexedToList2 === flatMapIndexedToListResult2,
+                flatMapIndexedToList3 === flatMapIndexedToListResult3,
+        )
+    }
+
 
     class IntInitialValue(private val end: Int) : InitialValue<Int> {
         private var next = 0
