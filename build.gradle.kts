@@ -7,7 +7,7 @@ buildscript {
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${property("KOTLIN_VERSION")}")
-        classpath("com.novoda:bintray-release:${property("BINTRAY_RELEASE")}")
+        classpath("com.github.panpf.bintraypublish:bintraypublish:${property("BINTRAY_PUBLISH")}")
     }
 }
 

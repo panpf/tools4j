@@ -1,6 +1,3 @@
-import com.novoda.gradle.release.PublishExtension
-import java.util.*
-
 plugins {
     id("java-library")
     id("jacoco")
