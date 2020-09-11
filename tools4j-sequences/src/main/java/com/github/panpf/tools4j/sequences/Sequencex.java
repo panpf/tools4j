@@ -2096,8 +2096,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    @NotNull
-    public static <T> Double maxOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> double maxOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2119,8 +2118,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    @NotNull
-    public static <T> Float maxOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> float maxOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2380,8 +2378,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    @NotNull
-    public static <T> Double minOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> double minOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2403,8 +2400,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    @NotNull
-    public static <T> Float minOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> float minOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
