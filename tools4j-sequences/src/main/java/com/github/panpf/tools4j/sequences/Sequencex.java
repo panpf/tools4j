@@ -18,13 +18,10 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.*;
-import kotlin.OptIn;
-import kotlin.OverloadResolutionByLambdaReturnType;
-import kotlin.SinceKotlin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -1454,7 +1451,7 @@ public class Sequencex {
     /**
      * Returns a single sequence of all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original sequence.
-     *
+     * <p>
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
@@ -1471,7 +1468,7 @@ public class Sequencex {
     /**
      * Returns a single sequence of all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original sequence.
-     *
+     * <p>
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
@@ -1488,7 +1485,7 @@ public class Sequencex {
     /**
      * Appends all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original sequence, to the given [destination].
-     *
+     * <p>
      * The operation is _terminal_.
      */
     @NotNull
@@ -1508,7 +1505,7 @@ public class Sequencex {
     /**
      * Appends all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original sequence, to the given [destination].
-     *
+     * <p>
      * The operation is _terminal_.
      */
     @NotNull
@@ -1993,7 +1990,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static Double maxByDouble(@Nullable Sequence<Double> sequence) {
+    public static Double maxDoubleOrNull(@Nullable Sequence<Double> sequence) {
         if (sequence == null) return null;
         Iterator<Double> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2015,7 +2012,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static Float maxByFloat(@Nullable Sequence<Float> sequence) {
+    public static Float maxFloatOrNull(@Nullable Sequence<Float> sequence) {
         if (sequence == null) return null;
         Iterator<Float> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2035,7 +2032,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T extends Comparable<T>> T max(@Nullable Sequence<T> sequence) {
+    public static <T extends Comparable<T>> T maxOrNull(@Nullable Sequence<T> sequence) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2053,7 +2050,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T maxByOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2076,7 +2073,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T maxWith(@Nullable Sequence<T> sequence, @NotNull Comparator<T> comparator) {
+    public static <T> T maxWithOrNull(@Nullable Sequence<T> sequence, @NotNull Comparator<T> comparator) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2100,7 +2097,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static Double minByDouble(@Nullable Sequence<Double> sequence) {
+    public static Double minDoubleOrNull(@Nullable Sequence<Double> sequence) {
         if (sequence == null) return null;
         Iterator<Double> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2122,7 +2119,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static Float minByFloat(@Nullable Sequence<Float> sequence) {
+    public static Float minFloatOrNull(@Nullable Sequence<Float> sequence) {
         if (sequence == null) return null;
         Iterator<Float> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2142,7 +2139,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T extends Comparable<T>> T min(@Nullable Sequence<T> sequence) {
+    public static <T extends Comparable<T>> T minOrNull(@Nullable Sequence<T> sequence) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2160,7 +2157,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T minByOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2183,7 +2180,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T minWith(@Nullable Sequence<T> sequence, @NotNull Comparator<T> comparator) {
+    public static <T> T minWithOrNull(@Nullable Sequence<T> sequence, @NotNull Comparator<T> comparator) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;

@@ -4,6 +4,7 @@
 * new: Added 'tools4j-resources' module and 'tools4j-run' module
 * new: Sequencex add flatMapOfIterable, flatMapOfIterableTo, flatMapIndexed, flatMapIndexedOfIterable, flatMapIndexedOfIterableTo, flatMapIndexedTo method
 * new: Collectionx add flatMapIndexed, flatMapIndexedTo method
+* change: Sequencex max\* and min\* method rename to max\*OrNull and min\*OrNull
 
 ## v1.0.0-beta02
 improve: Improve code

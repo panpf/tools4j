@@ -347,8 +347,8 @@ Dependencies：
     * groupBy, groupByTo, map, withIndex, mapIndexedNotNull,
     * mapIndexedNotNullTo, mapIndexedTo, mapNotNull, mapNotNullTo, mapTo,
     * withIndex, distinct, distinctBy, all, any, count, fold, foldIndexed,
-    * forEach, forEachIndexed, onEach, maxByDouble, maxByFloat, max, maxBy,
-    * maxWith, minByDouble, minByFloat, min, minBy, minWith, none, reduce,
+    * forEach, forEachIndexed, onEach, maxOrNull, maxByOrNull, maxWithOrNull, 
+    * minOrNull, minByOrNull, minWithOrNull, none, reduce,
     * reduceIndexed, sumBy, sumByDouble, sumOf, requireNoNulls, minus,
     * minusElement, partition, plus, plusElement, zip, unzip,
     * joinTo, joinToString, averageOf
