@@ -1305,7 +1305,7 @@ public class Collectionx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double maxOfDouble(@Nullable Iterable<Double> iterable) {
+    public static Double maxDoubleOrNull(@Nullable Iterable<Double> iterable) {
         Iterator<Double> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         double max = iterator.next();
@@ -1324,7 +1324,7 @@ public class Collectionx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float maxOfFloat(@Nullable Iterable<Float> iterable) {
+    public static Float maxFloatOrNull(@Nullable Iterable<Float> iterable) {
         Iterator<Float> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         float max = iterator.next();
@@ -1341,7 +1341,7 @@ public class Collectionx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static <T extends Comparable<T>> T max(@Nullable Iterable<T> iterable) {
+    public static <T extends Comparable<T>> T maxOrNull(@Nullable Iterable<T> iterable) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T max = iterator.next();
@@ -1352,11 +1352,13 @@ public class Collectionx {
         return max;
     }
 
+    // todo add maxOf method
+
     /**
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T maxByOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T maxElem = iterator.next();
@@ -1376,7 +1378,7 @@ public class Collectionx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static <T> T maxWith(@Nullable Iterable<T> iterable, @NotNull Comparator<T> comparator) {
+    public static <T> T maxWithOrNull(@Nullable Iterable<T> iterable, @NotNull Comparator<T> comparator) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T max = iterator.next();
@@ -1397,7 +1399,7 @@ public class Collectionx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double minOfDouble(@Nullable Iterable<Double> iterable) {
+    public static Double minDoubleOrNull(@Nullable Iterable<Double> iterable) {
         Iterator<Double> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         double min = iterator.next();
@@ -1416,7 +1418,7 @@ public class Collectionx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float minOfFloat(@Nullable Iterable<Float> iterable) {
+    public static Float minFloatOrNull(@Nullable Iterable<Float> iterable) {
         Iterator<Float> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         float min = iterator.next();
@@ -1433,7 +1435,7 @@ public class Collectionx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static <T extends Comparable<T>> T min(@Nullable Iterable<T> iterable) {
+    public static <T extends Comparable<T>> T minOrNull(@Nullable Iterable<T> iterable) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T min = iterator.next();
@@ -1448,7 +1450,7 @@ public class Collectionx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T minByOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> transformer) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T minElem = iterator.next();
@@ -1468,7 +1470,7 @@ public class Collectionx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static <T> T minWith(@Nullable Iterable<T> iterable, @NotNull Comparator<T> comparator) {
+    public static <T> T minWithOrNull(@Nullable Iterable<T> iterable, @NotNull Comparator<T> comparator) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
         if (iterable == null || !iterator.hasNext()) return null;
         T min = iterator.next();
@@ -1478,6 +1480,8 @@ public class Collectionx {
         }
         return min;
     }
+
+    // todo add minOf method
 
 
     /* ******************************************* add ******************************************* */

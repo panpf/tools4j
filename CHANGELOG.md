@@ -7,6 +7,7 @@
 * change: Sequencex max\* and min\* method rename to max\*OrNull and min\*OrNull
 * new: Sequencex added maxOf\* and maxOf\* method
 * change: Mapx max\* and min\* method rename to max\*OrNull and min\*OrNull
+* change: Collectionx max\* and min\* method rename to max\*OrNull and min\*OrNull
 
 ## v1.0.0-beta02
 improve: Improve code

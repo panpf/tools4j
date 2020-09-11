@@ -612,7 +612,7 @@ public class Mapx {
      */
     @Nullable
     public static <K, V, R extends Comparable<R>> Map.Entry<K, V> maxByOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
-        return Collectionx.maxBy(map != null ? map.entrySet() : null, selector);
+        return Collectionx.maxByOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -620,8 +620,10 @@ public class Mapx {
      */
     @Nullable
     public static <K, V> Map.Entry<K, V> maxWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
-        return Collectionx.maxWith(map != null ? map.entrySet() : null, comparator);
+        return Collectionx.maxWithOrNull(map != null ? map.entrySet() : null, comparator);
     }
+
+    // todo add maxOf method
 
 
     /* ******************************************* min ****************************************** */
@@ -631,7 +633,7 @@ public class Mapx {
      */
     @Nullable
     public static <K, V, R extends Comparable<R>> Map.Entry<K, V> minByOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
-        return Collectionx.minBy(map != null ? map.entrySet() : null, selector);
+        return Collectionx.minByOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -639,8 +641,10 @@ public class Mapx {
      */
     @Nullable
     public static <K, V> Map.Entry<K, V> minWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
-        return Collectionx.minWith(map != null ? map.entrySet() : null, comparator);
+        return Collectionx.minWithOrNull(map != null ? map.entrySet() : null, comparator);
     }
+
+    // todo add minOf method
 
 
     /* ******************************************* none ****************************************** */
