@@ -611,7 +611,7 @@ public class Mapx {
      * Returns the first entry yielding the largest value of the given function or `null` if there are no entries.
      */
     @Nullable
-    public static <K, V, R extends Comparable<R>> Map.Entry<K, V> maxBy(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+    public static <K, V, R extends Comparable<R>> Map.Entry<K, V> maxByOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
         return Collectionx.maxBy(map != null ? map.entrySet() : null, selector);
     }
 
@@ -619,7 +619,7 @@ public class Mapx {
      * Returns the first entry having the largest value according to the provided [comparator] or `null` if there are no entries.
      */
     @Nullable
-    public static <K, V> Map.Entry<K, V> maxWith(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
+    public static <K, V> Map.Entry<K, V> maxWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
         return Collectionx.maxWith(map != null ? map.entrySet() : null, comparator);
     }
 
@@ -630,7 +630,7 @@ public class Mapx {
      * Returns the first entry yielding the smallest value of the given function or `null` if there are no entries.
      */
     @Nullable
-    public static <K, V, R extends Comparable<R>> Map.Entry<K, V> minBy(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+    public static <K, V, R extends Comparable<R>> Map.Entry<K, V> minByOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
         return Collectionx.minBy(map != null ? map.entrySet() : null, selector);
     }
 
@@ -638,7 +638,7 @@ public class Mapx {
      * Returns the first entry having the smallest value according to the provided [comparator] or `null` if there are no entries.
      */
     @Nullable
-    public static <K, V> Map.Entry<K, V> minWith(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
+    public static <K, V> Map.Entry<K, V> minWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<Map.Entry<K, V>> comparator) {
         return Collectionx.minWith(map != null ? map.entrySet() : null, comparator);
     }
 
@@ -1018,6 +1018,9 @@ public class Mapx {
     public static <K, V, R> List<R> mapNotNull(@Nullable Map<K, V> map, @NotNull NullableTransformer<Map.Entry<K, V>, R> transform) {
         return mapNotNullTo(map, new ArrayList<R>(), transform);
     }
+
+
+    /* ******************************************* flatMap ****************************************** */
 
 
     /**

@@ -35,6 +35,7 @@ class MapxTest {
 
         assertNotEquals("1, 3, 2", Mapx.builder("1", "111").put("3", "333").put("2", "222").buildHashMap().map { entry -> entry.key }.joinToString())
         assertNotEquals("1, 3, 2", Mapx.builder("1", "111").put("3", "333").put("2", "222").buildWeakHashMap().map { entry -> entry.key }.joinToString())
+        @Suppress("SimplifiableCallChain")
         assertNotEquals("1, 3, 2", Mapx.builder("1", "111").put("3", "333").put("2", "222").buildHashtable().map { entry -> entry.key }.joinToString())
         assertEquals("1, 3, 2", Mapx.builder("1", "111").put("3", "333").put("2", "222").buildLinkedHashMap().map { entry -> entry.key }.joinToString())
         assertEquals("1, 2, 3", Mapx.builder("1", "111").put("3", "333").put("2", "222").buildTreeMap().map { entry -> entry.key }.joinToString())
@@ -112,26 +113,26 @@ class MapxTest {
         assertTwoEquals(LinkedHashMap::class.java.name, Mapx.mutableMapOf<String, String>()::class.java.name, mutableMapOf<String, String>()::class.java.name)
         assertTwoEquals(1, Mapx.mutableMapOf<String, String>().apply { put("key3", "value3") }.size, mutableMapOf<String, String>().apply { put("key3", "value3") }.size)
 
-        assertTwoEquals(2, Mapx.mutableMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).size,
+        assertTwoEquals(2, Mapx.mutableMapOf(Pair("key", "value"), Pair("key2", "value2")).size,
                 mutableMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).size)
-        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.mutableMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
+        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.mutableMapOf(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
                 mutableMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2"))::class.java.name)
-        assertTwoEquals(3, Mapx.mutableMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
+        assertTwoEquals(3, Mapx.mutableMapOf(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
                 mutableMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).apply { put("key3", "value3") }.size)
-        assertTwoEquals(0, Mapx.mutableMapOf<String, String>(*arrayOf<Pair<String, String>>()).size,
+        assertTwoEquals(0, Mapx.mutableMapOf(*arrayOf<Pair<String, String>>()).size,
                 mutableMapOf(*arrayOf<kotlin.Pair<String, String>>()).size)
-        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.mutableMapOf<String, String>(*arrayOf<Pair<String, String>>())::class.java.name,
+        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.mutableMapOf(*arrayOf<Pair<String, String>>())::class.java.name,
                 mutableMapOf(*arrayOf<kotlin.Pair<String, String>>())::class.java.name)
 
         assertTwoEquals(0, Mapx.hashMapOf<String, String>().size, hashMapOf<String, String>().size)
         assertTwoEquals(java.util.HashMap::class.java.name, Mapx.hashMapOf<String, String>()::class.java.name, hashMapOf<String, String>()::class.java.name)
         assertTwoEquals(1, Mapx.hashMapOf<String, String>().apply { put("key3", "value3") }.size, hashMapOf<String, String>().apply { put("key3", "value3") }.size)
 
-        assertTwoEquals(2, Mapx.hashMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).size,
+        assertTwoEquals(2, Mapx.hashMapOf(Pair("key", "value"), Pair("key2", "value2")).size,
                 hashMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).size)
-        assertTwoEquals(java.util.HashMap::class.java.name, Mapx.hashMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
+        assertTwoEquals(java.util.HashMap::class.java.name, Mapx.hashMapOf(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
                 hashMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2"))::class.java.name)
-        assertTwoEquals(3, Mapx.hashMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
+        assertTwoEquals(3, Mapx.hashMapOf(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
                 hashMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).apply { put("key3", "value3") }.size)
 
 
@@ -139,22 +140,22 @@ class MapxTest {
         assertTwoEquals(LinkedHashMap::class.java.name, Mapx.linkedMapOf<String, String>()::class.java.name, linkedMapOf<String, String>()::class.java.name)
         assertTwoEquals(1, Mapx.linkedMapOf<String, String>().apply { put("key3", "value3") }.size, linkedMapOf<String, String>().apply { put("key3", "value3") }.size)
 
-        assertTwoEquals(2, Mapx.linkedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).size,
+        assertTwoEquals(2, Mapx.linkedMapOf(Pair("key", "value"), Pair("key2", "value2")).size,
                 linkedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).size)
-        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.linkedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
+        assertTwoEquals(LinkedHashMap::class.java.name, Mapx.linkedMapOf(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
                 linkedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2"))::class.java.name)
-        assertTwoEquals(3, Mapx.linkedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
+        assertTwoEquals(3, Mapx.linkedMapOf(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
                 linkedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).apply { put("key3", "value3") }.size)
 
 
-        assertTwoEquals(2, Mapx.sortedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).size,
+        assertTwoEquals(2, Mapx.sortedMapOf(Pair("key", "value"), Pair("key2", "value2")).size,
                 sortedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).size)
-        assertTwoEquals(TreeMap::class.java.name, Mapx.sortedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
+        assertTwoEquals(TreeMap::class.java.name, Mapx.sortedMapOf(Pair("key", "value"), Pair("key2", "value2"))::class.java.name,
                 sortedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2"))::class.java.name)
-        assertTwoEquals(3, Mapx.sortedMapOf<String, String>(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
+        assertTwoEquals(3, Mapx.sortedMapOf(Pair("key", "value"), Pair("key2", "value2")).apply { put("key3", "value3") }.size,
                 sortedMapOf(kotlin.Pair("key", "value"), kotlin.Pair("key2", "value2")).apply { put("key3", "value3") }.size)
 
-        assertTwoEquals("{key=value, key2=value2}", Mapx.sortedMapOf<String, String>(Pair("key2", "value2"), Pair("key", "value")).toString(),
+        assertTwoEquals("{key=value, key2=value2}", Mapx.sortedMapOf(Pair("key2", "value2"), Pair("key", "value")).toString(),
                 sortedMapOf(kotlin.Pair("key2", "value2"), kotlin.Pair("key", "value")).toString())
     }
 
@@ -345,9 +346,6 @@ class MapxTest {
             fail()
         } catch (e: Exception) {
         }
-//        val defaultValue: DefaultValue<String> = DefaultValue { "valueDefault" }
-//        val method = Classx.getMethodRecursive(Mapx::class.java, "getOrElseNullable", Map::class.java, Object::class.java, DefaultValue::class.java)
-//        assertEquals("valueDefault", Classx.callStaticMethod(method, map, "key2", defaultValue))
         try {
             Mapx.getValue(null as Map<String, String>?, "key1")
             fail()
@@ -450,20 +448,20 @@ class MapxTest {
         val map = Mapx.builder("1", "111").put("2", "222").put("3", "333").buildHashMap()
 
         assertTwoEquals("3=333",
-                Mapx.maxBy(map) { it.key }.toString(),
-                map.maxBy { it.key }.toString())
+                Mapx.maxByOrNull(map) { it.key }.toString(),
+                map.maxByOrNull { it.key }.toString())
 
         assertTwoEquals(null,
-                Mapx.maxBy(null as Map<String, String>?) { it.key },
-                mutableMapOf<String, String>().maxBy { it.key })
+                Mapx.maxByOrNull(null as Map<String, String>?) { it.key },
+                mutableMapOf<String, String>().maxByOrNull { it.key })
 
         assertTwoEquals("3=333",
-                Mapx.maxWith(map) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
-                map.maxWith(Comparator { it1, it2 -> it1.key.compareTo(it2.key) }).toString())
+                Mapx.maxWithOrNull(map) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
+                map.maxWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) }.toString())
 
         assertTwoEquals(null,
-                Mapx.maxWith(null as Map<String, String>?) { it1, it2 -> it1.key.compareTo(it2.key) },
-                mutableMapOf<String, String>().maxWith(Comparator { it1, it2 -> it1.key.compareTo(it2.key) }))
+                Mapx.maxWithOrNull(null as Map<String, String>?) { it1, it2 -> it1.key.compareTo(it2.key) },
+                mutableMapOf<String, String>().maxWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) })
     }
 
     @Test
@@ -471,20 +469,20 @@ class MapxTest {
         val map = Mapx.builder("1", "111").put("2", "222").put("3", "333").buildHashMap()
 
         assertTwoEquals("1=111",
-                Mapx.minBy(map) { it.key }.toString(),
-                map.minBy { it.key }.toString())
+                Mapx.minByOrNull(map) { it.key }.toString(),
+                map.minByOrNull { it.key }.toString())
 
         assertTwoEquals(null,
-                Mapx.minBy(null as Map<String, String>?) { it.key },
-                mutableMapOf<String, String>().minBy { it.key })
+                Mapx.minByOrNull(null as Map<String, String>?) { it.key },
+                mutableMapOf<String, String>().minByOrNull { it.key })
 
         assertTwoEquals("1=111",
-                Mapx.minWith(map) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
-                map.minWith(Comparator { it1, it2 -> it1.key.compareTo(it2.key) }).toString())
+                Mapx.minWithOrNull(map) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
+                map.minWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) }.toString())
 
         assertTwoEquals(null,
-                Mapx.minWith(null as Map<String, String>?) { it1, it2 -> it1.key.compareTo(it2.key) },
-                mutableMapOf<String, String>().minWith(Comparator { it1, it2 -> it1.key.compareTo(it2.key) }))
+                Mapx.minWithOrNull(null as Map<String, String>?) { it1, it2 -> it1.key.compareTo(it2.key) },
+                mutableMapOf<String, String>().minWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) })
     }
 
     @Test
@@ -695,8 +693,8 @@ class MapxTest {
                 map.mapKeys { (it.key + it.key + it.key).toInt() })
 
         assertTwoEquals("1, 2, 3",
-                Mapx.mapTo(map, ArrayList<String>()) { it.key }.joinToString(),
-                map.mapTo(ArrayList<String>()) { it.key }.joinToString())
+                Mapx.mapTo(map, ArrayList()) { it.key }.joinToString(),
+                map.mapTo(ArrayList()) { it.key }.joinToString())
 
         assertTwoEquals("1, 2, 3",
                 Mapx.map(map) { it.key }.joinToString(),
@@ -711,16 +709,16 @@ class MapxTest {
                 map.mapNotNull { if (it.key != "2") it.key else null }.joinToString())
 
         assertTwoEquals("1, 1, 1, 2, 2, 2, 3, 3, 3",
-                Mapx.flatMapTo(map, ArrayList<String>()) { it.value.toList().map { it.toString() } }.joinToString(),
-                map.flatMapTo(ArrayList()) { it.value.toList().map { it.toString() } }.joinToString())
+                Mapx.flatMapTo(map, ArrayList()) { it -> it.value.toList().map { it.toString() } }.joinToString(),
+                map.flatMapTo(ArrayList()) { it -> it.value.toList().map { it.toString() } }.joinToString())
 
         assertTwoEquals("",
-                Mapx.flatMapTo(null as LinkedHashMap<String, String>?, ArrayList<String>()) { it.value.toList().map { it.toString() } }.joinToString(),
-                LinkedHashMap<String, String>().flatMapTo(ArrayList()) { it.value.toList().map { it.toString() } }.joinToString())
+                Mapx.flatMapTo(null as LinkedHashMap<String, String>?, ArrayList()) { it -> it.value.toList().map { it.toString() } }.joinToString(),
+                LinkedHashMap<String, String>().flatMapTo(ArrayList()) { it -> it.value.toList().map { it.toString() } }.joinToString())
 
         assertTwoEquals("1, 1, 1, 2, 2, 2, 3, 3, 3",
-                Mapx.flatMap(map) { it.value.toList().map { it.toString() } }.joinToString(),
-                map.flatMap { it.value.toList().map { it.toString() } }.joinToString())
+                Mapx.flatMap(map) { it -> it.value.toList().map { it.toString() } }.joinToString(),
+                map.flatMap { it -> it.value.toList().map { it.toString() } }.joinToString())
     }
 
     @Test

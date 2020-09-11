@@ -164,8 +164,8 @@ Dependencies：
     * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty,
     * putAll, plus, plusAssign, remove, minus, minusAssign, set,
     * get, getOrElse, getValue, getOrPut, contains, containsKey,
-    * containsValue, all, any, count, forEach, onEach, maxBy, maxWith,
-    * minBy, minWith, none, filterKeys, filterValues, filterTo, filter,
+    * containsValue, all, any, count, forEach, onEach, maxByOrNull, maxWithOrNull,
+    * minByOrNull, minWithOrNull, none, filterKeys, filterValues, filterTo, filter,
     * filterNotTo, filterNot, iterator, toPair, toMap, toList, asIterable,
     * mapValuesTo, mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo,
     * mapNotNull, flatMapTo, flatMap, capacity
