@@ -18,6 +18,7 @@
 
 package com.github.panpf.tools4j.collections
 
+import com.github.panpf.tools4j.iterable.CharSequenceIterable
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
@@ -235,12 +236,6 @@ class CollectionxTest {
     }
 
     @Test
-    fun testDrop() {
-        val lists = listOf("1", "2", "3", "4")
-        assertEquals(Collectionx.joinToArrayString(Collectionx.drop(lists, 2)), Collectionx.joinToArrayString(lists.drop(2)))
-    }
-
-    @Test
     fun testToArray() {
         assertArrayEquals(byteArrayOf(4.toByte(), 3.toByte(), 2.toByte()), Collectionx.toByteArray(listOf(4.toByte(), 3.toByte(), 2.toByte())))
         assertArrayEquals(byteArrayOf(), Collectionx.toByteArray(null))
@@ -273,6 +268,535 @@ class CollectionxTest {
         assertArrayEquals(charArrayOf(4.toChar(), 3.toChar(), 2.toChar()), Collectionx.toCharArray(listOf(4.toChar(), 3.toChar(), 2.toChar())))
         assertArrayEquals(charArrayOf(), Collectionx.toCharArray(null))
         assertArrayEquals(charArrayOf(), Collectionx.toCharArray(listOf<Char>()))
+    }
+    
+    @Test
+    fun testFlatten() {
+        assertTwoEquals(
+                "a, b, c, d, e, f, g, h, i",
+                arrayListOf(
+                        arrayListOf("a", "b", "c"),
+                        arrayListOf("d", "e", "f"),
+                        arrayListOf("g", "h", "i")
+                ).flatten().joinToString(),
+                Collectionx.joinToString(Collectionx.flatten(Collectionx.arrayListOf(
+                        Collectionx.arrayListOf("a", "b", "c"),
+                        Collectionx.arrayListOf("d", "e", "f"),
+                        Collectionx.arrayListOf("g", "h", "i")
+                )))
+        )
+
+        assertTwoEquals(
+                "a, b, c, d, e, f, g, h, i",
+                arrayListOf(
+                        CharSequenceIterable("abc"),
+                        CharSequenceIterable("def"),
+                        CharSequenceIterable("ghi")
+                ).flatten().joinToString(),
+                Collectionx.joinToString(Collectionx.flatten(Collectionx.arrayListOf(
+                        CharSequenceIterable("abc"),
+                        CharSequenceIterable("def"),
+                        CharSequenceIterable("ghi")
+                )))
+        )
+    }
+
+    @Test
+    fun testContains() {
+        val list = Collectionx.arrayListOf("a", "b", "c")
+
+        assertTrue(Collectionx.contains(list, "a"))
+        assertTrue(Collectionx.contains(list, "b"))
+        assertTrue(Collectionx.contains(list, "c"))
+        assertFalse(Collectionx.contains(list, "d"))
+    }
+
+    @Test
+    fun testElementAt() {
+        val list0 = arrayListOf("a", "b", "c")
+        val list1 = Collectionx.arrayListOf("a", "b", "c")
+
+        assertTwoEquals("a", list0.elementAt(0), Collectionx.elementAt(list1, 0))
+        assertTwoEquals("b", list0.elementAt(1), Collectionx.elementAt(list1, 1))
+        assertTwoEquals("c", list0.elementAt(2), Collectionx.elementAt(list1, 2))
+        assertTwoThrow(ArrayIndexOutOfBoundsException::class, { list0.elementAt(-1) }, { Collectionx.elementAt(list1, -1) })
+        assertTwoThrow(IndexOutOfBoundsException::class, { list0.elementAt(3) }, { Collectionx.elementAt(list1, 3) })
+
+        assertTwoEquals("a", list0.elementAtOrElse(0) { "j" }, Collectionx.elementAtOrElse(list1, 0) { "j" })
+        assertTwoEquals("b", list0.elementAtOrElse(1) { "k" }, Collectionx.elementAtOrElse(list1, 1) { "j" })
+        assertTwoEquals("c", list0.elementAtOrElse(2) { "j" }, Collectionx.elementAtOrElse(list1, 2) { "j" })
+        assertTwoEquals("j", list0.elementAtOrElse(-1) { "j" }, Collectionx.elementAtOrElse(list1, -1) { "j" })
+        assertTwoEquals("k", list0.elementAtOrElse(3) { "k" }, Collectionx.elementAtOrElse(list1, 3) { "k" })
+
+        assertTwoEquals("a", list0.elementAtOrNull(0), Collectionx.elementAtOrNull(list1, 0))
+        assertTwoEquals("b", list0.elementAtOrNull(1), Collectionx.elementAtOrNull(list1, 1))
+        assertTwoEquals("c", list0.elementAtOrNull(2), Collectionx.elementAtOrNull(list1, 2))
+        assertTwoEquals(null, list0.elementAtOrNull(-1), Collectionx.elementAtOrNull(list1, -1))
+        assertTwoEquals(null, list0.elementAtOrNull(3), Collectionx.elementAtOrNull(list1, 3))
+    }
+
+    @Test
+    fun testFind() {
+        val list0 = arrayListOf("aj", "bj", "cj", "bo")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "bo")
+
+        assertTwoEquals("aj", list0.find { it.startsWith("a") }, Collectionx.find(list1) { it.startsWith("a") })
+        assertTwoEquals("bj", list0.find { it.startsWith("b") }, Collectionx.find(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.find { it.startsWith("c") }, Collectionx.find(list1) { it.startsWith("c") })
+        assertTwoEquals(null, list0.find { it.startsWith("k") }, Collectionx.find(list1) { it.startsWith("k") })
+
+        assertTwoEquals("aj", list0.findLast { it.startsWith("a") }, Collectionx.findLast(list1) { it.startsWith("a") })
+        assertTwoEquals("bo", list0.findLast { it.startsWith("b") }, Collectionx.findLast(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.findLast { it.startsWith("c") }, Collectionx.findLast(list1) { it.startsWith("c") })
+        assertTwoEquals(null, list0.findLast { it.startsWith("k") }, Collectionx.findLast(list1) { it.startsWith("k") })
+    }
+
+    @Test
+    fun testFirst() {
+        val list0 = arrayListOf("aj", "bj", "cj", "bo")
+        val emptySequence0 = arrayListOf<String>()
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "bo")
+        val emptySequence1 = Collectionx.arrayListOf<String>()
+
+        assertTwoEquals("aj", list0.first(), Collectionx.first(list1))
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.first() }, { Collectionx.first(emptySequence1) })
+
+        assertTwoEquals("aj", list0.first { it.startsWith("a") }, Collectionx.first(list1) { it.startsWith("a") })
+        assertTwoEquals("bj", list0.first { it.startsWith("b") }, Collectionx.first(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.first { it.startsWith("c") }, Collectionx.first(list1) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class, { list0.first { it.startsWith("k") } }, { Collectionx.first(list1) { it.startsWith("k") } })
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.first { it.startsWith("a") } }, { Collectionx.first(emptySequence1) { it.startsWith("a") } })
+
+        assertTwoEquals("aj", list0.firstOrNull(), Collectionx.firstOrNull(list1))
+        assertTwoEquals(null, emptySequence0.firstOrNull(), Collectionx.firstOrNull(emptySequence1))
+
+        assertTwoEquals("aj", list0.firstOrNull { it.startsWith("a") }, Collectionx.firstOrNull(list1) { it.startsWith("a") })
+        assertTwoEquals("bj", list0.firstOrNull { it.startsWith("b") }, Collectionx.firstOrNull(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.firstOrNull { it.startsWith("c") }, Collectionx.firstOrNull(list1) { it.startsWith("c") })
+        assertTwoEquals(null, list0.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(list1) { it.startsWith("k") })
+        assertTwoEquals(null, emptySequence0.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(emptySequence1) { it.startsWith("k") })
+    }
+
+    @Test
+    fun testIndexOf() {
+        val list0 = arrayListOf("aj", "bj", "cj", "bo")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "bo")
+
+        assertTwoEquals(0, list0.indexOf("aj"), Collectionx.indexOf(list1, "aj"))
+        assertTwoEquals(1, list0.indexOf("bj"), Collectionx.indexOf(list1, "bj"))
+        assertTwoEquals(2, list0.indexOf("cj"), Collectionx.indexOf(list1, "cj"))
+        assertTwoEquals(3, list0.indexOf("bo"), Collectionx.indexOf(list1, "bo"))
+        assertTwoEquals(-1, list0.indexOf("bb"), Collectionx.indexOf(list1, "bb"))
+
+        assertTwoEquals(0, list0.indexOfFirst { it.startsWith("a") }, Collectionx.indexOfFirst(list1) { it.startsWith("a") })
+        assertTwoEquals(1, list0.indexOfFirst { it.startsWith("b") }, Collectionx.indexOfFirst(list1) { it.startsWith("b") })
+        assertTwoEquals(2, list0.indexOfFirst { it.startsWith("c") }, Collectionx.indexOfFirst(list1) { it.startsWith("c") })
+        assertTwoEquals(-1, list0.indexOfFirst { it.startsWith("k") }, Collectionx.indexOfFirst(list1) { it.startsWith("k") })
+
+        assertTwoEquals(0, list0.indexOfLast { it.startsWith("a") }, Collectionx.indexOfLast(list1) { it.startsWith("a") })
+        assertTwoEquals(3, list0.indexOfLast { it.startsWith("b") }, Collectionx.indexOfLast(list1) { it.startsWith("b") })
+        assertTwoEquals(2, list0.indexOfLast { it.startsWith("c") }, Collectionx.indexOfLast(list1) { it.startsWith("c") })
+        assertTwoEquals(-1, list0.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(list1) { it.startsWith("k") })
+    }
+
+    @Test
+    fun testLast() {
+        val list0 = arrayListOf("aj", "bj", "cj", "bo")
+        val emptySequence0 = arrayListOf<String>()
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "bo")
+        val emptySequence1 = Collectionx.arrayListOf<String>()
+
+        assertTwoEquals("bo", list0.last(), Collectionx.last(list1))
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.last() }, { Collectionx.last(emptySequence1) })
+
+        assertTwoEquals("aj", list0.last { it.startsWith("a") }, Collectionx.last(list1) { it.startsWith("a") })
+        assertTwoEquals("bo", list0.last { it.startsWith("b") }, Collectionx.last(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.last { it.startsWith("c") }, Collectionx.last(list1) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class, { list0.last { it.startsWith("k") } }, { Collectionx.last(list1) { it.startsWith("k") } })
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.last { it.startsWith("a") } }, { Collectionx.last(emptySequence1) { it.startsWith("a") } })
+
+        assertTwoEquals("bo", list0.lastOrNull(), Collectionx.lastOrNull(list1))
+        assertTwoEquals(null, emptySequence0.lastOrNull(), Collectionx.lastOrNull(emptySequence1))
+
+        assertTwoEquals("aj", list0.lastOrNull { it.startsWith("a") }, Collectionx.lastOrNull(list1) { it.startsWith("a") })
+        assertTwoEquals("bo", list0.lastOrNull { it.startsWith("b") }, Collectionx.lastOrNull(list1) { it.startsWith("b") })
+        assertTwoEquals("cj", list0.lastOrNull { it.startsWith("c") }, Collectionx.lastOrNull(list1) { it.startsWith("c") })
+        assertTwoEquals(null, list0.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(list1) { it.startsWith("k") })
+        assertTwoEquals(null, emptySequence0.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(emptySequence1) { it.startsWith("k") })
+
+        assertTwoEquals(0, list0.lastIndexOf("aj"), Collectionx.lastIndexOf(list1, "aj"))
+        assertTwoEquals(1, list0.lastIndexOf("bj"), Collectionx.lastIndexOf(list1, "bj"))
+        assertTwoEquals(2, list0.lastIndexOf("cj"), Collectionx.lastIndexOf(list1, "cj"))
+        assertTwoEquals(3, list0.lastIndexOf("bo"), Collectionx.lastIndexOf(list1, "bo"))
+        assertTwoEquals(-1, list0.lastIndexOf("bb"), Collectionx.lastIndexOf(list1, "bb"))
+    }
+
+    @Test
+    fun testSingle() {
+        val singleSequence0 = arrayListOf("cj")
+        val singleSequence1 = Collectionx.arrayListOf("cj")
+        val multiSequence0 = arrayListOf("aj", "bj", "cj", "bo")
+        val multiSequence1 = Collectionx.arrayListOf("aj", "bj", "cj", "bo")
+        val emptySequence0 = arrayListOf<String>()
+        val emptySequence1 = Collectionx.arrayListOf<String>()
+
+        assertTwoEquals("cj", singleSequence0.single(), Collectionx.single(singleSequence1))
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.single() }, { Collectionx.single(emptySequence1) })
+        assertTwoThrow(IllegalArgumentException::class, { multiSequence0.single() }, { Collectionx.single(multiSequence1) })
+
+        assertTwoEquals("cj",
+                singleSequence0.single { it.startsWith("c") },
+                Collectionx.single(singleSequence1) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class,
+                { singleSequence0.single { it.startsWith("b") } },
+                { Collectionx.single(singleSequence1) { it.startsWith("b") } })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.single { it.startsWith("c") } },
+                { Collectionx.single(emptySequence1) { it.startsWith("c") } })
+        assertTwoEquals("cj",
+                multiSequence0.single { it.startsWith("c") },
+                Collectionx.single(multiSequence1) { it.startsWith("c") })
+        assertTwoThrow(IllegalArgumentException::class,
+                { multiSequence0.single { it.startsWith("b") } },
+                { Collectionx.single(multiSequence1) { it.startsWith("b") } })
+
+        assertTwoEquals("cj", singleSequence0.singleOrNull(), Collectionx.singleOrNull(singleSequence1))
+        assertTwoEquals(null, emptySequence0.singleOrNull(), Collectionx.singleOrNull(emptySequence1))
+        assertTwoEquals(null, multiSequence0.singleOrNull(), Collectionx.singleOrNull(multiSequence1))
+
+        assertTwoEquals("cj",
+                singleSequence0.singleOrNull { it.startsWith("c") },
+                Collectionx.singleOrNull(singleSequence1) { it.startsWith("c") })
+        assertTwoEquals(null,
+                singleSequence0.singleOrNull { it.startsWith("b") },
+                Collectionx.singleOrNull(singleSequence1) { it.startsWith("b") })
+        assertTwoEquals(null,
+                emptySequence0.singleOrNull { it.startsWith("c") },
+                Collectionx.singleOrNull(emptySequence1) { it.startsWith("c") })
+        assertTwoEquals("cj",
+                multiSequence0.singleOrNull { it.startsWith("c") },
+                Collectionx.singleOrNull(multiSequence1) { it.startsWith("c") })
+        assertTwoEquals(null,
+                multiSequence0.singleOrNull { it.startsWith("b") },
+                Collectionx.singleOrNull(multiSequence1) { it.startsWith("b") })
+    }
+
+    @Test
+    fun testDrop() {
+        val list0 = arrayListOf("aj", "bj", "cj", "dj")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "dj")
+
+        /*
+         * drop 系列的方法表示从列表头部开始跳过部分元素
+         */
+
+        // drop 方法的意思是从列表头部开始跳过多少个元素
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { list0.drop(-1) },
+                { Collectionx.drop(list1, -1) }
+        )
+
+        assertTrue(list0 == list0.drop(0))
+        assertTrue(list1 == Collectionx.drop(list1, 0))
+        assertTrue(list0 !== list0.drop(0))
+        assertTrue(list1 !== Collectionx.drop(list1, 0))
+
+        assertTwoEquals("bj, cj, dj",
+                list0.drop(1).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(list1, 1)))
+
+        assertTwoEquals("cj, dj",
+                list0.drop(2).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(list1, 2)))
+
+        assertTwoEquals("dj",
+                list0.drop(3).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(list1, 3)))
+
+        assertTwoEquals("",
+                list0.drop(4).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(list1, 4)))
+
+        assertTwoEquals("",
+                list0.drop(5).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(list1, 5)))
+
+        assertTwoEquals("",
+                list0.drop(5).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(Collectionx.drop(list1, 5), 5)))
+
+        // dropWhile 方法的意思是从不符合条件的元素开始往后遍历
+
+        assertTwoEquals("aj, bj, cj, dj",
+                list0.dropWhile { !it.startsWith("a") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("a") }))
+
+        assertTwoEquals("bj, cj, dj",
+                list0.dropWhile { !it.startsWith("b") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("b") }))
+
+        assertTwoEquals("cj, dj",
+                list0.dropWhile { !it.startsWith("c") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("c") }))
+
+        assertTwoEquals("dj",
+                list0.dropWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("d") }))
+
+        assertTwoEquals("",
+                list0.dropWhile { !it.startsWith("e") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("e") }))
+
+
+        assertTwoEquals("dj",
+                list0.dropWhile { !it.startsWith("b") }.drop(2).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(Collectionx.dropWhile(list1) { !it.startsWith("b") }, 2)))
+    }
+
+    @Test
+    fun testTake() {
+        val list0 = arrayListOf("aj", "bj", "cj", "dj")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "cj", "dj")
+
+        /*
+         * take 系列的方法表示从列表头部开始取部分元素
+         */
+
+        // take 方法的意思是从列表头部开始取多少个元素
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { list0.take(-1) },
+                { Collectionx.take(list1, -1) }
+        )
+
+        assertTrue(emptyList<String>() === list0.take(0))
+        assertTrue(Collectionx.emptyList<String>() === Collectionx.take(list1, 0))
+
+        assertTwoEquals("aj",
+                list0.take(1).joinToString(),
+                Collectionx.joinToString(Collectionx.take(list1, 1)))
+
+        assertTwoEquals("aj, bj",
+                list0.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(list1, 2)))
+
+        assertTwoEquals("aj, bj, cj",
+                list0.take(3).joinToString(),
+                Collectionx.joinToString(Collectionx.take(list1, 3)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                list0.take(4).joinToString(),
+                Collectionx.joinToString(Collectionx.take(list1, 4)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                list0.take(5).joinToString(),
+                Collectionx.joinToString(Collectionx.take(list1, 5)))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                list0.take(5).joinToString(),
+                Collectionx.joinToString(Collectionx.take(Collectionx.take(list1, 5), 5)))
+
+        // takeWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
+
+        assertTwoEquals("",
+                list0.takeWhile { !it.startsWith("a") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("a") }))
+
+        assertTwoEquals("aj",
+                list0.takeWhile { !it.startsWith("b") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("b") }))
+
+        assertTwoEquals("aj, bj",
+                list0.takeWhile { !it.startsWith("c") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("c") }))
+
+        assertTwoEquals("aj, bj, cj",
+                list0.takeWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("d") }))
+
+        assertTwoEquals("aj, bj, cj, dj",
+                list0.takeWhile { !it.startsWith("e") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("e") }))
+
+
+        assertTwoEquals("aj, bj",
+                list0.takeWhile { !it.startsWith("d") }.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(Collectionx.takeWhile(list1) { !it.startsWith("d") }, 2)))
+    }
+
+    @Test
+    fun testFilter() {
+        val list0 = arrayListOf("aj", "bo", "cj", "do")
+        val list1 = Collectionx.arrayListOf("aj", "bo", "cj", "do")
+
+        assertTwoEquals("aj, cj",
+                list0.filter { it.endsWith("j") }.joinToString(),
+                Collectionx.joinToString(Collectionx.filter(list1) { it.endsWith("j") }))
+
+        val filterToDestination = java.util.ArrayList<String>()
+        val filterToDestination1 = java.util.ArrayList<String>()
+        val filterToDestinationResult = list0.filterTo(filterToDestination) { it.endsWith("j") }
+        val filterToDestinationResult1 = Collectionx.filterTo(list1, filterToDestination1) { it.endsWith("j") }
+        assertTwoEquals("aj, cj",
+                filterToDestinationResult.joinToString(),
+                Collectionx.joinToString(filterToDestinationResult1))
+        assertTrue(filterToDestination === filterToDestinationResult)
+        assertTrue(filterToDestination1 === filterToDestinationResult1)
+
+        assertTwoEquals("bo, do",
+                list0.filterIndexed { index, _ -> (index % 2) != 0 }.joinToString(),
+                Collectionx.joinToString(Collectionx.filterIndexed(list1) { index, _ -> (index % 2) != 0 }))
+
+        val filterIndexedToDestination = java.util.ArrayList<String>()
+        val filterIndexedToDestination1 = java.util.ArrayList<String>()
+        val filterIndexedToDestinationResult = list0.filterIndexedTo(filterIndexedToDestination) { index, _ -> (index % 2) != 0 }
+        val filterIndexedToDestinationResult1 = Collectionx.filterIndexedTo(list1, filterIndexedToDestination1) { index, _ -> (index % 2) != 0 }
+        assertTwoEquals("bo, do",
+                filterIndexedToDestinationResult.joinToString(),
+                Collectionx.joinToString(filterIndexedToDestinationResult1))
+        assertTrue(filterIndexedToDestination === filterIndexedToDestinationResult)
+        assertTrue(filterIndexedToDestination1 === filterIndexedToDestinationResult1)
+
+
+        val anyList0 = arrayListOf(4, "f", 76, "gsdg")
+        val anyList1 = Collectionx.arrayListOf(4, "f", 76, "gsdg")
+
+        assertTwoEquals("4, 76",
+                anyList0.filterIsInstance(Integer::class.java).joinToString(),
+                Collectionx.joinToString(Collectionx.filterIsInstance(anyList1, Integer::class.java)))
+        assertTwoEquals("f, gsdg",
+                anyList0.filterIsInstance(String::class.java).joinToString(),
+                Collectionx.joinToString(Collectionx.filterIsInstance(anyList1, String::class.java)))
+
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination = java.util.ArrayList<Integer>()
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination1 = arrayListOf<Integer>()
+        val filterIsInstanceToDestinationResult = anyList0.filterIsInstanceTo(filterIsInstanceToDestination, Integer::class.java)
+        val filterIsInstanceToDestinationResult1 = Collectionx.filterIsInstanceTo(anyList1, filterIsInstanceToDestination1, Integer::class.java)
+        assertTwoEquals("4, 76",
+                filterIsInstanceToDestinationResult.joinToString(),
+                Collectionx.joinToString(filterIsInstanceToDestinationResult1))
+        assertTrue(filterIsInstanceToDestination === filterIsInstanceToDestinationResult)
+        assertTrue(filterIsInstanceToDestination1 === filterIsInstanceToDestinationResult1)
+
+        assertTwoEquals("bo, do",
+                list0.filterNot { it.endsWith("j") }.joinToString(),
+                Collectionx.joinToString(Collectionx.filterNot(list1) { it.endsWith("j") }))
+
+        val filterNotToDestination = java.util.ArrayList<String>()
+        val filterNotToDestination1 = java.util.ArrayList<String>()
+        val filterNotToDestinationResult = list0.filterNotTo(filterNotToDestination) { it.endsWith("j") }
+        val filterNotToDestinationResult1 = Collectionx.filterNotTo(list1, filterNotToDestination1) { it.endsWith("j") }
+        assertTwoEquals("bo, do",
+                filterNotToDestinationResult.joinToString(),
+                Collectionx.joinToString(filterNotToDestinationResult1))
+        assertTrue(filterNotToDestination === filterNotToDestinationResult)
+        assertTrue(filterNotToDestination1 === filterNotToDestinationResult1)
+
+
+        val notNullList0 = arrayListOf(null, "f", null, "gsdg")
+        val notNullList1 = Collectionx.arrayListOf(null, "f", null, "gsdg")
+
+        assertTwoEquals("f, gsdg",
+                notNullList0.filterNotNull().joinToString(),
+                Collectionx.joinToString(Collectionx.filterNotNull(notNullList1)))
+
+        val filterNotNullToDestination = java.util.ArrayList<String>()
+        val filterNotNullToDestination1 = java.util.ArrayList<String>()
+        val filterNotNullToDestinationResult = notNullList0.filterNotNullTo(filterNotNullToDestination)
+        val filterNotNullToDestinationResult1 = Collectionx.filterNotNullTo(notNullList1, filterNotNullToDestination1)
+        assertTwoEquals("f, gsdg",
+                filterNotNullToDestinationResult.joinToString(),
+                Collectionx.joinToString(filterNotNullToDestinationResult1))
+        assertTrue(filterNotNullToDestination === filterNotNullToDestinationResult)
+        assertTrue(filterNotNullToDestination1 === filterNotNullToDestinationResult1)
+    }
+
+    @Test
+    fun testSort() {
+        val list0 = arrayListOf("aaa", "h", "uuuu", "gg")
+        val list1 = Collectionx.arrayListOf("aaa", "h", "uuuu", "gg")
+
+        assertTwoEquals("aaa, gg, h, uuuu",
+                list0.sorted().joinToString(),
+                Collectionx.joinToString(Collectionx.sorted(list1)))
+
+        assertTwoEquals("uuuu, h, gg, aaa",
+                list0.sortedDescending().joinToString(),
+                Collectionx.joinToString(Collectionx.sortedDescending(list1)))
+
+        assertTwoEquals("h, gg, aaa, uuuu",
+                list0.sortedBy { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedBy(list1) { it.length }))
+
+        assertTwoEquals("uuuu, aaa, gg, h",
+                list0.sortedByDescending { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedByDescending(list1) { it.length }))
+
+        assertTwoEquals("aaa, gg, h, uuuu",
+                list0.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(list1) { it1, it2 -> it1.compareTo(it2) }))
+    }
+
+    @Test
+    @Suppress("ReplaceAssociateFunction")
+    fun testAssociate() {
+        val list0 = arrayListOf("aj", "bj", "ao", "bo")
+        val list1 = Collectionx.arrayListOf("aj", "bj", "ao", "bo")
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                list0.associate { it.first().toString() to it },
+                Collectionx.associate(list1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) },
+        )
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                list0.associateBy { it.first().toString() },
+                Collectionx.associateBy(list1) { it.first().toString() },
+        )
+
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                list0.associateBy({ it.first().toString() }, { it }),
+                Collectionx.associateBy(list1, { it.first().toString() }, { it }),
+        )
+
+        val associateToMap0 = HashMap<String, String>()
+        val associateToMap1 = HashMap<String, String>()
+        val associateToMapResult0 = list0.associateTo(associateToMap0) { it.first().toString() to it }
+        val associateToMapResult1 = Collectionx.associateTo(list1, associateToMap1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateToMap0,
+                associateToMap1,
+        )
+        assertTrue(associateToMap0 === associateToMapResult0)
+        assertTrue(associateToMap1 === associateToMapResult1)
+
+        val associateByTo1Map0 = HashMap<String, String>()
+        val associateByTo1Map1 = HashMap<String, String>()
+        val associateByTo1MapResult0 = list0.associateByTo(associateByTo1Map0) { it.first().toString() }
+        val associateByTo1MapResult1 = Collectionx.associateByTo(list1, associateByTo1Map1) { it.first().toString() }
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateByTo1Map0,
+                associateByTo1Map1,
+        )
+        assertTrue(associateByTo1Map0 === associateByTo1MapResult0)
+        assertTrue(associateByTo1Map1 === associateByTo1MapResult1)
+
+        val associateByTo2Map0 = HashMap<String, String>()
+        val associateByTo2Map1 = HashMap<String, String>()
+        val associateByTo2MapResult0 = list0.associateByTo(associateByTo2Map0, { it.first().toString() }, { it })
+        val associateByTo2MapResult1 = Collectionx.associateByTo(list1, associateByTo2Map1, { it.first().toString() }, { it })
+        assertTwoEquals(
+                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
+                associateByTo2Map0,
+                associateByTo2Map1,
+        )
+        assertTrue(associateByTo2Map0 === associateByTo2MapResult0)
+        assertTrue(associateByTo2Map1 === associateByTo2MapResult1)
     }
 
 
