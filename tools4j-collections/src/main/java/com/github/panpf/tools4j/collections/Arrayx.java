@@ -4935,7 +4935,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double max(@Nullable Double[] elements) {
+    public static Double maxOrNull(@Nullable Double[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Double max = elements[0];
         if (max.isNaN()) return max;
@@ -4953,7 +4953,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float max(@Nullable Float[] elements) {
+    public static Float maxOrNull(@Nullable Float[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Float max = elements[0];
         if (max.isNaN()) return max;
@@ -4969,7 +4969,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static <T extends Comparable<T>> T max(@Nullable T[] elements) {
+    public static <T extends Comparable<T>> T maxOrNull(@Nullable T[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -4983,7 +4983,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static Byte max(@Nullable byte[] elements) {
+    public static Byte maxOrNull(@Nullable byte[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -4997,7 +4997,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static Short max(@Nullable short[] elements) {
+    public static Short maxOrNull(@Nullable short[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5011,7 +5011,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static Integer max(@Nullable int[] elements) {
+    public static Integer maxOrNull(@Nullable int[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5025,7 +5025,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static Long max(@Nullable long[] elements) {
+    public static Long maxOrNull(@Nullable long[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5041,7 +5041,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float max(@Nullable float[] elements) {
+    public static Float maxOrNull(@Nullable float[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Float max = elements[0];
         if (max.isNaN()) return max;
@@ -5059,7 +5059,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double max(@Nullable double[] elements) {
+    public static Double maxOrNull(@Nullable double[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Double max = elements[0];
         if (max.isNaN()) return max;
@@ -5075,7 +5075,7 @@ public class Arrayx {
      * Returns the largest element or `null` if there are no elements.
      */
     @Nullable
-    public static Character max(@Nullable char[] elements) {
+    public static Character maxOrNull(@Nullable char[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5089,7 +5089,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T maxBy(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T maxByOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5108,7 +5108,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Byte maxBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
+    public static <R extends Comparable<R>> Byte maxByOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5127,7 +5127,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Short maxBy(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
+    public static <R extends Comparable<R>> Short maxByOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5146,7 +5146,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Integer maxBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
+    public static <R extends Comparable<R>> Integer maxByOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5165,7 +5165,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Long maxBy(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
+    public static <R extends Comparable<R>> Long maxByOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5184,7 +5184,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Float maxBy(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
+    public static <R extends Comparable<R>> Float maxByOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5203,7 +5203,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Double maxBy(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
+    public static <R extends Comparable<R>> Double maxByOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5222,7 +5222,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Boolean maxBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
+    public static <R extends Comparable<R>> Boolean maxByOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5241,7 +5241,7 @@ public class Arrayx {
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character maxBy(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
+    public static <R extends Comparable<R>> Character maxByOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
@@ -5260,7 +5260,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static <T> T maxWith(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
+    public static <T> T maxWithOrNull(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5274,7 +5274,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Byte maxWith(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
+    public static Byte maxWithOrNull(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5288,7 +5288,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Short maxWith(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
+    public static Short maxWithOrNull(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5302,7 +5302,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Integer maxWith(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
+    public static Integer maxWithOrNull(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5316,7 +5316,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Long maxWith(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
+    public static Long maxWithOrNull(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5330,7 +5330,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Float maxWith(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
+    public static Float maxWithOrNull(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5344,7 +5344,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Double maxWith(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
+    public static Double maxWithOrNull(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5358,7 +5358,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Boolean maxWith(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
+    public static Boolean maxWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5372,7 +5372,7 @@ public class Arrayx {
      * Returns the first element having the largest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Character maxWith(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
+    public static Character maxWithOrNull(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5381,6 +5381,8 @@ public class Arrayx {
         }
         return max;
     }
+
+    // todo add maxOf method
 
 
     /* ******************************************* min ******************************************* */
@@ -5392,7 +5394,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double min(@Nullable Double[] elements) {
+    public static Double minOrNull(@Nullable Double[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Double min = elements[0];
         if (min.isNaN()) return min;
@@ -5410,7 +5412,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float min(@Nullable Float[] elements) {
+    public static Float minOrNull(@Nullable Float[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Float min = elements[0];
         if (min.isNaN()) return min;
@@ -5426,7 +5428,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static <T extends Comparable<T>> T min(@Nullable T[] elements) {
+    public static <T extends Comparable<T>> T minOrNull(@Nullable T[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5440,7 +5442,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static Byte min(@Nullable byte[] elements) {
+    public static Byte minOrNull(@Nullable byte[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5454,7 +5456,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static Short min(@Nullable short[] elements) {
+    public static Short minOrNull(@Nullable short[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5468,7 +5470,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static Integer min(@Nullable int[] elements) {
+    public static Integer minOrNull(@Nullable int[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5482,7 +5484,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static Long min(@Nullable long[] elements) {
+    public static Long minOrNull(@Nullable long[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5498,7 +5500,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Float min(@Nullable float[] elements) {
+    public static Float minOrNull(@Nullable float[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Float min = elements[0];
         if (min.isNaN()) return min;
@@ -5516,7 +5518,7 @@ public class Arrayx {
      * If any of elements is `NaN` returns `NaN`.
      */
     @Nullable
-    public static Double min(@Nullable double[] elements) {
+    public static Double minOrNull(@Nullable double[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         Double min = elements[0];
         if (min.isNaN()) return min;
@@ -5532,7 +5534,7 @@ public class Arrayx {
      * Returns the smallest element or `null` if there are no elements.
      */
     @Nullable
-    public static Character min(@Nullable char[] elements) {
+    public static Character minOrNull(@Nullable char[] elements) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5546,7 +5548,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <T, R extends Comparable<R>> T minBy(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> T minByOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5565,7 +5567,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Byte minBy(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
+    public static <R extends Comparable<R>> Byte minByOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5584,7 +5586,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Short minBy(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
+    public static <R extends Comparable<R>> Short minByOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5603,7 +5605,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Integer minBy(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
+    public static <R extends Comparable<R>> Integer minByOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5622,7 +5624,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Long minBy(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
+    public static <R extends Comparable<R>> Long minByOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5641,7 +5643,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Float minBy(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
+    public static <R extends Comparable<R>> Float minByOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5660,7 +5662,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Double minBy(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
+    public static <R extends Comparable<R>> Double minByOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5679,7 +5681,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Boolean minBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
+    public static <R extends Comparable<R>> Boolean minByOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5698,7 +5700,7 @@ public class Arrayx {
      * Returns the first element yielding the smallest value of the given function or `null` if there are no elements.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character minBy(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
+    public static <R extends Comparable<R>> Character minByOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char minElem = elements[0];
         R minValue = transformer.transform(minElem);
@@ -5717,7 +5719,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static <T> T minWith(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
+    public static <T> T minWithOrNull(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         T min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5731,7 +5733,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Byte minWith(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
+    public static Byte minWithOrNull(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         byte min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5745,7 +5747,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Short minWith(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
+    public static Short minWithOrNull(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         short min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5759,7 +5761,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Integer minWith(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
+    public static Integer minWithOrNull(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         int min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5773,7 +5775,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Long minWith(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
+    public static Long minWithOrNull(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         long min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5787,7 +5789,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Float minWith(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
+    public static Float minWithOrNull(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         float min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5801,7 +5803,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Double minWith(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
+    public static Double minWithOrNull(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         double min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5815,7 +5817,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Boolean minWith(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
+    public static Boolean minWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         boolean min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5829,7 +5831,7 @@ public class Arrayx {
      * Returns the first element having the smallest value according to the provided [comparator] or `null` if there are no elements.
      */
     @Nullable
-    public static Character minWith(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
+    public static Character minWithOrNull(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
         if (Arrayx.isNullOrEmpty(elements)) return null;
         char min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5838,6 +5840,8 @@ public class Arrayx {
         }
         return min;
     }
+
+    // todo add minOf method
 
 
     /* ******************************************* join ******************************************* */
@@ -11320,6 +11324,8 @@ public class Arrayx {
         }
         return destination;
     }
+
+    // todo add flatMapIndexed and flatMapIndexedTo method
 
 
     /* ******************************************* average ******************************************* */
