@@ -196,6 +196,15 @@ public class Collectionx {
         }
     }
 
+    /**
+     * Returns an empty read-only list.  The returned list is serializable (JVM).
+     */
+    @NotNull
+    public static  <T> List<T> emptyList() {
+        //noinspection unchecked
+        return (List<T>) EmptyList.INSTANCE;
+    }
+
 
     /* ******************************************* setOf ******************************************* */
 
@@ -289,6 +298,7 @@ public class Collectionx {
     @NotNull
     @SafeVarargs
     public static <T> TreeSet<T> sortedSetOf(@Nullable T... elements) {
+        //noinspection SortedCollectionWithNonComparableKeys
         return Arrayx.toCollection(elements, new TreeSet<T>());
     }
 
@@ -625,7 +635,7 @@ public class Collectionx {
     /**
      * Appends all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original collection, to the given [destination].
-     *
+     * <p>
      * The operation is _terminal_.
      */
     @NotNull
@@ -643,7 +653,7 @@ public class Collectionx {
     /**
      * Returns a single collection of all elements yielded from results of [transform] function being invoked on each element
      * and its index in the original collection.
-     *
+     * <p>
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
@@ -1670,7 +1680,7 @@ public class Collectionx {
         if (iterable instanceof Set) {
             return (Set<T>) iterable;
         } else if (iterable instanceof Collection) {
-            if (source instanceof Collection && ((Collection) source).size() < 2) {
+            if (source instanceof Collection && ((Collection<T>) source).size() < 2) {
                 return (Collection<T>) iterable;
             } else if (safeToConvertToSet((Collection<T>) iterable)) {
                 return toHashSet(iterable);
@@ -1725,7 +1735,7 @@ public class Collectionx {
      * Returns `true` if all elements match the given [predicate].
      */
     public static <T> boolean all(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection) iterable).isEmpty()) {
+        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) {
             return true;
         }
         for (T element : iterable) {
@@ -1744,14 +1754,14 @@ public class Collectionx {
      */
     public static <T> boolean any(@Nullable Iterable<T> iterable) {
         if (iterable == null) return false;
-        return iterable instanceof Collection ? !((Collection) iterable).isEmpty() : iterable.iterator().hasNext();
+        return iterable instanceof Collection ? !((Collection<T>) iterable).isEmpty() : iterable.iterator().hasNext();
     }
 
     /**
      * Returns `true` if at least one element matches the given [predicate].
      */
     public static <T> boolean any(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection) iterable).isEmpty()) return false;
+        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) return false;
         for (T element : iterable) if (predicate.accept(element)) return true;
         return false;
     }
@@ -1764,14 +1774,14 @@ public class Collectionx {
      */
     public static <T> boolean none(@Nullable Iterable<T> iterable) {
         if (iterable == null) return true;
-        return iterable instanceof Collection ? ((Collection) iterable).isEmpty() : !iterable.iterator().hasNext();
+        return iterable instanceof Collection ? ((Collection<T>) iterable).isEmpty() : !iterable.iterator().hasNext();
     }
 
     /**
      * Returns `true` if no elements match the given [predicate].
      */
     public static <T> boolean none(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection) iterable).isEmpty()) return true;
+        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) return true;
         for (T element : iterable) if (predicate.accept(element)) return false;
         return true;
     }
@@ -1785,7 +1795,7 @@ public class Collectionx {
     public static <T> boolean contains(@Nullable Iterable<T> iterable, @NotNull T element) {
         if (iterable == null) return false;
         if (iterable instanceof Collection) {
-            return ((Collection) iterable).contains(element);
+            return ((Collection<T>) iterable).contains(element);
         } else {
             return indexOf(iterable, element) >= 0;
         }
@@ -2024,7 +2034,7 @@ public class Collectionx {
     public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable Iterable<T> elements) {
         if (elements == null) return toList(collection);
         if (elements instanceof Collection) {
-            ArrayList<T> result = new ArrayList<>(count(collection) + ((Collection) elements).size());
+            ArrayList<T> result = new ArrayList<>(count(collection) + ((Collection<T>) elements).size());
             addAll(result, collection);
             addAll(result, elements);
             return result;
@@ -2327,7 +2337,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> reversed(@Nullable Iterable<T> iterable) {
-        if (iterable instanceof Collection && ((Collection) iterable).size() <= 1) {
+        if (iterable instanceof Collection && ((Collection<T>) iterable).size() <= 1) {
             return toList(iterable);
         } else {
             List<T> list = toList(iterable);
@@ -2345,7 +2355,7 @@ public class Collectionx {
      */
     public static <T> int indexOf(@Nullable Iterable<T> iterable, @Nullable T element) {
         if (iterable instanceof List) {
-            return ((List) iterable).indexOf(element);
+            return ((List<T>) iterable).indexOf(element);
         } else {
             if (iterable != null) {
                 int index = 0;
@@ -2436,7 +2446,7 @@ public class Collectionx {
      */
     public static <T> int lastIndexOf(@Nullable Iterable<T> iterable, @Nullable T element) {
         if (iterable instanceof List) {
-            return ((List) iterable).lastIndexOf(element);
+            return ((List<T>) iterable).lastIndexOf(element);
         } else {
             int lastIndex = -1;
             if (iterable != null) {
@@ -2644,7 +2654,7 @@ public class Collectionx {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
         if (n == 0) {
-            return Collectionx.arrayListOf();
+            return Collectionx.emptyList();
         }
         if (iterable instanceof Collection) {
             if (n >= ((Collection<T>) iterable).size()) {
@@ -3216,9 +3226,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> T elementAt(@Nullable List<T> list, int index) {
-        if (isNullOrEmpty(list)) {
-            throw new IndexOutOfBoundsException("Collection doesn't contain element at index " + index + ".");
-        }
+        if (list == null) throw new IndexOutOfBoundsException("Collection doesn't contain element at index " + index + ".");
         return list.get(index);
     }
 
@@ -3419,7 +3427,7 @@ public class Collectionx {
     @NotNull
     public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, @NotNull R[] other, @NotNull Transformer2<T, R, V> transform) {
         int arraySize = other.length;
-        List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), arraySize));
+        List<V> list = new ArrayList<>(Math.min(collectionSizeOrDefault(iterable, 10), arraySize));
         int i = 0;
         for (T element : iterable) {
             if (i >= arraySize) {
@@ -3455,7 +3463,7 @@ public class Collectionx {
     public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
         Iterator<T> first = iterable.iterator();
         Iterator<R> second = other.iterator();
-        List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), collectionSizeOrDefault(other, 10)));
+        List<V> list = new ArrayList<>(Math.min(collectionSizeOrDefault(iterable, 10), collectionSizeOrDefault(other, 10)));
         while (first.hasNext() && second.hasNext()) {
             list.add(transform.transform(first.next(), second.next()));
         }
@@ -3623,7 +3631,30 @@ public class Collectionx {
         }
         return result;
     }
-    
+
+
+    /* ******************************************* flatten ******************************************* */
+
+    /**
+     * Returns a single list of all elements from all collections in the given collection.
+     */
+    @NotNull
+    public static <T> List<T> flatten(@Nullable Iterable<Iterable<T>> iterables) {
+        ArrayList<T> result = new ArrayList<>();
+        if (iterables != null) {
+            for (Iterable<T> element : iterables) {
+                if (element instanceof Collection) {
+                    result.addAll((Collection<? extends T>) element);
+                } else {
+                    for (T t : element) {
+                        result.add(t);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {
         try {
             if (transform != null) {

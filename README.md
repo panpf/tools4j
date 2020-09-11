@@ -135,7 +135,7 @@ Dependencies：
 * Collectionx: [Collectionx.java] | [Collectionx.kt]
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf,
     * collectionSizeOrDefault, isEmpty, isNotEmpty, orEmpty,
-    * immutableListOf, mutableListOf, arrayListOf, immutableSetOf,
+    * immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf,
     * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo,
     * filterNotTo, filterNotNullTo, filterIndexedTo, filterIsInstanceTo,
     * filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
@@ -159,7 +159,7 @@ Dependencies：
     * distinct, distinctBy, intersect, retainAll, associateTo, associate,
     * associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile,
     * single, singleOrNull, elementAtOrElse, elementAt, elementAtOrNull,
-    * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array
+    * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array, flatten
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxTest.kt])
     * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf,
     * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty,

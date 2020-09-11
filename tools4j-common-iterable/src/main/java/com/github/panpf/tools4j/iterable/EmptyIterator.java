@@ -16,11 +16,13 @@
 
 package com.github.panpf.tools4j.iterable;
 
-import java.util.Iterator;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.NoSuchElementException;
 
-public class EmptyIterator implements Iterator<Object> {
+public class EmptyIterator implements ListIterator<Object> {
 
+    @NotNull
     public static final EmptyIterator INSTANCE = new EmptyIterator();
 
     private EmptyIterator() {
@@ -29,6 +31,27 @@ public class EmptyIterator implements Iterator<Object> {
     @Override
     public boolean hasNext() {
         return false;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return false;
+    }
+
+    @NotNull
+    @Override
+    public Object previous() {
+        throw new NoSuchElementException();
+    }
+
+    @Override
+    public int nextIndex() {
+        return -1;
+    }
+
+    @Override
+    public int previousIndex() {
+        return -1;
     }
 
     @Override
