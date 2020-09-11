@@ -515,8 +515,8 @@ Please view the [CHANGELOG.md] file
 
 [DateRangex.java]: tools4j-ranges-date/src/main/java/com/github/panpf/tools4j/ranges/date/DateRangex.java
 [DateRangexTest.kt]: tools4j-ranges-date/src/test/java/com/github/panpf/tools4j/ranges/date/DateRangexTest.kt
-[DateRangex.kt]: tools4j-ranges-date-ktx/src/main/java/com/github/panpf/tools4j/ranges/ktx/DateRangex.kt
-[DateRangexTest.kt]: tools4j-ranges-date-ktx/src/test/java/com/github/panpf/tools4j/ranges/ktx/DateRangexTest.kt
+[DateRangex.kt]: tools4j-ranges-date-ktx/src/main/java/com/github/panpf/tools4j/ranges/date/ktx/DateRangex.kt
+[DateRangexTest.kt]: tools4j-ranges-date-ktx/src/test/java/com/github/panpf/tools4j/ranges/date/ktx/DateRangexTest.kt
 
 [Reflectx.java]: tools4j-reflect/src/main/java/com/github/panpf/tools4j/reflect/Reflectx.java
 [ReflectxTest.kt]: tools4j-reflect/src/test/java/com/github/panpf/tools4j/reflect/ReflectxTest.kt
