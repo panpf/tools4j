@@ -5,11 +5,13 @@
 * new: Sequencex add flatMapOfIterable, flatMapOfIterableTo, flatMapIndexed, flatMapIndexedOfIterable, flatMapIndexedOfIterableTo, flatMapIndexedTo method
 * new: Collectionx add flatMapIndexed, flatMapIndexedTo method
 * change: Sequencex max\* and min\* method rename to max\*OrNull and min\*OrNull
-* new: Sequencex added maxOf\* and maxOf\* method
+* new: Sequencex added maxOf\* and minOf\* method
 * change: Mapx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Collectionx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * new: Collectionx added emptyList, flatten method
+* new: Mapx added maxOf\* and minOf\* method
+* new: Collectionx added maxOf\* and minOf\* method
 
 ## v1.0.0-beta02
 improve: Improve code

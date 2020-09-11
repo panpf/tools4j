@@ -145,7 +145,9 @@ Dependencies：
     * joinTo, joinToString, count, averageOf, sumOf, sumBy,
     * first, firstOrNull, last, lastOrNull, find, findLast, getOrElse,
     * getOrNull, maxOrNull, maxByOrNull, maxWithOrNull, 
+    * maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull
     * minOrNull, minByOrNull, minWithOrNull,
+    * minOf, minOfOrNull, minOfWith, minOfWithOrNull
     * addAll, removeAll, partition, toCollection, toList, toSet,
     * toSortedSet, toHashSet, safeToConvertToSet,
     * convertToSetForSetOperationWith, convertToSetForSetOperation,
@@ -166,7 +168,9 @@ Dependencies：
     * putAll, plus, plusAssign, remove, minus, minusAssign, set,
     * get, getOrElse, getValue, getOrPut, contains, containsKey,
     * containsValue, all, any, count, forEach, onEach, maxByOrNull, maxWithOrNull,
-    * minByOrNull, minWithOrNull, none, filterKeys, filterValues, filterTo, filter,
+    * maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minByOrNull, minWithOrNull, 
+    * minOf, minOfOrNull, minOfWith, minOfWithOrNull, 
+    * none, filterKeys, filterValues, filterTo, filter,
     * filterNotTo, filterNot, iterator, toPair, toMap, toList, asIterable,
     * mapValuesTo, mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo,
     * mapNotNull, flatMapTo, flatMap, capacity

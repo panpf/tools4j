@@ -200,7 +200,7 @@ public class Collectionx {
      * Returns an empty read-only list.  The returned list is serializable (JVM).
      */
     @NotNull
-    public static  <T> List<T> emptyList() {
+    public static <T> List<T> emptyList() {
         //noinspection unchecked
         return (List<T>) EmptyList.INSTANCE;
     }
@@ -1362,8 +1362,6 @@ public class Collectionx {
         return max;
     }
 
-    // todo add maxOf method
-
     /**
      * Returns the first element yielding the largest value of the given function or `null` if there are no elements.
      */
@@ -1397,6 +1395,164 @@ public class Collectionx {
             if (comparator.compare(max, e) < 0) max = e;
         }
         return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    public static <T> double maxOfByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        double maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            double v = selector.transform(iterator.next());
+            maxValue = Math.max(maxValue, v);
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    public static <T> float maxOfByFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        float maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            float v = selector.transform(iterator.next());
+            maxValue = Math.max(maxValue, v);
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    @NotNull
+    public static <T, R extends Comparable<R>> R maxOf(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        R maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (maxValue.compareTo(v) < 0) {
+                maxValue = v;
+            }
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Double maxOfByDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        double maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            double v = selector.transform(iterator.next());
+            maxValue = Math.max(maxValue, v);
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Float maxOfByFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        float maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            float v = selector.transform(iterator.next());
+            maxValue = Math.max(maxValue, v);
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     */
+    @Nullable
+    public static <T, R extends Comparable<R>> R maxOfOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        R maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (maxValue.compareTo(v) < 0) {
+                maxValue = v;
+            }
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the collection.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    @NotNull
+    public static <T, R> R maxOfWith(@Nullable Iterable<T> iterable, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        R maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (comparator.compare(maxValue, v) < 0) {
+                maxValue = v;
+            }
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the collection or `null` if there are no elements.
+     */
+    @Nullable
+    public static <T, R> R maxOfWithOrNull(@Nullable Iterable<T> iterable, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        R maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (comparator.compare(maxValue, v) < 0) {
+                maxValue = v;
+            }
+        }
+        return maxValue;
     }
 
 
@@ -1491,7 +1647,163 @@ public class Collectionx {
         return min;
     }
 
-    // todo add minOf method
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    public static <T> double minOfByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        double minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            double v = selector.transform(iterator.next());
+            minValue = Math.min(minValue, v);
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    public static <T> float minOfByFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        float minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            float v = selector.transform(iterator.next());
+            minValue = Math.min(minValue, v);
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    @NotNull
+    public static <T, R extends Comparable<R>> R minOf(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        R minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (minValue.compareTo(v) > 0) {
+                minValue = v;
+            }
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Double minOfByDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        double minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            double v = selector.transform(iterator.next());
+            minValue = Math.min(minValue, v);
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Float minOfByFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        float minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            float v = selector.transform(iterator.next());
+            minValue = Math.min(minValue, v);
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the collection or `null` if there are no elements.
+     */
+    @Nullable
+    public static <T, R extends Comparable<R>> R minOfOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        R minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (minValue.compareTo(v) > 0) {
+                minValue = v;
+            }
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the collection.
+     *
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    @NotNull
+    public static <T, R> R minOfWith(@Nullable Iterable<T> iterable, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) throw new NoSuchElementException();
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        R minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (comparator.compare(minValue, v) > 0) {
+                minValue = v;
+            }
+        }
+        return minValue;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the collection or `null` if there are no elements.
+     */
+    @Nullable
+    public static <T, R> R minOfWithOrNull(@Nullable Iterable<T> iterable, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (iterable == null) return null;
+        Iterator<T> iterator = iterable.iterator();
+        if (!iterator.hasNext()) return null;
+        R minValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (comparator.compare(minValue, v) > 0) {
+                minValue = v;
+            }
+        }
+        return minValue;
+    }
 
 
     /* ******************************************* add ******************************************* */
@@ -3226,7 +3538,8 @@ public class Collectionx {
      */
     @NotNull
     public static <T> T elementAt(@Nullable List<T> list, int index) {
-        if (list == null) throw new IndexOutOfBoundsException("Collection doesn't contain element at index " + index + ".");
+        if (list == null)
+            throw new IndexOutOfBoundsException("Collection doesn't contain element at index " + index + ".");
         return list.get(index);
     }
 

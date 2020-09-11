@@ -623,7 +623,91 @@ public class Mapx {
         return Collectionx.maxWithOrNull(map != null ? map.entrySet() : null, comparator);
     }
 
-    // todo add maxOf method
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    public static <K, V> double maxOfByDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.maxOfByDouble(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    public static <K, V> float maxOfByFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.maxOfByFloat(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    @NotNull
+    public static <K, V, R extends Comparable<R>> R maxOf(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.maxOf(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <K, V> Double maxOfByDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.maxOfByDoubleOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <K, V> Float maxOfByFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.maxOfByFloatOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     */
+    @Nullable
+    public static <K, V, R extends Comparable<R>> R maxOfOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.maxOfOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each entry in the map.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    @NotNull
+    public static <K, V, R> R maxOfWith(@Nullable Map<K, V> map, @NotNull Comparator<R> comparator, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.maxOfWith(map != null ? map.entrySet() : null, comparator, selector);
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each entry in the map or `null` if there are no entries.
+     */
+    @Nullable
+    public static <K, V, R> R maxOfWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<R> comparator, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.maxOfWithOrNull(map != null ? map.entrySet() : null, comparator, selector);
+    }
 
 
     /* ******************************************* min ****************************************** */
@@ -644,7 +728,91 @@ public class Mapx {
         return Collectionx.minWithOrNull(map != null ? map.entrySet() : null, comparator);
     }
 
-    // todo add minOf method
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    public static <K, V> double minOfByDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.minOfByDouble(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    public static <K, V> float minOfByFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.minOfByFloat(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    @NotNull
+    public static <K, V, R extends Comparable<R>> R minOf(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.minOf(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <K, V> Double minOfByDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.minOfByDoubleOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     * <p>
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <K, V> Float minOfByFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.minOfByFloatOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each entry in the map or `null` if there are no entries.
+     */
+    @Nullable
+    public static <K, V, R extends Comparable<R>> R minOfOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.minOfOrNull(map != null ? map.entrySet() : null, selector);
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each entry in the map.
+     *
+     * @throws NoSuchElementException if the map is empty.
+     */
+    @NotNull
+    public static <K, V, R> R minOfWith(@Nullable Map<K, V> map, @NotNull Comparator<R> comparator, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.minOfWith(map != null ? map.entrySet() : null, comparator, selector);
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each entry in the map or `null` if there are no entries.
+     */
+    @Nullable
+    public static <K, V, R> R minOfWithOrNull(@Nullable Map<K, V> map, @NotNull Comparator<R> comparator, @NotNull Transformer<Map.Entry<K, V>, R> selector) {
+        return Collectionx.minOfWithOrNull(map != null ? map.entrySet() : null, comparator, selector);
+    }
 
 
     /* ******************************************* none ****************************************** */
