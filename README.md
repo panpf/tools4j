@@ -122,10 +122,10 @@ Dependencies：
     * filterIsInstanceTo, filterNot, filterNotNullTo, filterNotTo,
     * filterTo, zip, partition, first, firstOrNull, last, lastOrNull
     * find, findLast, getOrElse, getOrNull, elementAt, elementAtOrElse,
-    * elementAtOrNull, flatMap, flatMapTo, averageOf average, none,
-    * reduce, reduceIndexed, reduceRight, reduceRightIndexed, fold,
-    * foldIndexed, foldRight, foldRightIndexed, intersect, subtract,
-    * drop, dropLast, dropLastWhile, dropWhile, take, takeLast,
+    * elementAtOrNull, flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, 
+    * averageOf average, none, reduce, reduceIndexed, reduceRight, 
+    * reduceRightIndexed, fold, foldIndexed, foldRight, foldRightIndexed, 
+    * intersect, subtract, drop, dropLast, dropLastWhile, dropWhile, take, takeLast,
     * takeLastWhile, takeWhile, distinct, distinctBy, withIndex
 * Arrayx2: [Arrayx2.java]
     * contentHashCode, contentDeepEquals, contentDeepHashCode,

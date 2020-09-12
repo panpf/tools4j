@@ -11199,6 +11199,7 @@ public class Arrayx {
         return flatMapTo(elements, new ArrayList<R>(), transform);
     }
 
+
     /**
      * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
      */
@@ -11325,7 +11326,214 @@ public class Arrayx {
         return destination;
     }
 
-    // todo add flatMapIndexed and flatMapIndexedTo method
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <T, R> List<R> flatMapIndexed(@Nullable T[] elements, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable byte[] elements, @NotNull IndexedTransformer<Byte, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable short[] elements, @NotNull IndexedTransformer<Short, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable int[] elements, @NotNull IndexedTransformer<Integer, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable long[] elements, @NotNull IndexedTransformer<Long, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable float[] elements, @NotNull IndexedTransformer<Float, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable double[] elements, @NotNull IndexedTransformer<Double, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable boolean[] elements, @NotNull IndexedTransformer<Boolean, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+    /**
+     * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original array.
+     */
+    @NotNull
+    public static <R> List<R> flatMapIndexed(@Nullable char[] elements, @NotNull IndexedTransformer<Character, Iterable<R>> transform) {
+        return flatMapIndexedTo(elements, new ArrayList<R>(), transform);
+    }
+
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@Nullable T[] elements, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (T element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable byte[] elements, @NotNull C destination, @NotNull IndexedTransformer<Byte, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (byte element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable short[] elements, @NotNull C destination, @NotNull IndexedTransformer<Short, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (short element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable int[] elements, @NotNull C destination, @NotNull IndexedTransformer<Integer, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (int element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable long[] elements, @NotNull C destination, @NotNull IndexedTransformer<Long, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (long element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable float[] elements, @NotNull C destination, @NotNull IndexedTransformer<Float, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (float element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable double[] elements, @NotNull C destination, @NotNull IndexedTransformer<Double, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (double element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable boolean[] elements, @NotNull C destination, @NotNull IndexedTransformer<Boolean, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (boolean element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
+
+    /**
+     * Appends all elements yielded from results of [transform] function being invoked on each element of original array, to the given [destination].
+     */
+    @NotNull
+    public static <R, C extends Collection<R>> C flatMapIndexedTo(@Nullable char[] elements, @NotNull C destination, @NotNull IndexedTransformer<Character, Iterable<R>> transform) {
+        if (elements != null) {
+            int index = 0;
+            for (char element : elements) {
+                Iterable<R> list = transform.transform(index++, element);
+                Collectionx.addAll(destination, list);
+            }
+        }
+        return destination;
+    }
 
 
     /* ******************************************* average ******************************************* */

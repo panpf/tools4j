@@ -1,6 +1,5 @@
 package com.github.panpf.tools4j.collections
 
-import com.github.panpf.tools4j.common.Transformer
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -76,31 +75,31 @@ class ArrayxTest {
 
     @Test
     fun testJoinToArrayString() {
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(arrayOf("4", "3", "2"), Transformer { "key$it" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(arrayOf("4", "3", "2")) { "key$it" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(arrayOf("4", "3", "2")))
 
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(charArrayOf('4', '3', '2'), Transformer { "key${it}" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(charArrayOf('4', '3', '2')) { "key${it}" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(charArrayOf('4', '3', '2')))
 
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(byteArrayOf(4.toByte(), 3.toByte(), 2.toByte()), Transformer { "key$it" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(byteArrayOf(4.toByte(), 3.toByte(), 2.toByte())) { "key$it" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(byteArrayOf(4.toByte(), 3.toByte(), 2.toByte())))
 
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(shortArrayOf(4.toShort(), 3.toShort(), 2.toShort()), Transformer { "key$it" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(shortArrayOf(4.toShort(), 3.toShort(), 2.toShort())) { "key$it" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(shortArrayOf(4.toShort(), 3.toShort(), 2.toShort())))
 
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(intArrayOf(4, 3, 2), Transformer { "key$it" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(intArrayOf(4, 3, 2)) { "key$it" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(intArrayOf(4, 3, 2)))
 
-        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(longArrayOf(4.toLong(), 3.toLong(), 2.toLong()), Transformer { "key$it" }))
+        assertEquals("[key4, key3, key2]", Arrayx.joinToArrayString(longArrayOf(4.toLong(), 3.toLong(), 2.toLong())) { "key$it" })
         assertEquals("[4, 3, 2]", Arrayx.joinToArrayString(longArrayOf(4.toLong(), 3.toLong(), 2.toLong())))
 
-        assertEquals("[key4.0, key3.0, key2.0]", Arrayx.joinToArrayString(floatArrayOf(4.toFloat(), 3.toFloat(), 2.toFloat()), Transformer { "key$it" }))
+        assertEquals("[key4.0, key3.0, key2.0]", Arrayx.joinToArrayString(floatArrayOf(4.toFloat(), 3.toFloat(), 2.toFloat())) { "key$it" })
         assertEquals("[4.0, 3.0, 2.0]", Arrayx.joinToArrayString(floatArrayOf(4.toFloat(), 3.toFloat(), 2.toFloat())))
 
-        assertEquals("[key4.0, key3.0, key2.0]", Arrayx.joinToArrayString(doubleArrayOf(4.toDouble(), 3.toDouble(), 2.toDouble()), Transformer { "key$it" }))
+        assertEquals("[key4.0, key3.0, key2.0]", Arrayx.joinToArrayString(doubleArrayOf(4.toDouble(), 3.toDouble(), 2.toDouble())) { "key$it" })
         assertEquals("[4.0, 3.0, 2.0]", Arrayx.joinToArrayString(doubleArrayOf(4.toDouble(), 3.toDouble(), 2.toDouble())))
 
-        assertEquals("[keytrue, keyfalse, keyfalse]", Arrayx.joinToArrayString(booleanArrayOf(true, false, false), Transformer { "key$it" }))
+        assertEquals("[keytrue, keyfalse, keyfalse]", Arrayx.joinToArrayString(booleanArrayOf(true, false, false)) { "key$it" })
         assertEquals("[true, false, false]", Arrayx.joinToArrayString(booleanArrayOf(true, false, false)))
     }
 }
