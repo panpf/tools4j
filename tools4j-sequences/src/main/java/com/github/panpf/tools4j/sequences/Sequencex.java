@@ -2096,7 +2096,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    public static <T> double maxOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> double maxOfDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2118,7 +2118,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    public static <T> float maxOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> float maxOfFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2162,7 +2162,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> Double maxOfByDoubleOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> Double maxOfDoubleOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2183,7 +2183,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> Float maxOfByFloatOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> Float maxOfFloatOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2378,7 +2378,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    public static <T> double minOfByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> double minOfDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2400,7 +2400,7 @@ public class Sequencex {
      *                                <p>
      *                                The operation is _terminal_.
      */
-    public static <T> float minOfByFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> float minOfFloat(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) throw new NoSuchElementException();
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -2444,7 +2444,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> Double minOfByDoubleOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
+    public static <T> Double minOfDoubleOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> selector) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;
@@ -2465,7 +2465,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> Float minOfByFloatOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
+    public static <T> Float minOfFloatOrNull(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Float> selector) {
         if (sequence == null) return null;
         Iterator<T> iterator = sequence.iterator();
         if (!iterator.hasNext()) return null;

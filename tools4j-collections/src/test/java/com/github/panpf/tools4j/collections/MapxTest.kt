@@ -464,31 +464,31 @@ class MapxTest {
 
 
         assertTwoEquals("3.0",
-                Mapx.maxOfByDouble(map) { it.key.toDouble() }.toString(),
+                Mapx.maxOfDouble(map) { it.key.toDouble() }.toString(),
                 map.maxOf { it.key.toDouble() }.toString())
         assertTwoThrow(NoSuchElementException::class,
-                { Mapx.maxOfByDouble(null as Map<String, String>?) { it.key.toDouble() } },
+                { Mapx.maxOfDouble(null as Map<String, String>?) { it.key.toDouble() } },
                 { mutableMapOf<String, String>().maxOf { it.key.toDouble() } })
 
         assertTwoEquals("3.0",
-                Mapx.maxOfByDoubleOrNull(map) { it.key.toDouble() }.toString(),
+                Mapx.maxOfDoubleOrNull(map) { it.key.toDouble() }.toString(),
                 map.maxOfOrNull { it.key.toDouble() }.toString())
         assertTwoEquals(null,
-                Mapx.maxOfByDoubleOrNull(null as Map<String, String>?) { it.key.toDouble() },
+                Mapx.maxOfDoubleOrNull(null as Map<String, String>?) { it.key.toDouble() },
                 mutableMapOf<String, String>().maxOfOrNull { it.key.toDouble() })
 
         assertTwoEquals("3.0",
-                Mapx.maxOfByFloat(map) { it.key.toFloat() }.toString(),
+                Mapx.maxOfFloat(map) { it.key.toFloat() }.toString(),
                 map.maxOf { it.key.toFloat() }.toString())
         assertTwoThrow(NoSuchElementException::class,
-                { Mapx.maxOfByFloat(null as Map<String, String>?) { it.key.toFloat() } },
+                { Mapx.maxOfFloat(null as Map<String, String>?) { it.key.toFloat() } },
                 { mutableMapOf<String, String>().maxOf { it.key.toFloat() } })
 
         assertTwoEquals("3.0",
-                Mapx.maxOfByFloatOrNull(map) { it.key.toFloat() }.toString(),
+                Mapx.maxOfFloatOrNull(map) { it.key.toFloat() }.toString(),
                 map.maxOfOrNull { it.key.toFloat() }.toString())
         assertTwoEquals(null,
-                Mapx.maxOfByFloatOrNull(null as Map<String, String>?) { it.key.toFloat() },
+                Mapx.maxOfFloatOrNull(null as Map<String, String>?) { it.key.toFloat() },
                 mutableMapOf<String, String>().maxOfOrNull { it.key.toFloat() })
 
         assertTwoEquals("3",
@@ -540,31 +540,31 @@ class MapxTest {
 
 
         assertTwoEquals("1.0",
-                Mapx.minOfByDouble(map) { it.key.toDouble() }.toString(),
+                Mapx.minOfDouble(map) { it.key.toDouble() }.toString(),
                 map.minOf { it.key.toDouble() }.toString())
         assertTwoThrow(NoSuchElementException::class,
-                { Mapx.minOfByDouble(null as Map<String, String>?) { it.key.toDouble() } },
+                { Mapx.minOfDouble(null as Map<String, String>?) { it.key.toDouble() } },
                 { mutableMapOf<String, String>().minOf { it.key.toDouble() } })
 
         assertTwoEquals("1.0",
-                Mapx.minOfByDoubleOrNull(map) { it.key.toDouble() }.toString(),
+                Mapx.minOfDoubleOrNull(map) { it.key.toDouble() }.toString(),
                 map.minOfOrNull { it.key.toDouble() }.toString())
         assertTwoEquals(null,
-                Mapx.minOfByDoubleOrNull(null as Map<String, String>?) { it.key.toDouble() },
+                Mapx.minOfDoubleOrNull(null as Map<String, String>?) { it.key.toDouble() },
                 mutableMapOf<String, String>().minOfOrNull { it.key.toDouble() })
 
         assertTwoEquals("1.0",
-                Mapx.minOfByFloat(map) { it.key.toFloat() }.toString(),
+                Mapx.minOfFloat(map) { it.key.toFloat() }.toString(),
                 map.minOf { it.key.toFloat() }.toString())
         assertTwoThrow(NoSuchElementException::class,
-                { Mapx.minOfByFloat(null as Map<String, String>?) { it.key.toFloat() } },
+                { Mapx.minOfFloat(null as Map<String, String>?) { it.key.toFloat() } },
                 { mutableMapOf<String, String>().minOf { it.key.toFloat() } })
 
         assertTwoEquals("1.0",
-                Mapx.minOfByFloatOrNull(map) { it.key.toFloat() }.toString(),
+                Mapx.minOfFloatOrNull(map) { it.key.toFloat() }.toString(),
                 map.minOfOrNull { it.key.toFloat() }.toString())
         assertTwoEquals(null,
-                Mapx.minOfByFloatOrNull(null as Map<String, String>?) { it.key.toFloat() },
+                Mapx.minOfFloatOrNull(null as Map<String, String>?) { it.key.toFloat() },
                 mutableMapOf<String, String>().minOfOrNull { it.key.toFloat() })
 
         assertTwoEquals("1",

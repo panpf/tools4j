@@ -1405,7 +1405,7 @@ public class Collectionx {
      *
      * @throws NoSuchElementException if the collection is empty.
      */
-    public static <T> double maxOfByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+    public static <T> double maxOfDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
         if (iterable == null) throw new NoSuchElementException();
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -1425,7 +1425,7 @@ public class Collectionx {
      *
      * @throws NoSuchElementException if the collection is empty.
      */
-    public static <T> float maxOfByFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+    public static <T> float maxOfFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
         if (iterable == null) throw new NoSuchElementException();
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -1465,7 +1465,7 @@ public class Collectionx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <T> Double maxOfByDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+    public static <T> Double maxOfDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
         if (iterable == null) return null;
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) return null;
@@ -1484,7 +1484,7 @@ public class Collectionx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <T> Float maxOfByFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+    public static <T> Float maxOfFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
         if (iterable == null) return null;
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) return null;
@@ -1655,7 +1655,7 @@ public class Collectionx {
      *
      * @throws NoSuchElementException if the collection is empty.
      */
-    public static <T> double minOfByDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+    public static <T> double minOfDouble(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
         if (iterable == null) throw new NoSuchElementException();
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -1675,7 +1675,7 @@ public class Collectionx {
      *
      * @throws NoSuchElementException if the collection is empty.
      */
-    public static <T> float minOfByFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+    public static <T> float minOfFloat(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
         if (iterable == null) throw new NoSuchElementException();
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) throw new NoSuchElementException();
@@ -1715,7 +1715,7 @@ public class Collectionx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <T> Double minOfByDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
+    public static <T> Double minOfDoubleOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Double> selector) {
         if (iterable == null) return null;
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) return null;
@@ -1734,7 +1734,7 @@ public class Collectionx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <T> Float minOfByFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
+    public static <T> Float minOfFloatOrNull(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Float> selector) {
         if (iterable == null) return null;
         Iterator<T> iterator = iterable.iterator();
         if (!iterator.hasNext()) return null;

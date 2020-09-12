@@ -631,8 +631,8 @@ public class Mapx {
      *
      * @throws NoSuchElementException if the map is empty.
      */
-    public static <K, V> double maxOfByDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
-        return Collectionx.maxOfByDouble(map != null ? map.entrySet() : null, selector);
+    public static <K, V> double maxOfDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.maxOfDouble(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -643,8 +643,8 @@ public class Mapx {
      *
      * @throws NoSuchElementException if the map is empty.
      */
-    public static <K, V> float maxOfByFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
-        return Collectionx.maxOfByFloat(map != null ? map.entrySet() : null, selector);
+    public static <K, V> float maxOfFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.maxOfFloat(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -665,8 +665,8 @@ public class Mapx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <K, V> Double maxOfByDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
-        return Collectionx.maxOfByDoubleOrNull(map != null ? map.entrySet() : null, selector);
+    public static <K, V> Double maxOfDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.maxOfDoubleOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -676,8 +676,8 @@ public class Mapx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <K, V> Float maxOfByFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
-        return Collectionx.maxOfByFloatOrNull(map != null ? map.entrySet() : null, selector);
+    public static <K, V> Float maxOfFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.maxOfFloatOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -736,8 +736,8 @@ public class Mapx {
      *
      * @throws NoSuchElementException if the map is empty.
      */
-    public static <K, V> double minOfByDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
-        return Collectionx.minOfByDouble(map != null ? map.entrySet() : null, selector);
+    public static <K, V> double minOfDouble(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.minOfDouble(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -748,8 +748,8 @@ public class Mapx {
      *
      * @throws NoSuchElementException if the map is empty.
      */
-    public static <K, V> float minOfByFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
-        return Collectionx.minOfByFloat(map != null ? map.entrySet() : null, selector);
+    public static <K, V> float minOfFloat(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.minOfFloat(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -770,8 +770,8 @@ public class Mapx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <K, V> Double minOfByDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
-        return Collectionx.minOfByDoubleOrNull(map != null ? map.entrySet() : null, selector);
+    public static <K, V> Double minOfDoubleOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Double> selector) {
+        return Collectionx.minOfDoubleOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
@@ -781,8 +781,8 @@ public class Mapx {
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
      */
     @Nullable
-    public static <K, V> Float minOfByFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
-        return Collectionx.minOfByFloatOrNull(map != null ? map.entrySet() : null, selector);
+    public static <K, V> Float minOfFloatOrNull(@Nullable Map<K, V> map, @NotNull Transformer<Map.Entry<K, V>, Float> selector) {
+        return Collectionx.minOfFloatOrNull(map != null ? map.entrySet() : null, selector);
     }
 
     /**
