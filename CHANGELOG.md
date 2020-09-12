@@ -17,6 +17,7 @@ Change:
 * change: Mapx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Collectionx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx max\* and min\* method rename to max\*OrNull and min\*OrNull
+* change: Arrayx2 merged to Arrayx
 
 ## v1.0.0-beta02
 improve: Improve code

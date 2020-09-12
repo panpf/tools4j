@@ -9,6 +9,7 @@ class ArrayxTest {
 
     @Test
     fun testNullOrEmpty() {
+        arrayOf(3.4).maxOrNull()
         assertTrue(Arrayx.isNullOrEmpty(null as Array<String>?))
         assertTrue(Arrayx.isNullOrEmpty(arrayOf<String>()))
         assertFalse(Arrayx.isNullOrEmpty(arrayOf("1")))

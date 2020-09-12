@@ -129,7 +129,6 @@ Dependencies：
     * reduceRightIndexed, fold, foldIndexed, foldRight, foldRightIndexed, 
     * intersect, subtract, drop, dropLast, dropLastWhile, dropWhile, take, takeLast,
     * takeLastWhile, takeWhile, distinct, distinctBy, withIndex
-* Arrayx2: [Arrayx2.java]
     * contentHashCode, contentDeepEquals, contentDeepHashCode,
     * contentDeepToString, contentToString, contentEquals,
     * binarySearch, copyOf, copyOfRange, slice, sliceArray,
@@ -417,9 +416,6 @@ Please view the [CHANGELOG.md] file
 [ArrayxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/ArrayxTest.kt
 [Arrayx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Arrayx.kt
 [ArrayxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/ArrayxTest.kt
-
-[Arrayx2.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Arrayx2.java
-[Arrayx2Test.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/Arrayx2Test.kt
 
 [Collectionx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Collectionx.java
 [CollectionxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/CollectionxTest.kt
