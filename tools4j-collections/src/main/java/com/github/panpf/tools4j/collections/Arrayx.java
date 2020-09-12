@@ -1907,7 +1907,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> reversed(@Nullable T[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<T> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1918,7 +1918,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> reversed(@Nullable byte[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Byte> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1929,7 +1929,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> reversed(@Nullable short[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Short> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1940,7 +1940,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> reversed(@Nullable int[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Integer> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1951,7 +1951,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> reversed(@Nullable long[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Long> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1962,7 +1962,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> reversed(@Nullable float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Float> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1973,7 +1973,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> reversed(@Nullable double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Double> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1984,7 +1984,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> reversed(@Nullable boolean[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Boolean> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1995,7 +1995,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> reversed(@Nullable char[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
         List<Character> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -2020,7 +2020,7 @@ public class Arrayx {
      */
     @NotNull
     public static byte[] reversedArray(@Nullable byte[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new byte[0];
+        if (elements == null || elements.length == 0) return new byte[0];
         byte[] result = new byte[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2034,7 +2034,7 @@ public class Arrayx {
      */
     @NotNull
     public static short[] reversedArray(@Nullable short[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new short[0];
+        if (elements == null || elements.length == 0) return new short[0];
         short[] result = new short[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2048,7 +2048,7 @@ public class Arrayx {
      */
     @NotNull
     public static int[] reversedArray(@Nullable int[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new int[0];
+        if (elements == null || elements.length == 0) return new int[0];
         int[] result = new int[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2062,7 +2062,7 @@ public class Arrayx {
      */
     @NotNull
     public static long[] reversedArray(@Nullable long[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new long[0];
+        if (elements == null || elements.length == 0) return new long[0];
         long[] result = new long[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2076,7 +2076,7 @@ public class Arrayx {
      */
     @NotNull
     public static float[] reversedArray(@Nullable float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new float[0];
+        if (elements == null || elements.length == 0) return new float[0];
         float[] result = new float[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2090,7 +2090,7 @@ public class Arrayx {
      */
     @NotNull
     public static double[] reversedArray(@Nullable double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new double[0];
+        if (elements == null || elements.length == 0) return new double[0];
         double[] result = new double[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2104,7 +2104,7 @@ public class Arrayx {
      */
     @NotNull
     public static boolean[] reversedArray(@Nullable boolean[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new boolean[0];
+        if (elements == null || elements.length == 0) return new boolean[0];
         boolean[] result = new boolean[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -2118,7 +2118,7 @@ public class Arrayx {
      */
     @NotNull
     public static char[] reversedArray(@Nullable char[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return new char[0];
+        if (elements == null || elements.length == 0) return new char[0];
         char[] result = new char[elements.length];
         int lastIndex = elements.length - 1;
         for (int i = 0; i <= lastIndex; i++) {
@@ -4936,7 +4936,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double maxOrNull(@Nullable Double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Double max = elements[0];
         if (max.isNaN()) return max;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -4954,7 +4954,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float maxOrNull(@Nullable Float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Float max = elements[0];
         if (max.isNaN()) return max;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -4970,7 +4970,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T extends Comparable<T>> T maxOrNull(@Nullable T[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
@@ -4984,7 +4984,7 @@ public class Arrayx {
      */
     @Nullable
     public static Byte maxOrNull(@Nullable byte[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
@@ -4998,7 +4998,7 @@ public class Arrayx {
      */
     @Nullable
     public static Short maxOrNull(@Nullable short[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
@@ -5012,7 +5012,7 @@ public class Arrayx {
      */
     @Nullable
     public static Integer maxOrNull(@Nullable int[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
@@ -5026,7 +5026,7 @@ public class Arrayx {
      */
     @Nullable
     public static Long maxOrNull(@Nullable long[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
@@ -5042,7 +5042,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float maxOrNull(@Nullable float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Float max = elements[0];
         if (max.isNaN()) return max;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5060,7 +5060,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double maxOrNull(@Nullable double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Double max = elements[0];
         if (max.isNaN()) return max;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5076,7 +5076,7 @@ public class Arrayx {
      */
     @Nullable
     public static Character maxOrNull(@Nullable char[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
@@ -5090,7 +5090,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T, R extends Comparable<R>> T maxByOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5109,7 +5109,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Byte maxByOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5128,7 +5128,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Short maxByOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5147,7 +5147,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Integer maxByOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5166,7 +5166,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Long maxByOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5185,7 +5185,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Float maxByOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         float maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5204,7 +5204,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Double maxByOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         double maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5223,7 +5223,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Boolean maxByOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         boolean maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5242,7 +5242,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Character maxByOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char maxElem = elements[0];
         R maxValue = transformer.transform(maxElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5261,7 +5261,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T> T maxWithOrNull(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
@@ -5275,7 +5275,7 @@ public class Arrayx {
      */
     @Nullable
     public static Byte maxWithOrNull(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
@@ -5289,7 +5289,7 @@ public class Arrayx {
      */
     @Nullable
     public static Short maxWithOrNull(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
@@ -5303,7 +5303,7 @@ public class Arrayx {
      */
     @Nullable
     public static Integer maxWithOrNull(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
@@ -5317,7 +5317,7 @@ public class Arrayx {
      */
     @Nullable
     public static Long maxWithOrNull(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
@@ -5331,7 +5331,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float maxWithOrNull(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         float max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             float e = elements[i];
@@ -5345,7 +5345,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double maxWithOrNull(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         double max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             double e = elements[i];
@@ -5359,7 +5359,7 @@ public class Arrayx {
      */
     @Nullable
     public static Boolean maxWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         boolean max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             boolean e = elements[i];
@@ -5373,7 +5373,7 @@ public class Arrayx {
      */
     @Nullable
     public static Character maxWithOrNull(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char max = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
@@ -5382,7 +5382,1251 @@ public class Arrayx {
         return max;
     }
 
-    // todo add maxOf method
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static <T> double maxOfDouble(@Nullable T[] elements, @NotNull Transformer<T, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static <T> float maxOfFloat(@Nullable T[] elements, @NotNull Transformer<T, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <T, R extends Comparable<R>> R maxOf(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable byte[] elements, @NotNull Transformer<Byte, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable short[] elements, @NotNull Transformer<Short, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable short[] elements, @NotNull Transformer<Short, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable int[] elements, @NotNull Transformer<Integer, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable int[] elements, @NotNull Transformer<Integer, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable long[] elements, @NotNull Transformer<Long, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable long[] elements, @NotNull Transformer<Long, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable float[] elements, @NotNull Transformer<Float, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable float[] elements, @NotNull Transformer<Float, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable double[] elements, @NotNull Transformer<Double, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable double[] elements, @NotNull Transformer<Double, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double maxOfDouble(@Nullable char[] elements, @NotNull Transformer<Character, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float maxOfFloat(@Nullable char[] elements, @NotNull Transformer<Character, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R maxOf(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Double maxOfDoubleOrNull(@Nullable T[] elements, @NotNull Transformer<T, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Float maxOfFloatOrNull(@Nullable T[] elements, @NotNull Transformer<T, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T, R extends Comparable<R>> R maxOfOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable short[] elements, @NotNull Transformer<Short, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable short[] elements, @NotNull Transformer<Short, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable long[] elements, @NotNull Transformer<Long, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable long[] elements, @NotNull Transformer<Long, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable float[] elements, @NotNull Transformer<Float, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable float[] elements, @NotNull Transformer<Float, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable double[] elements, @NotNull Transformer<Double, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable double[] elements, @NotNull Transformer<Double, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double maxOfDoubleOrNull(@Nullable char[] elements, @NotNull Transformer<Character, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float maxOfFloatOrNull(@Nullable char[] elements, @NotNull Transformer<Character, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (max < e) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R maxOfOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (max.compareTo(e) < 0) max = e;
+        }
+        return max;
+    }
+
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <T, R> R maxOfWith(@Nullable T[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable byte[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable short[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable int[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable long[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable float[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable double[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable boolean[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R maxOfWith(@Nullable char[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <T, R> R maxOfWithOrNull(@Nullable T[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable byte[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable short[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable int[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable long[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable float[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable double[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
+
+    /**
+     * Returns the largest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R maxOfWithOrNull(@Nullable char[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R max = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(max, e) < 0) max = e;
+        }
+        return max;
+    }
 
 
     /* ******************************************* min ******************************************* */
@@ -5395,7 +6639,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double minOrNull(@Nullable Double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Double min = elements[0];
         if (min.isNaN()) return min;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5413,7 +6657,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float minOrNull(@Nullable Float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Float min = elements[0];
         if (min.isNaN()) return min;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5429,7 +6673,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T extends Comparable<T>> T minOrNull(@Nullable T[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
@@ -5443,7 +6687,7 @@ public class Arrayx {
      */
     @Nullable
     public static Byte minOrNull(@Nullable byte[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
@@ -5457,7 +6701,7 @@ public class Arrayx {
      */
     @Nullable
     public static Short minOrNull(@Nullable short[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
@@ -5471,7 +6715,7 @@ public class Arrayx {
      */
     @Nullable
     public static Integer minOrNull(@Nullable int[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
@@ -5485,7 +6729,7 @@ public class Arrayx {
      */
     @Nullable
     public static Long minOrNull(@Nullable long[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
@@ -5501,7 +6745,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float minOrNull(@Nullable float[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Float min = elements[0];
         if (min.isNaN()) return min;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5519,7 +6763,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double minOrNull(@Nullable double[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         Double min = elements[0];
         if (min.isNaN()) return min;
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5535,7 +6779,7 @@ public class Arrayx {
      */
     @Nullable
     public static Character minOrNull(@Nullable char[] elements) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
@@ -5549,7 +6793,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T, R extends Comparable<R>> T minByOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5568,7 +6812,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Byte minByOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5587,7 +6831,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Short minByOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5606,7 +6850,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Integer minByOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5625,7 +6869,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Long minByOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5644,7 +6888,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Float minByOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         float minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5663,7 +6907,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Double minByOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         double minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5682,7 +6926,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Boolean minByOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         boolean minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5701,7 +6945,7 @@ public class Arrayx {
      */
     @Nullable
     public static <R extends Comparable<R>> Character minByOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> transformer) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char minElem = elements[0];
         R minValue = transformer.transform(minElem);
         for (int i = 1, size = elements.length; i < size; i++) {
@@ -5720,7 +6964,7 @@ public class Arrayx {
      */
     @Nullable
     public static <T> T minWithOrNull(@Nullable T[] elements, @NotNull Comparator<T> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         T min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             T e = elements[i];
@@ -5734,7 +6978,7 @@ public class Arrayx {
      */
     @Nullable
     public static Byte minWithOrNull(@Nullable byte[] elements, @NotNull Comparator<Byte> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         byte min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             byte e = elements[i];
@@ -5748,7 +6992,7 @@ public class Arrayx {
      */
     @Nullable
     public static Short minWithOrNull(@Nullable short[] elements, @NotNull Comparator<Short> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         short min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             short e = elements[i];
@@ -5762,7 +7006,7 @@ public class Arrayx {
      */
     @Nullable
     public static Integer minWithOrNull(@Nullable int[] elements, @NotNull Comparator<Integer> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         int min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             int e = elements[i];
@@ -5776,7 +7020,7 @@ public class Arrayx {
      */
     @Nullable
     public static Long minWithOrNull(@Nullable long[] elements, @NotNull Comparator<Long> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         long min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             long e = elements[i];
@@ -5790,7 +7034,7 @@ public class Arrayx {
      */
     @Nullable
     public static Float minWithOrNull(@Nullable float[] elements, @NotNull Comparator<Float> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         float min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             float e = elements[i];
@@ -5804,7 +7048,7 @@ public class Arrayx {
      */
     @Nullable
     public static Double minWithOrNull(@Nullable double[] elements, @NotNull Comparator<Double> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         double min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             double e = elements[i];
@@ -5818,7 +7062,7 @@ public class Arrayx {
      */
     @Nullable
     public static Boolean minWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<Boolean> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         boolean min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             boolean e = elements[i];
@@ -5832,7 +7076,7 @@ public class Arrayx {
      */
     @Nullable
     public static Character minWithOrNull(@Nullable char[] elements, @NotNull Comparator<Character> comparator) {
-        if (Arrayx.isNullOrEmpty(elements)) return null;
+        if (elements == null || elements.length == 0) return null;
         char min = elements[0];
         for (int i = 1, size = elements.length; i < size; i++) {
             char e = elements[i];
@@ -5841,7 +7085,1251 @@ public class Arrayx {
         return min;
     }
 
-    // todo add minOf method
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static <T> double minOfDouble(@Nullable T[] elements, @NotNull Transformer<T, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static <T> float minOfFloat(@Nullable T[] elements, @NotNull Transformer<T, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <T, R extends Comparable<R>> R minOf(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable byte[] elements, @NotNull Transformer<Byte, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable short[] elements, @NotNull Transformer<Short, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable short[] elements, @NotNull Transformer<Short, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable int[] elements, @NotNull Transformer<Integer, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable int[] elements, @NotNull Transformer<Integer, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable long[] elements, @NotNull Transformer<Long, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable long[] elements, @NotNull Transformer<Long, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable float[] elements, @NotNull Transformer<Float, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable float[] elements, @NotNull Transformer<Float, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable double[] elements, @NotNull Transformer<Double, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable double[] elements, @NotNull Transformer<Double, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static double minOfDouble(@Nullable char[] elements, @NotNull Transformer<Character, Double> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    public static Float minOfFloat(@Nullable char[] elements, @NotNull Transformer<Character, Float> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R extends Comparable<R>> R minOf(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Double minOfDoubleOrNull(@Nullable T[] elements, @NotNull Transformer<T, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T> Float minOfFloatOrNull(@Nullable T[] elements, @NotNull Transformer<T, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <T, R extends Comparable<R>> R minOfOrNull(@Nullable T[] elements, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable byte[] elements, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable short[] elements, @NotNull Transformer<Short, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable short[] elements, @NotNull Transformer<Short, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable short[] elements, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable int[] elements, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable long[] elements, @NotNull Transformer<Long, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable long[] elements, @NotNull Transformer<Long, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable long[] elements, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable float[] elements, @NotNull Transformer<Float, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable float[] elements, @NotNull Transformer<Float, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable float[] elements, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable double[] elements, @NotNull Transformer<Double, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable double[] elements, @NotNull Transformer<Double, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable double[] elements, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable boolean[] elements, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Double minOfDoubleOrNull(@Nullable char[] elements, @NotNull Transformer<Character, Double> selector) {
+        if (elements == null || elements.length == 0) return null;
+        double min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            double e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static Float minOfFloatOrNull(@Nullable char[] elements, @NotNull Transformer<Character, Float> selector) {
+        if (elements == null || elements.length == 0) return null;
+        float min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            float e = selector.transform(elements[i]);
+            if (min > e) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value among all values produced by [selector] function
+     * applied to each element in the array.
+     *
+     * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
+     */
+    @Nullable
+    public static <R extends Comparable<R>> R minOfOrNull(@Nullable char[] elements, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (min.compareTo(e) > 0) min = e;
+        }
+        return min;
+    }
+
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <T, R> R minOfWith(@Nullable T[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable byte[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable short[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable int[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable long[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable float[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable double[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable boolean[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     *
+     * @throws NoSuchElementException if the array is empty.
+     */
+    @NotNull
+    public static <R> R minOfWith(@Nullable char[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) throw  new NoSuchElementException();
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <T, R> R minOfWithOrNull(@Nullable T[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<T, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable byte[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Byte, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable short[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Short, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable int[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Integer, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable long[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Long, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable float[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Float, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable double[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Double, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable boolean[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Boolean, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
+
+    /**
+     * Returns the smallest value according to the provided [comparator]
+     * among all values produced by [selector] function applied to each element in the array.
+     */
+    @Nullable
+    public static <R> R minOfWithOrNull(@Nullable char[] elements, @NotNull Comparator<R> comparator, @NotNull Transformer<Character, R> selector) {
+        if (elements == null || elements.length == 0) return null;
+        R min = selector.transform(elements[0]);
+        for (int i = 1, size = elements.length; i < size; i++) {
+            R e = selector.transform(elements[i]);
+            if (comparator.compare(min, e) > 0) min = e;
+        }
+        return min;
+    }
 
 
     /* ******************************************* join ******************************************* */
@@ -11727,63 +14215,63 @@ public class Arrayx {
      * Returns `true` if the array has no elements.
      */
     public static <T> boolean none(@Nullable T[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable byte[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable short[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable int[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable long[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable float[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable double[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable boolean[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
      * Returns `true` if the array has no elements.
      */
     public static boolean none(@Nullable char[] elements) {
-        return Arrayx.isNullOrEmpty(elements);
+        return elements == null || elements.length == 0;
     }
 
     /**
@@ -11867,7 +14355,7 @@ public class Arrayx {
      */
     @NotNull
     public static <S, T extends S> S reduce(@Nullable T[] elements, @NotNull Operation<T, S> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         S accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11879,7 +14367,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static byte reduce(@Nullable byte[] elements, @NotNull Operation<Byte, Byte> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         byte accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11891,7 +14379,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static short reduce(@Nullable short[] elements, @NotNull Operation<Short, Short> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         short accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11903,7 +14391,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static int reduce(@Nullable int[] elements, @NotNull Operation<Integer, Integer> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11915,7 +14403,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static long reduce(@Nullable long[] elements, @NotNull Operation<Long, Long> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         long accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11927,7 +14415,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static float reduce(@Nullable float[] elements, @NotNull Operation<Float, Float> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         float accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11939,7 +14427,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static double reduce(@Nullable double[] elements, @NotNull Operation<Double, Double> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         double accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11951,7 +14439,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static boolean reduce(@Nullable boolean[] elements, @NotNull Operation<Boolean, Boolean> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         boolean accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11963,7 +14451,7 @@ public class Arrayx {
      * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.
      */
     public static char reduce(@Nullable char[] elements, @NotNull Operation<Character, Character> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         char accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(accumulator, elements[index]);
@@ -11980,7 +14468,7 @@ public class Arrayx {
      */
     @NotNull
     public static <S, T extends S> S reduceIndexed(@Nullable T[] elements, @NotNull IndexedOperation<T, S> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         S accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -11996,7 +14484,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static byte reduceIndexed(@Nullable byte[] elements, @NotNull IndexedOperation<Byte, Byte> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         byte accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12012,7 +14500,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static short reduceIndexed(@Nullable short[] elements, @NotNull IndexedOperation<Short, Short> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         short accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12028,7 +14516,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static int reduceIndexed(@Nullable int[] elements, @NotNull IndexedOperation<Integer, Integer> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12044,7 +14532,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static long reduceIndexed(@Nullable long[] elements, @NotNull IndexedOperation<Long, Long> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         long accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12060,7 +14548,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static float reduceIndexed(@Nullable float[] elements, @NotNull IndexedOperation<Float, Float> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         float accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12076,7 +14564,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static double reduceIndexed(@Nullable double[] elements, @NotNull IndexedOperation<Double, Double> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         double accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12092,7 +14580,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static boolean reduceIndexed(@Nullable boolean[] elements, @NotNull IndexedOperation<Boolean, Boolean> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         boolean accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12108,7 +14596,7 @@ public class Arrayx {
      *                  and the element itself and calculates the next accumulator value.
      */
     public static char reduceIndexed(@Nullable char[] elements, @NotNull IndexedOperation<Character, Character> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         char accumulator = elements[0];
         for (int index = 1, size = elements.length; index < size; index++) {
             accumulator = operation.operation(index, accumulator, elements[index]);
@@ -12121,7 +14609,7 @@ public class Arrayx {
      */
     @NotNull
     public static <S, T extends S> S reduceRight(@Nullable T[] elements, @NotNull RightOperation<T, S> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         S accumulator = elements[index--];
@@ -12135,7 +14623,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static byte reduceRight(@Nullable byte[] elements, @NotNull RightOperation<Byte, Byte> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         byte accumulator = elements[index--];
@@ -12149,7 +14637,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static short reduceRight(@Nullable short[] elements, @NotNull RightOperation<Short, Short> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         short accumulator = elements[index--];
@@ -12163,7 +14651,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static int reduceRight(@Nullable int[] elements, @NotNull RightOperation<Integer, Integer> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int accumulator = elements[index--];
@@ -12177,7 +14665,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static long reduceRight(@Nullable long[] elements, @NotNull RightOperation<Long, Long> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         long accumulator = elements[index--];
@@ -12191,7 +14679,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static float reduceRight(@Nullable float[] elements, @NotNull RightOperation<Float, Float> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         float accumulator = elements[index--];
@@ -12205,7 +14693,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static double reduceRight(@Nullable double[] elements, @NotNull RightOperation<Double, Double> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         double accumulator = elements[index--];
@@ -12219,7 +14707,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static boolean reduceRight(@Nullable boolean[] elements, @NotNull RightOperation<Boolean, Boolean> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         boolean accumulator = elements[index--];
@@ -12233,7 +14721,7 @@ public class Arrayx {
      * Accumulates value starting with last element and applying [operation] from right to left to each element and current accumulator value.
      */
     public static char reduceRight(@Nullable char[] elements, @NotNull RightOperation<Character, Character> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         char accumulator = elements[index--];
@@ -12252,7 +14740,7 @@ public class Arrayx {
      */
     @NotNull
     public static <S, T extends S> S reduceRightIndexed(@Nullable T[] elements, @NotNull IndexedRightOperation<T, S> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         S accumulator = elements[index--];
@@ -12271,7 +14759,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static byte reduceRightIndexed(@Nullable byte[] elements, @NotNull IndexedRightOperation<Byte, Byte> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         byte accumulator = elements[index--];
@@ -12290,7 +14778,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static short reduceRightIndexed(@Nullable short[] elements, @NotNull IndexedRightOperation<Short, Short> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         short accumulator = elements[index--];
@@ -12309,7 +14797,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static int reduceRightIndexed(@Nullable int[] elements, @NotNull IndexedRightOperation<Integer, Integer> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int accumulator = elements[index--];
@@ -12328,7 +14816,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static long reduceRightIndexed(@Nullable long[] elements, @NotNull IndexedRightOperation<Long, Long> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         long accumulator = elements[index--];
@@ -12347,7 +14835,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static float reduceRightIndexed(@Nullable float[] elements, @NotNull IndexedRightOperation<Float, Float> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         float accumulator = elements[index--];
@@ -12366,7 +14854,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static double reduceRightIndexed(@Nullable double[] elements, @NotNull IndexedRightOperation<Double, Double> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         double accumulator = elements[index--];
@@ -12385,7 +14873,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static boolean reduceRightIndexed(@Nullable boolean[] elements, @NotNull IndexedRightOperation<Boolean, Boolean> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         boolean accumulator = elements[index--];
@@ -12404,7 +14892,7 @@ public class Arrayx {
      *                  and current accumulator value, and calculates the next accumulator value.
      */
     public static char reduceRightIndexed(@Nullable char[] elements, @NotNull IndexedRightOperation<Character, Character> operation) {
-        if (Arrayx.isNullOrEmpty(elements)) throw new UnsupportedOperationException("Empty array can't be reduced.");
+        if (elements == null || elements.length == 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         int index = count(elements) - 1;
         if (index < 0) throw new UnsupportedOperationException("Empty array can't be reduced.");
         char accumulator = elements[index--];

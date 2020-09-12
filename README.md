@@ -114,8 +114,10 @@ Dependencies：
     * sortByDescending, sorted, sortedDescending, sortedWith,
     * sortedBy, sortedByDescending, sortedArray, sortedArrayDescending,
     * sortedArrayWith, single, singleOrNull, any, all, iterator,
-    * asIterable, groupBy, groupByTo, count, maxOrNull, maxByOrNull, maxWithOrNull,
-    * minOrNull, minByOrNull, minWithOrNull, joinTo, joinToString, sum, sumBy,
+    * asIterable, groupBy, groupByTo, count, maxOrNull, maxByOrNull, 
+    * maxWithOrNull, maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, 
+    * minOrNull, minByOrNull, minWithOrNull, minOf, minOfOrNull, 
+    * minOfWith, minOfWithOrNull, joinTo, joinToString, sum, sumBy,
     * sumByDouble, plus, plusElement, indices, indexOf, indexOfFirst
     * lastIndexOf, contains, forEach, forEachIndexed, filter,
     * filterIndexed, filterIndexedTo, filterIsInstance,

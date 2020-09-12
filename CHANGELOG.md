@@ -9,6 +9,7 @@ New:
 * new: Mapx added maxOf\* and minOf\* method
 * new: Collectionx added emptyList, flatten, maxOf\* and minOf\*, flatMapIndexed, flatMapIndexedTo method
 * new: Arrayx added flatMapIndexed and flatMapIndexedTo method
+* new: Arrayx added maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull method
 
 Change: 
 * change: Sequencex.flattenSequenceOfIterable() rename to flattenOfIterable
