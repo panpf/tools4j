@@ -976,6 +976,126 @@ class SequencexTest {
         )
     }
 
+    @Test
+    fun testGroup() {
+        val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+
+        assertTwoEquals(
+                "{a=[aj, ao], b=[bj, bo]}",
+                sequence0.groupBy { it.first() }.toString(),
+                Sequencex.groupBy(sequence1) { it.first() }.toString(),
+        )
+
+        assertTwoEquals(
+                "{a=[j, o], b=[j, o]}",
+                sequence0.groupBy({ it.first() }, { it.last() }).toString(),
+                Sequencex.groupBy(sequence1, { it.first() }, { it.last() }).toString(),
+        )
+
+        val groupByToMap0 = HashMap<Char, MutableList<String>>()
+        val groupByToMap1 = HashMap<Char, List<String>>()
+        val groupByToMapResult0 = sequence0.groupByTo(groupByToMap0) { it.first() }
+        val groupByToMapResult1 = Sequencex.groupByTo(sequence1, groupByToMap1) { it.first() }
+        assertTwoEquals(
+                "{a=[aj, ao], b=[bj, bo]}",
+                groupByToMap0.toString(),
+                groupByToMap1.toString(),
+        )
+        assertTrue(groupByToMap0 === groupByToMapResult0)
+        assertTrue(groupByToMap1 === groupByToMapResult1)
+
+        val groupByToMap2 = HashMap<Char, MutableList<Char>>()
+        val groupByToMap3 = HashMap<Char, List<Char>>()
+        val groupByToMapResult2 = sequence0.groupByTo(groupByToMap2, { it.first() }, { it.last() })
+        val groupByToMapResult3 = Sequencex.groupByTo(sequence1, groupByToMap3, { it.first() }, { it.last() })
+        assertTwoEquals(
+                "{a=[j, o], b=[j, o]}",
+                groupByToMap2.toString(),
+                groupByToMap3.toString(),
+        )
+        assertTrue(groupByToMap2 === groupByToMapResult2)
+        assertTrue(groupByToMap3 === groupByToMapResult3)
+    }
+
+    @Test
+    fun testMap() {
+        val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
+
+        assertTwoEquals(
+                "a, b, a, c, b",
+                sequence0.map { it.first() }.joinToString(),
+                Sequencex.joinToString(Sequencex.map(sequence1) { it.first() }),
+        )
+
+        assertTwoEquals(
+                "a, b, a, b",
+                sequence0.mapNotNull { if (it != "cc") it.first() else null }.joinToString(),
+                Sequencex.joinToString(Sequencex.mapNotNull(sequence1) { if (it != "cc") it.first() else null }),
+        )
+
+        assertTwoEquals(
+                "0:a, 1:b, 2:a, 3:c, 4:b",
+                sequence0.mapIndexed { index, s -> "$index:${s.first()}" }.joinToString(),
+                Sequencex.joinToString(Sequencex.mapIndexed(sequence1) { index, s -> "$index:${s.first()}" }),
+        )
+
+        assertTwoEquals(
+                "0:a, 1:b, 2:a, 4:b",
+                sequence0.mapIndexedNotNull { index, s -> if (s != "cc") "$index:${s.first()}" else null }.joinToString(),
+                Sequencex.joinToString(Sequencex.mapIndexedNotNull(sequence1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }),
+        )
+
+        val mapToList0 = ArrayList<Char>()
+        val mapToList1 = ArrayList<Char>()
+        val mapToListResult0 = sequence0.mapTo(mapToList0) { it.first() }
+        val mapToListResult1 = Sequencex.mapTo(sequence1, mapToList1) { it.first() }
+        assertTwoEquals(
+                "[a, b, a, c, b]",
+                mapToList0.toString(),
+                mapToList1.toString(),
+        )
+        assertTrue(mapToList0 === mapToListResult0)
+        assertTrue(mapToList1 === mapToListResult1)
+
+        val mapNotNullToList0 = ArrayList<Char>()
+        val mapNotNullToList1 = ArrayList<Char>()
+        val mapNotNullToListResult0 = sequence0.mapNotNullTo(mapNotNullToList0) { if (it != "cc") it.first() else null }
+        val mapNotNullToListResult1 = Sequencex.mapNotNullTo(sequence1, mapNotNullToList1) { if (it != "cc") it.first() else null }
+        assertTwoEquals(
+                "[a, b, a, b]",
+                mapNotNullToList0.toString(),
+                mapNotNullToList1.toString(),
+        )
+        assertTrue(mapNotNullToList0 === mapNotNullToListResult0)
+        assertTrue(mapNotNullToList1 === mapNotNullToListResult1)
+
+        val mapIndexedToList0 = ArrayList<String>()
+        val mapIndexedToList1 = ArrayList<String>()
+        val mapIndexedToListResult0 = sequence0.mapIndexedTo(mapIndexedToList0) { index, s -> "$index:${s.first()}" }
+        val mapIndexedToListResult1 = Sequencex.mapIndexedTo(sequence1, mapIndexedToList1) { index, s -> "$index:${s.first()}" }
+        assertTwoEquals(
+                "[0:a, 1:b, 2:a, 3:c, 4:b]",
+                mapIndexedToList0.toString(),
+                mapIndexedToList1.toString(),
+        )
+        assertTrue(mapIndexedToList0 === mapIndexedToListResult0)
+        assertTrue(mapIndexedToList1 === mapIndexedToListResult1)
+
+        val mapIndexedNotNullToList0 = ArrayList<String>()
+        val mapIndexedNotNullToList1 = ArrayList<String>()
+        val mapIndexedNotNullToListResult0 = sequence0.mapIndexedNotNullTo(mapIndexedNotNullToList0) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        val mapIndexedNotNullToListResult1 = Sequencex.mapIndexedNotNullTo(sequence1, mapIndexedNotNullToList1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        assertTwoEquals(
+                "[0:a, 1:b, 2:a, 4:b]",
+                mapIndexedNotNullToList0.toString(),
+                mapIndexedNotNullToList1.toString(),
+        )
+        assertTrue(mapIndexedNotNullToList0 === mapIndexedNotNullToListResult0)
+        assertTrue(mapIndexedNotNullToList1 === mapIndexedNotNullToListResult1)
+    }
+
 
     class IntInitialValue(private val end: Int) : InitialValue<Int> {
         private var next = 0

@@ -1635,6 +1635,17 @@ public class Sequencex {
     }
 
     /**
+     * Returns a sequence containing only the non-null results of applying the given [transform] function
+     * to each element in the original sequence.
+     * <p>
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T, R> Sequence<R> mapNotNull(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transform) {
+        return filterNotNull(new NullableTransformingSequence<>(sequence, transform));
+    }
+
+    /**
      * Returns a sequence containing the results of applying the given [transform] function
      * to each element and its index in the original sequence.
      *
@@ -1663,20 +1674,33 @@ public class Sequencex {
     }
 
     /**
-     * Applies the given [transform] function to each element and its index in the original sequence
-     * and appends only the non-null results to the given [destination].
-     *
-     * @param transform function that takes the index of an element and the element itself
-     *                  and returns the result of the transform applied to the element.
-     *                  <p>
-     *                  The operation is _terminal_.
+     * Applies the given [transform] function to each element of the original sequence
+     * and appends the results to the given [destination].
+     * <p>
+     * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
-        forEachIndexed(sequence, new IndexedAction<T>() {
+    public static <T, R, C extends Collection<R>> C mapTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
+        Iterator<T> iterator = sequence.iterator();
+        while (iterator.hasNext()) {
+            T item = iterator.next();
+            destination.add(transform.transform(item));
+        }
+        return destination;
+    }
+
+    /**
+     * Applies the given [transform] function to each element in the original sequence
+     * and appends only the non-null results to the given [destination].
+     * <p>
+     * The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R, C extends Collection<R>> C mapNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
+        forEach(sequence, new Action<T>() {
             @Override
-            public void action(int index, @NotNull T element) {
-                R result = transform.transform(index, element);
+            public void action(@NotNull T element) {
+                R result = transform.transform(element);
                 if (result != null) destination.add(result);
             }
         });
@@ -1704,47 +1728,23 @@ public class Sequencex {
     }
 
     /**
-     * Returns a sequence containing only the non-null results of applying the given [transform] function
-     * to each element in the original sequence.
-     * <p>
-     * The operation is _intermediate_ and _stateless_.
-     */
-    @NotNull
-    public static <T, R> Sequence<R> mapNotNull(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transform) {
-        return filterNotNull(new NullableTransformingSequence<>(sequence, transform));
-    }
-
-    /**
-     * Applies the given [transform] function to each element in the original sequence
+     * Applies the given [transform] function to each element and its index in the original sequence
      * and appends only the non-null results to the given [destination].
-     * <p>
-     * The operation is _terminal_.
+     *
+     * @param transform function that takes the index of an element and the element itself
+     *                  and returns the result of the transform applied to the element.
+     *                  <p>
+     *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
-        forEach(sequence, new Action<T>() {
+    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
+        forEachIndexed(sequence, new IndexedAction<T>() {
             @Override
-            public void action(@NotNull T element) {
-                R result = transform.transform(element);
+            public void action(int index, @NotNull T element) {
+                R result = transform.transform(index, element);
                 if (result != null) destination.add(result);
             }
         });
-        return destination;
-    }
-
-    /**
-     * Applies the given [transform] function to each element of the original sequence
-     * and appends the results to the given [destination].
-     * <p>
-     * The operation is _terminal_.
-     */
-    @NotNull
-    public static <T, R, C extends Collection<R>> C mapTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            destination.add(transform.transform(item));
-        }
         return destination;
     }
 
