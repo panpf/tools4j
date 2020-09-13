@@ -145,6 +145,17 @@ public class Collectionx {
 
 
     /**
+     * Returns a new read-only list of given elements.  The returned list is serializable (JVM).
+     */
+    @NotNull
+    @SafeVarargs
+    public static <T> List<T> listOf(T... elements) {
+        //noinspection unchecked
+        return (elements != null ? elements.length : 0) > 0 ? Arrayx.asList(elements) : (List<T>) emptyList();
+    }
+
+
+    /**
      * Returns an empty read-only list.  The returned list is serializable (JVM).
      */
     @NotNull
@@ -524,7 +535,7 @@ public class Collectionx {
         int index = 0;
         if (iterable != null) {
             for (T t : iterable) {
-                destination.add(transform.transform(index, t));
+                destination.add(transform.transform(index++, t));
             }
         }
         return destination;
@@ -584,7 +595,7 @@ public class Collectionx {
         int index = 0;
         if (iterable != null) {
             for (T t : iterable) {
-                R r = transform.transform(index, t);
+                R r = transform.transform(index++, t);
                 if (r != null) {
                     destination.add(r);
                 }

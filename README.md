@@ -136,8 +136,8 @@ Dependencies：
 * Collectionx: [Collectionx.java] | [Collectionx.kt]
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf,
     * collectionSizeOrDefault, isEmpty, isNotEmpty, orEmpty,
-    * immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf,
-    * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo,
+    * listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, 
+    * immutableSetOf, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo,
     * filterNotTo, filterNotNullTo, filterIndexedTo, filterIsInstanceTo,
     * filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
     * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo,

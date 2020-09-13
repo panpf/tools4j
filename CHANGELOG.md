@@ -10,6 +10,7 @@ New:
 * new: Collectionx added emptyList, flatten, maxOf\* and minOf\*, flatMapIndexed, flatMapIndexedTo method
 * new: Arrayx added flatMapIndexed and flatMapIndexedTo method
 * new: Arrayx added maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull method
+* new: Collectionx added asList method
 
 Change: 
 * change: Sequencex.flattenSequenceOfIterable() rename to flattenOfIterable
@@ -18,6 +19,9 @@ Change:
 * change: Collectionx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx2 merged to Arrayx
+
+Remove:
+* remove: Arrayx remove asList method
 
 ## v1.0.0-beta02
 improve: Improve code
