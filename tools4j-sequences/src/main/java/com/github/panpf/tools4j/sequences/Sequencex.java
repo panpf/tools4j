@@ -1978,6 +1978,23 @@ public class Sequencex {
         });
     }
 
+    /**
+     * Returns a sequence which performs the given [action] on each element of the original sequence as they pass through it.
+     * <p>
+     * The operation is _intermediate_ and _stateless_.
+     */
+    @NotNull
+    public static <T> Sequence<T> onEachIndexed(@Nullable Sequence<T> sequence, @NotNull final IndexedAction<T> action) {
+        return mapIndexed(sequence, new IndexedTransformer<T, T>() {
+            @NotNull
+            @Override
+            public T transform(int index, @NotNull T t) {
+                action.action(index, t);
+                return t;
+            }
+        });
+    }
+
 
     /* ******************************************* max ******************************************* */
 
