@@ -1020,6 +1020,7 @@ class SequencexTest {
 
     @Test
     fun testMap() {
+        // todo 测试 sequence null 的情况， 同步到 CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
 
@@ -1094,6 +1095,189 @@ class SequencexTest {
         )
         assertTrue(mapIndexedNotNullToList0 === mapIndexedNotNullToListResult0)
         assertTrue(mapIndexedNotNullToList1 === mapIndexedNotNullToListResult1)
+    }
+
+    @Test
+    fun testWithIndex() {
+        val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
+
+        assertTwoEquals(
+                "0:aj, 1:bj, 2:ao, 3:cc, 4:bo",
+                sequence0.withIndex().joinToString { "${it.index}:${it.value}" },
+                Sequencex.joinToString(Sequencex.withIndex(sequence1)) { "${it.index}:${it.value}" },
+        )
+
+        val iterator0 = sequence0.withIndex().iterator()
+        if (iterator0 is MutableIterator) {
+            assertThrow(UnsupportedOperationException::class) { iterator0.remove() }
+        }
+        assertThrow(UnsupportedOperationException::class) { Sequencex.withIndex(sequence1).iterator().remove() }
+    }
+
+    @Test
+    fun testDistinct() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals(
+                "aj, bj, bo",
+                sequence0.distinct().joinToString(),
+                Sequencex.joinToString(Sequencex.distinct(sequence1)),
+        )
+
+        assertTwoEquals(
+                "aj, bo",
+                sequence0.distinctBy { it.last() }.joinToString(),
+                Sequencex.joinToString(Sequencex.distinctBy(sequence1) { it.last() }),
+        )
+    }
+
+    @Test
+    fun testAll() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals(
+                true,
+                sequence0.all { it -> it.all { it.isLetter() } },
+                Sequencex.all(sequence1) { it -> it.all { it.isLetter() } },
+        )
+
+        assertTwoEquals(
+                false,
+                sequence0.all { it.last() == 'j' },
+                Sequencex.all(sequence1) { it.last() == 'j' },
+        )
+    }
+
+    @Test
+    fun testAny() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals(
+                true,
+                sequence0.any(),
+                Sequencex.any(sequence1),
+        )
+
+        assertTwoEquals(
+                false,
+                sequenceOf<String>().any(),
+                Sequencex.any(Sequencex.sequenceOf<String>()),
+        )
+
+        assertTwoEquals(
+                true,
+                sequence0.any { it.last() == 'j' },
+                Sequencex.any(sequence1) { it.last() == 'j' },
+        )
+
+        assertTwoEquals(
+                false,
+                sequence0.any { it -> it.all { it.isDigit() } },
+                Sequencex.any(sequence1) { it -> it.all { it.isDigit() } },
+        )
+    }
+
+    @Test
+    fun testCount() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals(
+                5,
+                sequence0.count(),
+                Sequencex.count(sequence1),
+        )
+
+        assertTwoEquals(
+                0,
+                sequenceOf<String>().count(),
+                Sequencex.count(Sequencex.sequenceOf<String>()),
+        )
+
+        assertTwoEquals(
+                0,
+                (null as kotlin.sequences.Sequence<String>?)?.count() ?: 0,
+                Sequencex.count(null as Sequence<String>?),
+        )
+
+        assertTwoEquals(
+                4,
+                sequence0.count { it.last() == 'j' },
+                Sequencex.count(sequence1) { it.last() == 'j' },
+        )
+
+        assertTwoEquals(
+                0,
+                sequenceOf<String>().count { it.last() == 'j' },
+                Sequencex.count(Sequencex.sequenceOf<String>()) { it.last() == 'j' },
+        )
+
+        assertTwoEquals(
+                0,
+                (null as kotlin.sequences.Sequence<String>?)?.count { it.last() == 'j' } ?: 0,
+                Sequencex.count(null as Sequence<String>?) { it.last() == 'j' },
+        )
+    }
+
+    @Test
+    fun testFold() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals(
+                "^ajbjajbjbo",
+                sequence0.fold("^") { r, t -> r + t },
+                Sequencex.fold(sequence1, "^") { r, t -> r + t },
+        )
+
+        assertTwoEquals(
+                "^0aj1bj2aj3bj4bo",
+                sequence0.foldIndexed("^") { i, r, t -> r + i.toString() + t },
+                Sequencex.foldIndexed(sequence1, "^") { i, r, t -> r + i.toString() + t },
+        )
+    }
+
+    @Test
+    fun testEach() {
+        val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+
+        assertTwoEquals("aj, bj, aj, bj, bo",
+                ArrayList<String>().apply { sequence0.forEach { add(it) } }.joinToString(),
+                ArrayList<String>().apply { Sequencex.forEach(sequence1) { add(it) } }.joinToString())
+
+        assertTwoEquals("",
+                ArrayList<String>().apply { sequenceOf<String>().forEach { add(it) } }.joinToString(),
+                ArrayList<String>().apply { Sequencex.forEach(null as Sequence<String>?) { add(it) } }.joinToString())
+
+        assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
+                ArrayList<String>().apply { sequence0.forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
+                ArrayList<String>().apply { Sequencex.forEachIndexed(sequence1) { i, it -> add(i.toString() + it) } }.joinToString())
+
+        assertTwoEquals("",
+                ArrayList<String>().apply { sequenceOf<String>().forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
+                ArrayList<String>().apply { Sequencex.forEachIndexed(null as Sequence<String>?) { i, it -> add(i.toString() + it) } }.joinToString())
+
+
+        assertTwoEquals("aj, bj, aj, bj, bo",
+                ArrayList<String>().apply { sequence0.onEach { add(it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Sequencex.toMutableList(Sequencex.onEach(sequence1) { add(it) }) }.joinToString())
+
+        assertTwoEquals("",
+                ArrayList<String>().apply { sequenceOf<String>().onEach { add(it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Sequencex.toMutableList(Sequencex.onEach(null as Sequence<String>?) { add(it) }) }.joinToString())
+
+        assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
+                ArrayList<String>().apply { sequence0.onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Sequencex.toMutableList(Sequencex.onEachIndexed(sequence1) { i, it -> add(i.toString() + it) }) }.joinToString())
+
+        assertTwoEquals("",
+                ArrayList<String>().apply { sequenceOf<String>().onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Sequencex.toMutableList(Sequencex.onEachIndexed(null as Sequence<String>?) { i, it -> add(i.toString() + it) }) }.joinToString())
     }
 
 
