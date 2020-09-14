@@ -45,6 +45,7 @@ public class IndexedValue<T> {
         return Objects.hash(index, value);
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "IndexedValue{" +
