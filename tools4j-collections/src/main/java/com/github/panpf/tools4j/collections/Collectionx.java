@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
+import com.github.panpf.tools4j.iterable.IndexingIterable;
 import com.github.panpf.tools4j.ranges.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -670,6 +671,25 @@ public class Collectionx {
     @NotNull
     public static <T, R> List<R> flatMapIndexed(@NotNull Iterable<T> iterable, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         return flatMapIndexedTo(iterable, new ArrayList<R>(), transform);
+    }
+
+
+    /* ******************************************* withIndex ******************************************* */
+
+
+    /**
+     * Returns a lazy [Iterable] that wraps each element of the original collection
+     * into an [IndexedValue] containing the index of that element and the element itself.
+     */
+    @NotNull
+    public static <T> Iterable<IndexedValue<T>> withIndex(@NotNull final Iterable<T> iterable) {
+        return new IndexingIterable<>(new DefaultValue<Iterator<T>>() {
+            @NotNull
+            @Override
+            public Iterator<T> get() {
+                return iterable.iterator();
+            }
+        });
     }
 
 
@@ -2125,7 +2145,7 @@ public class Collectionx {
     }
 
 
-    /* ******************************************* forEach ******************************************* */
+    /* ******************************************* each ******************************************* */
 
 
     /**
@@ -2148,6 +2168,28 @@ public class Collectionx {
         for (T item : iterable) {
             action.action(index++, item);
         }
+    }
+
+    /**
+     * Performs the given [action] on each element and returns the collection itself afterwards.
+     */
+    @NotNull
+    public static <T> Iterable<T> onEach(@NotNull Iterable<T> iterable, @NotNull Action<T> action) {
+        for (T element : iterable) action.action(element);
+        return iterable;
+    }
+
+    /**
+     * Performs the given [action] on each element, providing sequential index with the element,
+     * and returns the collection itself afterwards.
+     *
+     * @param action function that takes the index of an element and the element itself
+     *                 and performs the action on the element.
+     */
+    @NotNull
+    public static <T> Iterable<T> onEachIndexed(@NotNull Iterable<T> iterable, @NotNull IndexedAction<T> action) {
+        forEachIndexed(iterable, action);
+        return iterable;
     }
 
 

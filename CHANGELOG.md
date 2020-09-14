@@ -7,7 +7,7 @@ New:
 * new: Added 'tools4j-resources' module and 'tools4j-run' module
 * new: Sequencex add flatMapOfIterable, flatMapOfIterableTo, flatMapIndexed, flatMapIndexedOfIterable, flatMapIndexedOfIterableTo, flatMapIndexedTo, maxOf\* and minOf\*, onEachIndexed method
 * new: Mapx added maxOf\* and minOf\* method
-* new: Collectionx added emptyList, flatten, maxOf\* and minOf\*, flatMapIndexed, flatMapIndexedTo method
+* new: Collectionx added emptyList, flatten, maxOf\* and minOf\*, flatMapIndexed, flatMapIndexedTo, withIndex, onEach, onEachIndexed method
 * new: Arrayx added flatMapIndexed and flatMapIndexedTo method
 * new: Arrayx added maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull method
 * new: Collectionx added asList method

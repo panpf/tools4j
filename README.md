@@ -150,10 +150,10 @@ Dependencies：
     * minOrNull, minByOrNull, minWithOrNull,
     * minOf, minOfOrNull, minOfWith, minOfWithOrNull
     * addAll, removeAll, partition, toCollection, toList, toSet,
-    * toSortedSet, toHashSet, safeToConvertToSet,
+    * toSortedSet, toHashSet, safeToConvertToSet, withIndex
     * convertToSetForSetOperationWith, convertToSetForSetOperation,
-    * union, all, any, contains, forEach, forEachIndexed, chunked, minus,
-    * minusElement, plus, plusElement, indices, groupByTo, groupBy,
+    * union, all, any, contains, forEach, forEachIndexed, onEach, onEachIndexed, 
+    * chunked, minus, minusElement, plus, plusElement, indices, groupByTo, groupBy,
     * sort, sortWith, sortBy, sortedDescending, sortByDescending,
     * sortedWith, sortedBy, sorted, sortedByDescending, reverse,
     * indexOf, indexOfFirst, indexOfLast, lastIndexOf, fold, foldIndexed,
