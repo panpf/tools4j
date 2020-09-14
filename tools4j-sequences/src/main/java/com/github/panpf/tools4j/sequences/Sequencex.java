@@ -1630,7 +1630,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> map(@NotNull Sequence<T> sequence, @NotNull Transformer<T, R> transform) {
+    public static <T, R> Sequence<R> map(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transform) {
         return new TransformingSequence<>(sequence, transform);
     }
 
@@ -1641,7 +1641,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> mapNotNull(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transform) {
+    public static <T, R> Sequence<R> mapNotNull(@Nullable Sequence<T> sequence, @NotNull NullableTransformer<T, R> transform) {
         return filterNotNull(new NullableTransformingSequence<>(sequence, transform));
     }
 
@@ -1655,7 +1655,7 @@ public class Sequencex {
      *                  The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> mapIndexed(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, R> transform) {
+    public static <T, R> Sequence<R> mapIndexed(@Nullable Sequence<T> sequence, @NotNull IndexedTransformer<T, R> transform) {
         return new TransformingIndexedSequence<>(sequence, transform);
     }
 
@@ -1669,7 +1669,7 @@ public class Sequencex {
      *                  The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> mapIndexedNotNull(@NotNull Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transform) {
+    public static <T, R> Sequence<R> mapIndexedNotNull(@Nullable Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transform) {
         return filterNotNull(new NullableTransformingIndexedSequence<>(sequence, transform));
     }
 
@@ -1680,11 +1680,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            destination.add(transform.transform(item));
+    public static <T, R, C extends Collection<R>> C mapTo(@Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
+        if (sequence != null) {
+            Iterator<T> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                destination.add(transform.transform(item));
+            }
         }
         return destination;
     }
@@ -1696,14 +1698,16 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
-        forEach(sequence, new Action<T>() {
-            @Override
-            public void action(@NotNull T element) {
-                R result = transform.transform(element);
-                if (result != null) destination.add(result);
-            }
-        });
+    public static <T, R, C extends Collection<R>> C mapNotNullTo(@Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
+        if (sequence != null) {
+            forEach(sequence, new Action<T>() {
+                @Override
+                public void action(@NotNull T element) {
+                    R result = transform.transform(element);
+                    if (result != null) destination.add(result);
+                }
+            });
+        }
         return destination;
     }
 
@@ -1717,12 +1721,14 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapIndexedTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, R> transform) {
-        int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            destination.add(transform.transform(index++, item));
+    public static <T, R, C extends Collection<R>> C mapIndexedTo(@Nullable Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, R> transform) {
+        if (sequence != null) {
+            int index = 0;
+            Iterator<T> iterator = sequence.iterator();
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                destination.add(transform.transform(index++, item));
+            }
         }
         return destination;
     }
@@ -1737,14 +1743,16 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
-        forEachIndexed(sequence, new IndexedAction<T>() {
-            @Override
-            public void action(int index, @NotNull T element) {
-                R result = transform.transform(index, element);
-                if (result != null) destination.add(result);
-            }
-        });
+    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(@Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
+        if (sequence != null) {
+            forEachIndexed(sequence, new IndexedAction<T>() {
+                @Override
+                public void action(int index, @NotNull T element) {
+                    R result = transform.transform(index, element);
+                    if (result != null) destination.add(result);
+                }
+            });
+        }
         return destination;
     }
 
@@ -1967,7 +1975,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> onEach(@NotNull Sequence<T> sequence, @NotNull final Action<T> action) {
+    public static <T> Sequence<T> onEach(@Nullable Sequence<T> sequence, @NotNull final Action<T> action) {
         return map(sequence, new Transformer<T, T>() {
             @NotNull
             @Override

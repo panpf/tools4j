@@ -26,14 +26,14 @@ import java.util.NoSuchElementException;
 
 public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     @NotNull
     private final NullableTransformer<T, R> transformer;
     @NotNull
     private final Transformer<R, Iterator<E>> iteratorTransformer;
 
-    public NullableFlatteningSequence(@NotNull Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iterator) {
+    public NullableFlatteningSequence(@Nullable Sequence<T> sequence, @NotNull NullableTransformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iterator) {
         this.sequence = sequence;
         this.transformer = transformer;
         this.iteratorTransformer = iterator;
@@ -44,8 +44,8 @@ public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             @Nullable
             private Iterator<E> itemIterator = null;
 
@@ -66,7 +66,7 @@ public class NullableFlatteningSequence<T, R, E> implements Sequence<E> {
                 }
 
                 while (itemIterator == null) {
-                    if (!iterator.hasNext()) {
+                    if (iterator == null || !iterator.hasNext()) {
                         return false;
                     } else {
                         T element = iterator.next();

@@ -18,8 +18,10 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.IndexedTransformer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence which returns the results of applying the given [transformer] function to the values
@@ -28,12 +30,12 @@ import java.util.Iterator;
  */
 public class TransformingIndexedSequence<T, R> implements Sequence<R> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     @NotNull
     private final IndexedTransformer<T, R> transformer;
 
-    public TransformingIndexedSequence(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, R> transformer) {
+    public TransformingIndexedSequence(@Nullable Sequence<T> sequence, @NotNull IndexedTransformer<T, R> transformer) {
         this.sequence = sequence;
         this.transformer = transformer;
     }
@@ -42,19 +44,23 @@ public class TransformingIndexedSequence<T, R> implements Sequence<R> {
     @Override
     public Iterator<R> iterator() {
         return new Iterator<R>() {
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
 
             int index = 0;
 
             @Override
             public R next() {
-                return transformer.transform(index++, iterator.next());
+                if (iterator != null) {
+                    return transformer.transform(index++, iterator.next());
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
             public boolean hasNext() {
-                return iterator.hasNext();
+                return iterator != null && iterator.hasNext();
             }
 
             @Override
