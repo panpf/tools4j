@@ -142,6 +142,7 @@ public class EmptyList implements List<Object>, Serializable, RandomAccess {
 
     @Override
     public boolean add(Object o) {
+        //noinspection Contract
         return false;
     }
 
@@ -153,16 +154,14 @@ public class EmptyList implements List<Object>, Serializable, RandomAccess {
     @NotNull
     @Override
     public ListIterator<Object> listIterator() {
-        //noinspection unchecked
-        return (ListIterator<Object>) EmptyIterator.INSTANCE;
+        return EmptyIterator.INSTANCE;
     }
 
     @NotNull
     @Override
     public ListIterator<Object> listIterator(int index) {
         if (index != 0) throw new IndexOutOfBoundsException("Index: " + index);
-        //noinspection unchecked
-        return (ListIterator<Object>) EmptyIterator.INSTANCE;
+        return EmptyIterator.INSTANCE;
     }
 
     @NotNull

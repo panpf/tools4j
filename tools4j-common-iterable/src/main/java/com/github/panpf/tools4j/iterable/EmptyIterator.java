@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.NoSuchElementException;
 
-public class EmptyIterator implements ListIterator<Object> {
+public class EmptyIterator implements java.util.ListIterator<Object> {
 
     @NotNull
     public static final EmptyIterator INSTANCE = new EmptyIterator();
@@ -62,5 +62,15 @@ public class EmptyIterator implements ListIterator<Object> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");
+    }
+
+    @Override
+    public void set(Object o) {
+
+    }
+
+    @Override
+    public void add(Object o) {
+
     }
 }
