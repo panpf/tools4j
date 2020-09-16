@@ -32,7 +32,7 @@ implementation "com.github.panpf.tools4j:tools4j-ktx:$LAST_VERSION" // Kotlin ex
 
 Please replace `$LAST_VERSION` with the latest version: [![Download][version_icon]][version_link]
 
-The "com.github.panpf.tools4j:tools4j:$LAST_VERSION" dependency will add all the modules included in tools4j to your project. If you only need of one of the modules, you can just add it to your project, all supported modules as follows:
+The "com.github.panpf.tools4j:tools4j:$LAST_VERSION" dependency will add all the modules included in tools4j to your project (Except for 'tools4j-test'). If you only need of one of the modules, you can just add it to your project, all supported modules as follows:
 ```groovy
 implementation "com.github.panpf.tools4j:tools4j-annotation:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-annotation-ktx:$LAST_VERSION" // Kotlin extension, not required
@@ -84,6 +84,9 @@ implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION" // 
 
 implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
 
+implementation "com.github.panpf.tools4j:tools4j-test:$LAST_VERSION"    // Not included in 'com.github.panpf.tools4j:tools4j'
+implementation "com.github.panpf.tools4j:tools4j-test-ktx:$LAST_VERSION" // Kotlin extension, not required, Not included in 'com.github.panpf.tools4j:tools4j-ktx'
+
 implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION" // Kotlin extension, not required
 ```
@@ -97,11 +100,11 @@ Dependencies：
 `Representatives with the (Test) tag have passed the test and can be used with confidence.`
 
 ### tools4j-annotation
-* Annotationx: [Annotationx.java] ([Test][AnnotationxTest.kt]) | [Annotationx.kt] ([Test][AnnotationxTest.kt])
+* Annotationx: [Annotationx.java] ([Test][AnnotationxTest.kt]) | [Annotationx.kt] ([Test][AnnotationxKtxTest.kt])
     * getAnnotationFromEnum
 
 ### tools4j-base64
-* Base64x: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xTest.kt])
+* Base64x: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xKtxTest.kt])
     * encode, encodeToString, decode, decodeToString
 
 ### tools4j-collections
@@ -163,7 +166,7 @@ Dependencies：
     * associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile,
     * single, singleOrNull, elementAtOrElse, elementAt, elementAtOrNull,
     * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array, flatten
-* Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxTest.kt])
+* Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
     * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf,
     * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty,
     * putAll, plus, plusAssign, remove, minus, minusAssign, set,
@@ -182,22 +185,22 @@ Dependencies：
     * compareByDescending, naturalOrder, reverseOrder, maxOf, minOf
 
 ### tools4j-crypto
-* Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxTest.kt])
+* Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxKtxTest.kt])
     * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt,
     * encryptToBase64, decrypt, decryptFromBase64, decryptToString,
     * decryptToStringFromBase64
-* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxTest.kt])
+* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxKtxTest.kt])
     * createKeyByPassword, encrypt, encryptToBase64,
     * decrypt, decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxTest.kt])
+* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxKtxTest.kt])
     * toBase64, toBytes
-* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxTest.kt])
+* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxKtxTest.kt])
     * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64,
     * verify, verifyFromBase64, encrypt, encryptToBase64, decrypt,
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
 
 ### tools4j-date
-* Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexTest.kt])
+* Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexKtxTest.kt])
     * createCalendar, toDate, format, formatTimeLength, getCalendarField,
     * addToDate, addCalendarField, isSame\[Year, Month...\], differField,
 
@@ -207,7 +210,7 @@ Dependencies：
     * eachCount, eachCountTo
 
 ### tools4j-io
-* Filex: [Filex.java] ([Test][FilexTest.kt]) | [Filex.kt] ([Test][FilexTest.kt])
+* Filex: [Filex.java] ([Test][FilexTest.kt]) | [Filex.kt] ([Test][FilexKtxTest.kt])
     * mkdirsOrThrow, mkdirsOrCheck, createNewFileOrThrow, createNewFileOrCheck,
     * ensureFileNotExist, ensureDirNotExist, clean, cleanRecursively,
     * lengthRecursively, listRecursively, listFilesRecursively, listCount,
@@ -224,7 +227,7 @@ Dependencies：
     * forEachBlock, forEachLine, outputStream, bufferedOutputStream, writer,
     * bufferedWriter, printWriter, writeBytes, appendBytes, writeText,
     * appendText, walk, walkTopDown, walkBottomUp
-* IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxTest.kt])
+* IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
     * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose,
     * writeBytesAndClose, writeTextAndClose, writeCharAndClose,
     * writeCharsAndClose, copyTo, inputStream, byteInputStream,
@@ -232,19 +235,19 @@ Dependencies：
     * readLines, readBytes, readText, lineIterable, useLines, forEachLine
 
 ### tools4j-lang
-* Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxTest.kt])
+* Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxKtxTest.kt])
     * isTrue, isFalse, isNullOrTrue, isNullOrFalse
-* Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxTest.kt])
+* Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxKtxTest.kt])
     * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr,
     * isNotDigit, digitOr, isNotLetter, letterOr, isNotLetterOrDigit,
     * letterOrDigitOr, isDigit, isLetter, isLetterOrDigit, equals
-* Numberx: [Numberx.java] ([Test][NumberxTest.kt]) | [Numberx.kt] ([Test][NumberxTest.kt])
+* Numberx: [Numberx.java] ([Test][NumberxTest.kt]) | [Numberx.kt] ([Test][NumberxKtxTest.kt])
     * requireNotZero, pad, orZero, to\*OrDefault, to\*OrZero, toHexString,
     * toHexStringOr, toHexStringOrNull, toBinaryString, toBinaryStringOr,
     * toBinaryStringOrNull, toOctalString, toOctalStringOr, toOctalStringOrNull
-* Objectx: [Objectx.java] ([Test][ObjectxTest.kt]) | [Objectx.kt] ([Test][ObjectxTest.kt])
+* Objectx: [Objectx.java] ([Test][ObjectxTest.kt]) | [Objectx.kt] ([Test][ObjectxKtxTest.kt])
     * toSimpleString
-* Stringx: [Stringx.java] ([Test][StringxTest.kt]) | [Stringx.kt] ([Test][StringxTest.kt])
+* Stringx: [Stringx.java] ([Test][StringxTest.kt]) | [Stringx.kt] ([Test][StringxKtxTest.kt])
     * isSafe, isNotSafe, safeOr, safeOrNull, requireSafe, requireNotSafe,
     * notBlankOr, isNotNullOrBlank, notNullOrBlankOr, notEmptyOr,
     * isNotNullOrEmpty, notNullOrEmptyOr, isChinese, isNotChinese, chineseOr,
@@ -279,11 +282,11 @@ Dependencies：
     * min, minBy, minWith, none, onEach, reduce, reduceIndexed, reduceRight,
     * reduceRightIndexed, sumBy, sumByDouble, chunked, chunkedIterable,
     * partition, windowed, windowedIterable, zip, zipWithNext, asIterable
-* Throwablex: [Throwablex.java] ([Test][ThrowablexTest.kt]) | [Throwablex.kt] ([Test][ThrowablexTest.kt])
+* Throwablex: [Throwablex.java] ([Test][ThrowablexTest.kt]) | [Throwablex.kt] ([Test][ThrowablexKtxTest.kt])
     * stackTraceToString
 
 ### tools4j-math
-* Mathx: [Mathx.java] ([Test][MathxTest.kt]) | [Mathx.kt] ([Test][MathxTest.kt])
+* Mathx: [Mathx.java] ([Test][MathxTest.kt]) | [Mathx.kt] ([Test][MathxKtxTest.kt])
     * divide, divideToInt, divideToLong, scale, proportion, percent,
     * format, formatPercentWith
 
@@ -296,21 +299,21 @@ Dependencies：
     * guessFileNameFromContentDisposition, guessFileNameFromUrl
 
 ### tools4j-premise
-* Premisex: [Premisex.java] ([Test][PremisexTest.kt]) | [Premisex.kt] ([Test][PremisexTest.kt])
+* Premisex: [Premisex.java] ([Test][PremisexTest.kt]) | [Premisex.kt] ([Test][PremisexKtxTest.kt])
     * require, check, requireNotNull, checkNotNull
 
 ### tools4j-ranges
-* Rangex: [Rangex.java] ([Test][RangexTest.kt]) | [Rangex.kt] ([Test][RangexTest.kt])
+* Rangex: [Rangex.java] ([Test][RangexTest.kt]) | [Rangex.kt] ([Test][RangexKtxTest.kt])
     * rangeTo, until, downTo, requireInRange, requireNotInRange, in, notIn,
     * reversed, step, coerceAtLeast, coerceAtMost, coerceIn
 
 ### tools4j-ranges-date
-* DateRangex: [DateRangex.java] ([Test][DateRangexTest.kt]) | [DateRangex.kt] ([Test][DateRangexTest.kt])
+* DateRangex: [DateRangex.java] ([Test][DateRangexTest.kt]) | [DateRangex.kt] ([Test][DateRangexKtxTest.kt])
     * \[Year, Month...\]RangeTo, \[Year, Month...\]Until,
     * \[Year, Month...\]DownTo, reversed, step
 
 ### tools4j-reflect
-* Reflectx: [Reflectx.java] ([Test][ReflectxTest.kt]) | [Reflectx.kt] ([Test][ReflectxTest.kt])
+* Reflectx: [Reflectx.java] ([Test][ReflectxTest.kt]) | [Reflectx.kt] ([Test][ReflectxKtxTest.kt])
     * getDeclaredFieldRecursive, getDeclaredFieldsRecursive, getFieldValue,
     * getStaticFieldValue, setFieldValue, setStaticFieldValue,
     * getDeclaredMethodRecursive, getDeclaredMethodsRecursive, callMethod,
@@ -319,7 +322,7 @@ Dependencies：
     * isTypeArray, isTypeCollection
 
 ### tools4j-regex
-* Regexx: [Regexx.java] ([Test][RegexxTest.kt]) | [Regexx.kt] ([Test][RegexxTest.kt])
+* Regexx: [Regexx.java] ([Test][RegexxTest.kt]) | [Regexx.kt] ([Test][RegexxKtxTest.kt])
     * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup,
     * replaceFirst, replaceAll, IPV4, IPV6, MAC_ADDRESS, CHINESE,
     * CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
@@ -333,7 +336,7 @@ Dependencies：
     * getWorkspaceDir, isClassInJar, getClassInDir, getClassInJarFile
 
 ### tools4j-security
-* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxTest.kt])
+* MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxKtxTest.kt])
     * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
 
 ### tools4j-sequences
@@ -360,8 +363,12 @@ Dependencies：
     * minusElement, partition, plus, plusElement, zip, unzip,
     * joinTo, joinToString, averageOf
 
+### tools4j-test
+* Assertx: [Assertx.java] | [Assertx.kt]
+    * assertTwoEquals, assertAllNotNull, assertAllNull, assertNoThrow, assertThrow, assertTwoThrow
+
 ### tools4j-zip
-* Zipx: [Zipx.java] ([Test][ZipxTest.kt]) | [Zipx.kt] ([Test][ZipxTest.kt])
+* Zipx: [Zipx.java] ([Test][ZipxTest.kt]) | [Zipx.kt] ([Test][ZipxKtxTest.kt])
     * compress, decompress, gzipCompress, gzipDecompress, compressFilesTo,
     * compressFilesTo, compressFileTo, compressFile, compressChildFileTo,
     * compressChildFile, decompressTo, decompress, getCompressDstFile,
@@ -405,27 +412,27 @@ Please view the [CHANGELOG.md] file
 [Annotationx.java]: tools4j-annotation/src/main/java/com/github/panpf/tools4j/annotation/Annotationx.java
 [AnnotationxTest.kt]: tools4j-annotation/src/test/java/com/github/panpf/tools4j/annotation/AnnotationxTest.kt
 [Annotationx.kt]: tools4j-annotation-ktx/src/main/java/com/github/panpf/tools4j/annotation/ktx/Annotationx.kt
-[AnnotationxTest.kt]: tools4j-annotation-ktx/src/test/java/com/github/panpf/tools4j/annotation/ktx/AnnotationxTest.kt
+[AnnotationxKtxTest.kt]: tools4j-annotation-ktx/src/test/java/com/github/panpf/tools4j/annotation/ktx/AnnotationxTest.kt
 
 [Base64x.java]: tools4j-base64/src/main/java/com/github/panpf/tools4j/base64/Base64x.java
 [Base64xTest.kt]: tools4j-base64/src/test/java/com/github/panpf/tools4j/base64/Base64xTest.kt
 [Base64x.kt]: tools4j-base64-ktx/src/main/java/com/github/panpf/tools4j/base64/ktx/Base64x.kt
-[Base64xTest.kt]: tools4j-base64-ktx/src/test/java/com/github/panpf/tools4j/base64/ktx/Base64xTest.kt
+[Base64xKtxTest.kt]: tools4j-base64-ktx/src/test/java/com/github/panpf/tools4j/base64/ktx/Base64xTest.kt
 
 [Arrayx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Arrayx.java
 [ArrayxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/ArrayxTest.kt
 [Arrayx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Arrayx.kt
-[ArrayxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/ArrayxTest.kt
+[ArrayxKtxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/ArrayxTest.kt
 
 [Collectionx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Collectionx.java
 [CollectionxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/CollectionxTest.kt
 [Collectionx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Collectionx.kt
-[CollectionxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/CollectionxTest.kt
+[CollectionxKtxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/CollectionxTest.kt
 
 [Mapx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Mapx.java
 [MapxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/MapxTest.kt
 [Mapx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Mapx.kt
-[MapxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/MapxTest.kt
+[MapxKtxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/MapxTest.kt
 
 [Comparex.java]: tools4j-compare/src/main/java/com/github/panpf/tools4j/compare/Comparex.java
 [ComparexTest.kt]: tools4j-compare/src/test/java/com/github/panpf/tools4j/compare/ComparexTest.kt
@@ -433,27 +440,27 @@ Please view the [CHANGELOG.md] file
 [Aesx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Aesx.java
 [AesxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/AesxTest.kt
 [Aesx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Aesx.kt
-[AesxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/AesxTest.kt
+[AesxKtxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/AesxTest.kt
 
 [Desx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Desx.java
 [DesxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/DesxTest.kt
 [Desx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Desx.kt
-[DesxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/DesxTest.kt
+[DesxKtxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/DesxTest.kt
 
 [Keyx.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Keyx.java
 [KeyxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/KeyxTest.kt
 [Keyx.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Keyx.kt
-[KeyxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/KeyxTest.kt
+[KeyxKtxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/KeyxTest.kt
 
 [Rsax.java]: tools4j-crypto/src/main/java/com/github/panpf/tools4j/crypto/Rsax.java
 [RsaxTest.kt]: tools4j-crypto/src/test/java/com/github/panpf/tools4j/crypto/RsaxTest.kt
 [Rsax.kt]: tools4j-crypto-ktx/src/main/java/com/github/panpf/tools4j/crypto/ktx/Rsax.kt
-[RsaxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/RsaxTest.kt
+[RsaxKtxTest.kt]: tools4j-crypto-ktx/src/test/java/com/github/panpf/tools4j/crypto/ktx/RsaxTest.kt
 
 [Datex.java]: tools4j-date/src/main/java/com/github/panpf/tools4j/date/Datex.java
 [DatexTest.kt]: tools4j-date/src/test/java/com/github/panpf/tools4j/date/DatexTest.kt
 [Datex.kt]: tools4j-date-ktx/src/main/java/com/github/panpf/tools4j/date/ktx/Datex.kt
-[DatexTest.kt]: tools4j-date-ktx/src/test/java/com/github/panpf/tools4j/date/ktx/DatexTest.kt
+[DatexKtxTest.kt]: tools4j-date-ktx/src/test/java/com/github/panpf/tools4j/date/ktx/DatexTest.kt
 
 [Groupingx.java]: tools4j-grouping/src/main/java/com/github/panpf/tools4j/grouping/Groupingx.java
 [GroupingxTest.kt]: tools4j-grouping/src/test/java/com/github/panpf/tools4j/grouping/GroupingxTest.kt
@@ -461,47 +468,47 @@ Please view the [CHANGELOG.md] file
 [Filex.java]: tools4j-io/src/main/java/com/github/panpf/tools4j/io/Filex.java
 [FilexTest.kt]: tools4j-io/src/test/java/com/github/panpf/tools4j/io/FilexTest.kt
 [Filex.kt]: tools4j-io-ktx/src/main/java/com/github/panpf/tools4j/io/ktx/Filex.kt
-[FilexTest.kt]: tools4j-io-ktx/src/test/java/com/github/panpf/tools4j/io/ktx/FilexTest.kt
+[FilexKtxTest.kt]: tools4j-io-ktx/src/test/java/com/github/panpf/tools4j/io/ktx/FilexTest.kt
 
 [IOx.java]: tools4j-io/src/main/java/com/github/panpf/tools4j/io/IOx.java
 [IOxTest.kt]: tools4j-io/src/test/java/com/github/panpf/tools4j/io/IOxTest.kt
 [IOx.kt]: tools4j-io-ktx/src/main/java/com/github/panpf/tools4j/io/ktx/IOx.kt
-[IOxTest.kt]: tools4j-io-ktx/src/test/java/com/github/panpf/tools4j/io/ktx/IOxTest.kt
+[IOxKtxTest.kt]: tools4j-io-ktx/src/test/java/com/github/panpf/tools4j/io/ktx/IOxTest.kt
 
 [Booleanx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Booleanx.java
 [BooleanxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/BooleanxTest.kt
 [Booleanx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Booleanx.kt
-[BooleanxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/BooleanxTest.kt
+[BooleanxKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/BooleanxTest.kt
 
 [Charx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Charx.java
 [CharxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/CharxTest.kt
 [Charx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Charx.kt
-[CharxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/CharxTest.kt
+[CharxKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/CharxTest.kt
 
 [Numberx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Numberx.java
 [NumberxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/NumberxTest.kt
 [Numberx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Numberx.kt
-[NumberxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/NumberxTest.kt
+[NumberxKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/NumberxTest.kt
 
 [Objectx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Objectx.java
 [ObjectxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/ObjectxTest.kt
 [Objectx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Objectx.kt
-[ObjectxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/ObjectxTest.kt
+[ObjectxKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/ObjectxTest.kt
 
 [Stringx.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Stringx.java
 [StringxTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/StringxTest.kt
 [Stringx.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Stringx.kt
-[StringxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/StringxTest.kt
+[StringxKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/StringxTest.kt
 
 [Throwablex.java]: tools4j-lang/src/main/java/com/github/panpf/tools4j/lang/Throwablex.java
 [ThrowablexTest.kt]: tools4j-lang/src/test/java/com/github/panpf/tools4j/lang/ThrowablexTest.kt
 [Throwablex.kt]: tools4j-lang-ktx/src/main/java/com/github/panpf/tools4j/lang/ktx/Throwablex.kt
-[ThrowablexTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/ThrowablexTest.kt
+[ThrowablexKtxTest.kt]: tools4j-lang-ktx/src/test/java/com/github/panpf/tools4j/lang/ktx/ThrowablexTest.kt
 
 [Mathx.java]: tools4j-math/src/main/java/com/github/panpf/tools4j/math/Mathx.java
 [MathxTest.kt]: tools4j-math/src/test/java/com/github/panpf/tools4j/math/MathxTest.kt
 [Mathx.kt]: tools4j-math-ktx/src/main/java/com/github/panpf/tools4j/math/ktx/Mathx.kt
-[MathxTest.kt]: tools4j-math-ktx/src/test/java/com/github/panpf/tools4j/math/ktx/MathxTest.kt
+[MathxKtxTest.kt]: tools4j-math-ktx/src/test/java/com/github/panpf/tools4j/math/ktx/MathxTest.kt
 
 [Netx.java]: tools4j-net/src/main/java/com/github/panpf/tools4j/net/Netx.java
 [NetxTest.kt]: tools4j-net/src/test/java/com/github/panpf/tools4j/net/NetxTest.kt
@@ -509,27 +516,27 @@ Please view the [CHANGELOG.md] file
 [Premisex.java]: tools4j-premise/src/main/java/com/github/panpf/tools4j/premise/Premisex.java
 [PremisexTest.kt]: tools4j-premise/src/test/java/com/github/panpf/tools4j/premise/PremisexTest.kt
 [Premisex.kt]: tools4j-premise-ktx/src/main/java/com/github/panpf/tools4j/premise/ktx/Premisex.kt
-[PremisexTest.kt]: tools4j-premise-ktx/src/test/java/com/github/panpf/tools4j/premise/ktx/PremisexTest.kt
+[PremisexKtxTest.kt]: tools4j-premise-ktx/src/test/java/com/github/panpf/tools4j/premise/ktx/PremisexTest.kt
 
 [Rangex.java]: tools4j-ranges/src/main/java/com/github/panpf/tools4j/ranges/Rangex.java
 [RangexTest.kt]: tools4j-ranges/src/test/java/com/github/panpf/tools4j/ranges/RangexTest.kt
 [Rangex.kt]: tools4j-ranges-ktx/src/main/java/com/github/panpf/tools4j/ranges/ktx/Rangex.kt
-[RangexTest.kt]: tools4j-ranges-ktx/src/test/java/com/github/panpf/tools4j/ranges/ktx/RangexTest.kt
+[RangexKtxTest.kt]: tools4j-ranges-ktx/src/test/java/com/github/panpf/tools4j/ranges/ktx/RangexTest.kt
 
 [DateRangex.java]: tools4j-ranges-date/src/main/java/com/github/panpf/tools4j/ranges/date/DateRangex.java
 [DateRangexTest.kt]: tools4j-ranges-date/src/test/java/com/github/panpf/tools4j/ranges/date/DateRangexTest.kt
 [DateRangex.kt]: tools4j-ranges-date-ktx/src/main/java/com/github/panpf/tools4j/ranges/date/ktx/DateRangex.kt
-[DateRangexTest.kt]: tools4j-ranges-date-ktx/src/test/java/com/github/panpf/tools4j/ranges/date/ktx/DateRangexTest.kt
+[DateRangexKtxTest.kt]: tools4j-ranges-date-ktx/src/test/java/com/github/panpf/tools4j/ranges/date/ktx/DateRangexTest.kt
 
 [Reflectx.java]: tools4j-reflect/src/main/java/com/github/panpf/tools4j/reflect/Reflectx.java
 [ReflectxTest.kt]: tools4j-reflect/src/test/java/com/github/panpf/tools4j/reflect/ReflectxTest.kt
 [Reflectx.kt]: tools4j-reflect-ktx/src/main/java/com/github/panpf/tools4j/reflect/ktx/Reflectx.kt
-[ReflectxTest.kt]: tools4j-reflect-ktx/src/test/java/com/github/panpf/tools4j/reflect/ktx/ReflectxTest.kt
+[ReflectxKtxTest.kt]: tools4j-reflect-ktx/src/test/java/com/github/panpf/tools4j/reflect/ktx/ReflectxTest.kt
 
 [Regexx.java]: tools4j-regex/src/main/java/com/github/panpf/tools4j/regex/Regexx.java
 [RegexxTest.kt]: tools4j-regex/src/test/java/com/github/panpf/tools4j/regex/RegexxTest.kt
 [Regexx.kt]: tools4j-regex-ktx/src/main/java/com/github/panpf/tools4j/regex/ktx/Regexx.kt
-[RegexxTest.kt]: tools4j-regex-ktx/src/test/java/com/github/panpf/tools4j/regex/ktx/RegexxTest.kt
+[RegexxKtxTest.kt]: tools4j-regex-ktx/src/test/java/com/github/panpf/tools4j/regex/ktx/RegexxTest.kt
 
 [ResourcesCacheHelper.java]: tools4j-resources/src/main/java/com/github/panpf/tools4j/resources/ResourcesCacheHelper.java
 [ResourcesCacheHelperTest.kt]: tools4j-resources/src/test/java/com/github/panpf/tools4j/resources/ResourcesCacheHelperTest.kt
@@ -540,12 +547,15 @@ Please view the [CHANGELOG.md] file
 [MessageDigestx.java]: tools4j-security/src/main/java/com/github/panpf/tools4j/security/MessageDigestx.java
 [MessageDigestxTest.kt]: tools4j-security/src/test/java/com/github/panpf/tools4j/security/MessageDigestxTest.kt
 [MessageDigestx.kt]: tools4j-security-ktx/src/main/java/com/github/panpf/tools4j/security/ktx/MessageDigestx.kt
-[MessageDigestxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/MessageDigestxTest.kt
+[MessageDigestxKtxTest.kt]: tools4j-security-ktx/src/test/java/com/github/panpf/tools4j/security/ktx/MessageDigestxTest.kt
 
 [Sequencex.java]: tools4j-sequences/src/main/java/com/github/panpf/tools4j/sequences/Sequencex.java
-[SequencexTest.kt]: tools4j-sequences/src/test/java/com/github/panpf/tools4j/sequences/SequencexTest.kt
+[SequencexKtxTest.kt]: tools4j-sequences/src/test/java/com/github/panpf/tools4j/sequences/SequencexTest.kt
+
+[Assertx.java]: tools4j-test/src/main/java/com/github/panpf/tools4j/test/Assertx.java
+[Assertx.kt]: tools4j-test-ktx/src/main/java/com/github/panpf/tools4j/test/ktx/Assertx.kt
 
 [Zipx.java]: tools4j-zip/src/main/java/com/github/panpf/tools4j/zip/Zipx.java
 [ZipxTest.kt]: tools4j-zip/src/test/java/com/github/panpf/tools4j/zip/ZipxTest.kt
 [Zipx.kt]: tools4j-zip-ktx/src/main/java/com/github/panpf/tools4j/zip/ktx/Zipx.kt
-[ZipxTest.kt]: tools4j-zip-ktx/src/test/java/com/github/panpf/tools4j/zip/ktx/ZipxTest.kt
+[ZipxKtxTest.kt]: tools4j-zip-ktx/src/test/java/com/github/panpf/tools4j/zip/ktx/ZipxTest.kt

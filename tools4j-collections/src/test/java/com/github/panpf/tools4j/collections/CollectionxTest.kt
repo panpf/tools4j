@@ -19,6 +19,7 @@
 package com.github.panpf.tools4j.collections
 
 import com.github.panpf.tools4j.iterable.CharSequenceIterable
+import com.github.panpf.tools4j.test.ktx.*
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*

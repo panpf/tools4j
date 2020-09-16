@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.sequences
 
 import com.github.panpf.tools4j.iterable.EmptyIterator
+import com.github.panpf.tools4j.test.ktx.*
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*

@@ -1,7 +1,6 @@
 plugins {
     id("java-library")
     id("jacoco")
-    id("kotlin")
 }
 
 group = "com.github.panpf.tools4j"
@@ -14,13 +13,7 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
-    api(project(":tools4j-common-action"))
-    api(project(":tools4j-common-iterable"))
-    api(project(":tools4j-common-rangesbase"))
-
-    testImplementation("junit:junit:${property("JUNIT_VERSION")}")
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
-    testImplementation(project(":tools4j-test-ktx"))
+    api("junit:junit:${property("JUNIT_VERSION")}")
 }
 
 tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))
@@ -37,9 +30,9 @@ tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))
     apply { plugin("com.github.panpf.bintray-publish") }
     configure<com.github.panpf.bintray.publish.PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-lang"
+        artifactId = "tools4j-test"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Lang"
+        desc = "Java, Tools, Test"
         website = "https://github.com/panpf/tools4j"
         userOrg = localProperties.getProperty("bintray.userOrg")
         bintrayUser = localProperties.getProperty("bintray.user")

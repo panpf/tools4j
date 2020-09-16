@@ -61,5 +61,8 @@ include(":tools4j-security-ktx")
 
 include(":tools4j-sequences")
 
+include(":tools4j-test")
+include(":tools4j-test-ktx")
+
 include(":tools4j-zip")
 include(":tools4j-zip-ktx")

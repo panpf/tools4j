@@ -11,6 +11,7 @@ New:
 * new: Arrayx added flatMapIndexed and flatMapIndexedTo method
 * new: Arrayx added maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull method
 * new: Collectionx added asList method
+* new: Added 'tools4j-test' module and 'tools4j-test-ktx' module
 
 Change: 
 * change: Sequencex.flattenSequenceOfIterable() rename to flattenOfIterable
