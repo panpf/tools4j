@@ -1,4 +1,4 @@
-## new
+## v1.0.0-beta03
 
 Fix:
 * fix: Fix the stack overflow bug when Sequencex.flatten() is passed into TransformingSequence
