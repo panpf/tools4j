@@ -25,8 +25,6 @@ include(":tools4j-crypto-ktx")
 include(":tools4j-date")
 include(":tools4j-date-ktx")
 
-include(":tools4j-grouping")
-
 include(":tools4j-io")
 include(":tools4j-io-ktx")
 

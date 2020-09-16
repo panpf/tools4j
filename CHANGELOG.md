@@ -20,6 +20,7 @@ Change:
 * change: Collectionx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx2 merged to Arrayx
+* change: Groupingx move to 'tools4j-collections' module
 
 Remove:
 * remove: Arrayx remove asList method

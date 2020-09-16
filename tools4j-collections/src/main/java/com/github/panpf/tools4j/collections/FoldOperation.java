@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.grouping;
+package com.github.panpf.tools4j.collections;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public interface AggregateOperation<T, K, R> {
+public interface FoldOperation<T, K, R> {
 
     @NotNull
-    R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first);
+    R operation(@NotNull K key, @NotNull R accumulator, @NotNull T element);
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.grouping;
+package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.Transformer;
 import com.github.panpf.tools4j.common.Transformer2;

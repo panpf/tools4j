@@ -51,8 +51,6 @@ implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION" // Ko
 implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-grouping:$LAST_VERSION"
-
 implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION" // Kotlin extension, not required
 
@@ -166,6 +164,9 @@ Dependencies：
     * associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile,
     * single, singleOrNull, elementAtOrElse, elementAt, elementAtOrNull,
     * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array, flatten
+* Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
+    * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo,
+    * eachCount, eachCountTo
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
     * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf,
     * hashMapOf, linkedMapOf, sortedMapOf, isEmpty, isNotEmpty, orEmpty,
@@ -203,11 +204,6 @@ Dependencies：
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexKtxTest.kt])
     * createCalendar, toDate, format, formatTimeLength, getCalendarField,
     * addToDate, addCalendarField, isSame\[Year, Month...\], differField,
-
-### tools4j-grouping
-* Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
-    * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo,
-    * eachCount, eachCountTo
 
 ### tools4j-io
 * Filex: [Filex.java] ([Test][FilexTest.kt]) | [Filex.kt] ([Test][FilexKtxTest.kt])
@@ -429,6 +425,9 @@ Please view the [CHANGELOG.md] file
 [Collectionx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Collectionx.kt
 [CollectionxKtxTest.kt]: tools4j-collections-ktx/src/test/java/com/github/panpf/tools4j/collections/ktx/CollectionxTest.kt
 
+[Groupingx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Groupingx.java
+[GroupingxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/GroupingxTest.kt
+
 [Mapx.java]: tools4j-collections/src/main/java/com/github/panpf/tools4j/collections/Mapx.java
 [MapxTest.kt]: tools4j-collections/src/test/java/com/github/panpf/tools4j/collections/MapxTest.kt
 [Mapx.kt]: tools4j-collections-ktx/src/main/java/com/github/panpf/tools4j/collections/ktx/Mapx.kt
@@ -461,9 +460,6 @@ Please view the [CHANGELOG.md] file
 [DatexTest.kt]: tools4j-date/src/test/java/com/github/panpf/tools4j/date/DatexTest.kt
 [Datex.kt]: tools4j-date-ktx/src/main/java/com/github/panpf/tools4j/date/ktx/Datex.kt
 [DatexKtxTest.kt]: tools4j-date-ktx/src/test/java/com/github/panpf/tools4j/date/ktx/DatexTest.kt
-
-[Groupingx.java]: tools4j-grouping/src/main/java/com/github/panpf/tools4j/grouping/Groupingx.java
-[GroupingxTest.kt]: tools4j-grouping/src/test/java/com/github/panpf/tools4j/grouping/GroupingxTest.kt
 
 [Filex.java]: tools4j-io/src/main/java/com/github/panpf/tools4j/io/Filex.java
 [FilexTest.kt]: tools4j-io/src/test/java/com/github/panpf/tools4j/io/FilexTest.kt

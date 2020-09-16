@@ -20,7 +20,6 @@ dependencies {
     api(project(":tools4j-compare"))
     api(project(":tools4j-crypto"))
     api(project(":tools4j-date"))
-    api(project(":tools4j-grouping"))
     api(project(":tools4j-io"))
     api(project(":tools4j-lang"))
     api(project(":tools4j-math"))
