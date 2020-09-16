@@ -13,34 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.github.panpf.tools4j.test.ktx
 
 import com.github.panpf.tools4j.test.Assertx
 import kotlin.reflect.KClass
 
 
-fun assertTwoEquals(expected: Any?, actual1: Any?, actual2: Any?) = Assertx.assertTwoEquals(expected, actual1, actual2)
+inline fun assertTwoEquals(expected: Any?, actual1: Any?, actual2: Any?) = Assertx.assertTwoEquals(expected, actual1, actual2)
 
-fun assertAllNotNull(vararg values: Any?) = Assertx.assertAllNotNull(*values)
+inline fun assertAllNotNull(vararg values: Any?) = Assertx.assertAllNotNull(*values)
 
-fun assertAllNull(vararg values: Any?) = Assertx.assertAllNull(*values)
+inline fun assertAllNull(vararg values: Any?) = Assertx.assertAllNull(*values)
 
-fun assertNoThrow(message: String? = null, block: () -> Unit) = Assertx.assertNoThrow(message, block)
+inline fun assertNoThrow(message: String? = null, block: Runnable) = Assertx.assertNoThrow(message, block)
 
-fun assertNoThrow(block: () -> Unit) = Assertx.assertNoThrow(block)
+inline fun assertNoThrow(block: Runnable) = Assertx.assertNoThrow(block)
 
-fun assertThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit) = Assertx.assertThrow(message, expectedTrowType?.java, block)
+inline fun assertThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block: Runnable) = Assertx.assertThrow(message, expectedTrowType?.java, block)
 
-fun assertThrow(expectedTrowType: KClass<out Throwable>? = null, block: () -> Unit) = Assertx.assertThrow(expectedTrowType?.java, block)
+inline fun assertThrow(expectedTrowType: KClass<out Throwable>? = null, block: Runnable) = Assertx.assertThrow(expectedTrowType?.java, block)
 
-fun assertThrow(message: String? = null, block: () -> Unit) = Assertx.assertThrow(message, block)
+inline fun assertThrow(message: String? = null, block: Runnable) = Assertx.assertThrow(message, block)
 
-fun assertThrow(block: () -> Unit) = Assertx.assertThrow(block)
+inline fun assertThrow(block: Runnable) = Assertx.assertThrow(block)
 
-fun assertTwoThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block0: () -> Unit, block1: () -> Unit) = Assertx.assertTwoThrow(message, expectedTrowType?.java, block0, block1)
+inline fun assertTwoThrow(message: String? = null, expectedTrowType: KClass<out Throwable>? = null, block0: Runnable, block1: Runnable) = Assertx.assertTwoThrow(message, expectedTrowType?.java, block0, block1)
 
-fun assertTwoThrow(expectedTrowType: KClass<out Throwable>? = null, block0: () -> Unit, block1: () -> Unit) = Assertx.assertTwoThrow(expectedTrowType?.java, block0, block1)
+inline fun assertTwoThrow(expectedTrowType: KClass<out Throwable>? = null, block0: Runnable, block1: Runnable) = Assertx.assertTwoThrow(expectedTrowType?.java, block0, block1)
 
-fun assertTwoThrow(message: String? = null, block0: () -> Unit, block1: () -> Unit) = Assertx.assertTwoThrow(message, block0, block1)
+inline fun assertTwoThrow(message: String? = null, block0: Runnable, block1: Runnable) = Assertx.assertTwoThrow(message, block0, block1)
 
-fun assertTwoThrow(block0: () -> Unit, block1: () -> Unit) = Assertx.assertTwoThrow(block0, block1)
+inline fun assertTwoThrow(block0: Runnable, block1: Runnable) = Assertx.assertTwoThrow(block0, block1)
