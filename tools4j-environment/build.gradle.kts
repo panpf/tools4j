@@ -33,9 +33,9 @@ tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))
     apply { plugin("com.github.panpf.bintray-publish") }
     configure<com.github.panpf.bintray.publish.PublishExtension> {
         groupId = "com.github.panpf.tools4j"
-        artifactId = "tools4j-run"
+        artifactId = "tools4j-environment"
         publishVersion = property("VERSION").toString()
-        desc = "Java, Tools, Run"
+        desc = "Java, Tools, Environment"
         website = "https://github.com/panpf/tools4j"
         userOrg = localProperties.getProperty("bintray.userOrg")
         bintrayUser = localProperties.getProperty("bintray.user")

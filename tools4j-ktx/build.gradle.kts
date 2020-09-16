@@ -28,6 +28,7 @@ dependencies {
     api(project(":tools4j-collections-ktx"))
     api(project(":tools4j-crypto-ktx"))
     api(project(":tools4j-date-ktx"))
+    api(project(":tools4j-environment"))
     api(project(":tools4j-io-ktx"))
     api(project(":tools4j-lang-ktx"))
     api(project(":tools4j-math-ktx"))
@@ -38,7 +39,6 @@ dependencies {
     api(project(":tools4j-reflect-ktx"))
     api(project(":tools4j-regex-ktx"))
     api(project(":tools4j-resources"))
-    api(project(":tools4j-run"))
     api(project(":tools4j-security-ktx"))
     api(project(":tools4j-zip-ktx"))
 

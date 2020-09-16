@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.run;
+package com.github.panpf.tools4j.environment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,8 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.net.URL;
 
-// todo change to environment
-public class Runx {
+public class Environmentx {
 
 
     /**
@@ -39,8 +38,8 @@ public class Runx {
      * If it returns true, it means that the specified class is contained in the jar
      */
     public static boolean isClassInJar(@NotNull Class<?> clazz) {
-        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-run/build/libs/tools4j-run.jar!/com/github/panpf/tools4j/run'
-        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-run/build/classes/kotlin/test/com/github/panpf/tools4j/run/'
+        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/libs/tools4j-environment.jar!/com/github/panpf/tools4j/environment'
+        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/classes/kotlin/test/com/github/panpf/tools4j/environment/'
         URL resourceUrl = clazz.getResource("");
         return resourceUrl != null && "jar".equals(resourceUrl.getProtocol());
     }
@@ -51,8 +50,8 @@ public class Runx {
      */
     @Nullable
     public static File getClassInDir(@NotNull Class<?> clazz) {
-        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-run/build/libs/tools4j-run.jar!/com/github/panpf/tools4j/run'
-        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-run/build/classes/kotlin/test/com/github/panpf/tools4j/run/'
+        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/libs/tools4j-environment.jar!/com/github/panpf/tools4j/environment'
+        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/classes/kotlin/test/com/github/panpf/tools4j/environment/'
         URL resourceUrl = clazz.getResource("");
         if (resourceUrl != null && "file".equals(resourceUrl.getProtocol())) {
             return new File(resourceUrl.getPath());
@@ -63,19 +62,19 @@ public class Runx {
 
 
     /**
-     * Get the jar file where the specified class is located，example: '/Users/panpf/Workspace/tools4j/tools4j-run/build/libs/tools4j-run.jar'
+     * Get the jar file where the specified class is located，example: '/Users/panpf/Workspace/tools4j/tools4j-environment/build/libs/tools4j-environment.jar'
      */
     @Nullable
     public static File getClassInJarFile(@NotNull Class<?> clazz) {
-        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-run/build/libs/tools4j-run.jar!/com/github/panpf/tools4j/run'
-        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-run/build/classes/kotlin/test/com/github/panpf/tools4j/run/'
+        // resourceUrl example: 'jar:file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/libs/tools4j-environment.jar!/com/github/panpf/tools4j/environment'
+        // resourceUrl example: 'file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/classes/kotlin/test/com/github/panpf/tools4j/environment/'
         URL resourceUrl = clazz.getResource("");
         if (resourceUrl == null) {
             System.err.println("resourceUrl is null");
             return null;
         }
 
-        // urlPath example: 'file:/Users/panpf/Workspace/tools4j/tools4j-run/build/libs/tools4j-run.jar!/com/github/panpf/tools4j/run'
+        // urlPath example: 'file:/Users/panpf/Workspace/tools4j/tools4j-environment/build/libs/tools4j-environment.jar!/com/github/panpf/tools4j/environment'
         String urlPath = resourceUrl.getPath();
         String startFlag = "file:";
         if (!"jar".equals(resourceUrl.getProtocol()) || !urlPath.startsWith(startFlag)) {

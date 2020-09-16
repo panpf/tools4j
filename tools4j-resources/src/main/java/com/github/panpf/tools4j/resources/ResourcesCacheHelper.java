@@ -17,7 +17,7 @@
 package com.github.panpf.tools4j.resources;
 
 import com.github.panpf.tools4j.io.Filex;
-import com.github.panpf.tools4j.run.Runx;
+import com.github.panpf.tools4j.environment.Environmentx;
 import com.github.panpf.tools4j.security.MessageDigestx;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +52,7 @@ public class ResourcesCacheHelper {
         this.targetClazz = targetClazz;
         this.cacheDir = cacheDir;
 
-        this.isInJar = Runx.isClassInJar(targetClazz);
+        this.isInJar = Environmentx.isClassInJar(targetClazz);
         this.devResourcesDirCreators.add(new GradleBuildResourcesDirCreator());
     }
 
@@ -60,7 +60,7 @@ public class ResourcesCacheHelper {
     public File getFile(@NotNull String filePathInResources) throws IOException {
         ResourcesItem item;
         if (isInJar) {
-            File jarFile = Runx.getClassInJarFile(targetClazz);
+            File jarFile = Environmentx.getClassInJarFile(targetClazz);
             if (jarFile == null) throw new IOException("Not get jar file");
             ZipFile zipFile = new ZipFile(jarFile);
 
@@ -111,7 +111,7 @@ public class ResourcesCacheHelper {
     public File getDir(@NotNull String dirPathInResources) throws IOException {
         List<ResourcesItem> sourceChildResItems;
         if (isInJar) {
-            File jarFile = Runx.getClassInJarFile(targetClazz);
+            File jarFile = Environmentx.getClassInJarFile(targetClazz);
             if (jarFile == null) throw new IOException("Not get jar file");
             ZipFile zipFile = new ZipFile(jarFile);
             List<ResourcesItem> sourceChildFilesTemp = new ArrayList<>();

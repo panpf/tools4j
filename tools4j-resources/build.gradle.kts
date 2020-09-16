@@ -14,7 +14,7 @@ configure<JavaPluginConvention> {
 
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
-    api(project(":tools4j-run"))
+    api(project(":tools4j-environment"))
     api(project(":tools4j-io"))
     api(project(":tools4j-security"))
 

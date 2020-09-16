@@ -25,6 +25,8 @@ include(":tools4j-crypto-ktx")
 include(":tools4j-date")
 include(":tools4j-date-ktx")
 
+include(":tools4j-environment")
+
 include(":tools4j-io")
 include(":tools4j-io-ktx")
 
@@ -52,7 +54,6 @@ include(":tools4j-regex")
 include(":tools4j-regex-ktx")
 
 include(":tools4j-resources")
-include(":tools4j-run")
 
 include(":tools4j-security")
 include(":tools4j-security-ktx")

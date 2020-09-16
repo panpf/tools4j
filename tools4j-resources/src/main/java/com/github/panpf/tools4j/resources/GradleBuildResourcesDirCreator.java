@@ -16,7 +16,7 @@
 
 package com.github.panpf.tools4j.resources;
 
-import com.github.panpf.tools4j.run.Runx;
+import com.github.panpf.tools4j.environment.Environmentx;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,7 +27,7 @@ public class GradleBuildResourcesDirCreator implements DevResourcesDirCreator {
     @Nullable
     @Override
     public File createDevResourceDir(@NotNull Class<?> targetClazz) {
-        File targetClazzInDir = Runx.getClassInDir(targetClazz);
+        File targetClazzInDir = Environmentx.getClassInDir(targetClazz);
         String targetClazzInDirPath = targetClazzInDir != null ? targetClazzInDir.getPath() : "";
 
         // gradle project

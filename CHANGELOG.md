@@ -21,6 +21,7 @@ Change:
 * change: Arrayx max\* and min\* method rename to max\*OrNull and min\*OrNull
 * change: Arrayx2 merged to Arrayx
 * change: Groupingx move to 'tools4j-collections' module
+* change: 'tools4j-run rename to 'tools4j-environment'
 
 Remove:
 * remove: Arrayx remove asList method
