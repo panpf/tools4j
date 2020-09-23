@@ -125,35 +125,24 @@ Dependencies：
     * contentDeepHashCode, contentDeepToString, contentToString, contentEquals, binarySearch, copyOf, 
     * copyOfRange, slice, sliceArray, associate, associateBy, associateByTo, associateTo
 * Collectionx: [Collectionx.java] | [Collectionx.kt]
-    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf,
-    * collectionSizeOrDefault, isEmpty, isNotEmpty, orEmpty,
-    * listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, 
-    * immutableSetOf, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo,
-    * filterNotTo, filterNotNullTo, filterIndexedTo, filterIsInstanceTo,
-    * filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
-    * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo,
-    * mapNotNull, mapIndexedNotNullTo, mapIndexedNotNull, 
-    * flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, 
-    * joinTo, joinToString, count, averageOf, sumOf, sumBy,
-    * first, firstOrNull, last, lastOrNull, find, findLast, getOrElse,
-    * getOrNull, maxOrNull, maxByOrNull, maxWithOrNull, 
-    * maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull
-    * minOrNull, minByOrNull, minWithOrNull,
-    * minOf, minOfOrNull, minOfWith, minOfWithOrNull
-    * addAll, removeAll, partition, toCollection, toList, toSet,
-    * toSortedSet, toHashSet, safeToConvertToSet, withIndex
-    * convertToSetForSetOperationWith, convertToSetForSetOperation,
-    * union, all, any, contains, forEach, forEachIndexed, onEach, onEachIndexed, 
-    * chunked, minus, minusElement, plus, plusElement, indices, groupByTo, groupBy,
-    * sort, sortWith, sortBy, sortedDescending, sortByDescending,
-    * sortedWith, sortedBy, sorted, sortedByDescending, reverse,
-    * indexOf, indexOfFirst, indexOfLast, lastIndexOf, fold, foldIndexed,
-    * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight,
-    * reduceRightIndexed, slice, take, takeLast, takeLastWhile, takeWhile,
-    * distinct, distinctBy, intersect, retainAll, associateTo, associate,
-    * associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile,
-    * single, singleOrNull, elementAtOrElse, elementAt, elementAtOrNull,
-    * fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array, flatten
+    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
+    * isNotEmpty, orEmpty, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
+    * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
+    * filterIndexedTo, filterIsInstanceTo, filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
+    * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo, 
+    * mapIndexedNotNull, flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, joinTo, joinToString, count, 
+    * averageOf, sumOf, sumBy, first, firstOrNull, last, lastOrNull, find, findLast, getOrElse, getOrNull, 
+    * maxOrNull, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOrNull, 
+    * minByOrNull, minWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull, addAll, removeAll, partition, 
+    * toCollection, toList, toSet, toSortedSet, toHashSet, safeToConvertToSet, withIndex, 
+    * convertToSetForSetOperationWith, convertToSetForSetOperation, union, all, any, contains, forEach, 
+    * forEachIndexed, onEach, onEachIndexed, chunked, minus, minusElement, plus, plusElement, indices, 
+    * groupByTo, groupBy, sort, sortWith, sortBy, sortedDescending, sortByDescending, sortedWith, sortedBy, 
+    * sorted, sortedByDescending, reverse, indexOf, indexOfFirst, indexOfLast, lastIndexOf, fold, foldIndexed,
+    * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight, reduceRightIndexed, slice, take, takeLast, 
+    * takeLastWhile, takeWhile, distinct, distinctBy, intersect, retainAll, associateTo, associate, associateByTo, 
+    * associateBy, drop, dropLast, dropLastWhile, dropWhile, single, singleOrNull, elementAtOrElse, 
+    * elementAt, elementAtOrNull, fill, shuffle, shuffled, zip, zipWithNext, iterator, to\*Array, flatten
 * Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
     * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo,
     * eachCount, eachCountTo
