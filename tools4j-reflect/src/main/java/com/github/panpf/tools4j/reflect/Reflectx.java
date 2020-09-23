@@ -67,7 +67,7 @@ public class Reflectx {
      */
     @NotNull
     public static Field[] getDeclaredFieldsRecursive(@NotNull Class<?> clazz, @Nullable Brake brake) {
-        List<Field> fieldList = new LinkedList<>();
+        List<Field> fieldList = new LinkedList<Field>();
 
         Class<?> currentClazz = clazz;
         while (currentClazz != null) {
@@ -115,8 +115,7 @@ public class Reflectx {
      */
     @Nullable
     public static <T> T getFieldValue(@NotNull Object object, @NotNull String fieldName) throws NoSuchFieldException {
-        //noinspection unchecked
-        return (T) getFieldValue(object, getDeclaredFieldRecursive(object.getClass(), fieldName));
+        return getFieldValue(object, getDeclaredFieldRecursive(object.getClass(), fieldName));
     }
 
 
@@ -220,7 +219,7 @@ public class Reflectx {
      */
     @NotNull
     public static Method[] getDeclaredMethodsRecursive(@NotNull Class<?> clazz, @Nullable Brake brake) {
-        List<Method> methodList = new LinkedList<>();
+        List<Method> methodList = new LinkedList<Method>();
 
         Class<?> currentClazz = clazz;
         while (currentClazz != null) {
@@ -258,7 +257,9 @@ public class Reflectx {
         try {
             //noinspection unchecked
             return (T) method.invoke(object, params);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        } catch (InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -286,7 +287,9 @@ public class Reflectx {
         try {
             //noinspection unchecked
             return (T) method.invoke(null, params);
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        } catch (InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -342,7 +345,7 @@ public class Reflectx {
      */
     @NotNull
     public static Constructor<?>[] getDeclaredConstructorsRecursive(@NotNull Class<?> clazz, @Nullable Brake brake) {
-        List<Constructor<?>> constructorList = new LinkedList<>();
+        List<Constructor<?>> constructorList = new LinkedList<Constructor<?>>();
 
         Class<?> currentClazz = clazz;
         while (currentClazz != null) {
@@ -381,7 +384,7 @@ public class Reflectx {
      */
     @NotNull
     public static Class<?>[] getClassHierarchy(@NotNull Class<?> clazz, boolean ignoreSelf) {
-        List<Class<?>> classList = new LinkedList<>();
+        List<Class<?>> classList = new LinkedList<Class<?>>();
         Class<?> currentClazz;
         if (!ignoreSelf) {
             currentClazz = clazz;

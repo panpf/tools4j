@@ -193,7 +193,7 @@ public class Regexx {
     @NotNull
     public static String[] getAll(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
-        List<String> stringList = new LinkedList<>();
+        List<String> stringList = new LinkedList<String>();
         while (matcher.find()) {
             stringList.add(matcher.group());
         }
@@ -206,7 +206,7 @@ public class Regexx {
     @NotNull
     public static String[] getAll(@Nullable CharSequence charSequence, @NotNull String regex) {
         Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
-        List<String> stringList = new LinkedList<>();
+        List<String> stringList = new LinkedList<String>();
         while (matcher.find()) {
             stringList.add(matcher.group());
         }
@@ -237,7 +237,7 @@ public class Regexx {
     @NotNull
     public static Group[] allGroup(@Nullable CharSequence charSequence, @NotNull Pattern pattern) {
         Matcher matcher = pattern.matcher(charSequence != null ? charSequence : "");
-        List<Group> stringList = new LinkedList<>();
+        List<Group> stringList = new LinkedList<Group>();
         while (matcher.find()) {
             stringList.add(new Group(matcher.start(), matcher.end(), matcher.group()));
         }
@@ -250,7 +250,7 @@ public class Regexx {
     @NotNull
     public static Group[] allGroup(@Nullable CharSequence charSequence, @NotNull String regex) {
         Matcher matcher = Pattern.compile(regex).matcher(charSequence != null ? charSequence : "");
-        List<Group> stringList = new LinkedList<>();
+        List<Group> stringList = new LinkedList<Group>();
         while (matcher.find()) {
             stringList.add(new Group(matcher.start(), matcher.end(), matcher.group()));
         }

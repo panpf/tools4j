@@ -23,7 +23,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.io.*
 import java.net.URL
-import java.nio.charset.StandardCharsets
+import java.nio.charset.Charset
 
 class IOxTest {
 
@@ -151,10 +151,10 @@ class IOxTest {
         IOx.closeQuietly(IOx.inputStream("1234567890".toByteArray()))
         IOx.closeQuietly(IOx.inputStream("1234567890".toByteArray(), 0, 5))
 
-        IOx.closeQuietly(IOx.byteInputStream("1234567890", StandardCharsets.UTF_8))
+        IOx.closeQuietly(IOx.byteInputStream("1234567890", Charset.forName("UTF-8")))
         IOx.closeQuietly(IOx.byteInputStream("1234567890"))
 
-        IOx.closeQuietly(IOx.reader(IOx.byteInputStream("1234567890"), StandardCharsets.UTF_8))
+        IOx.closeQuietly(IOx.reader(IOx.byteInputStream("1234567890"), Charset.forName("UTF-8")))
         IOx.closeQuietly(IOx.reader(IOx.byteInputStream("1234567890")))
         IOx.closeQuietly(IOx.reader("1234567890"))
 
@@ -163,9 +163,9 @@ class IOxTest {
         IOx.closeQuietly(IOx.buffered(IOx.reader("1234567890"), IOx.DEFAULT_BUFFER_SIZE))
         IOx.closeQuietly(IOx.buffered(IOx.reader("1234567890")))
 
-        IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890"), StandardCharsets.UTF_8, IOx.DEFAULT_BUFFER_SIZE))
+        IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890"), Charset.forName("UTF-8"), IOx.DEFAULT_BUFFER_SIZE))
         IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890"), IOx.DEFAULT_BUFFER_SIZE))
-        IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890"), StandardCharsets.UTF_8))
+        IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890"), Charset.forName("UTF-8")))
         IOx.closeQuietly(IOx.bufferedReader(IOx.byteInputStream("1234567890")))
     }
 
@@ -179,10 +179,11 @@ class IOxTest {
             Assert.assertEquals(String(Filex.inputStream(file).use { IOx.readBytes(it) }), content)
             Assert.assertEquals(Filex.reader(file).use { IOx.readText(it) }, content)
 
+            // todo change to https
             val resultBytes = IOx.readBytes(URL("http://pv.sohu.com/cityjson"))
             Assert.assertTrue(String(resultBytes).regexFind(Regexx.IPV4))
 
-            val result = IOx.readText(URL("http://pv.sohu.com/cityjson"), StandardCharsets.UTF_8)
+            val result = IOx.readText(URL("http://pv.sohu.com/cityjson"), Charset.forName("UTF-8"))
             Assert.assertTrue(result.regexFind(Regexx.IPV4))
 
             val result2 = IOx.readText(URL("http://pv.sohu.com/cityjson"))
@@ -234,7 +235,7 @@ class IOxTest {
 
     @Test
     fun testOutputStream() {
-        IOx.closeQuietly(IOx.writer(ByteArrayOutputStream(), StandardCharsets.UTF_8))
+        IOx.closeQuietly(IOx.writer(ByteArrayOutputStream(), Charset.forName("UTF-8")))
         IOx.closeQuietly(IOx.writer(ByteArrayOutputStream()))
 
         IOx.closeQuietly(IOx.buffered(ByteArrayOutputStream(), 1024 * 4))
@@ -243,8 +244,8 @@ class IOxTest {
         IOx.closeQuietly(IOx.buffered(IOx.writer(ByteArrayOutputStream()), 1024 * 4))
         IOx.closeQuietly(IOx.buffered(IOx.writer(ByteArrayOutputStream())))
 
-        IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream(), StandardCharsets.UTF_8, 1024 * 4))
-        IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream(), StandardCharsets.UTF_8))
+        IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream(), Charset.forName("UTF-8"), 1024 * 4))
+        IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream(), Charset.forName("UTF-8")))
         IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream(), 1024 * 4))
         IOx.closeQuietly(IOx.bufferedWriter(ByteArrayOutputStream()))
     }

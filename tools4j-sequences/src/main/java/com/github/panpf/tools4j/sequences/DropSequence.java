@@ -41,13 +41,13 @@ public class DropSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     @NotNull
     @Override
     public Sequence<T> drop(int n) {
-        return new DropSequence<>(sequence, count + n);
+        return new DropSequence<T>(sequence, count + n);
     }
 
     @NotNull
     @Override
     public Sequence<T> take(int n) {
-        return new SubSequence<>(sequence, count, count + n);
+        return new SubSequence<T>(sequence, count, count + n);
     }
 
     @NotNull

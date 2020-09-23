@@ -36,6 +36,6 @@ public class DistinctSequence<T, K> implements Sequence<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return new DistinctIterator<>(source.iterator(), keySelector);
+        return new DistinctIterator<T, K>(source.iterator(), keySelector);
     }
 }

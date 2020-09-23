@@ -18,6 +18,6 @@ public class IndexingIterable<T> implements Iterable<IndexedValue<T>> {
     @NotNull
     @Override
     public Iterator<IndexedValue<T>> iterator() {
-        return new IndexingIterator<>(defaultValue.get());
+        return new IndexingIterator<T>(defaultValue.get());
     }
 }

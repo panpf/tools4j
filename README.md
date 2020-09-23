@@ -397,8 +397,8 @@ Please view the [CHANGELOG.md] file
 [platform_kotlin_link]: http://kotlinlang.org
 [license_icon]: https://img.shields.io/badge/License-Apache%202-blue.svg
 [license_link]: https://www.apache.org/licenses/LICENSE-2.0
-[source_compatibility_icon]: https://img.shields.io/badge/SourceCompatibility-1.7-red.svg
-[target_compatibility_icon]: https://img.shields.io/badge/TargetCompatibility-1.7-red.svg
+[source_compatibility_icon]: https://img.shields.io/badge/SourceCompatibility-1.6-red.svg
+[target_compatibility_icon]: https://img.shields.io/badge/TargetCompatibility-1.6-red.svg
 [kotlin_jvmtarget_icon]: https://img.shields.io/badge/KotlinJvmTarget-1.6-red.svg
 [version_icon]: https://api.bintray.com/packages/panpf/maven/tools4j/images/download.svg
 [version_link]:https://bintray.com/panpf/maven/tools4j/_latestVersion

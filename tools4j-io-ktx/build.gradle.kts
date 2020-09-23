@@ -8,8 +8,8 @@ group = "com.github.panpf.tools4j"
 version = property("VERSION").toString()
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_6
+    targetCompatibility = JavaVersion.VERSION_1_6
 }
 
 tasks {

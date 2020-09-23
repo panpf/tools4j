@@ -20,7 +20,8 @@ import java.util.Comparator;
 
 public class ReverseOrderComparator<T extends Comparable<T>> implements Comparator<T> {
 
-    public static final ReverseOrderComparator<? extends Comparable<?>> INSTANCE = new ReverseOrderComparator<>();
+    @SuppressWarnings("rawtypes")
+    public static final ReverseOrderComparator INSTANCE = new ReverseOrderComparator();
 
     @Override
     public int compare(T a, T b) {

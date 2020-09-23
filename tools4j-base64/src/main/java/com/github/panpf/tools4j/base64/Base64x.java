@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.base64;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 /**
  * Base64 tool method
@@ -67,7 +67,6 @@ public class Base64x {
      * should not close the output stream it is wrapping when it
      * itself is closed.
      */
-    @SuppressWarnings("unused")
     public static final int NO_CLOSE = 16;
 
     //  --------------------------------------------------------
@@ -175,7 +174,7 @@ public class Base64x {
      */
     @NotNull
     public static byte[] encode(@NotNull String input, int flags) {
-        return encode(input.getBytes(StandardCharsets.UTF_8), flags);
+        return encode(input.getBytes(Charset.forName("UTF-8")), flags);
     }
 
     /**
@@ -204,7 +203,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int offset, int len, int flags) {
-        return new String(encode(input, offset, len, flags), StandardCharsets.UTF_8);
+        return new String(encode(input, offset, len, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -218,7 +217,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int offset, int len) {
-        return new String(encode(input, offset, len), StandardCharsets.UTF_8);
+        return new String(encode(input, offset, len), Charset.forName("UTF-8"));
     }
 
     /**
@@ -232,7 +231,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input, int flags) {
-        return new String(encode(input, flags), StandardCharsets.UTF_8);
+        return new String(encode(input, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -243,7 +242,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull byte[] input) {
-        return new String(encode(input), StandardCharsets.UTF_8);
+        return new String(encode(input), Charset.forName("UTF-8"));
     }
 
     /**
@@ -257,7 +256,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull String input, int flags) {
-        return new String(encode(input, flags), StandardCharsets.UTF_8);
+        return new String(encode(input, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -268,7 +267,7 @@ public class Base64x {
      */
     @NotNull
     public static String encodeToString(@NotNull String input) {
-        return new String(encode(input), StandardCharsets.UTF_8);
+        return new String(encode(input), Charset.forName("UTF-8"));
     }
 
     //  --------------------------------------------------------
@@ -377,7 +376,7 @@ public class Base64x {
      */
     @NotNull
     public static byte[] decode(@NotNull String input, int flags) {
-        return decode(input.getBytes(StandardCharsets.UTF_8), flags);
+        return decode(input.getBytes(Charset.forName("UTF-8")), flags);
     }
 
     /**
@@ -415,7 +414,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int offset, int len, int flags) {
-        return new String(decode(input, offset, len, flags), StandardCharsets.UTF_8);
+        return new String(decode(input, offset, len, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -432,7 +431,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int offset, int len) {
-        return new String(decode(input, offset, len), StandardCharsets.UTF_8);
+        return new String(decode(input, offset, len), Charset.forName("UTF-8"));
     }
 
     /**
@@ -449,7 +448,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input, int flags) {
-        return new String(decode(input, flags), StandardCharsets.UTF_8);
+        return new String(decode(input, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -464,7 +463,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull byte[] input) {
-        return new String(decode(input), StandardCharsets.UTF_8);
+        return new String(decode(input), Charset.forName("UTF-8"));
     }
 
     /**
@@ -483,7 +482,7 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull String input, int flags) {
-        return new String(decode(input, flags), StandardCharsets.UTF_8);
+        return new String(decode(input, flags), Charset.forName("UTF-8"));
     }
 
     /**
@@ -500,14 +499,13 @@ public class Base64x {
      */
     @NotNull
     public static String decodeToString(@NotNull String input) {
-        return new String(decode(input), StandardCharsets.UTF_8);
+        return new String(decode(input), Charset.forName("UTF-8"));
     }
 
     //  --------------------------------------------------------
     //  shared code
     //  --------------------------------------------------------
 
-    @SuppressWarnings("unused")
     private static abstract class Coder {
         public byte[] output;
         public int op;
@@ -539,6 +537,7 @@ public class Base64x {
          * Lookup table for turning bytes into their position in the
          * Base64 alphabet.
          */
+        @SuppressWarnings("CStyleArrayDeclaration")
         private static final int DECODE[] = {
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,

@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -264,7 +263,7 @@ public class Filex {
 
         long length = 0;
 
-        Queue<File> fileQueue = new LinkedList<>();
+        Queue<File> fileQueue = new LinkedList<File>();
         fileQueue.add(file);
 
         File childFile;
@@ -322,9 +321,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<String> files = new LinkedList<>();
+        List<String> files = new LinkedList<String>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         while (true) {
@@ -358,9 +357,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<String> files = new LinkedList<>();
+        List<String> files = new LinkedList<String>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         while (true) {
@@ -393,9 +392,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<String> files = new LinkedList<>();
+        List<String> files = new LinkedList<String>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         while (true) {
@@ -426,9 +425,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<File> files = new LinkedList<>();
+        List<File> files = new LinkedList<File>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         while (true) {
@@ -461,9 +460,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<File> files = new LinkedList<>();
+        List<File> files = new LinkedList<File>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         File currentDir;
@@ -497,9 +496,9 @@ public class Filex {
         if (!dir.exists()) return null;
         if (dir.isFile()) return null;
 
-        List<File> files = new LinkedList<>();
+        List<File> files = new LinkedList<File>();
 
-        Queue<File> dirQueue = new LinkedList<>();
+        Queue<File> dirQueue = new LinkedList<File>();
         dirQueue.add(dir);
 
         while (true) {
@@ -1376,7 +1375,7 @@ public class Filex {
 
     @NotNull
     private static List<File> normalize(@NotNull List<File> files) {
-        List<File> list = new ArrayList<>(files.size());
+        List<File> list = new ArrayList<File>(files.size());
         for (File file : files) {
             String name = file.getName();
             //noinspection StatementWithEmptyBody
@@ -1712,7 +1711,7 @@ public class Filex {
 
             List<File> segments = thisComponents.segments;
             int resultSize = segments.size() - sameCount;
-            ArrayList<File> list = new ArrayList<>(resultSize);
+            ArrayList<File> list = new ArrayList<File>(resultSize);
             if (segments instanceof RandomAccess) {
                 for (int index = sameCount, size = segments.size(); index < size; index++) {
                     list.add(segments.get(index));
@@ -1808,12 +1807,12 @@ public class Filex {
         List<File> list;
         if (!subPath.isEmpty()) {
             String[] pathItems = subPath.split(String.valueOf(File.separatorChar));
-            list = new ArrayList<>(pathItems.length);
+            list = new ArrayList<File>(pathItems.length);
             for (String pathItem : pathItems) {
                 list.add(new File(pathItem));
             }
         } else {
-            list = new ArrayList<>(0);
+            list = new ArrayList<File>(0);
         }
         return new FilePathComponents(new File(rootName), list);
     }
@@ -1988,7 +1987,7 @@ public class Filex {
      */
     @NotNull
     public static String readText(@NotNull File file) throws IOException {
-        return readText(file, StandardCharsets.UTF_8);
+        return readText(file, Charset.forName("UTF-8"));
     }
 
     /**
@@ -2001,7 +2000,7 @@ public class Filex {
      */
     @NotNull
     public static List<String> readLines(@NotNull File file, @NotNull Charset charset) throws IOException {
-        final ArrayList<String> result = new ArrayList<>();
+        final ArrayList<String> result = new ArrayList<String>();
         forEachLine(file, charset, new Action<String>() {
             @Override
             public void action(@NotNull String s) {
@@ -2020,7 +2019,7 @@ public class Filex {
      */
     @NotNull
     public static List<String> readLines(@NotNull File file) throws IOException {
-        return readLines(file, StandardCharsets.UTF_8);
+        return readLines(file, Charset.forName("UTF-8"));
     }
 
 
@@ -2054,7 +2053,7 @@ public class Filex {
      */
     @NotNull
     public static <T> T useLines(@NotNull File file, @NotNull Transformer<Iterable<String>, T> block) throws FileNotFoundException {
-        return useLines(file, StandardCharsets.UTF_8, block);
+        return useLines(file, Charset.forName("UTF-8"), block);
     }
 
     /**
@@ -2121,7 +2120,7 @@ public class Filex {
      */
     public static void forEachLine(@NotNull File file, @NotNull Action<String> action) throws IOException {
         // Note: close is called at forEachLine
-        forEachLine(file, StandardCharsets.UTF_8, action);
+        forEachLine(file, Charset.forName("UTF-8"), action);
     }
 
 
@@ -2219,7 +2218,7 @@ public class Filex {
      */
     @NotNull
     public static PrintWriter printWriter(@NotNull File file) throws FileNotFoundException {
-        return printWriter(file, StandardCharsets.UTF_8);
+        return printWriter(file, Charset.forName("UTF-8"));
     }
 
 
@@ -2273,7 +2272,7 @@ public class Filex {
      * @param text text to write into file.
      */
     public static void writeText(@NotNull File file, @NotNull String text) throws IOException {
-        writeText(file, text, StandardCharsets.UTF_8);
+        writeText(file, text, Charset.forName("UTF-8"));
     }
 
     /**
@@ -2292,7 +2291,7 @@ public class Filex {
      * @param text text to append to file.
      */
     public static void appendText(@NotNull File file, @NotNull String text) throws IOException {
-        appendText(file, text, StandardCharsets.UTF_8);
+        appendText(file, text, Charset.forName("UTF-8"));
     }
 
 

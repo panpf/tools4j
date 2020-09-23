@@ -24,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,14 +55,6 @@ public class IOx {
      */
     public static void closeQuietly(@Nullable Closeable closeable) {
         if (closeable != null) {
-            if (closeable instanceof OutputStream) {
-                try {
-                    ((OutputStream) closeable).flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
             try {
                 closeable.close();
             } catch (Exception e) {
@@ -311,7 +302,7 @@ public class IOx {
      */
     @NotNull
     public static ByteArrayInputStream byteInputStream(@NotNull String string) {
-        return inputStream(string.getBytes(StandardCharsets.UTF_8));
+        return inputStream(string.getBytes(Charset.forName("UTF-8")));
     }
 
 
@@ -328,7 +319,7 @@ public class IOx {
      */
     @NotNull
     public static InputStreamReader reader(@NotNull InputStream inputStream) {
-        return reader(inputStream, StandardCharsets.UTF_8);
+        return reader(inputStream, Charset.forName("UTF-8"));
     }
 
     /**
@@ -405,7 +396,7 @@ public class IOx {
      */
     @NotNull
     public static BufferedReader bufferedReader(@NotNull InputStream inputStream) {
-        return bufferedReader(inputStream, StandardCharsets.UTF_8);
+        return bufferedReader(inputStream, Charset.forName("UTF-8"));
     }
 
 
@@ -467,7 +458,7 @@ public class IOx {
      */
     @NotNull
     public static String readText(@NotNull URL url) throws IOException {
-        return readText(url, StandardCharsets.UTF_8);
+        return readText(url, Charset.forName("UTF-8"));
     }
 
     /**
@@ -493,7 +484,7 @@ public class IOx {
      */
     @NotNull
     public static List<String> readLines(@NotNull Reader reader) throws IOException {
-        final List<String> result = new ArrayList<>();
+        final List<String> result = new ArrayList<String>();
         forEachLine(reader, new Action<String>() {
             @Override
             public void action(@NotNull String s) {
@@ -591,7 +582,7 @@ public class IOx {
      */
     @NotNull
     public static OutputStreamWriter writer(@NotNull OutputStream outputStream) {
-        return writer(outputStream, StandardCharsets.UTF_8);
+        return writer(outputStream, Charset.forName("UTF-8"));
     }
 
 

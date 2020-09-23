@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -601,7 +601,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getDigest(@NotNull String text, @NotNull String algorithm) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getDigest(inputStream, algorithm);
         } catch (IOException e) {
@@ -620,7 +620,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getMD5(@NotNull String text) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getMD5(inputStream);
         } catch (IOException e) {
@@ -639,7 +639,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getMD5_16(@NotNull String text) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getMD5_16(inputStream);
         } catch (IOException e) {
@@ -658,7 +658,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getSHA1(@NotNull String text) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getSHA1(inputStream);
         } catch (IOException e) {
@@ -677,7 +677,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getSHA256(@NotNull String text) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getSHA256(inputStream);
         } catch (IOException e) {
@@ -696,7 +696,7 @@ public class MessageDigestx {
      */
     @NotNull
     public static String getSHA512(@NotNull String text) {
-        InputStream inputStream = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(text.getBytes(Charset.forName("UTF-8")));
         try {
             return getSHA512(inputStream);
         } catch (IOException e) {

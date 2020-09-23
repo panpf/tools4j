@@ -32,10 +32,10 @@ public class FlatteningSequence<T, R, E> implements Sequence<E> {
     @NotNull
     private final Transformer<R, Iterator<E>> iteratorTransformer;
 
-    public FlatteningSequence(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iterator) {
+    public FlatteningSequence(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transformer, @NotNull Transformer<R, Iterator<E>> iteratorTransformer) {
         this.sequence = sequence;
         this.transformer = transformer;
-        this.iteratorTransformer = iterator;
+        this.iteratorTransformer = iteratorTransformer;
     }
 
     @NotNull

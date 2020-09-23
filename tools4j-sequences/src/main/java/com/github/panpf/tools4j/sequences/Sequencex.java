@@ -140,7 +140,7 @@ public class Sequencex {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                return new ArrayIterator<>(elements);
+                return new ArrayIterator<T>(elements);
             }
         };
     }
@@ -279,7 +279,6 @@ public class Sequencex {
      * Creates a sequence that returns the specified values.
      */
     @NotNull
-    @SafeVarargs
     public static <T> Sequence<T> sequenceOf(@NotNull T... elements) {
         //noinspection unchecked
         return elements.length > 0 ? asSequence(elements) : (Sequence<T>) emptySequence();
@@ -303,7 +302,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> constrainOnce(@NotNull Sequence<T> sequence) {
-        return sequence instanceof ConstrainedOnceSequence ? sequence : new ConstrainedOnceSequence<>(sequence);
+        return sequence instanceof ConstrainedOnceSequence ? sequence : new ConstrainedOnceSequence<T>(sequence);
     }
 
     /**
@@ -315,7 +314,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> generateSequence(@NotNull final InitialValue<T> nextFunction) {
-        return constrainOnce(new GeneratorSequence<>(nextFunction, new NextValue<T>() {
+        return constrainOnce(new GeneratorSequence<T>(nextFunction, new NextValue<T>() {
             @Nullable
             @Override
             public T next(@NotNull T o) {
@@ -336,7 +335,7 @@ public class Sequencex {
     @NotNull
     public static <T> Sequence<T> generateSequence(@Nullable final T seed, @NotNull NextValue<T> nextFunction) {
         //noinspection unchecked
-        return seed == null ? (Sequence<T>) EmptySequence.INSTANCE : new GeneratorSequence<>(new InitialValue<T>() {
+        return seed == null ? (Sequence<T>) EmptySequence.INSTANCE : new GeneratorSequence<T>(new InitialValue<T>() {
             @NotNull
             @Override
             public T get() {
@@ -356,7 +355,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> generateSequence(@NotNull InitialValue<T> seedFunction, @NotNull NextValue<T> nextFunction) {
-        return new GeneratorSequence<>(seedFunction, nextFunction);
+        return new GeneratorSequence<T>(seedFunction, nextFunction);
     }
 
 
@@ -399,7 +398,7 @@ public class Sequencex {
         if (sequence instanceof TransformingSequence) {
             return ((TransformingSequence<?, T>) sequence).flatten(transformer);
         }
-        return new FlatteningSequence<>(sequence, new Transformer<T, T>() {
+        return new FlatteningSequence<T, T, R>(sequence, new Transformer<T, T>() {
             @NotNull
             @Override
             public T transform(@NotNull T t) {
@@ -821,7 +820,7 @@ public class Sequencex {
         } else if (sequence instanceof DropTakeSequence) {
             return ((DropTakeSequence<T>) sequence).drop(n);
         } else {
-            return new DropSequence<>(sequence, n);
+            return new DropSequence<T>(sequence, n);
         }
     }
 
@@ -832,7 +831,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> dropWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        return new DropWhileSequence<>(sequence, predicate);
+        return new DropWhileSequence<T>(sequence, predicate);
     }
 
 
@@ -854,7 +853,7 @@ public class Sequencex {
         } else if (sequence instanceof DropTakeSequence) {
             return ((DropTakeSequence<T>) sequence).take(n);
         } else {
-            return new TakeSequence<>(sequence, n);
+            return new TakeSequence<T>(sequence, n);
         }
     }
 
@@ -865,7 +864,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> takeWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        return new TakeWhileSequence<>(sequence, predicate);
+        return new TakeWhileSequence<T>(sequence, predicate);
     }
 
 
@@ -879,7 +878,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> filter(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        return new FilteringSequence<>(sequence, true, predicate);
+        return new FilteringSequence<T>(sequence, true, predicate);
     }
 
     /**
@@ -907,18 +906,21 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> filterIndexed(@NotNull Sequence<T> sequence, @NotNull final IndexedPredicate<T> predicate) {
-        return new TransformingSequence<>(new FilteringSequence<>(new IndexingSequence<>(sequence), true, new Predicate<IndexedValue<T>>() {
-            @Override
-            public boolean accept(@NotNull IndexedValue<T> it) {
-                return predicate.accept(it.index, it.value);
-            }
-        }), new Transformer<IndexedValue<T>, T>() {
-            @NotNull
-            @Override
-            public T transform(@NotNull IndexedValue<T> it) {
-                return it.value;
-            }
-        });
+        return new TransformingSequence<IndexedValue<T>, T>(
+                new FilteringSequence<IndexedValue<T>>(new IndexingSequence<T>(sequence), true, new Predicate<IndexedValue<T>>() {
+                    @Override
+                    public boolean accept(@NotNull IndexedValue<T> it) {
+                        return predicate.accept(it.index, it.value);
+                    }
+                }),
+                new Transformer<IndexedValue<T>, T>() {
+                    @NotNull
+                    @Override
+                    public T transform(@NotNull IndexedValue<T> it) {
+                        return it.value;
+                    }
+                }
+        );
     }
 
     /**
@@ -1001,7 +1003,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> filterNot(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        return new FilteringSequence<>(sequence, false, predicate);
+        return new FilteringSequence<T>(sequence, false, predicate);
     }
 
     /**
@@ -1306,7 +1308,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Set<T> toMutableSet(@NotNull Sequence<T> sequence) {
-        Set<T> set = new LinkedHashSet<>();
+        Set<T> set = new LinkedHashSet<T>();
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
@@ -1344,7 +1346,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> SortedSet<T> toSortedSet(@NotNull Sequence<T> sequence, @NotNull Comparator<T> comparator) {
-        return toCollection(sequence, new TreeSet<>(comparator));
+        return toCollection(sequence, new TreeSet<T>(comparator));
     }
 
 
@@ -1384,7 +1386,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMap(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Sequence<R>> transform) {
-        return new FlatteningSequence<>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
+        return new FlatteningSequence<T, Sequence<R>, R>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
             public Iterator<R> transform(@NotNull Sequence<R> sequence) {
@@ -1401,7 +1403,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMapOfIterable(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterable<R>> transform) {
-        return new FlatteningSequence<>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
+        return new FlatteningSequence<T, Iterable<R>, R>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
             @NotNull
             @Override
             public Iterator<R> transform(@NotNull Iterable<R> iterable) {
@@ -1456,7 +1458,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMapIndexedOfIterable(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
-        return new IndexedFlatteningSequence<>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
+        return new IndexedFlatteningSequence<T, Iterable<R>, R>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
             @NotNull
             @Override
             public Iterator<R> transform(@NotNull Iterable<R> iterable) {
@@ -1473,7 +1475,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMapIndexed(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
-        return new IndexedFlatteningSequence<>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
+        return new IndexedFlatteningSequence<T, Sequence<R>, R>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
             public Iterator<R> transform(@NotNull Sequence<R> iterable) {
@@ -1569,7 +1571,7 @@ public class Sequencex {
             @NotNull
             @Override
             public List<T> get() {
-                return new ArrayList<>();
+                return new ArrayList<T>();
             }
         };
         Iterator<T> iterator = sequence.iterator();
@@ -1602,7 +1604,7 @@ public class Sequencex {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         Iterator<T> iterator = sequence.iterator();
@@ -1631,7 +1633,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> map(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> transform) {
-        return new TransformingSequence<>(sequence, transform);
+        return new TransformingSequence<T, R>(sequence, transform);
     }
 
     /**
@@ -1642,7 +1644,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> mapNotNull(@Nullable Sequence<T> sequence, @NotNull NullableTransformer<T, R> transform) {
-        return filterNotNull(new NullableTransformingSequence<>(sequence, transform));
+        return filterNotNull(new NullableTransformingSequence<T, R>(sequence, transform));
     }
 
     /**
@@ -1656,7 +1658,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> mapIndexed(@Nullable Sequence<T> sequence, @NotNull IndexedTransformer<T, R> transform) {
-        return new TransformingIndexedSequence<>(sequence, transform);
+        return new TransformingIndexedSequence<T, R>(sequence, transform);
     }
 
     /**
@@ -1670,7 +1672,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> mapIndexedNotNull(@Nullable Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transform) {
-        return filterNotNull(new NullableTransformingIndexedSequence<>(sequence, transform));
+        return filterNotNull(new NullableTransformingIndexedSequence<T, R>(sequence, transform));
     }
 
     /**
@@ -1767,7 +1769,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<IndexedValue<T>> withIndex(@NotNull Sequence<T> sequence) {
-        return new IndexingSequence<>(sequence);
+        return new IndexingSequence<T>(sequence);
     }
 
 
@@ -1802,7 +1804,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, K> Sequence<T> distinctBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> transformer) {
-        return new DistinctSequence<>(sequence, transformer);
+        return new DistinctSequence<T, K>(sequence, transformer);
     }
 
 
@@ -2877,7 +2879,7 @@ public class Sequencex {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                final Set<T> other = new HashSet<>();
+                final Set<T> other = new HashSet<T>();
                 Collections.addAll(other, elements);
                 return filterNot(sequence, new Predicate<T>() {
                     @Override
@@ -2908,7 +2910,7 @@ public class Sequencex {
                     other = (Set<T>) elements;
                 } else if (elements instanceof Collection) {
                     if (((Collection<T>) elements).size() > 2 && elements instanceof ArrayList) {
-                        other = new HashSet<>();
+                        other = new HashSet<T>();
                         for (T item : elements) {
                             other.add(item);
                         }
@@ -2916,7 +2918,7 @@ public class Sequencex {
                         other = (Collection<T>) elements;
                     }
                 } else {
-                    other = new HashSet<>();
+                    other = new HashSet<T>();
                     for (T item : elements) {
                         other.add(item);
                     }
@@ -3115,7 +3117,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<Pair<T, R>> zip(@NotNull Sequence<T> sequence, @NotNull Sequence<R> other) {
-        return new MergingSequence<>(sequence, other, new Transformer2<T, R, Pair<T, R>>() {
+        return new MergingSequence<T, R, Pair<T, R>>(sequence, other, new Transformer2<T, R, Pair<T, R>>() {
             @NotNull
             @Override
             public Pair<T, R> transform(@NotNull T t, @NotNull R r) {
@@ -3133,7 +3135,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R, V> Sequence<V> zip(@NotNull Sequence<T> sequence, @NotNull Sequence<R> other, @NotNull Transformer2<T, R, V> transform) {
-        return new MergingSequence<>(sequence, other, transform);
+        return new MergingSequence<T, R, V>(sequence, other, transform);
     }
 
     /**
@@ -3145,8 +3147,8 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Pair<List<T>, List<R>> unzip(@NotNull Sequence<Pair<T, R>> sequence) {
-        List<T> listT = new ArrayList<>();
-        List<R> listR = new ArrayList<>();
+        List<T> listT = new ArrayList<T>();
+        List<R> listR = new ArrayList<R>();
         Iterator<Pair<T, R>> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             Pair<T, R> pair = iterator.next();

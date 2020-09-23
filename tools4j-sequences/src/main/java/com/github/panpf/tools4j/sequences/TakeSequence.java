@@ -43,13 +43,13 @@ public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     @Override
     public Sequence<T> drop(int n) {
         //noinspection unchecked
-        return n >= count ? (Sequence<T>) Sequencex.emptySequence() : new SubSequence<>(sequence, n, count);
+        return n >= count ? (Sequence<T>) Sequencex.emptySequence() : new SubSequence<T>(sequence, n, count);
     }
 
     @NotNull
     @Override
     public Sequence<T> take(int n) {
-        return n >= count ? this : new TakeSequence<>(sequence, n);
+        return n >= count ? this : new TakeSequence<T>(sequence, n);
     }
 
     @NotNull

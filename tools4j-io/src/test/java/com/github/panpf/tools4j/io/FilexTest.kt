@@ -22,7 +22,7 @@ import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.nio.charset.StandardCharsets
+import java.nio.charset.Charset
 import java.util.*
 
 class FilexTest {
@@ -1272,11 +1272,11 @@ class FilexTest {
             IOx.closeQuietly(Filex.inputStream(file))
             IOx.closeQuietly(Filex.bufferedInputStream(file, 1024 * 4))
             IOx.closeQuietly(Filex.bufferedInputStream(file))
-            IOx.closeQuietly(Filex.reader(file, StandardCharsets.UTF_8))
+            IOx.closeQuietly(Filex.reader(file, Charset.forName("UTF-8")))
             IOx.closeQuietly(Filex.reader(file))
-            IOx.closeQuietly(Filex.bufferedReader(file, StandardCharsets.UTF_8, 1024 * 4))
+            IOx.closeQuietly(Filex.bufferedReader(file, Charset.forName("UTF-8"), 1024 * 4))
             IOx.closeQuietly(Filex.bufferedReader(file, 1024 * 4))
-            IOx.closeQuietly(Filex.bufferedReader(file, StandardCharsets.UTF_8))
+            IOx.closeQuietly(Filex.bufferedReader(file, Charset.forName("UTF-8")))
             IOx.closeQuietly(Filex.bufferedReader(file))
         } finally {
             Filex.deleteRecursively(file)
@@ -1290,9 +1290,9 @@ class FilexTest {
         Filex.writeText(file, content)
         try {
             assertEquals(String(Filex.readBytes(file)), content)
-            assertEquals(Filex.readText(file, StandardCharsets.UTF_8), content)
+            assertEquals(Filex.readText(file, Charset.forName("UTF-8")), content)
             assertEquals(Filex.readText(file), content)
-            assertEquals(Filex.readLines(file, StandardCharsets.UTF_8).joinToString(prefix = "[", postfix = "]"), "[" + content.replace("\n", ", ") + "]")
+            assertEquals(Filex.readLines(file, Charset.forName("UTF-8")).joinToString(prefix = "[", postfix = "]"), "[" + content.replace("\n", ", ") + "]")
             assertEquals(Filex.readLines(file).joinToString(prefix = "[", postfix = "]"), "[" + content.replace("\n", ", ") + "]")
         } finally {
             Filex.deleteRecursively(file)
@@ -1306,7 +1306,7 @@ class FilexTest {
         Filex.writeText(file, content)
         try {
             assertEquals(StringBuilder().apply {
-                Filex.useLines(file, StandardCharsets.UTF_8) { iterable ->
+                Filex.useLines(file, Charset.forName("UTF-8")) { iterable ->
                     iterable.forEach { lineString ->
                         if (length > 0) append("\n")
                         append(lineString)
@@ -1356,7 +1356,7 @@ class FilexTest {
         Filex.writeText(file, content)
         try {
             assertEquals(StringBuilder().apply {
-                Filex.forEachLine(file, StandardCharsets.UTF_8) { lineString ->
+                Filex.forEachLine(file, Charset.forName("UTF-8")) { lineString ->
                     if (length > 0) append("\n")
                     append(lineString)
                 }
@@ -1381,13 +1381,13 @@ class FilexTest {
             IOx.closeQuietly(Filex.outputStream(file))
             IOx.closeQuietly(Filex.bufferedOutputStream(file, 1024 * 4))
             IOx.closeQuietly(Filex.bufferedOutputStream(file))
-            IOx.closeQuietly(Filex.writer(file, StandardCharsets.UTF_8))
+            IOx.closeQuietly(Filex.writer(file, Charset.forName("UTF-8")))
             IOx.closeQuietly(Filex.writer(file))
-            IOx.closeQuietly(Filex.bufferedWriter(file, StandardCharsets.UTF_8, 1024 * 4 * 4))
+            IOx.closeQuietly(Filex.bufferedWriter(file, Charset.forName("UTF-8"), 1024 * 4 * 4))
             IOx.closeQuietly(Filex.bufferedWriter(file, 1024 * 4 * 4))
-            IOx.closeQuietly(Filex.bufferedWriter(file, StandardCharsets.UTF_8))
+            IOx.closeQuietly(Filex.bufferedWriter(file, Charset.forName("UTF-8")))
             IOx.closeQuietly(Filex.bufferedWriter(file))
-            IOx.closeQuietly(Filex.printWriter(file, StandardCharsets.UTF_8))
+            IOx.closeQuietly(Filex.printWriter(file, Charset.forName("UTF-8")))
             IOx.closeQuietly(Filex.printWriter(file))
         } finally {
             Filex.deleteRecursively(file)
@@ -1406,13 +1406,13 @@ class FilexTest {
             Filex.appendBytes(file, (content + "2").toByteArray())
             assertEquals(Filex.readText(file), content + "1" + content + "2")
 
-            Filex.writeText(file, content + "3", StandardCharsets.UTF_8)
+            Filex.writeText(file, content + "3", Charset.forName("UTF-8"))
             assertEquals(Filex.readText(file), content + "3")
 
             Filex.writeText(file, content + "4")
             assertEquals(Filex.readText(file), content + "4")
 
-            Filex.appendText(file, content + "5", StandardCharsets.UTF_8)
+            Filex.appendText(file, content + "5", Charset.forName("UTF-8"))
             assertEquals(Filex.readText(file), content + "4" + content + "5")
 
             Filex.appendText(file, content + "6")

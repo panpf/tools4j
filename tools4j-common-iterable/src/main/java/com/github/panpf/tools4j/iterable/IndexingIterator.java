@@ -23,7 +23,7 @@ public class IndexingIterator<T> implements Iterator<IndexedValue<T>> {
 
     @Override
     public IndexedValue<T> next() {
-        return new IndexedValue<>(index++, iterator.next());
+        return new IndexedValue<T>(index++, iterator.next());
     }
 
     @Override

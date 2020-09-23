@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -2431,7 +2430,7 @@ public class Stringx {
      */
     @NotNull
     public static byte[] toByteArray(@Nullable String string) {
-        return string != null ? string.getBytes(StandardCharsets.UTF_8) : new byte[0];
+        return string != null ? string.getBytes(Charset.forName("UTF-8")) : new byte[0];
     }
 
 
@@ -3209,7 +3208,7 @@ public class Stringx {
         if (limit < 0) {
             throw new IllegalArgumentException("Param 'limit' is less than to zero.");
         }
-        final List<String> delimitersList = new ArrayList<>(delimiters.length);
+        final List<String> delimitersList = new ArrayList<String>(delimiters.length);
         Collections.addAll(delimitersList, delimiters);
         return new DelimitedRangesIterable(charSequence != null ? charSequence : "", startIndex, limit, new NextMatch() {
             @Nullable
@@ -3235,7 +3234,7 @@ public class Stringx {
      */
     @NotNull
     public static Iterable<String> splitToIterable(@Nullable final CharSequence charSequence, @NotNull String[] delimiters, boolean ignoreCase, int limit) {
-        return new TransformingIterable<>(rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit), new Transformer<IntRange, String>() {
+        return new TransformingIterable<IntRange, String>(rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit), new Transformer<IntRange, String>() {
             @NotNull
             @Override
             public String transform(@NotNull IntRange range) {
@@ -3290,7 +3289,7 @@ public class Stringx {
      */
     @NotNull
     public static Iterable<String> splitToIterable(@Nullable final CharSequence charSequence, @NotNull char[] delimiters, boolean ignoreCase, int limit) {
-        return new TransformingIterable<>(rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit), new Transformer<IntRange, String>() {
+        return new TransformingIterable<IntRange, String>(rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit), new Transformer<IntRange, String>() {
             @NotNull
             @Override
             public String transform(@NotNull IntRange range) {
@@ -3351,7 +3350,7 @@ public class Stringx {
             }
         }
 
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList = new ArrayList<String>();
         for (IntRange range : rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit)) {
             stringList.add(substring(charSequence, range));
         }
@@ -3407,7 +3406,7 @@ public class Stringx {
         if (delimiters.length == 1) {
             return split(charSequence, String.valueOf(delimiters[0]), ignoreCase, limit);
         }
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList = new ArrayList<String>();
         for (IntRange range : rangesDelimitedBy(charSequence, delimiters, 0, ignoreCase, limit)) {
             stringList.add(substring(charSequence, range));
         }
@@ -3463,13 +3462,13 @@ public class Stringx {
         int currentOffset = 0;
         int nextIndex = indexOf(charSequence, delimiter, currentOffset, ignoreCase);
         if (nextIndex == -1 || limit == 1) {
-            ArrayList<String> arrayList = new ArrayList<>();
+            ArrayList<String> arrayList = new ArrayList<String>();
             arrayList.add(orEmpty(charSequence).toString());
             return arrayList;
         }
 
         boolean isLimited = limit > 0;
-        ArrayList<String> result = new ArrayList<>(isLimited ? Math.min(limit, 10) : 10);
+        ArrayList<String> result = new ArrayList<String>(isLimited ? Math.min(limit, 10) : 10);
         do {
             result.add(substring(charSequence, currentOffset, nextIndex));
             currentOffset = nextIndex + delimiter.length();
@@ -3492,7 +3491,7 @@ public class Stringx {
     @NotNull
     public static List<String> split(@Nullable CharSequence charSequence, @NotNull Pattern regex, int limit) {
         String[] splitItems = regex.split(orEmpty(charSequence), limit == 0 ? -1 : limit);
-        ArrayList<String> arrayList = new ArrayList<>(splitItems.length);
+        ArrayList<String> arrayList = new ArrayList<String>(splitItems.length);
         Collections.addAll(arrayList, splitItems);
         return arrayList;
     }
@@ -3522,7 +3521,7 @@ public class Stringx {
      */
     @NotNull
     public static List<String> lines(@Nullable CharSequence charSequence) {
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList = new ArrayList<String>();
         for (String s : lineIterable(charSequence)) {
             stringList.add(s);
         }
@@ -4010,9 +4009,9 @@ public class Stringx {
     @NotNull
     public static Set<Character> toSet(@Nullable CharSequence charSequence) {
         if (charSequence == null || count(charSequence) == 0) {
-            return new LinkedHashSet<>();
+            return new LinkedHashSet<Character>();
         } else if (count(charSequence) == 1) {
-            Set<Character> characterSet = new LinkedHashSet<>();
+            Set<Character> characterSet = new LinkedHashSet<Character>();
             characterSet.add(charSequence.charAt(0));
             return characterSet;
         } else {
@@ -4093,7 +4092,7 @@ public class Stringx {
             @NotNull
             @Override
             public List<Character> get() {
-                return new ArrayList<>();
+                return new ArrayList<Character>();
             }
         };
         for (char element : iterable(charSequence)) {
@@ -4123,7 +4122,7 @@ public class Stringx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         for (char element : iterable(charSequence)) {
@@ -4256,7 +4255,7 @@ public class Stringx {
      */
     @NotNull
     public static Iterable<IndexedValue<Character>> withIndex(@Nullable final CharSequence charSequence) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Character>>() {
+        return new IndexingIterable<Character>(new DefaultValue<Iterator<Character>>() {
             @NotNull
             @Override
             public Iterator<Character> get() {
@@ -4741,7 +4740,7 @@ public class Stringx {
                 second.append(element);
             }
         }
-        return new Pair<>(first.toString(), second.toString());
+        return new Pair<String, String>(first.toString(), second.toString());
     }
 
 
@@ -4846,7 +4845,7 @@ public class Stringx {
         }
         IntProgression progression = (partialWindows ? indices(charSequence) : new IntRange(0, count(charSequence) - size));
         IntProgression windows = IntProgression.fromClosedRange(progression.getFirst(), progression.getLast(), step);
-        return new TransformingIterable<>(windows, new Transformer<Integer, R>() {
+        return new TransformingIterable<Integer, R>(windows, new Transformer<Integer, R>() {
             @NotNull
             @Override
             public R transform(@NotNull Integer index) {
@@ -4892,7 +4891,7 @@ public class Stringx {
     @NotNull
     public static <V> List<V> zip(@Nullable CharSequence charSequence, @Nullable CharSequence other, @NotNull Transformer2<Character, Character, V> transform) {
         int length = Math.min(count(charSequence), count(other));
-        List<V> list = new ArrayList<>(length);
+        List<V> list = new ArrayList<V>(length);
         if (charSequence != null && other != null) {
             for (int i = 0; i < length; i++) {
                 list.add(transform.transform(charSequence.charAt(i), other.charAt(i)));
@@ -4911,7 +4910,7 @@ public class Stringx {
             @NotNull
             @Override
             public Pair<Character, Character> transform(@NotNull Character character, @NotNull Character character2) {
-                return new Pair<>(character, character2);
+                return new Pair<Character, Character>(character, character2);
             }
         });
     }
@@ -4925,8 +4924,8 @@ public class Stringx {
     @NotNull
     public static <R> List<R> zipWithNext(@Nullable CharSequence charSequence, @NotNull Transformer2<Character, Character, R> transform) {
         int size = count(charSequence) - 1;
-        if (charSequence == null || size < 1) return new ArrayList<>(0);
-        List<R> result = new ArrayList<>(size);
+        if (charSequence == null || size < 1) return new ArrayList<R>(0);
+        List<R> result = new ArrayList<R>(size);
         for (int index = 0; index < size; index++) {
             result.add(transform.transform(charSequence.charAt(index), charSequence.charAt(index + 1)));
         }
@@ -4944,7 +4943,7 @@ public class Stringx {
             @NotNull
             @Override
             public Pair<Character, Character> transform(@NotNull Character character, @NotNull Character character2) {
-                return new Pair<>(character, character2);
+                return new Pair<Character, Character>(character, character2);
             }
         });
     }
@@ -4959,7 +4958,7 @@ public class Stringx {
     @NotNull
     public static Iterable<Character> asIterable(@Nullable CharSequence charSequence) {
         if (charSequence == null || charSequence instanceof String && isEmpty(charSequence))
-            return new ArrayList<>(0);
+            return new ArrayList<Character>(0);
         return new CharSequenceIterable(charSequence);
     }
 

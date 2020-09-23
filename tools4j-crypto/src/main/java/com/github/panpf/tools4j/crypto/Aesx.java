@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -74,7 +74,7 @@ public class Aesx {
      */
     @NotNull
     public static Key createKeyByPassword(String password, int keySizeInBytes) {
-        byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+        byte[] passwordBytes = password.getBytes(Charset.forName("UTF-8"));
         byte[] key = InsecureSHA1PRNGKeyDerivator.deriveInsecureKey(passwordBytes, keySizeInBytes);
         return new SecretKeySpec(key, ALGORITHM);
     }
@@ -240,7 +240,9 @@ public class Aesx {
         Cipher cipher;
         try {
             cipher = Cipher.getInstance(algorithm);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException(e);
+        } catch (NoSuchPaddingException e) {
             throw new IllegalArgumentException(e);
         }
 
