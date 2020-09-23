@@ -30,7 +30,7 @@ public class DistinctIterator<T, K> extends AbstractIterator<T> {
     @NotNull
     private final Transformer<T, K> keySelector;
     @NotNull
-    private final HashSet<K> observed = new HashSet<>();
+    private final HashSet<K> observed = new HashSet<K>();
 
     public DistinctIterator(@NotNull Iterator<T> source, @NotNull Transformer<T, K> keySelector) {
         this.source = source;

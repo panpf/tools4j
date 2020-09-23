@@ -366,7 +366,9 @@ public class Rsax {
         Cipher cipher;
         try {
             cipher = Cipher.getInstance(algorithm);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException(e);
+        } catch (NoSuchPaddingException e) {
             throw new IllegalArgumentException(e);
         }
 

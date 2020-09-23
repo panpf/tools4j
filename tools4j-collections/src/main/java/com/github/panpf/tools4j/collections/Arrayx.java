@@ -3860,7 +3860,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> Iterator<T> iterator(@Nullable T[] elements) {
-        return new ArrayIterator<>(elements);
+        return new ArrayIterator<T>(elements);
     }
 
     /**
@@ -4285,7 +4285,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<T> get() {
-                return new ArrayList<>();
+                return new ArrayList<T>();
             }
         };
         if (elements != null) {
@@ -4310,7 +4310,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Byte> get() {
-                return new ArrayList<>();
+                return new ArrayList<Byte>();
             }
         };
         if (elements != null) {
@@ -4335,7 +4335,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Short> get() {
-                return new ArrayList<>();
+                return new ArrayList<Short>();
             }
         };
         if (elements != null) {
@@ -4360,7 +4360,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Integer> get() {
-                return new ArrayList<>();
+                return new ArrayList<Integer>();
             }
         };
         if (elements != null) {
@@ -4385,7 +4385,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Long> get() {
-                return new ArrayList<>();
+                return new ArrayList<Long>();
             }
         };
         if (elements != null) {
@@ -4410,7 +4410,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Float> get() {
-                return new ArrayList<>();
+                return new ArrayList<Float>();
             }
         };
         if (elements != null) {
@@ -4435,7 +4435,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Double> get() {
-                return new ArrayList<>();
+                return new ArrayList<Double>();
             }
         };
         if (elements != null) {
@@ -4460,7 +4460,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Boolean> get() {
-                return new ArrayList<>();
+                return new ArrayList<Boolean>();
             }
         };
         if (elements != null) {
@@ -4485,7 +4485,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<Character> get() {
-                return new ArrayList<>();
+                return new ArrayList<Character>();
             }
         };
         if (elements != null) {
@@ -4511,7 +4511,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4537,7 +4537,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4563,7 +4563,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4589,7 +4589,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4615,7 +4615,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4641,7 +4641,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4667,7 +4667,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4693,7 +4693,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -4719,7 +4719,7 @@ public class Arrayx {
             @NotNull
             @Override
             public List<V> get() {
-                return new ArrayList<>();
+                return new ArrayList<V>();
             }
         };
         if (elements != null) {
@@ -11517,7 +11517,7 @@ public class Arrayx {
     public static <T, R, V> List<V> zip(@Nullable T[] elements, @Nullable R[] other, @NotNull Transformer2<T, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11531,7 +11531,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable byte[] elements, @Nullable R[] other, @NotNull Transformer2<Byte, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11545,7 +11545,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable short[] elements, @Nullable R[] other, @NotNull Transformer2<Short, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11559,7 +11559,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable int[] elements, @Nullable R[] other, @NotNull Transformer2<Integer, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11573,7 +11573,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable long[] elements, @Nullable R[] other, @NotNull Transformer2<Long, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11587,7 +11587,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable float[] elements, @Nullable R[] other, @NotNull Transformer2<Float, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11601,7 +11601,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable double[] elements, @Nullable R[] other, @NotNull Transformer2<Double, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11615,7 +11615,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable boolean[] elements, @Nullable R[] other, @NotNull Transformer2<Boolean, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11629,7 +11629,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable char[] elements, @Nullable R[] other, @NotNull Transformer2<Character, R, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -11769,7 +11769,7 @@ public class Arrayx {
     public static <T, R, V> List<V> zip(@Nullable T[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11785,7 +11785,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable byte[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Byte, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11801,7 +11801,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable short[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Short, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11817,7 +11817,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable int[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Integer, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11833,7 +11833,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable long[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Long, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11849,7 +11849,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable float[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Float, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11865,7 +11865,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable double[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Double, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11881,7 +11881,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable boolean[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Boolean, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -11897,7 +11897,7 @@ public class Arrayx {
     public static <R, V> List<V> zip(@Nullable char[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Character, R, V> transform) {
         if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
         int arraySize = elements.length;
-        List<V> list = new ArrayList<>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
         for (R element : other) {
             if (i >= arraySize) break;
@@ -12025,7 +12025,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable byte[] elements, @Nullable byte[] other, @NotNull Transformer2<Byte, Byte, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12039,7 +12039,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable short[] elements, @Nullable short[] other, @NotNull Transformer2<Short, Short, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12053,7 +12053,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable int[] elements, @Nullable int[] other, @NotNull Transformer2<Integer, Integer, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12067,7 +12067,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable long[] elements, @Nullable long[] other, @NotNull Transformer2<Long, Long, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12081,7 +12081,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable float[] elements, @Nullable float[] other, @NotNull Transformer2<Float, Float, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12095,7 +12095,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable double[] elements, @Nullable double[] other, @NotNull Transformer2<Double, Double, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12109,7 +12109,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable boolean[] elements, @Nullable boolean[] other, @NotNull Transformer2<Boolean, Boolean, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12123,7 +12123,7 @@ public class Arrayx {
     public static <V> List<V> zip(@Nullable char[] elements, @Nullable char[] other, @NotNull Transformer2<Character, Character, V> transform) {
         if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
         int size = Math.min(count(elements), count(other));
-        List<V> list = new ArrayList<>(size);
+        List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             list.add(transform.transform(elements[i], other[i]));
         }
@@ -12141,8 +12141,8 @@ public class Arrayx {
      */
     @NotNull
     public static <T> Pair<List<T>, List<T>> partition(@Nullable T[] elements, @NotNull Predicate<T> predicate) {
-        List<T> first = new ArrayList<>();
-        List<T> second = new ArrayList<>();
+        List<T> first = new ArrayList<T>();
+        List<T> second = new ArrayList<T>();
         if (elements != null) {
             for (T element : elements) {
                 if (predicate.accept(element)) {
@@ -12152,7 +12152,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<T>, List<T>>(first, second);
     }
 
     /**
@@ -12162,8 +12162,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Byte>, List<Byte>> partition(@Nullable byte[] elements, @NotNull Predicate<Byte> predicate) {
-        List<Byte> first = new ArrayList<>();
-        List<Byte> second = new ArrayList<>();
+        List<Byte> first = new ArrayList<Byte>();
+        List<Byte> second = new ArrayList<Byte>();
         if (elements != null) {
             for (byte element : elements) {
                 if (predicate.accept(element)) {
@@ -12173,7 +12173,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Byte>, List<Byte>>(first, second);
     }
 
     /**
@@ -12183,8 +12183,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Short>, List<Short>> partition(@Nullable short[] elements, @NotNull Predicate<Short> predicate) {
-        List<Short> first = new ArrayList<>();
-        List<Short> second = new ArrayList<>();
+        List<Short> first = new ArrayList<Short>();
+        List<Short> second = new ArrayList<Short>();
         if (elements != null) {
             for (short element : elements) {
                 if (predicate.accept(element)) {
@@ -12194,7 +12194,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Short>, List<Short>>(first, second);
     }
 
     /**
@@ -12204,8 +12204,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Integer>, List<Integer>> partition(@Nullable int[] elements, @NotNull Predicate<Integer> predicate) {
-        List<Integer> first = new ArrayList<>();
-        List<Integer> second = new ArrayList<>();
+        List<Integer> first = new ArrayList<Integer>();
+        List<Integer> second = new ArrayList<Integer>();
         if (elements != null) {
             for (int element : elements) {
                 if (predicate.accept(element)) {
@@ -12215,7 +12215,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Integer>, List<Integer>>(first, second);
     }
 
     /**
@@ -12225,8 +12225,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Long>, List<Long>> partition(@Nullable long[] elements, @NotNull Predicate<Long> predicate) {
-        List<Long> first = new ArrayList<>();
-        List<Long> second = new ArrayList<>();
+        List<Long> first = new ArrayList<Long>();
+        List<Long> second = new ArrayList<Long>();
         if (elements != null) {
             for (long element : elements) {
                 if (predicate.accept(element)) {
@@ -12236,7 +12236,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Long>, List<Long>>(first, second);
     }
 
     /**
@@ -12246,8 +12246,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Float>, List<Float>> partition(@Nullable float[] elements, @NotNull Predicate<Float> predicate) {
-        List<Float> first = new ArrayList<>();
-        List<Float> second = new ArrayList<>();
+        List<Float> first = new ArrayList<Float>();
+        List<Float> second = new ArrayList<Float>();
         if (elements != null) {
             for (float element : elements) {
                 if (predicate.accept(element)) {
@@ -12257,7 +12257,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Float>, List<Float>>(first, second);
     }
 
     /**
@@ -12267,8 +12267,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Double>, List<Double>> partition(@Nullable double[] elements, @NotNull Predicate<Double> predicate) {
-        List<Double> first = new ArrayList<>();
-        List<Double> second = new ArrayList<>();
+        List<Double> first = new ArrayList<Double>();
+        List<Double> second = new ArrayList<Double>();
         if (elements != null) {
             for (double element : elements) {
                 if (predicate.accept(element)) {
@@ -12278,7 +12278,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Double>, List<Double>>(first, second);
     }
 
     /**
@@ -12288,8 +12288,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Boolean>, List<Boolean>> partition(@Nullable boolean[] elements, @NotNull Predicate<Boolean> predicate) {
-        List<Boolean> first = new ArrayList<>();
-        List<Boolean> second = new ArrayList<>();
+        List<Boolean> first = new ArrayList<Boolean>();
+        List<Boolean> second = new ArrayList<Boolean>();
         if (elements != null) {
             for (boolean element : elements) {
                 if (predicate.accept(element)) {
@@ -12299,7 +12299,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Boolean>, List<Boolean>>(first, second);
     }
 
     /**
@@ -12309,8 +12309,8 @@ public class Arrayx {
      */
     @NotNull
     public static Pair<List<Character>, List<Character>> partition(@Nullable char[] elements, @NotNull Predicate<Character> predicate) {
-        List<Character> first = new ArrayList<>();
-        List<Character> second = new ArrayList<>();
+        List<Character> first = new ArrayList<Character>();
+        List<Character> second = new ArrayList<Character>();
         if (elements != null) {
             for (char element : elements) {
                 if (predicate.accept(element)) {
@@ -12320,7 +12320,7 @@ public class Arrayx {
                 }
             }
         }
-        return new Pair<>(first, second);
+        return new Pair<List<Character>, List<Character>>(first, second);
     }
 
 
@@ -16040,7 +16040,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> dropWhile(@Nullable T[] elements, @NotNull Predicate<T> predicate) {
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         if (elements != null) {
             boolean yielding = false;
             for (T item : elements) {
@@ -16060,7 +16060,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> dropWhile(@Nullable byte[] elements, @NotNull Predicate<Byte> predicate) {
-        List<Byte> list = new ArrayList<>();
+        List<Byte> list = new ArrayList<Byte>();
         if (elements != null) {
             boolean yielding = false;
             for (byte item : elements) {
@@ -16080,7 +16080,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> dropWhile(@Nullable short[] elements, @NotNull Predicate<Short> predicate) {
-        List<Short> list = new ArrayList<>();
+        List<Short> list = new ArrayList<Short>();
         if (elements != null) {
             boolean yielding = false;
             for (short item : elements) {
@@ -16100,7 +16100,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> dropWhile(@Nullable int[] elements, @NotNull Predicate<Integer> predicate) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         if (elements != null) {
             boolean yielding = false;
             for (int item : elements) {
@@ -16120,7 +16120,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> dropWhile(@Nullable long[] elements, @NotNull Predicate<Long> predicate) {
-        List<Long> list = new ArrayList<>();
+        List<Long> list = new ArrayList<Long>();
         if (elements != null) {
             boolean yielding = false;
             for (long item : elements) {
@@ -16140,7 +16140,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> dropWhile(@Nullable float[] elements, @NotNull Predicate<Float> predicate) {
-        List<Float> list = new ArrayList<>();
+        List<Float> list = new ArrayList<Float>();
         if (elements != null) {
             boolean yielding = false;
             for (float item : elements) {
@@ -16160,7 +16160,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> dropWhile(@Nullable double[] elements, @NotNull Predicate<Double> predicate) {
-        List<Double> list = new ArrayList<>();
+        List<Double> list = new ArrayList<Double>();
         if (elements != null) {
             boolean yielding = false;
             for (double item : elements) {
@@ -16180,7 +16180,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> dropWhile(@Nullable boolean[] elements, @NotNull Predicate<Boolean> predicate) {
-        List<Boolean> list = new ArrayList<>();
+        List<Boolean> list = new ArrayList<Boolean>();
         if (elements != null) {
             boolean yielding = false;
             for (boolean item : elements) {
@@ -16200,7 +16200,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> dropWhile(@Nullable char[] elements, @NotNull Predicate<Character> predicate) {
-        List<Character> list = new ArrayList<>();
+        List<Character> list = new ArrayList<Character>();
         if (elements != null) {
             boolean yielding = false;
             for (char item : elements) {
@@ -16231,7 +16231,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<T> list = new ArrayList<>(n);
+        List<T> list = new ArrayList<T>(n);
         for (T item : elements) {
             if (count++ == n)
                 break;
@@ -16252,7 +16252,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Byte> list = new ArrayList<>(n);
+        List<Byte> list = new ArrayList<Byte>(n);
         for (byte item : elements) {
             if (count++ == n)
                 break;
@@ -16273,7 +16273,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Short> list = new ArrayList<>(n);
+        List<Short> list = new ArrayList<Short>(n);
         for (short item : elements) {
             if (count++ == n)
                 break;
@@ -16294,7 +16294,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Integer> list = new ArrayList<>(n);
+        List<Integer> list = new ArrayList<Integer>(n);
         for (int item : elements) {
             if (count++ == n)
                 break;
@@ -16315,7 +16315,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Long> list = new ArrayList<>(n);
+        List<Long> list = new ArrayList<Long>(n);
         for (long item : elements) {
             if (count++ == n)
                 break;
@@ -16336,7 +16336,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Float> list = new ArrayList<>(n);
+        List<Float> list = new ArrayList<Float>(n);
         for (float item : elements) {
             if (count++ == n)
                 break;
@@ -16357,7 +16357,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Double> list = new ArrayList<>(n);
+        List<Double> list = new ArrayList<Double>(n);
         for (double item : elements) {
             if (count++ == n)
                 break;
@@ -16378,7 +16378,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Boolean> list = new ArrayList<>(n);
+        List<Boolean> list = new ArrayList<Boolean>(n);
         for (boolean item : elements) {
             if (count++ == n)
                 break;
@@ -16399,7 +16399,7 @@ public class Arrayx {
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
-        List<Character> list = new ArrayList<>(n);
+        List<Character> list = new ArrayList<Character>(n);
         for (char item : elements) {
             if (count++ == n)
                 break;
@@ -16420,7 +16420,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<T> list = new ArrayList<>(n);
+        List<T> list = new ArrayList<T>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16438,7 +16438,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Byte> list = new ArrayList<>(n);
+        List<Byte> list = new ArrayList<Byte>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16456,7 +16456,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Short> list = new ArrayList<>(n);
+        List<Short> list = new ArrayList<Short>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16474,7 +16474,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Integer> list = new ArrayList<>(n);
+        List<Integer> list = new ArrayList<Integer>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16492,7 +16492,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Long> list = new ArrayList<>(n);
+        List<Long> list = new ArrayList<Long>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16510,7 +16510,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Float> list = new ArrayList<>(n);
+        List<Float> list = new ArrayList<Float>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16528,7 +16528,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Double> list = new ArrayList<>(n);
+        List<Double> list = new ArrayList<Double>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16546,7 +16546,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Boolean> list = new ArrayList<>(n);
+        List<Boolean> list = new ArrayList<Boolean>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16564,7 +16564,7 @@ public class Arrayx {
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
-        List<Character> list = new ArrayList<>(n);
+        List<Character> list = new ArrayList<Character>(n);
         for (int index = size - n; index < size; index++)
             list.add(elements[index]);
         return list;
@@ -16710,7 +16710,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> takeWhile(@Nullable T[] elements, @NotNull Predicate<T> predicate) {
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         if (elements != null) {
             for (T item : elements) {
                 if (!predicate.accept(item))
@@ -16726,7 +16726,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> takeWhile(@Nullable byte[] elements, @NotNull Predicate<Byte> predicate) {
-        List<Byte> list = new ArrayList<>();
+        List<Byte> list = new ArrayList<Byte>();
         if (elements != null) {
             for (byte item : elements) {
                 if (!predicate.accept(item))
@@ -16742,7 +16742,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> takeWhile(@Nullable short[] elements, @NotNull Predicate<Short> predicate) {
-        List<Short> list = new ArrayList<>();
+        List<Short> list = new ArrayList<Short>();
         if (elements != null) {
             for (short item : elements) {
                 if (!predicate.accept(item))
@@ -16758,7 +16758,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> takeWhile(@Nullable int[] elements, @NotNull Predicate<Integer> predicate) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         if (elements != null) {
             for (int item : elements) {
                 if (!predicate.accept(item))
@@ -16774,7 +16774,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> takeWhile(@Nullable long[] elements, @NotNull Predicate<Long> predicate) {
-        List<Long> list = new ArrayList<>();
+        List<Long> list = new ArrayList<Long>();
         if (elements != null) {
             for (long item : elements) {
                 if (!predicate.accept(item))
@@ -16790,7 +16790,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> takeWhile(@Nullable float[] elements, @NotNull Predicate<Float> predicate) {
-        List<Float> list = new ArrayList<>();
+        List<Float> list = new ArrayList<Float>();
         if (elements != null) {
             for (float item : elements) {
                 if (!predicate.accept(item))
@@ -16806,7 +16806,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> takeWhile(@Nullable double[] elements, @NotNull Predicate<Double> predicate) {
-        List<Double> list = new ArrayList<>();
+        List<Double> list = new ArrayList<Double>();
         if (elements != null) {
             for (double item : elements) {
                 if (!predicate.accept(item))
@@ -16822,7 +16822,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> takeWhile(@Nullable boolean[] elements, @NotNull Predicate<Boolean> predicate) {
-        List<Boolean> list = new ArrayList<>();
+        List<Boolean> list = new ArrayList<Boolean>();
         if (elements != null) {
             for (boolean item : elements) {
                 if (!predicate.accept(item))
@@ -16838,7 +16838,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> takeWhile(@Nullable char[] elements, @NotNull Predicate<Character> predicate) {
-        List<Character> list = new ArrayList<>();
+        List<Character> list = new ArrayList<Character>();
         if (elements != null) {
             for (char item : elements) {
                 if (!predicate.accept(item))
@@ -16951,9 +16951,9 @@ public class Arrayx {
      */
     @NotNull
     public static <T, K> List<T> distinctBy(@Nullable T[] elements, @NotNull Transformer<T, K> transformer) {
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (T e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -16970,9 +16970,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Byte> distinctBy(@Nullable byte[] elements, @NotNull Transformer<Byte, K> transformer) {
-        List<Byte> list = new ArrayList<>();
+        List<Byte> list = new ArrayList<Byte>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (byte e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -16989,9 +16989,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Short> distinctBy(@Nullable short[] elements, @NotNull Transformer<Short, K> transformer) {
-        List<Short> list = new ArrayList<>();
+        List<Short> list = new ArrayList<Short>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (short e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17008,9 +17008,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Integer> distinctBy(@Nullable int[] elements, @NotNull Transformer<Integer, K> transformer) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (int e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17027,9 +17027,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Long> distinctBy(@Nullable long[] elements, @NotNull Transformer<Long, K> transformer) {
-        List<Long> list = new ArrayList<>();
+        List<Long> list = new ArrayList<Long>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (long e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17046,9 +17046,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Float> distinctBy(@Nullable float[] elements, @NotNull Transformer<Float, K> transformer) {
-        List<Float> list = new ArrayList<>();
+        List<Float> list = new ArrayList<Float>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (float e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17065,9 +17065,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Double> distinctBy(@Nullable double[] elements, @NotNull Transformer<Double, K> transformer) {
-        List<Double> list = new ArrayList<>();
+        List<Double> list = new ArrayList<Double>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (double e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17084,9 +17084,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Boolean> distinctBy(@Nullable boolean[] elements, @NotNull Transformer<Boolean, K> transformer) {
-        List<Boolean> list = new ArrayList<>();
+        List<Boolean> list = new ArrayList<Boolean>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (boolean e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17103,9 +17103,9 @@ public class Arrayx {
      */
     @NotNull
     public static <K> List<Character> distinctBy(@Nullable char[] elements, @NotNull Transformer<Character, K> transformer) {
-        List<Character> list = new ArrayList<>();
+        List<Character> list = new ArrayList<Character>();
         if (elements != null) {
-            HashSet<K> set = new HashSet<>();
+            HashSet<K> set = new HashSet<K>();
             for (char e : elements) {
                 K key = transformer.transform(e);
                 if (set.add(key)) list.add(e);
@@ -17122,7 +17122,7 @@ public class Arrayx {
      * Returns a lazy [Iterable] of [IndexedValue] for each element of the original array.
      */
     public static <T> Iterable<IndexedValue<T>> withIndex(@Nullable final T[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<T>>() {
+        return new IndexingIterable<T>(new DefaultValue<Iterator<T>>() {
             @NotNull
             @Override
             public Iterator<T> get() {
@@ -17136,7 +17136,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Byte>> withIndex(@Nullable final byte[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Byte>>() {
+        return new IndexingIterable<Byte>(new DefaultValue<Iterator<Byte>>() {
             @NotNull
             @Override
             public Iterator<Byte> get() {
@@ -17150,7 +17150,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Short>> withIndex(@Nullable final short[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Short>>() {
+        return new IndexingIterable<Short>(new DefaultValue<Iterator<Short>>() {
             @NotNull
             @Override
             public Iterator<Short> get() {
@@ -17164,7 +17164,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Integer>> withIndex(@Nullable final int[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Integer>>() {
+        return new IndexingIterable<Integer>(new DefaultValue<Iterator<Integer>>() {
             @NotNull
             @Override
             public Iterator<Integer> get() {
@@ -17178,7 +17178,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Long>> withIndex(@Nullable final long[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Long>>() {
+        return new IndexingIterable<Long>(new DefaultValue<Iterator<Long>>() {
             @NotNull
             @Override
             public Iterator<Long> get() {
@@ -17192,7 +17192,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Float>> withIndex(@Nullable final float[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Float>>() {
+        return new IndexingIterable<Float>(new DefaultValue<Iterator<Float>>() {
             @NotNull
             @Override
             public Iterator<Float> get() {
@@ -17206,7 +17206,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Double>> withIndex(@Nullable final double[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Double>>() {
+        return new IndexingIterable<Double>(new DefaultValue<Iterator<Double>>() {
             @NotNull
             @Override
             public Iterator<Double> get() {
@@ -17220,7 +17220,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Boolean>> withIndex(@Nullable final boolean[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Boolean>>() {
+        return new IndexingIterable<Boolean>(new DefaultValue<Iterator<Boolean>>() {
             @NotNull
             @Override
             public Iterator<Boolean> get() {
@@ -17234,7 +17234,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<IndexedValue<Character>> withIndex(@Nullable final char[] elements) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<Character>>() {
+        return new IndexingIterable<Character>(new DefaultValue<Iterator<Character>>() {
             @NotNull
             @Override
             public Iterator<Character> get() {
@@ -18084,7 +18084,7 @@ public class Arrayx {
     public static <T> List<T> slice(@Nullable T[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0) return Collectionx.arrayListOf();
-        List<T> list = new ArrayList<>(size);
+        List<T> list = new ArrayList<T>(size);
         for (int index : indices) {
             if (elements != null) {
                 list.add(elements[index]);
@@ -18100,7 +18100,7 @@ public class Arrayx {
     public static List<Byte> slice(@Nullable byte[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Byte> list = new ArrayList<>(size);
+        List<Byte> list = new ArrayList<Byte>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18114,7 +18114,7 @@ public class Arrayx {
     public static List<Short> slice(@Nullable short[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Short> list = new ArrayList<>(size);
+        List<Short> list = new ArrayList<Short>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18128,7 +18128,7 @@ public class Arrayx {
     public static List<Integer> slice(@Nullable int[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Integer> list = new ArrayList<>(size);
+        List<Integer> list = new ArrayList<Integer>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18142,7 +18142,7 @@ public class Arrayx {
     public static List<Long> slice(@Nullable long[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Long> list = new ArrayList<>(size);
+        List<Long> list = new ArrayList<Long>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18156,7 +18156,7 @@ public class Arrayx {
     public static List<Float> slice(@Nullable float[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Float> list = new ArrayList<>(size);
+        List<Float> list = new ArrayList<Float>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18170,7 +18170,7 @@ public class Arrayx {
     public static List<Double> slice(@Nullable double[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Double> list = new ArrayList<>(size);
+        List<Double> list = new ArrayList<Double>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18184,7 +18184,7 @@ public class Arrayx {
     public static List<Boolean> slice(@Nullable boolean[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Boolean> list = new ArrayList<>(size);
+        List<Boolean> list = new ArrayList<Boolean>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }
@@ -18198,7 +18198,7 @@ public class Arrayx {
     public static List<Character> slice(@Nullable char[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
         if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
-        List<Character> list = new ArrayList<>(size);
+        List<Character> list = new ArrayList<Character>(size);
         for (int index : indices) {
             list.add(elements[index]);
         }

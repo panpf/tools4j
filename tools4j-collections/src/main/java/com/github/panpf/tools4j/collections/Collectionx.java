@@ -81,11 +81,11 @@ public class Collectionx {
     @SafeVarargs
     public static <T> LinkedList<T> linkedListOf(@NotNull T... elements) {
         if (elements.length > 0) {
-            LinkedList<T> list = new LinkedList<>();
+            LinkedList<T> list = new LinkedList<T>();
             addAll(list, elements);
             return list;
         } else {
-            return new LinkedList<>();
+            return new LinkedList<T>();
         }
     }
 
@@ -200,11 +200,11 @@ public class Collectionx {
     @SafeVarargs
     public static <T> ArrayList<T> arrayListOf(@NotNull T... elements) {
         if (elements.length > 0) {
-            ArrayList<T> list = new ArrayList<>(elements.length);
+            ArrayList<T> list = new ArrayList<T>(elements.length);
             addAll(list, elements);
             return list;
         } else {
-            return new ArrayList<>(0);
+            return new ArrayList<T>(0);
         }
     }
 
@@ -257,7 +257,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> Set<T> mutableSetOf() {
-        return new LinkedHashSet<>();
+        return new LinkedHashSet<T>();
     }
 
     /**
@@ -274,7 +274,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> HashSet<T> hashSetOf() {
-        return new HashSet<>();
+        return new HashSet<T>();
     }
 
     /**
@@ -291,7 +291,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> LinkedHashSet<T> linkedSetOf() {
-        return new LinkedHashSet<>();
+        return new LinkedHashSet<T>();
     }
 
     /**
@@ -320,7 +320,7 @@ public class Collectionx {
     @NotNull
     @SafeVarargs
     public static <T> TreeSet<T> sortedSetOf(@NotNull Comparator<T> comparator, @Nullable T... elements) {
-        return Arrayx.toCollection(elements, new TreeSet<>(comparator));
+        return Arrayx.toCollection(elements, new TreeSet<T>(comparator));
     }
 
 
@@ -683,7 +683,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> Iterable<IndexedValue<T>> withIndex(@NotNull final Iterable<T> iterable) {
-        return new IndexingIterable<>(new DefaultValue<Iterator<T>>() {
+        return new IndexingIterable<T>(new DefaultValue<Iterator<T>>() {
             @NotNull
             @Override
             public Iterator<T> get() {
@@ -1924,8 +1924,8 @@ public class Collectionx {
      */
     @NotNull
     public static <T> Pair<List<T>, List<T>> partition(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        List<T> first = new ArrayList<>();
-        List<T> second = new ArrayList<>();
+        List<T> first = new ArrayList<T>();
+        List<T> second = new ArrayList<T>();
         if (iterable != null) {
             for (T element : iterable) {
                 if (predicate.accept(element)) {
@@ -1995,7 +1995,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> SortedSet<T> toSortedSet(@Nullable Iterable<T> iterable, @NotNull Comparator<T> comparator) {
-        return toCollection(iterable, new TreeSet<>(comparator));
+        return toCollection(iterable, new TreeSet<T>(comparator));
     }
 
     /**
@@ -2211,13 +2211,13 @@ public class Collectionx {
 
         int listSize = count(iterable);
         int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
-        List<List<T>> resultList = new ArrayList<>(resultSize);
+        List<List<T>> resultList = new ArrayList<List<T>>(resultSize);
         List<T> chunkedList = null;
         int index = 0;
         if (iterable != null) {
             for (T element : iterable) {
                 if (chunkedList == null) {
-                    chunkedList = new ArrayList<>(Math.min(size, listSize - index));
+                    chunkedList = new ArrayList<T>(Math.min(size, listSize - index));
                 }
                 chunkedList.add(element);
                 if (chunkedList.size() >= size) {
@@ -2249,13 +2249,13 @@ public class Collectionx {
 
         int listSize = count(iterable);
         int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
-        List<R> resultList = new ArrayList<>(resultSize);
+        List<R> resultList = new ArrayList<R>(resultSize);
         List<T> chunkedList = null;
         int index = 0;
         if (iterable != null) {
             for (T element : iterable) {
                 if (chunkedList == null) {
-                    chunkedList = new ArrayList<>(Math.min(size, listSize - index));
+                    chunkedList = new ArrayList<T>(Math.min(size, listSize - index));
                 }
                 chunkedList.add(element);
                 if (chunkedList.size() >= size) {
@@ -2278,7 +2278,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> minus(@Nullable Iterable<T> iterable, @Nullable final T element) {
         if (element == null) return toList(iterable);
-        ArrayList<T> result = new ArrayList<>(collectionSizeOrDefault(iterable, 10));
+        ArrayList<T> result = new ArrayList<T>(collectionSizeOrDefault(iterable, 10));
         final boolean[] removed = new boolean[]{false};
         return filterTo(iterable, result, new Predicate<T>() {
             @Override
@@ -2342,7 +2342,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable T element) {
         if (element == null) return toList(collection);
-        ArrayList<T> result = new ArrayList<>(count(collection) + 1);
+        ArrayList<T> result = new ArrayList<T>(count(collection) + 1);
         if (collection != null) result.addAll(collection);
         result.add(element);
         return result;
@@ -2357,7 +2357,7 @@ public class Collectionx {
         if (iterable instanceof Collection) {
             return plus(((Collection<T>) iterable), element);
         } else {
-            ArrayList<T> result = new ArrayList<>();
+            ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
             result.add(element);
             return result;
@@ -2370,7 +2370,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable T[] elements) {
         if (elements == null || elements.length <= 0) return toList(collection);
-        ArrayList<T> result = new ArrayList<>(count(collection) + elements.length);
+        ArrayList<T> result = new ArrayList<T>(count(collection) + elements.length);
         addAll(result, collection);
         addAll(result, elements);
         return result;
@@ -2385,7 +2385,7 @@ public class Collectionx {
         if (iterable instanceof Collection) {
             return plus(((Collection<T>) iterable), elements);
         } else {
-            ArrayList<T> result = new ArrayList<>();
+            ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
             addAll(result, elements);
             return result;
@@ -2399,12 +2399,12 @@ public class Collectionx {
     public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable Iterable<T> elements) {
         if (elements == null) return toList(collection);
         if (elements instanceof Collection) {
-            ArrayList<T> result = new ArrayList<>(count(collection) + ((Collection<T>) elements).size());
+            ArrayList<T> result = new ArrayList<T>(count(collection) + ((Collection<T>) elements).size());
             addAll(result, collection);
             addAll(result, elements);
             return result;
         } else {
-            ArrayList<T> result = new ArrayList<>();
+            ArrayList<T> result = new ArrayList<T>();
             addAll(result, collection);
             addAll(result, elements);
             return result;
@@ -2420,7 +2420,7 @@ public class Collectionx {
         if (iterable instanceof Collection) {
             return plus((Collection<T>) iterable, elements);
         } else {
-            ArrayList<T> result = new ArrayList<>();
+            ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
             addAll(result, elements);
             return result;
@@ -2472,7 +2472,7 @@ public class Collectionx {
                 @NotNull
                 @Override
                 public List<T> get() {
-                    return new ArrayList<>();
+                    return new ArrayList<T>();
                 }
             };
             for (T element : iterable) {
@@ -2498,7 +2498,7 @@ public class Collectionx {
                 @NotNull
                 @Override
                 public List<V> get() {
-                    return new ArrayList<>();
+                    return new ArrayList<V>();
                 }
             };
             for (T element : iterable) {
@@ -2997,7 +2997,7 @@ public class Collectionx {
         if (size == 0) {
             return Collectionx.arrayListOf();
         } else {
-            ArrayList<T> resultList = new ArrayList<>(size);
+            ArrayList<T> resultList = new ArrayList<T>(size);
             for (int index : indices) {
                 if (list != null) {
                     resultList.add(list.get(index));
@@ -3030,7 +3030,7 @@ public class Collectionx {
             }
         }
         int count = 0;
-        ArrayList<T> list = new ArrayList<>(n);
+        ArrayList<T> list = new ArrayList<T>(n);
         if (iterable != null) {
             for (T item : iterable) {
                 if (count++ == n)
@@ -3061,7 +3061,7 @@ public class Collectionx {
         if (n == 1) {
             return mutableListOf(last(list));
         }
-        ArrayList<T> resultList = new ArrayList<>(n);
+        ArrayList<T> resultList = new ArrayList<T>(n);
         if (list instanceof RandomAccess) {
             for (int index = size - n; index < size; index++) {
                 resultList.add(list.get(index));
@@ -3090,7 +3090,7 @@ public class Collectionx {
                 iterator.next();
                 int expectedSize = list.size() - iterator.nextIndex();
                 if (expectedSize == 0) return Collectionx.arrayListOf();
-                ArrayList<T> resultList = new ArrayList<>(expectedSize);
+                ArrayList<T> resultList = new ArrayList<T>(expectedSize);
                 while (iterator.hasNext()) {
                     resultList.add(iterator.next());
                 }
@@ -3105,7 +3105,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> takeWhile(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        ArrayList<T> list = new ArrayList<>();
+        ArrayList<T> list = new ArrayList<T>();
         if (iterable != null) {
             for (T item : iterable) {
                 if (!predicate.accept(item))
@@ -3138,8 +3138,8 @@ public class Collectionx {
      */
     @NotNull
     public static <T, K> List<T> distinctBy(@Nullable Iterable<T> iterable, @NotNull Transformer<T, K> transformer) {
-        HashSet<K> set = new HashSet<>();
-        ArrayList<T> list = new ArrayList<>();
+        HashSet<K> set = new HashSet<K>();
+        ArrayList<T> list = new ArrayList<T>();
         if (iterable != null) {
             for (T e : iterable) {
                 K key = transformer.transform(e);
@@ -3338,7 +3338,7 @@ public class Collectionx {
                 return mutableListOf(last(collection));
             }
 
-            list = new ArrayList<>(resultSize);
+            list = new ArrayList<T>(resultSize);
             if (iterable instanceof List) {
                 List<T> list1 = (List<T>) iterable;
                 if (iterable instanceof RandomAccess) {
@@ -3355,7 +3355,7 @@ public class Collectionx {
                 return list;
             }
         } else {
-            list = new ArrayList<>();
+            list = new ArrayList<T>();
         }
 
         int count = 0;
@@ -3402,7 +3402,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> dropWhile(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
         boolean yielding = false;
-        ArrayList<T> list = new ArrayList<>();
+        ArrayList<T> list = new ArrayList<T>();
         if (iterable != null) {
             for (T item : iterable)
                 if (yielding) {
@@ -3793,7 +3793,7 @@ public class Collectionx {
     @NotNull
     public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, @NotNull R[] other, @NotNull Transformer2<T, R, V> transform) {
         int arraySize = other.length;
-        List<V> list = new ArrayList<>(Math.min(collectionSizeOrDefault(iterable, 10), arraySize));
+        List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), arraySize));
         int i = 0;
         for (T element : iterable) {
             if (i >= arraySize) {
@@ -3829,7 +3829,7 @@ public class Collectionx {
     public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
         Iterator<T> first = iterable.iterator();
         Iterator<R> second = other.iterator();
-        List<V> list = new ArrayList<>(Math.min(collectionSizeOrDefault(iterable, 10), collectionSizeOrDefault(other, 10)));
+        List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), collectionSizeOrDefault(other, 10)));
         while (first.hasNext() && second.hasNext()) {
             list.add(transform.transform(first.next(), second.next()));
         }
@@ -4006,7 +4006,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> flatten(@Nullable Iterable<Iterable<T>> iterables) {
-        ArrayList<T> result = new ArrayList<>();
+        ArrayList<T> result = new ArrayList<T>();
         if (iterables != null) {
             for (Iterable<T> element : iterables) {
                 if (element instanceof Collection) {

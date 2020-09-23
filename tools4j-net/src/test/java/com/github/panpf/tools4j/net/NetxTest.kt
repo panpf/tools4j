@@ -72,7 +72,7 @@ class NetxTest {
     fun testExternalIPV4From() {
         var ipv4: String? = null
         try {
-            ipv4 = Netx.getExternalIPV4AddressFrom(URL("http://pv.sohu.com/cityjson"), Netx.IPV4)
+            ipv4 = Netx.getExternalIPV4AddressFrom(URL("https://pv.sohu.com/cityjson"), Netx.IPV4)
         } catch (e: MalformedURLException) {
             e.printStackTrace()
         }

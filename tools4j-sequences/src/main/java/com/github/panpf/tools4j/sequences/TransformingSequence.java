@@ -69,6 +69,6 @@ public class TransformingSequence<T, R> implements Sequence<R> {
 
     @NotNull
     public <E> Sequence<E> flatten(@NotNull Transformer<R, Iterator<E>> iterator) {
-        return new FlatteningSequence<>(sequence, transformer, iterator);
+        return new FlatteningSequence<T, R, E>(sequence, transformer, iterator);
     }
 }

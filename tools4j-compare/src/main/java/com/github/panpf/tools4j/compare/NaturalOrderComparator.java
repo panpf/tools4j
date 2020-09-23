@@ -22,7 +22,8 @@ import java.util.Comparator;
 
 public class NaturalOrderComparator<T extends Comparable<T>> implements Comparator<T> {
 
-    public static final NaturalOrderComparator<? extends Comparable<?>> INSTANCE = new NaturalOrderComparator<>();
+    @SuppressWarnings("rawtypes")
+    public static final NaturalOrderComparator INSTANCE = new NaturalOrderComparator();
 
     @Override
     public int compare(T a, T b) {

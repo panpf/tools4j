@@ -26,7 +26,7 @@ public class ConstrainedOnceIterable<T> implements Iterable<T> {
     private final AtomicReference<Iterable<T>> iterableRef;
 
     public ConstrainedOnceIterable(Iterable<T> sequence) {
-        this.iterableRef = new AtomicReference<>(sequence);
+        this.iterableRef = new AtomicReference<Iterable<T>>(sequence);
     }
 
     @NotNull

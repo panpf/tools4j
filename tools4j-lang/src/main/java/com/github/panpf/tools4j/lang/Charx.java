@@ -17,14 +17,13 @@
 package com.github.panpf.tools4j.lang;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Character tool method
  */
 public class Charx {
 
-    public static final Charset UTF_8 = StandardCharsets.UTF_8;
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private Charx() {
     }

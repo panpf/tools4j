@@ -27,7 +27,7 @@ import java.util.zip.*;
 /**
  * ZIP tool method
  */
-@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "TryFinallyCanBeTryWithResources"})
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
 public class Zipx {
 
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 8;
@@ -97,11 +97,6 @@ public class Zipx {
         } finally {
             if (gzip != null) {
                 try {
-                    gzip.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
                     gzip.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -157,7 +152,7 @@ public class Zipx {
         try {
             zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(destinationFile, false)));
 
-            Stack<File> files = new Stack<>();
+            Stack<File> files = new Stack<File>();
             if (sourceFiles != null) {
                 Collections.addAll(files, sourceFiles);
             }
@@ -234,7 +229,6 @@ public class Zipx {
             throw e;
         } finally {
             if (zipOutputStream != null) {
-                zipOutputStream.flush();
                 zipOutputStream.close();
             }
         }
@@ -454,7 +448,6 @@ public class Zipx {
                         if (listener != null && !listener.isCanceled()) listener.onEntryEnd(currentZipEntry[0]);
                     } finally {
                         if (outputStream != null) {
-                            outputStream.flush();
                             outputStream.close();
                         }
                         if (inputStream != null) {
@@ -542,14 +535,17 @@ public class Zipx {
      * Get the original size of the Zip file
      */
     public static long getTrueSize(@NotNull File file) throws IOException {
-        try (ZipFile zipFile = new ZipFile(file)) {
+        ZipFile zipFile = new ZipFile(file);
+        try {
             return getTrueSize(zipFile);
+        } finally {
+            zipFile.close();
         }
     }
 
     @NotNull
     public static ArrayList<ZipEntry> listEntry(@NotNull ZipFile zipFile) {
-        ArrayList<ZipEntry> zipEntries = new ArrayList<>(zipFile.size());
+        ArrayList<ZipEntry> zipEntries = new ArrayList<ZipEntry>(zipFile.size());
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         while (entries.hasMoreElements()) {
             zipEntries.add(entries.nextElement());
@@ -559,14 +555,17 @@ public class Zipx {
 
     @NotNull
     public static ArrayList<ZipEntry> listEntry(@NotNull File file) throws IOException {
-        try (ZipFile zipFile = new ZipFile(file)) {
+        ZipFile zipFile = new ZipFile(file);
+        try {
             return listEntry(zipFile);
+        } finally {
+            zipFile.close();
         }
     }
 
     @NotNull
     public static ArrayList<String> listEntryName(@NotNull ZipFile zipFile) {
-        ArrayList<String> zipEntries = new ArrayList<>(zipFile.size());
+        ArrayList<String> zipEntries = new ArrayList<String>(zipFile.size());
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
         while (entries.hasMoreElements()) {
             zipEntries.add(entries.nextElement().getName());
@@ -576,14 +575,20 @@ public class Zipx {
 
     @NotNull
     public static ArrayList<String> listEntryName(@NotNull File file) throws IOException {
-        try (ZipFile zipFile = new ZipFile(file)) {
+        ZipFile zipFile = new ZipFile(file);
+        try {
             return listEntryName(zipFile);
+        } finally {
+            zipFile.close();
         }
     }
 
     public static int size(@NotNull File file) throws IOException {
-        try (ZipFile zipFile = new ZipFile(file)) {
+        ZipFile zipFile = new ZipFile(file);
+        try {
             return zipFile.size();
+        } finally {
+            zipFile.close();
         }
     }
 
@@ -593,7 +598,7 @@ public class Zipx {
 
         long length = 0;
 
-        Queue<File> fileQueue = new LinkedList<>();
+        Queue<File> fileQueue = new LinkedList<File>();
         fileQueue.add(file);
 
         File childFile;

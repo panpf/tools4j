@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -180,16 +180,9 @@ public class Netx {
     public static String getExternalIPV4AddressFromSohu() {
         String ipv4 = null;
         try {
-            ipv4 = getExternalIPV4AddressFrom(new URL("http://pv.sohu.com/cityjson?ie=utf-8"), IPV4);
+            ipv4 = getExternalIPV4AddressFrom(new URL("https://pv.sohu.com/cityjson?ie=utf-8"), IPV4);
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
-        if (ipv4 == null || "".equals(ipv4)) {
-            try {
-                ipv4 = getExternalIPV4AddressFrom(new URL("http://txt.go.sohu.com/ip/soip"), IPV4);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
         }
         return ipv4 != null && !"".equals(ipv4) ? ipv4 : null;
     }
@@ -209,7 +202,7 @@ public class Netx {
     public static City getCityFromSohu() {
         String response;
         try {
-            response = readText(new URL("http://pv.sohu.com/cityjson?ie=utf-8"));
+            response = readText(new URL("https://pv.sohu.com/cityjson?ie=utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -447,7 +440,7 @@ public class Netx {
         } finally {
             inputStream.close();
         }
-        return new String(urlContentBytes, StandardCharsets.UTF_8);
+        return new String(urlContentBytes, Charset.forName("UTF-8"));
     }
 
 }

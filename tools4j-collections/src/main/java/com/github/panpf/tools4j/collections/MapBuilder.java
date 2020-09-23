@@ -25,7 +25,7 @@ import java.util.*;
 public class MapBuilder<K, V> {
 
     @NotNull
-    private final List<Pair<K, V>> list = new LinkedList<>();
+    private final List<Pair<K, V>> list = new LinkedList<Pair<K, V>>();
 
     public MapBuilder(@NotNull K k, @Nullable V v) {
         put(k, v);
@@ -33,13 +33,13 @@ public class MapBuilder<K, V> {
 
     @NotNull
     public MapBuilder<K, V> put(@NotNull K k, @Nullable V v) {
-        list.add(new Pair<>(k, v));
+        list.add(new Pair<K, V>(k, v));
         return this;
     }
 
     @NotNull
     public Map<K, V> buildHashMap() {
-        Map<K, V> map = new HashMap<>();
+        Map<K, V> map = new HashMap<K, V>();
         for (Pair<K, V> pair : list) {
             map.put(pair.first, pair.second);
         }
@@ -48,7 +48,7 @@ public class MapBuilder<K, V> {
 
     @NotNull
     public WeakHashMap<K, V> buildWeakHashMap() {
-        WeakHashMap<K, V> map = new WeakHashMap<>();
+        WeakHashMap<K, V> map = new WeakHashMap<K, V>();
         for (Pair<K, V> pair : list) {
             map.put(pair.first, pair.second);
         }
@@ -57,7 +57,7 @@ public class MapBuilder<K, V> {
 
     @NotNull
     public LinkedHashMap<K, V> buildLinkedHashMap() {
-        LinkedHashMap<K, V> map = new LinkedHashMap<>();
+        LinkedHashMap<K, V> map = new LinkedHashMap<K, V>();
         for (Pair<K, V> pair : list) {
             map.put(pair.first, pair.second);
         }
@@ -66,7 +66,7 @@ public class MapBuilder<K, V> {
 
     @NotNull
     public Hashtable<K, V> buildHashtable() {
-        Hashtable<K, V> map = new Hashtable<>();
+        Hashtable<K, V> map = new Hashtable<K, V>();
         for (Pair<K, V> pair : list) {
             map.put(pair.first, pair.second);
         }
@@ -75,7 +75,7 @@ public class MapBuilder<K, V> {
 
     @NotNull
     public TreeMap<K, V> buildTreeMap() {
-        TreeMap<K, V> map = new TreeMap<>();
+        TreeMap<K, V> map = new TreeMap<K, V>();
         for (Pair<K, V> pair : list) {
             map.put(pair.first, pair.second);
         }

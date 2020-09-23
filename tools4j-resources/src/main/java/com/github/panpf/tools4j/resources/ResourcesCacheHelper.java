@@ -40,7 +40,7 @@ public class ResourcesCacheHelper {
     @NotNull
     private final File cacheDir;
 
-    private final List<DevResourcesDirCreator> devResourcesDirCreators = new LinkedList<>();
+    private final List<DevResourcesDirCreator> devResourcesDirCreators = new LinkedList<DevResourcesDirCreator>();
     public final boolean isInJar;
     @Nullable
     private File resourcesDir = null;
@@ -114,7 +114,7 @@ public class ResourcesCacheHelper {
             File jarFile = Environmentx.getClassInJarFile(targetClazz);
             if (jarFile == null) throw new IOException("Not get jar file");
             ZipFile zipFile = new ZipFile(jarFile);
-            List<ResourcesItem> sourceChildFilesTemp = new ArrayList<>();
+            List<ResourcesItem> sourceChildFilesTemp = new ArrayList<ResourcesItem>();
             Enumeration<?> zipEntryEnumeration = zipFile.entries();
             while (zipEntryEnumeration.hasMoreElements()) {
                 ZipEntry zipEntry = (ZipEntry) zipEntryEnumeration.nextElement();
@@ -142,7 +142,7 @@ public class ResourcesCacheHelper {
                 throw new FileNotFoundException(String.format("Source resources dir is empty. %s", sourceDir.getPath()));
             }
 
-            sourceChildResItems = new ArrayList<>(sourceChildFiles.length);
+            sourceChildResItems = new ArrayList<ResourcesItem>(sourceChildFiles.length);
             for (File sourceChildFile : sourceChildFiles) {
                 sourceChildResItems.add(new FileResourcesItem(sourceChildFile, sourceDir.getPath()));
             }
@@ -199,7 +199,7 @@ public class ResourcesCacheHelper {
                 }
             }
             return outDir;
-        } catch (Exception e) {
+        } catch (IOException e) {
             Filex.deleteRecursively(outDir);
             throw e;
         }

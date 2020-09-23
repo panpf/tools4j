@@ -104,7 +104,7 @@ public class FileTreeWalk implements Iterable<File> {
     private class FileTreeWalkIterator extends AbstractIterator<File> {
 
         // Stack of directory states, beginning from the start directory
-        private final Stack<WalkState> state = new Stack<>();
+        private final Stack<WalkState> state = new Stack<WalkState>();
 
         public FileTreeWalkIterator() {
             if (start.isDirectory()) {

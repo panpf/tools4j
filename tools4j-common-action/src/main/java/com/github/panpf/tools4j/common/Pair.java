@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.common;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public class Pair<A, B> {
 
@@ -50,11 +50,11 @@ public class Pair<A, B> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, second);
+        return Arrays.hashCode(new Object[]{first, second});
     }
 
     @NotNull
     public static <A, B> Pair<A, B> of(@NotNull A var0, @NotNull B var1) {
-        return new Pair<>(var0, var1);
+        return new Pair<A, B>(var0, var1);
     }
 }

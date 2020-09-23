@@ -40,6 +40,6 @@ public class TransformingIterable<T, R> implements Iterable<R> {
     @NotNull
     @Override
     public Iterator<R> iterator() {
-        return new TransformingIterator<>(iterable.iterator(), transformer);
+        return new TransformingIterator<T, R>(iterable.iterator(), transformer);
     }
 }

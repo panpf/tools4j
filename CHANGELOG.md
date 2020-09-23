@@ -1,3 +1,9 @@
+## new
+
+Downgrade:
+* downgrade: In order to be compatible with android 4.1, sourceCompatibility and targetCompatibility are reduced to 1.6
+
+
 ## v1.0.0-beta03
 
 Fix:

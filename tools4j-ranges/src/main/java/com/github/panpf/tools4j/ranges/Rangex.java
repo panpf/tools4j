@@ -417,7 +417,7 @@ public class Rangex {
      */
     @NotNull
     public static <T extends Comparable<T>> ComparableRange<T> rangeTo(@NotNull T start, @NotNull T endInclusive){
-        return new ComparableRange<>(start, endInclusive);
+        return new ComparableRange<T>(start, endInclusive);
     }
 
 

@@ -72,7 +72,7 @@ public class Groupingx {
             @NotNull
             @Override
             public Iterator<T> sourceIterator() {
-                return new ArrayIterator<>(elements);
+                return new ArrayIterator<T>(elements);
             }
 
             @NotNull

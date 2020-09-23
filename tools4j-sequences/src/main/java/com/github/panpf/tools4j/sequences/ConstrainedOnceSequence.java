@@ -27,7 +27,7 @@ class ConstrainedOnceSequence<T> implements Sequence<T> {
     private final AtomicReference<Sequence<T>> sequenceRef;
 
     ConstrainedOnceSequence(@NotNull Sequence<T> sequence) {
-        this.sequenceRef = new AtomicReference<>(sequence);
+        this.sequenceRef = new AtomicReference<Sequence<T>>(sequence);
     }
 
     @NotNull

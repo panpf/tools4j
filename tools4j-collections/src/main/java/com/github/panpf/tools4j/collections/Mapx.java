@@ -40,7 +40,7 @@ public class Mapx {
      */
     @NotNull
     public static <K, V> MapBuilder<K, V> builder(@NotNull K k, @Nullable V v) {
-        return new MapBuilder<>(k, v);
+        return new MapBuilder<K, V>(k, v);
     }
 
 
@@ -115,7 +115,7 @@ public class Mapx {
      * The returned map preserves the entry iteration order.
      */
     public static <K, V> Map<K, V> mutableMapOf() {
-        return new LinkedHashMap<>(0);
+        return new LinkedHashMap<K, V>(0);
     }
 
     /**
@@ -137,7 +137,7 @@ public class Mapx {
      * Returns an empty new [HashMap].
      */
     public static <K, V> HashMap<K, V> hashMapOf() {
-        return new HashMap<>(0);
+        return new HashMap<K, V>(0);
     }
 
     /**
@@ -147,7 +147,7 @@ public class Mapx {
     @NotNull
     @SafeVarargs
     public static <K, V> HashMap<K, V> hashMapOf(@NotNull Pair<K, V>... pairs) {
-        HashMap<K, V> map = new HashMap<>(capacity(pairs.length));
+        HashMap<K, V> map = new HashMap<K, V>(capacity(pairs.length));
         putAll(map, pairs);
         return map;
     }
@@ -156,7 +156,7 @@ public class Mapx {
      * Returns an empty new [LinkedHashMap].
      */
     public static <K, V> LinkedHashMap<K, V> linkedMapOf() {
-        return new LinkedHashMap<>(0);
+        return new LinkedHashMap<K, V>(0);
     }
 
     /**
@@ -170,7 +170,7 @@ public class Mapx {
     @NotNull
     @SafeVarargs
     public static <K, V> LinkedHashMap<K, V> linkedMapOf(@NotNull Pair<K, V>... pairs) {
-        LinkedHashMap<K, V> map = new LinkedHashMap<>(capacity(pairs.length));
+        LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(capacity(pairs.length));
         putAll(map, pairs);
         return map;
     }
@@ -182,7 +182,7 @@ public class Mapx {
     @NotNull
     @SafeVarargs
     public static <K extends Comparable<K>, V> SortedMap<K, V> sortedMapOf(@NotNull Pair<K, V>... pairs) {
-        TreeMap<K, V> map = new TreeMap<>();
+        TreeMap<K, V> map = new TreeMap<K, V>();
         putAll(map, pairs);
         return map;
     }
@@ -848,7 +848,7 @@ public class Mapx {
      */
     @NotNull
     public static <K, V> Map<K, V> filterKeys(@Nullable Map<K, V> map, @NotNull Predicate<K> predicate) {
-        LinkedHashMap<K, V> result = new LinkedHashMap<>();
+        LinkedHashMap<K, V> result = new LinkedHashMap<K, V>();
         if (map != null) {
             for (Map.Entry<K, V> entry : map.entrySet()) {
                 if (predicate.accept(entry.getKey())) {
@@ -865,7 +865,7 @@ public class Mapx {
      * The returned map preserves the entry iteration order of the original map.
      */
     public static <K, V> Map<K, V> filterValues(@Nullable Map<K, V> map, @NotNull Predicate<V> predicate) {
-        LinkedHashMap<K, V> result = new LinkedHashMap<>();
+        LinkedHashMap<K, V> result = new LinkedHashMap<K, V>();
         if (map != null) {
             for (Map.Entry<K, V> entry : map.entrySet()) {
                 if (predicate.accept(entry.getValue())) {
@@ -949,7 +949,7 @@ public class Mapx {
      */
     @NotNull
     public static <K, V> Pair<K, V> toPair(@NotNull Map.Entry<K, V> entry) {
-        return new Pair<>(entry.getKey(), entry.getValue());
+        return new Pair<K, V>(entry.getKey(), entry.getValue());
     }
 
     /**
@@ -1027,7 +1027,7 @@ public class Mapx {
 //        } else if (map.size() == 1) {
 //            return toSingletonMap(map);
         } else {
-            return new LinkedHashMap<>(map);
+            return new LinkedHashMap<K, V>(map);
         }
     }
 
@@ -1059,7 +1059,7 @@ public class Mapx {
 //        Map.Entry<K, V> first = iterator.next();
 //        if (!iterator.hasNext()) return Collectionx.arrayListOf(toPair(first));
 
-        ArrayList<Pair<K, V>> result = new ArrayList<>(count(map));
+        ArrayList<Pair<K, V>> result = new ArrayList<Pair<K, V>>(count(map));
 //        result.add(toPair(first));
 //        do {
 //            result.add(toPair(iterator.next()));
