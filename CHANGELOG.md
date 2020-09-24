@@ -1,6 +1,7 @@
 ## new
 
-Downgrade:
+Other:
+* upgrade: Kotlin upgraded to 1.4.10
 * downgrade: In order to be compatible with android 4.1, sourceCompatibility and targetCompatibility are reduced to 1.6
 
 
@@ -36,9 +37,13 @@ Improve:
 * improve: Sequencex.map\* method can now pass in null
 
 ## v1.0.0-beta02
-improve: Improve code
-upgrade: Kotlin upgraded to 1.4.0
-improve: Improve ktx library dependency
+
+Improve:
+* improve: Improve code
+* improve: Improve ktx library dependency
+
+Other:
+* upgrade: Kotlin upgraded to 1.4.0
 
 ## v1.0.0-beta01
 Initial release

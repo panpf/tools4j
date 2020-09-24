@@ -91,7 +91,7 @@ implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION" // Kotli
 
 Dependencies：
 * org.jetbrains:annotations: 13.0
-* org.jetbrains.kotlin:kotlin-stdlib-jdk7: 1.4.0（Only the '\*-ktx' library dependencies it）
+* org.jetbrains.kotlin:kotlin-stdlib-jdk7: 1.4.10（Only the '\*-ktx' library dependencies it）
 
 ## Modules
 
