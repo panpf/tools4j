@@ -9,10 +9,6 @@
 
 Extensions to the Java standard library, some tool methods related to File, IO, primitive types, String, Array, and Collection
 
-## Warning
-
-`Currently in the development stage, some APIs have not been tested yet, please use them carefully`
-
 ## Getting Started
 
 This library has been published to `jcenter` and private repositories `https://dl.bintray.com/panpf/maven/`, you can freely choose where to download it
