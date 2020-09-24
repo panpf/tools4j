@@ -858,210 +858,6 @@ class CollectionxTest {
         )
     }
 
-    @Suppress("RemoveExplicitTypeArguments")
-    @Test
-    fun testMax() {
-        val list = mapOf<String, String>("3" to "333", "1" to "111", "2" to "222").entries.toList()
-        val doubleList = listOf(3.0, 1.0, 2.0)
-        val floatList = listOf(3f, 1f, 2f)
-        val stringList = listOf("3", "1", "2")
-
-        assertTwoEquals(3.0,
-                Collectionx.maxDoubleOrNull(doubleList),
-                doubleList.maxOrNull())
-        assertTwoEquals(null,
-                Collectionx.maxDoubleOrNull(null as List<Double>?),
-                mutableListOf<Double>().maxOrNull())
-
-        assertTwoEquals(3f,
-                Collectionx.maxFloatOrNull(floatList),
-                floatList.maxOrNull())
-        assertTwoEquals(null,
-                Collectionx.maxFloatOrNull(null as List<Float>?),
-                mutableListOf<Float>().maxOrNull())
-
-        assertTwoEquals("3",
-                Collectionx.maxOrNull(stringList),
-                stringList.maxOrNull())
-        assertTwoEquals(null,
-                Collectionx.maxOrNull(null as List<String>?),
-                mutableListOf<String>().maxOrNull())
-
-
-        assertTwoEquals("3=333",
-                Collectionx.maxByOrNull(list) { it.key }.toString(),
-                list.maxByOrNull { it.key }.toString())
-        assertTwoEquals(null,
-                Collectionx.maxByOrNull(null as List<Map.Entry<String, String>>?) { it.key },
-                mutableListOf<Map.Entry<String, String>>().maxByOrNull { it.key })
-
-        assertTwoEquals("3=333",
-                Collectionx.maxWithOrNull(list) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
-                list.maxWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) }.toString())
-        assertTwoEquals(null,
-                Collectionx.maxWithOrNull(null as List<Map.Entry<String, String>>?) { it1, it2 -> it1.key.compareTo(it2.key) },
-                mutableListOf<Map.Entry<String, String>>().maxWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) })
-
-
-        assertTwoEquals("3.0",
-                Collectionx.maxOfDouble(list) { it.key.toDouble() }.toString(),
-                list.maxOf { it.key.toDouble() }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.maxOfDouble(null as List<Map.Entry<String, String>>?) { it.key.toDouble() } },
-                { mutableListOf<Map.Entry<String, String>>().maxOf { it.key.toDouble() } })
-
-        assertTwoEquals("3.0",
-                Collectionx.maxOfDoubleOrNull(list) { it.key.toDouble() }.toString(),
-                list.maxOfOrNull { it.key.toDouble() }.toString())
-        assertTwoEquals(null,
-                Collectionx.maxOfDoubleOrNull(null as List<Map.Entry<String, String>>?) { it.key.toDouble() },
-                mutableListOf<Map.Entry<String, String>>().maxOfOrNull { it.key.toDouble() })
-
-        assertTwoEquals("3.0",
-                Collectionx.maxOfFloat(list) { it.key.toFloat() }.toString(),
-                list.maxOf { it.key.toFloat() }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.maxOfFloat(null as List<Map.Entry<String, String>>?) { it.key.toFloat() } },
-                { mutableListOf<Map.Entry<String, String>>().maxOf { it.key.toFloat() } })
-
-        assertTwoEquals("3.0",
-                Collectionx.maxOfFloatOrNull(list) { it.key.toFloat() }.toString(),
-                list.maxOfOrNull { it.key.toFloat() }.toString())
-        assertTwoEquals(null,
-                Collectionx.maxOfFloatOrNull(null as List<Map.Entry<String, String>>?) { it.key.toFloat() },
-                mutableListOf<Map.Entry<String, String>>().maxOfOrNull { it.key.toFloat() })
-
-        assertTwoEquals("3",
-                Collectionx.maxOf(list) { it.key }.toString(),
-                list.maxOf { it.key }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.maxOf(null as List<Map.Entry<String, String>>?) { it.key } },
-                { mutableListOf<Map.Entry<String, String>>().maxOf { it.key } })
-
-        assertTwoEquals("3",
-                Collectionx.maxOfOrNull(list) { it.key }.toString(),
-                list.maxOfOrNull { it.key }.toString())
-        assertTwoEquals(null,
-                Collectionx.maxOfOrNull(null as List<Map.Entry<String, String>>?) { it.key },
-                mutableListOf<Map.Entry<String, String>>().maxOfOrNull { it.key })
-
-        assertTwoEquals("3",
-                Collectionx.maxOfWith(list, { it1, it2 -> it1.compareTo(it2) }, { it.key }).toString(),
-                list.maxOfWith({ it1, it2 -> it1.compareTo(it2) }, { it.key }).toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.maxOfWith(null as List<Map.Entry<String, String>>?, Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }) },
-                { mutableListOf<Map.Entry<String, String>>().maxOfWith(Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }) })
-
-        assertTwoEquals("3",
-                Collectionx.maxOfWithOrNull(list, { it1, it2 -> it1.compareTo(it2) }, { it.key }).toString(),
-                list.maxOfWithOrNull({ it1, it2 -> it1.compareTo(it2) }, { it.key }).toString())
-        assertTwoEquals(null,
-                Collectionx.maxOfWithOrNull(null as List<Map.Entry<String, String>>?, Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }),
-                mutableListOf<Map.Entry<String, String>>().maxOfWithOrNull(Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }))
-    }
-
-    @Test
-    fun testMin() {
-        val list = mapOf<String, String>("3" to "333", "1" to "111", "2" to "222").entries.toList()
-        val doubleList = listOf(3.0, 1.0, 2.0)
-        val floatList = listOf(3f, 1f, 2f)
-        val stringList = listOf("3", "1", "2")
-
-        assertTwoEquals(1.0,
-                Collectionx.minDoubleOrNull(doubleList),
-                doubleList.minOrNull())
-        assertTwoEquals(null,
-                Collectionx.minDoubleOrNull(null as List<Double>?),
-                mutableListOf<Double>().minOrNull())
-
-        assertTwoEquals(1f,
-                Collectionx.minFloatOrNull(floatList),
-                floatList.minOrNull())
-        assertTwoEquals(null,
-                Collectionx.minFloatOrNull(null as List<Float>?),
-                mutableListOf<Float>().minOrNull())
-
-        assertTwoEquals("1",
-                Collectionx.minOrNull(stringList),
-                stringList.minOrNull())
-        assertTwoEquals(null,
-                Collectionx.minOrNull(null as List<String>?),
-                mutableListOf<String>().minOrNull())
-
-
-
-        assertTwoEquals("1=111",
-                Collectionx.minByOrNull(list) { it.key }.toString(),
-                list.minByOrNull { it.key }.toString())
-        assertTwoEquals(null,
-                Collectionx.minByOrNull(null as List<Map.Entry<String, String>>?) { it.key },
-                mutableListOf<Map.Entry<String, String>>().minByOrNull { it.key })
-
-        assertTwoEquals("1=111",
-                Collectionx.minWithOrNull(list) { it1, it2 -> it1.key.compareTo(it2.key) }.toString(),
-                list.minWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) }.toString())
-        assertTwoEquals(null,
-                Collectionx.minWithOrNull(null as List<Map.Entry<String, String>>?) { it1, it2 -> it1.key.compareTo(it2.key) },
-                mutableListOf<Map.Entry<String, String>>().minWithOrNull { it1, it2 -> it1.key.compareTo(it2.key) })
-
-
-        assertTwoEquals("1.0",
-                Collectionx.minOfDouble(list) { it.key.toDouble() }.toString(),
-                list.minOf { it.key.toDouble() }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.minOfDouble(null as List<Map.Entry<String, String>>?) { it.key.toDouble() } },
-                { mutableListOf<Map.Entry<String, String>>().minOf { it.key.toDouble() } })
-
-        assertTwoEquals("1.0",
-                Collectionx.minOfDoubleOrNull(list) { it.key.toDouble() }.toString(),
-                list.minOfOrNull { it.key.toDouble() }.toString())
-        assertTwoEquals(null,
-                Collectionx.minOfDoubleOrNull(null as List<Map.Entry<String, String>>?) { it.key.toDouble() },
-                mutableListOf<Map.Entry<String, String>>().minOfOrNull { it.key.toDouble() })
-
-        assertTwoEquals("1.0",
-                Collectionx.minOfFloat(list) { it.key.toFloat() }.toString(),
-                list.minOf { it.key.toFloat() }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.minOfFloat(null as List<Map.Entry<String, String>>?) { it.key.toFloat() } },
-                { mutableListOf<Map.Entry<String, String>>().minOf { it.key.toFloat() } })
-
-        assertTwoEquals("1.0",
-                Collectionx.minOfFloatOrNull(list) { it.key.toFloat() }.toString(),
-                list.minOfOrNull { it.key.toFloat() }.toString())
-        assertTwoEquals(null,
-                Collectionx.minOfFloatOrNull(null as List<Map.Entry<String, String>>?) { it.key.toFloat() },
-                mutableListOf<Map.Entry<String, String>>().minOfOrNull { it.key.toFloat() })
-
-        assertTwoEquals("1",
-                Collectionx.minOf(list) { it.key }.toString(),
-                list.minOf { it.key }.toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.minOf(null as List<Map.Entry<String, String>>?) { it.key } },
-                { mutableListOf<Map.Entry<String, String>>().minOf { it.key } })
-
-        assertTwoEquals("1",
-                Collectionx.minOfOrNull(list) { it.key }.toString(),
-                list.minOfOrNull { it.key }.toString())
-        assertTwoEquals(null,
-                Collectionx.minOfOrNull(null as List<Map.Entry<String, String>>?) { it.key },
-                mutableListOf<Map.Entry<String, String>>().minOfOrNull { it.key })
-
-        assertTwoEquals("1",
-                Collectionx.minOfWith(list, { it1, it2 -> it1.compareTo(it2) }, { it.key }).toString(),
-                list.minOfWith({ it1, it2 -> it1.compareTo(it2) }, { it.key }).toString())
-        assertTwoThrow(NoSuchElementException::class,
-                { Collectionx.minOfWith(null as List<Map.Entry<String, String>>?, Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }) },
-                { mutableListOf<Map.Entry<String, String>>().minOfWith(Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }) })
-
-        assertTwoEquals("1",
-                Collectionx.minOfWithOrNull(list, { it1, it2 -> it1.compareTo(it2) }, { it.key }).toString(),
-                list.minOfWithOrNull({ it1, it2 -> it1.compareTo(it2) }, { it.key }).toString())
-        assertTwoEquals(null,
-                Collectionx.minOfWithOrNull(null as List<Map.Entry<String, String>>?, Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }),
-                mutableListOf<Map.Entry<String, String>>().minOfWithOrNull(Comparator<String>{ it1, it2 -> it1.compareTo(it2) }, { it.key }))
-    }
-
     @Test
     fun testGroup() {
         val list0 = listOf("aj", "bj", "ao", "bo")
@@ -1363,5 +1159,195 @@ class CollectionxTest {
         assertTwoEquals("",
                 java.util.ArrayList<String>().apply { listOf<String>().onEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
                 java.util.ArrayList<String>().apply { Collectionx.onEachIndexed(listOf<String>()) { i, it -> add(i.toString() + it) } }.joinToString())
+    }
+
+    @Test
+    @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
+    fun testMax() {
+        val doubleList0 = listOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val doubleList1 = Collectionx.listOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val emptyDoubleList0 = listOf<Double>()
+        val emptyDoubleList1 = Collectionx.listOf<Double>()
+        val nullDoubleList1: List<Double>? = null
+        assertTwoEquals(5.6, doubleList0.maxOrNull(), Collectionx.maxDoubleOrNull(doubleList1))
+        assertTwoEquals(null, emptyDoubleList0.maxOrNull(), Collectionx.maxDoubleOrNull(emptyDoubleList1))
+        assertTwoEquals(null, null, Collectionx.maxDoubleOrNull(nullDoubleList1))
+
+        val floatList0 = listOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val floatList1 = Collectionx.listOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val emptyFloatList0 = listOf<Float>()
+        val emptyFloatList1 = Collectionx.listOf<Float>()
+        val nullFloatList1: List<Float>? = null
+        assertTwoEquals(5.6f, floatList0.maxOrNull(), Collectionx.maxFloatOrNull(floatList1))
+        assertTwoEquals(null, emptyFloatList0.maxOrNull(), Collectionx.maxFloatOrNull(emptyFloatList1))
+        assertTwoEquals(null, null, Collectionx.maxFloatOrNull(nullFloatList1))
+
+        val list0 = listOf("6", "3", "7", "2", "1")
+        val list1 = Collectionx.listOf("6", "3", "7", "2", "1")
+        val emptyList0 = listOf<String>()
+        val emptyList1 = Collectionx.listOf<String>()
+        val nullList1: List<String>? = null
+        assertTwoEquals("7", list0.maxOrNull(), Collectionx.maxOrNull(list1))
+        assertTwoEquals(null, emptyList0.maxOrNull(), Collectionx.maxOrNull(emptyList1))
+        assertTwoEquals(null, null, Collectionx.maxOrNull(nullList1))
+
+        assertTwoEquals("7", list0.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(list1) { it.toInt() })
+        assertTwoEquals(null, emptyList0.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(emptyList1) { it.toInt() })
+        assertTwoEquals(null, null, Collectionx.maxByOrNull(nullList1) { it.toInt() })
+
+        assertTwoEquals("1",
+                list0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.maxWithOrNull(list1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                emptyList0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.maxWithOrNull(emptyList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                null,
+                Collectionx.maxWithOrNull(nullList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+
+        assertTwoEquals(7.0,
+                list0.maxOf { it.toDouble() },
+                Collectionx.maxOfDouble(list1) { it.toDouble() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.maxOf { it.toDouble() } },
+                { Collectionx.maxOfDouble(emptyList1) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfDouble(nullList1) { it.toDouble() } }
+
+        assertTwoEquals(7.0f,
+                list0.maxOf { it.toFloat() },
+                Collectionx.maxOfFloat(list1) { it.toFloat() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.maxOf { it.toFloat() } },
+                { Collectionx.maxOfFloat(emptyList1) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfFloat(nullList1) { it.toFloat() } }
+
+        assertTwoEquals(7.0, list0.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(list1) { it.toDouble() })
+        assertTwoEquals(null, emptyList0.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(emptyList1) { it.toDouble() })
+        assertTwoEquals(null, null, Collectionx.maxOfDoubleOrNull(nullList1) { it.toDouble() })
+
+        assertTwoEquals(7.0f, list0.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(list1) { it.toFloat() })
+        assertTwoEquals(null, emptyList0.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(emptyList1) { it.toFloat() })
+        assertTwoEquals(null, null, Collectionx.maxOfFloatOrNull(nullList1) { it.toFloat() })
+
+        assertTwoEquals("7", list0.maxOf { it }, Collectionx.maxOf(list1) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptyList0.maxOf { it } }, { Collectionx.maxOf(emptyList1) { it } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOf(nullList1) { it } }
+
+        assertTwoEquals("7", list0.maxOfOrNull { it }, Collectionx.maxOfOrNull(list1) { it })
+        assertTwoEquals(null, emptyList0.maxOfOrNull { it }, Collectionx.maxOfOrNull(emptyList1) { it })
+        assertTwoEquals(null, null, Collectionx.maxOfOrNull(nullList1) { it })
+
+        assertTwoEquals("1",
+                list0.maxOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWith(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.maxOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Collectionx.maxOfWith(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        )
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfWith(nullList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+
+        assertTwoEquals("1",
+                list0.maxOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWithOrNull(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null,
+                emptyList0.maxOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWithOrNull(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+        )
+        assertTwoEquals(null, null, Collectionx.maxOfWithOrNull(nullList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+    }
+
+    @Test
+    @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
+    fun testMin() {
+        val doubleList0 = listOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val doubleList1 = Collectionx.listOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val emptyDoubleList0 = listOf<Double>()
+        val emptyDoubleList1 = Collectionx.listOf<Double>()
+        val nullDoubleList1: List<Double>? = null
+        assertTwoEquals(1.1, doubleList0.minOrNull(), Collectionx.minDoubleOrNull(doubleList1))
+        assertTwoEquals(null, emptyDoubleList0.minOrNull(), Collectionx.minDoubleOrNull(emptyDoubleList1))
+        assertTwoEquals(null, null, Collectionx.minDoubleOrNull(nullDoubleList1))
+
+        val floatList0 = listOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val floatList1 = Collectionx.listOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val emptyFloatList0 = listOf<Float>()
+        val emptyFloatList1 = Collectionx.listOf<Float>()
+        val nullFloatList1: List<Float>? = null
+        assertTwoEquals(1.1f, floatList0.minOrNull(), Collectionx.minFloatOrNull(floatList1))
+        assertTwoEquals(null, emptyFloatList0.minOrNull(), Collectionx.minFloatOrNull(emptyFloatList1))
+        assertTwoEquals(null, null, Collectionx.minFloatOrNull(nullFloatList1))
+
+        val list0 = listOf("6", "3", "7", "2", "1")
+        val list1 = Collectionx.listOf("6", "3", "7", "2", "1")
+        val emptyList0 = listOf<String>()
+        val emptyList1 = Collectionx.listOf<String>()
+        val nullList1: List<String>? = null
+        assertTwoEquals("1", list0.minOrNull(), Collectionx.minOrNull(list1))
+        assertTwoEquals(null, emptyList0.minOrNull(), Collectionx.minOrNull(emptyList1))
+        assertTwoEquals(null, null, Collectionx.minOrNull(nullList1))
+
+        assertTwoEquals("1", list0.minByOrNull { it.toInt() }, Collectionx.minByOrNull(list1) { it.toInt() })
+        assertTwoEquals(null, emptyList0.minByOrNull { it.toInt() }, Collectionx.minByOrNull(emptyList1) { it.toInt() })
+        assertTwoEquals(null, null, Collectionx.minByOrNull(nullList1) { it.toInt() })
+
+        assertTwoEquals("7",
+                list0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.minWithOrNull(list1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                emptyList0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.minWithOrNull(emptyList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                null,
+                Collectionx.minWithOrNull(nullList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+
+        assertTwoEquals(1.0,
+                list0.minOf { it.toDouble() },
+                Collectionx.minOfDouble(list1) { it.toDouble() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.minOf { it.toDouble() } },
+                { Collectionx.minOfDouble(emptyList1) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfDouble(nullList1) { it.toDouble() } }
+
+        assertTwoEquals(1.0f,
+                list0.minOf { it.toFloat() },
+                Collectionx.minOfFloat(list1) { it.toFloat() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.minOf { it.toFloat() } },
+                { Collectionx.minOfFloat(emptyList1) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfFloat(nullList1) { it.toFloat() } }
+
+        assertTwoEquals(1.0, list0.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(list1) { it.toDouble() })
+        assertTwoEquals(null, emptyList0.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(emptyList1) { it.toDouble() })
+        assertTwoEquals(null, null, Collectionx.minOfDoubleOrNull(nullList1) { it.toDouble() })
+
+        assertTwoEquals(1.0f, list0.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(list1) { it.toFloat() })
+        assertTwoEquals(null, emptyList0.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(emptyList1) { it.toFloat() })
+        assertTwoEquals(null, null, Collectionx.minOfFloatOrNull(nullList1) { it.toFloat() })
+
+        assertTwoEquals("1", list0.minOf { it }, Collectionx.minOf(list1) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptyList0.minOf { it } }, { Collectionx.minOf(emptyList1) { it } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOf(nullList1) { it } }
+
+        assertTwoEquals("1", list0.minOfOrNull { it }, Collectionx.minOfOrNull(list1) { it })
+        assertTwoEquals(null, emptyList0.minOfOrNull { it }, Collectionx.minOfOrNull(emptyList1) { it })
+        assertTwoEquals(null, null, Collectionx.minOfOrNull(nullList1) { it })
+
+        assertTwoEquals("7",
+                list0.minOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWith(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoThrow(NoSuchElementException::class,
+                { emptyList0.minOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Collectionx.minOfWith(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        )
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfWith(nullList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+
+        assertTwoEquals("7",
+                list0.minOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWithOrNull(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null,
+                emptyList0.minOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWithOrNull(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+        )
+        assertTwoEquals(null, null, Collectionx.minOfWithOrNull(nullList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 }

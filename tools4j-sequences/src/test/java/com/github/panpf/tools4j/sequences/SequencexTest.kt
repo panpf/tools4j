@@ -17,7 +17,10 @@
 package com.github.panpf.tools4j.sequences
 
 import com.github.panpf.tools4j.iterable.EmptyIterator
-import com.github.panpf.tools4j.test.ktx.*
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import com.github.panpf.tools4j.test.ktx.assertTwoEquals
+import com.github.panpf.tools4j.test.ktx.assertTwoThrow
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
@@ -1021,7 +1024,7 @@ class SequencexTest {
 
     @Test
     fun testMap() {
-        // todo 测试 sequence null 的情况， 同步到 CollectionxTest
+        // todo test sequence null, synchronize to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
 
@@ -1279,6 +1282,196 @@ class SequencexTest {
         assertTwoEquals("",
                 ArrayList<String>().apply { sequenceOf<String>().onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Sequencex.toMutableList(Sequencex.onEachIndexed(null as Sequence<String>?) { i, it -> add(i.toString() + it) }) }.joinToString())
+    }
+
+    @Test
+    @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
+    fun testMax() {
+        val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val emptyDoubleSequence0 = sequenceOf<Double>()
+        val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
+        val nullDoubleSequence1: Sequence<Double>? = null
+        assertTwoEquals(5.6, doubleSequence0.maxOrNull(), Sequencex.maxDoubleOrNull(doubleSequence1))
+        assertTwoEquals(null, emptyDoubleSequence0.maxOrNull(), Sequencex.maxDoubleOrNull(emptyDoubleSequence1))
+        assertTwoEquals(null, null, Sequencex.maxDoubleOrNull(nullDoubleSequence1))
+
+        val floatSequence0 = sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val floatSequence1 = Sequencex.sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val emptyFloatSequence0 = sequenceOf<Float>()
+        val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
+        val nullFloatSequence1: Sequence<Float>? = null
+        assertTwoEquals(5.6f, floatSequence0.maxOrNull(), Sequencex.maxFloatOrNull(floatSequence1))
+        assertTwoEquals(null, emptyFloatSequence0.maxOrNull(), Sequencex.maxFloatOrNull(emptyFloatSequence1))
+        assertTwoEquals(null, null, Sequencex.maxFloatOrNull(nullFloatSequence1))
+
+        val sequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val sequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1: Sequence<String>? = null
+        assertTwoEquals("7", sequence0.maxOrNull(), Sequencex.maxOrNull(sequence1))
+        assertTwoEquals(null, emptySequence0.maxOrNull(), Sequencex.maxOrNull(emptySequence1))
+        assertTwoEquals(null, null, Sequencex.maxOrNull(nullSequence1))
+
+        assertTwoEquals("7", sequence0.maxByOrNull { it.toInt() }, Sequencex.maxByOrNull(sequence1) { it.toInt() })
+        assertTwoEquals(null, emptySequence0.maxByOrNull { it.toInt() }, Sequencex.maxByOrNull(emptySequence1) { it.toInt() })
+        assertTwoEquals(null, null, Sequencex.maxByOrNull(nullSequence1) { it.toInt() })
+
+        assertTwoEquals("1",
+                sequence0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Sequencex.maxWithOrNull(sequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                emptySequence0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Sequencex.maxWithOrNull(emptySequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                null,
+                Sequencex.maxWithOrNull(nullSequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+
+        assertTwoEquals(7.0,
+                sequence0.maxOf { it.toDouble() },
+                Sequencex.maxOfDouble(sequence1) { it.toDouble() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.maxOf { it.toDouble() } },
+                { Sequencex.maxOfDouble(emptySequence1) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfDouble(nullSequence1) { it.toDouble() } }
+
+        assertTwoEquals(7.0f,
+                sequence0.maxOf { it.toFloat() },
+                Sequencex.maxOfFloat(sequence1) { it.toFloat() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.maxOf { it.toFloat() } },
+                { Sequencex.maxOfFloat(emptySequence1) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfFloat(nullSequence1) { it.toFloat() } }
+
+        assertTwoEquals(7.0, sequence0.maxOfOrNull { it.toDouble() }, Sequencex.maxOfDoubleOrNull(sequence1) { it.toDouble() })
+        assertTwoEquals(null, emptySequence0.maxOfOrNull { it.toDouble() }, Sequencex.maxOfDoubleOrNull(emptySequence1) { it.toDouble() })
+        assertTwoEquals(null, null, Sequencex.maxOfDoubleOrNull(nullSequence1) { it.toDouble() })
+
+        assertTwoEquals(7.0f, sequence0.maxOfOrNull { it.toFloat() }, Sequencex.maxOfFloatOrNull(sequence1) { it.toFloat() })
+        assertTwoEquals(null, emptySequence0.maxOfOrNull { it.toFloat() }, Sequencex.maxOfFloatOrNull(emptySequence1) { it.toFloat() })
+        assertTwoEquals(null, null, Sequencex.maxOfFloatOrNull(nullSequence1) { it.toFloat() })
+
+        assertTwoEquals("7", sequence0.maxOf { it }, Sequencex.maxOf(sequence1) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.maxOf { it } }, { Sequencex.maxOf(emptySequence1) { it } })
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOf(nullSequence1) { it } }
+
+        assertTwoEquals("7", sequence0.maxOfOrNull { it }, Sequencex.maxOfOrNull(sequence1) { it })
+        assertTwoEquals(null, emptySequence0.maxOfOrNull { it }, Sequencex.maxOfOrNull(emptySequence1) { it })
+        assertTwoEquals(null, null, Sequencex.maxOfOrNull(nullSequence1) { it })
+
+        assertTwoEquals("1",
+                sequence0.maxOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.maxOfWith(sequence1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.maxOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Sequencex.maxOfWith(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        )
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfWith(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+
+        assertTwoEquals("1",
+                sequence0.maxOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.maxOfWithOrNull(sequence1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null,
+                emptySequence0.maxOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.maxOfWithOrNull(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+        )
+        assertTwoEquals(null, null, Sequencex.maxOfWithOrNull(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+    }
+
+    @Test
+    @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
+    fun testMin() {
+        val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val emptyDoubleSequence0 = sequenceOf<Double>()
+        val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
+        val nullDoubleSequence1: Sequence<Double>? = null
+        assertTwoEquals(1.1, doubleSequence0.minOrNull(), Sequencex.minDoubleOrNull(doubleSequence1))
+        assertTwoEquals(null, emptyDoubleSequence0.minOrNull(), Sequencex.minDoubleOrNull(emptyDoubleSequence1))
+        assertTwoEquals(null, null, Sequencex.minDoubleOrNull(nullDoubleSequence1))
+
+        val floatSequence0 = sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val floatSequence1 = Sequencex.sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val emptyFloatSequence0 = sequenceOf<Float>()
+        val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
+        val nullFloatSequence1: Sequence<Float>? = null
+        assertTwoEquals(1.1f, floatSequence0.minOrNull(), Sequencex.minFloatOrNull(floatSequence1))
+        assertTwoEquals(null, emptyFloatSequence0.minOrNull(), Sequencex.minFloatOrNull(emptyFloatSequence1))
+        assertTwoEquals(null, null, Sequencex.minFloatOrNull(nullFloatSequence1))
+
+        val sequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val sequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1: Sequence<String>? = null
+        assertTwoEquals("1", sequence0.minOrNull(), Sequencex.minOrNull(sequence1))
+        assertTwoEquals(null, emptySequence0.minOrNull(), Sequencex.minOrNull(emptySequence1))
+        assertTwoEquals(null, null, Sequencex.minOrNull(nullSequence1))
+
+        assertTwoEquals("1", sequence0.minByOrNull { it.toInt() }, Sequencex.minByOrNull(sequence1) { it.toInt() })
+        assertTwoEquals(null, emptySequence0.minByOrNull { it.toInt() }, Sequencex.minByOrNull(emptySequence1) { it.toInt() })
+        assertTwoEquals(null, null, Sequencex.minByOrNull(nullSequence1) { it.toInt() })
+
+        assertTwoEquals("7",
+                sequence0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Sequencex.minWithOrNull(sequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                emptySequence0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Sequencex.minWithOrNull(emptySequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+        assertTwoEquals(null,
+                null,
+                Sequencex.minWithOrNull(nullSequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+
+        assertTwoEquals(1.0,
+                sequence0.minOf { it.toDouble() },
+                Sequencex.minOfDouble(sequence1) { it.toDouble() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.minOf { it.toDouble() } },
+                { Sequencex.minOfDouble(emptySequence1) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfDouble(nullSequence1) { it.toDouble() } }
+
+        assertTwoEquals(1.0f,
+                sequence0.minOf { it.toFloat() },
+                Sequencex.minOfFloat(sequence1) { it.toFloat() })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.minOf { it.toFloat() } },
+                { Sequencex.minOfFloat(emptySequence1) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfFloat(nullSequence1) { it.toFloat() } }
+
+        assertTwoEquals(1.0, sequence0.minOfOrNull { it.toDouble() }, Sequencex.minOfDoubleOrNull(sequence1) { it.toDouble() })
+        assertTwoEquals(null, emptySequence0.minOfOrNull { it.toDouble() }, Sequencex.minOfDoubleOrNull(emptySequence1) { it.toDouble() })
+        assertTwoEquals(null, null, Sequencex.minOfDoubleOrNull(nullSequence1) { it.toDouble() })
+
+        assertTwoEquals(1.0f, sequence0.minOfOrNull { it.toFloat() }, Sequencex.minOfFloatOrNull(sequence1) { it.toFloat() })
+        assertTwoEquals(null, emptySequence0.minOfOrNull { it.toFloat() }, Sequencex.minOfFloatOrNull(emptySequence1) { it.toFloat() })
+        assertTwoEquals(null, null, Sequencex.minOfFloatOrNull(nullSequence1) { it.toFloat() })
+
+        assertTwoEquals("1", sequence0.minOf { it }, Sequencex.minOf(sequence1) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.minOf { it } }, { Sequencex.minOf(emptySequence1) { it } })
+        assertThrow(NoSuchElementException::class) { Sequencex.minOf(nullSequence1) { it } }
+
+        assertTwoEquals("1", sequence0.minOfOrNull { it }, Sequencex.minOfOrNull(sequence1) { it })
+        assertTwoEquals(null, emptySequence0.minOfOrNull { it }, Sequencex.minOfOrNull(emptySequence1) { it })
+        assertTwoEquals(null, null, Sequencex.minOfOrNull(nullSequence1) { it })
+
+        assertTwoEquals("7",
+                sequence0.minOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.minOfWith(sequence1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.minOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Sequencex.minOfWith(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        )
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfWith(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+
+        assertTwoEquals("7",
+                sequence0.minOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.minOfWithOrNull(sequence1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null,
+                emptySequence0.minOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Sequencex.minOfWithOrNull(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+        )
+        assertTwoEquals(null, null, Sequencex.minOfWithOrNull(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 
 

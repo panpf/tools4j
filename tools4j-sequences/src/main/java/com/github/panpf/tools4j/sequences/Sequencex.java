@@ -1418,7 +1418,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C flatMapTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Sequence<R>> transform) {
+    public static <T, R, C extends Collection<R>> C flatMapTo(
+            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Sequence<R>> transform) {
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
@@ -1438,7 +1439,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C flatMapOfIterableTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Iterable<R>> transform) {
+    public static <T, R, C extends Collection<R>> C flatMapOfIterableTo(
+            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Iterable<R>> transform) {
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
             T element = iterator.next();
@@ -1457,7 +1459,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> flatMapIndexedOfIterable(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+    public static <T, R> Sequence<R> flatMapIndexedOfIterable(
+            @NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         return new IndexedFlatteningSequence<T, Iterable<R>, R>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1474,7 +1477,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> flatMapIndexed(@NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+    public static <T, R> Sequence<R> flatMapIndexed(
+            @NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
         return new IndexedFlatteningSequence<T, Sequence<R>, R>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1491,7 +1495,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C flatMapIndexedOfIterableTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+    public static <T, R, C extends Collection<R>> C flatMapIndexedOfIterableTo(
+            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         int index = 0;
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
@@ -1511,7 +1516,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(
+            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
         int index = 0;
         Iterator<T> iterator = sequence.iterator();
         while (iterator.hasNext()) {
@@ -1553,7 +1559,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V> Map<K, List<V>> groupBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+    public static <T, K, V> Map<K, List<V>> groupBy(
+            @NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
         return groupByTo(sequence, new LinkedHashMap<K, List<V>>(), keySelector, valueTransform);
     }
 
@@ -1566,7 +1573,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, M extends Map<K, List<T>>> M groupByTo(@NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
+    public static <T, K, M extends Map<K, List<T>>> M groupByTo(
+            @NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
         DefaultValue<List<T>> defaultValue = new DefaultValue<List<T>>() {
             @NotNull
             @Override
@@ -1599,7 +1607,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V, M extends Map<K, List<V>>> M groupByTo(@NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+    public static <T, K, V, M extends Map<K, List<V>>> M groupByTo(
+            @NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
         DefaultValue<List<V>> defaultValue = new DefaultValue<List<V>>() {
             @NotNull
             @Override
@@ -1671,7 +1680,8 @@ public class Sequencex {
      *                  The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> mapIndexedNotNull(@Nullable Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transform) {
+    public static <T, R> Sequence<R> mapIndexedNotNull(
+            @Nullable Sequence<T> sequence, @NotNull NullableIndexedTransformer<T, R> transform) {
         return filterNotNull(new NullableTransformingIndexedSequence<T, R>(sequence, transform));
     }
 
@@ -1682,7 +1692,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapTo(@Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
+    public static <T, R, C extends Collection<R>> C mapTo(
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, R> transform) {
         if (sequence != null) {
             Iterator<T> iterator = sequence.iterator();
             while (iterator.hasNext()) {
@@ -1700,7 +1711,8 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapNotNullTo(@Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
+    public static <T, R, C extends Collection<R>> C mapNotNullTo(
+            @Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableTransformer<T, R> transform) {
         if (sequence != null) {
             forEach(sequence, new Action<T>() {
                 @Override
@@ -1723,7 +1735,8 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapIndexedTo(@Nullable Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, R> transform) {
+    public static <T, R, C extends Collection<R>> C mapIndexedTo(
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, R> transform) {
         if (sequence != null) {
             int index = 0;
             Iterator<T> iterator = sequence.iterator();
@@ -1745,7 +1758,8 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(@Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
+    public static <T, R, C extends Collection<R>> C mapIndexedNotNullTo(
+            @Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final NullableIndexedTransformer<T, R> transform) {
         if (sequence != null) {
             forEachIndexed(sequence, new IndexedAction<T>() {
                 @Override
@@ -2159,29 +2173,6 @@ public class Sequencex {
 
     /**
      * Returns the largest value among all values produced by [selector] function
-     * applied to each element in the sequence.
-     *
-     * @throws NoSuchElementException if the sequence is empty.
-     *                                <p>
-     *                                The operation is _terminal_.
-     */
-    @NotNull
-    public static <T, R extends Comparable<R>> R maxOf(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> selector) {
-        if (sequence == null) throw new NoSuchElementException();
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext()) throw new NoSuchElementException();
-        R maxValue = selector.transform(iterator.next());
-        while (iterator.hasNext()) {
-            R v = selector.transform(iterator.next());
-            if (maxValue.compareTo(v) < 0) {
-                maxValue = v;
-            }
-        }
-        return maxValue;
-    }
-
-    /**
-     * Returns the largest value among all values produced by [selector] function
      * applied to each element in the sequence or `null` if there are no elements.
      * <p>
      * If any of values produced by [selector] function is `NaN`, the returned result is `NaN`.
@@ -2218,6 +2209,29 @@ public class Sequencex {
         while (iterator.hasNext()) {
             float v = selector.transform(iterator.next());
             maxValue = Math.max(maxValue, v);
+        }
+        return maxValue;
+    }
+
+    /**
+     * Returns the largest value among all values produced by [selector] function
+     * applied to each element in the sequence.
+     *
+     * @throws NoSuchElementException if the sequence is empty.
+     *                                <p>
+     *                                The operation is _terminal_.
+     */
+    @NotNull
+    public static <T, R extends Comparable<R>> R maxOf(@Nullable Sequence<T> sequence, @NotNull Transformer<T, R> selector) {
+        if (sequence == null) throw new NoSuchElementException();
+        Iterator<T> iterator = sequence.iterator();
+        if (!iterator.hasNext()) throw new NoSuchElementException();
+        R maxValue = selector.transform(iterator.next());
+        while (iterator.hasNext()) {
+            R v = selector.transform(iterator.next());
+            if (maxValue.compareTo(v) < 0) {
+                maxValue = v;
+            }
         }
         return maxValue;
     }
