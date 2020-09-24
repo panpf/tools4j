@@ -17,7 +17,6 @@
 package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.NullableTransformer;
-import com.github.panpf.tools4j.common.Transformer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,10 +66,5 @@ public class NullableTransformingSequence<T, R> implements Sequence<R> {
                 throw new UnsupportedOperationException("remove");
             }
         };
-    }
-
-    @NotNull
-    public <E> Sequence<E> flatten(@NotNull Transformer<R, Iterator<E>> iterator) {
-        return new NullableFlatteningSequence<T, R, E>(sequence, transformer, iterator);
     }
 }
