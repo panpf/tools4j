@@ -15,14 +15,7 @@ Extensions to the Java standard library, some tool methods related to File, IO, 
 
 ## Getting Started
 
-Add the following maven repository to your project `build.gradle` file:
-```groovy
-allprojects {
-    repositories {
-        maven { url "https://dl.bintray.com/panpf/maven/" }
-    }
-}
-```
+This library has been published to `jcenter` and private repositories `https://dl.bintray.com/panpf/maven/`, you can freely choose where to download it
 
 Add the following dependencies to your module `build.gradle` file ：
 ```grovvy
