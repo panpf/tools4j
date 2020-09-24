@@ -1,4 +1,4 @@
-## new
+## v1.0.0-rc01
 
 Other:
 * upgrade: Kotlin upgraded to 1.4.10
