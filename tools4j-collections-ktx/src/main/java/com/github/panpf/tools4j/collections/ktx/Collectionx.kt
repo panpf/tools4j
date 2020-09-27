@@ -55,5 +55,4 @@ inline fun <T> Iterable<T>?.joinToArrayString(transform: Transformer<T, CharSequ
 /**
  * Returns a new readable and writable linked list of given elements
  */
-@SafeVarargs
 inline fun <T> linkedListOf(vararg elements: T): LinkedList<T> = Collectionx.linkedListOf(*elements)

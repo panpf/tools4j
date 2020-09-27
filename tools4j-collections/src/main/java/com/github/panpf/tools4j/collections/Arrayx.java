@@ -326,7 +326,6 @@ public class Arrayx {
      * Returns an array containing the specified elements.
      */
     @NotNull
-    @SafeVarargs
     public static <T> T[] arrayOf(@NotNull T... elements) {
         return elements;
     }
@@ -1066,7 +1065,6 @@ public class Arrayx {
 
 
     /* ******************************************* asList ******************************************* */
-
 
     /**
      * Returns a [List] that wraps the original array.

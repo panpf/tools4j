@@ -78,7 +78,6 @@ public class Collectionx {
      * Returns a new readable and writable linked list of given elements
      */
     @NotNull
-    @SafeVarargs
     public static <T> LinkedList<T> linkedListOf(@NotNull T... elements) {
         if (elements.length > 0) {
             LinkedList<T> list = new LinkedList<T>();
@@ -149,7 +148,6 @@ public class Collectionx {
      * Returns a new read-only list of given elements.  The returned list is serializable (JVM).
      */
     @NotNull
-    @SafeVarargs
     public static <T> List<T> listOf(T... elements) {
         //noinspection unchecked
         return (elements != null ? elements.length : 0) > 0 ? Arrayx.asList(elements) : (List<T>) emptyList();
@@ -178,7 +176,6 @@ public class Collectionx {
      * Returns a new read-only list of given elements.  The returned list is serializable (JVM).
      */
     @NotNull
-    @SafeVarargs
     public static <T> List<T> immutableListOf(@NotNull T... elements) {
         //noinspection unchecked
         return elements.length > 0 ? Arrays.asList(elements) : (List<T>) Collections.EMPTY_LIST;
@@ -188,7 +185,6 @@ public class Collectionx {
      * Returns a new readable and writable list of given elements
      */
     @NotNull
-    @SafeVarargs
     public static <T> List<T> mutableListOf(@NotNull T... elements) {
         return arrayListOf(elements);
     }
@@ -197,7 +193,6 @@ public class Collectionx {
      * Returns a new readable and writable array list of given elements
      */
     @NotNull
-    @SafeVarargs
     public static <T> ArrayList<T> arrayListOf(@NotNull T... elements) {
         if (elements.length > 0) {
             ArrayList<T> list = new ArrayList<T>(elements.length);
@@ -242,7 +237,6 @@ public class Collectionx {
      * Returns a new read-only set of given elements
      */
     @NotNull
-    @SafeVarargs
     public static <T> Set<T> immutableSetOf(@NotNull T... elements) {
         if (elements.length > 0) {
             return Arrayx.toCollection(elements, new LinkedHashSet<T>());
@@ -264,7 +258,6 @@ public class Collectionx {
      * Returns a new readable and writable set of given elements
      */
     @NotNull
-    @SafeVarargs
     public static <T> Set<T> mutableSetOf(@NotNull T... elements) {
         return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
     }
@@ -281,7 +274,6 @@ public class Collectionx {
      * Returns a new [HashSet] with the given elements.
      */
     @NotNull
-    @SafeVarargs
     public static <T> HashSet<T> hashSetOf(@NotNull T... elements) {
         return Arrayx.toCollection(elements, new HashSet<T>(Mapx.capacity(elements.length)));
     }
@@ -299,7 +291,6 @@ public class Collectionx {
      * Elements of the set are iterated in the order they were specified.
      */
     @NotNull
-    @SafeVarargs
     public static <T> LinkedHashSet<T> linkedSetOf(@NotNull T... elements) {
         return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
     }
@@ -308,7 +299,6 @@ public class Collectionx {
      * Returns a new [java.util.SortedSet] with the given elements.
      */
     @NotNull
-    @SafeVarargs
     public static <T> TreeSet<T> sortedSetOf(@Nullable T... elements) {
         //noinspection SortedCollectionWithNonComparableKeys
         return Arrayx.toCollection(elements, new TreeSet<T>());
@@ -318,7 +308,6 @@ public class Collectionx {
      * Returns a new [java.util.SortedSet] with the given [comparator] and elements.
      */
     @NotNull
-    @SafeVarargs
     public static <T> TreeSet<T> sortedSetOf(@NotNull Comparator<T> comparator, @Nullable T... elements) {
         return Arrayx.toCollection(elements, new TreeSet<T>(comparator));
     }

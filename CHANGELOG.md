@@ -1,3 +1,7 @@
+## new
+* improve: remove the use of @SafeVarargs annotation
+
+
 ## v1.0.0-rc01
 
 Other:

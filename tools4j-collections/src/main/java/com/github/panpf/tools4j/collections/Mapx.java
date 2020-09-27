@@ -103,7 +103,6 @@ public class Mapx {
      * The returned map is serializable (JVM).
      */
     @NotNull
-    @SafeVarargs
     public static <K, V> Map<K, V> immutableMapOf(@NotNull Pair<K, V>... pairs) {
         //noinspection unchecked
         return pairs.length > 0 ? toMap(pairs, new LinkedHashMap<K, V>(capacity(pairs.length))) : (Map<K, V>) Collections.EMPTY_MAP;
@@ -127,7 +126,6 @@ public class Mapx {
      * Entries of the map are iterated in the order they were specified.
      */
     @NotNull
-    @SafeVarargs
     public static <K, V> Map<K, V> mutableMapOf(@NotNull Pair<K, V>... pairs) {
         //noinspection unchecked
         return pairs.length > 0 ? toMap(pairs, new LinkedHashMap<K, V>(capacity(pairs.length))) : (Map<K, V>) mutableMapOf();
@@ -145,7 +143,6 @@ public class Mapx {
      * where the first component is the key and the second is the value.
      */
     @NotNull
-    @SafeVarargs
     public static <K, V> HashMap<K, V> hashMapOf(@NotNull Pair<K, V>... pairs) {
         HashMap<K, V> map = new HashMap<K, V>(capacity(pairs.length));
         putAll(map, pairs);
@@ -168,7 +165,6 @@ public class Mapx {
      * Entries of the map are iterated in the order they were specified.
      */
     @NotNull
-    @SafeVarargs
     public static <K, V> LinkedHashMap<K, V> linkedMapOf(@NotNull Pair<K, V>... pairs) {
         LinkedHashMap<K, V> map = new LinkedHashMap<K, V>(capacity(pairs.length));
         putAll(map, pairs);
@@ -180,7 +176,6 @@ public class Mapx {
      * where the first value is the key and the second is the value.
      */
     @NotNull
-    @SafeVarargs
     public static <K extends Comparable<K>, V> SortedMap<K, V> sortedMapOf(@NotNull Pair<K, V>... pairs) {
         TreeMap<K, V> map = new TreeMap<K, V>();
         putAll(map, pairs);
