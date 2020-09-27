@@ -39,6 +39,8 @@ public class Stringx {
     private Stringx() {
     }
 
+    // todo add ifEmpty ifBlank method from kotlin
+
 
     /* ******************************************* safe ****************************************** */
 

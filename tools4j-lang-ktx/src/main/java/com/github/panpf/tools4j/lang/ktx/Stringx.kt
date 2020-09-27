@@ -281,6 +281,8 @@ inline fun CharSequence?.orEmpty(): CharSequence = Stringx.orEmpty(this)
 /**
  * Returns the given character sequence if it is not null, otherwise return an empty sequence of characters
  */
+@Suppress("DeprecatedCallableAddReplaceWith")
+@Deprecated("kotlin stdlib already provides this method")
 inline fun String?.orEmpty(): String = Stringx.orEmpty(this)
 
 /**
