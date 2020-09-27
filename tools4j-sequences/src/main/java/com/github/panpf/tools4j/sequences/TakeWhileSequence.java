@@ -29,12 +29,12 @@ import java.util.NoSuchElementException;
  */
 public class TakeWhileSequence<T> implements Sequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     @NotNull
     private final Predicate<T> predicate;
 
-    public TakeWhileSequence(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public TakeWhileSequence(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         this.sequence = sequence;
         this.predicate = predicate;
     }
@@ -44,14 +44,14 @@ public class TakeWhileSequence<T> implements Sequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            @NotNull
-            final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             int nextState = -1; // -1 for unknown, 0 for done, 1 for continue
             @Nullable
             T nextItem = null;
 
             private void calcNext() {
-                if (iterator.hasNext()) {
+                if (iterator != null && iterator.hasNext()) {
                     T item = iterator.next();
                     if (predicate.accept(item)) {
                         nextState = 1;

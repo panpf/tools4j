@@ -1,6 +1,7 @@
 ## new
 * improve: remove the use of @SafeVarargs annotation
 * deprecated: Deprecated String?.orEmpty() method
+* improve: Most of Sequencex methods now accept nullable Sequence
 
 
 ## v1.0.0-rc01

@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.sequences;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -27,11 +28,11 @@ import java.util.NoSuchElementException;
  */
 public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     private final int count;
 
-    public TakeSequence(@NotNull Sequence<T> sequence, final int count) {
+    public TakeSequence(@Nullable Sequence<T> sequence, final int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Param 'count' is less than to zero.");
         }
@@ -57,19 +58,20 @@ public class TakeSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             int left = count;
 
             @Override
             public T next() {
-                if (left == 0) throw new NoSuchElementException();
+                if (left == 0 || iterator == null) throw new NoSuchElementException();
                 left--;
                 return iterator.next();
             }
 
             @Override
             public boolean hasNext() {
-                return left > 0 && iterator.hasNext();
+                return left > 0 && iterator != null && iterator.hasNext();
             }
 
             @Override

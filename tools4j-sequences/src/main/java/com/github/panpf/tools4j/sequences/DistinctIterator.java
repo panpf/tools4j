@@ -19,33 +19,36 @@ package com.github.panpf.tools4j.sequences;
 import com.github.panpf.tools4j.common.Transformer;
 import com.github.panpf.tools4j.iterable.AbstractIterator;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class DistinctIterator<T, K> extends AbstractIterator<T> {
 
-    @NotNull
+    @Nullable
     private final Iterator<T> source;
     @NotNull
     private final Transformer<T, K> keySelector;
     @NotNull
     private final HashSet<K> observed = new HashSet<K>();
 
-    public DistinctIterator(@NotNull Iterator<T> source, @NotNull Transformer<T, K> keySelector) {
+    public DistinctIterator(@Nullable Iterator<T> source, @NotNull Transformer<T, K> keySelector) {
         this.source = source;
         this.keySelector = keySelector;
     }
 
     @Override
     public void computeNext() {
-        while (source.hasNext()) {
-            T next = source.next();
-            K key = keySelector.transform(next);
+        if (source != null) {
+            while (source.hasNext()) {
+                T next = source.next();
+                K key = keySelector.transform(next);
 
-            if (observed.add(key)) {
-                setNext(next);
-                return;
+                if (observed.add(key)) {
+                    setNext(next);
+                    return;
+                }
             }
         }
 

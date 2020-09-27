@@ -67,16 +67,20 @@ public class Sequencex {
      * Creates a sequence that returns all values from this enumeration. The sequence is constrained to be iterated only once.
      */
     @NotNull
-    public static <T> Sequence<T> asSequence(@NotNull final Enumeration<T> enumeration) {
+    public static <T> Sequence<T> asSequence(@Nullable final Enumeration<T> enumeration) {
         return asSequence(new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return enumeration.hasMoreElements();
+                return enumeration != null && enumeration.hasMoreElements();
             }
 
             @Override
             public T next() {
-                return enumeration.nextElement();
+                if (enumeration != null) {
+                    return enumeration.nextElement();
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
@@ -90,12 +94,13 @@ public class Sequencex {
      * Creates a sequence that returns all elements from this iterator. The sequence is constrained to be iterated only once.
      */
     @NotNull
-    public static <T> Sequence<T> asSequence(@NotNull final Iterator<T> iterator) {
+    public static <T> Sequence<T> asSequence(@Nullable final Iterator<T> iterator) {
         return constrainOnce(new Sequence<T>() {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                return iterator;
+                //noinspection unchecked
+                return iterator != null ? iterator : (Iterator<T>) emptySequence().iterator();
             }
         });
     }
@@ -104,12 +109,13 @@ public class Sequencex {
      * Creates a [Sequence] instance that wraps the original collection returning its elements when being iterated.
      */
     @NotNull
-    public static <T> Sequence<T> asSequence(@NotNull final Iterable<T> iterable) {
+    public static <T> Sequence<T> asSequence(@Nullable final Iterable<T> iterable) {
         return new Sequence<T>() {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                return iterable.iterator();
+                //noinspection unchecked
+                return iterable != null ? iterable.iterator() : (Iterator<T>) emptySequence().iterator();
             }
         };
     }
@@ -118,8 +124,8 @@ public class Sequencex {
      * Returns this sequence as a [Sequence].
      */
     @NotNull
-    public static <T> Sequence<T> asSequence(@NotNull Sequence<T> sequence) {
-        return sequence;
+    public static <T> Sequence<T> asSequence(@Nullable Sequence<T> sequence) {
+        return sequence != null ? sequence : Sequencex.<T>emptySequence();
     }
 
     /**
@@ -261,12 +267,13 @@ public class Sequencex {
      * Creates an [Iterable] instance that wraps the original sequence returning its elements when being iterated.
      */
     @NotNull
-    public static <T> Iterable<T> asIterable(@NotNull final Sequence<T> sequence) {
+    public static <T> Iterable<T> asIterable(@Nullable final Sequence<T> sequence) {
         return new Iterable<T>() {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                return sequence.iterator();
+                //noinspection unchecked
+                return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
             }
         };
     }
@@ -279,7 +286,7 @@ public class Sequencex {
      * Creates a sequence that returns the specified values.
      */
     @NotNull
-    public static <T> Sequence<T> sequenceOf(@NotNull T... elements) {
+    public static <T> Sequence<T> sequenceOf(T... elements) {
         //noinspection unchecked
         return elements.length > 0 ? asSequence(elements) : (Sequence<T>) emptySequence();
     }
@@ -367,7 +374,7 @@ public class Sequencex {
      * <p>
      * The operation is _intermediate_ and _stateless_.
      */
-    public static <T> Sequence<T> flatten(@NotNull Sequence<Sequence<T>> sequence) {
+    public static <T> Sequence<T> flatten(@Nullable Sequence<Sequence<T>> sequence) {
         return flatten(sequence, new Transformer<Sequence<T>, Iterator<T>>() {
             @NotNull
             @Override
@@ -383,7 +390,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> flattenOfIterable(@NotNull Sequence<Iterable<T>> sequence) {
+    public static <T> Sequence<T> flattenOfIterable(@Nullable Sequence<Iterable<T>> sequence) {
         return flatten(sequence, new Transformer<Iterable<T>, Iterator<T>>() {
             @NotNull
             @Override
@@ -394,7 +401,7 @@ public class Sequencex {
     }
 
     @NotNull
-    private static <T, R> Sequence<R> flatten(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterator<R>> transformer) {
+    private static <T, R> Sequence<R> flatten(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Iterator<R>> transformer) {
         if (sequence instanceof TransformingSequence) {
             return ((TransformingSequence<?, T>) sequence).flatten(transformer);
         }
@@ -416,7 +423,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean contains(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> boolean contains(@Nullable Sequence<T> sequence, @NotNull T element) {
         return indexOf(sequence, element) >= 0;
     }
 
@@ -430,7 +437,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> T elementAt(@NotNull Sequence<T> sequence, int index) {
+    public static <T> T elementAt(@Nullable Sequence<T> sequence, int index) {
         return elementAtOrElse(sequence, index, new IndexedDefaultValue<T>() {
             @NotNull
             @Override
@@ -446,14 +453,16 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> T elementAtOrElse(@NotNull Sequence<T> sequence, int index, @NotNull IndexedDefaultValue<T> defaultValue) {
+    public static <T> T elementAtOrElse(@Nullable Sequence<T> sequence, int index, @NotNull IndexedDefaultValue<T> defaultValue) {
         if (index < 0) return defaultValue.get(index);
-        Iterator<T> iterator = sequence.iterator();
         int count = 0;
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (index == count++)
-                return element;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (index == count++)
+                    return element;
+            }
         }
         return defaultValue.get(index);
     }
@@ -464,14 +473,16 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T elementAtOrNull(@NotNull Sequence<T> sequence, int index) {
+    public static <T> T elementAtOrNull(@Nullable Sequence<T> sequence, int index) {
         if (index < 0) return null;
-        Iterator<T> iterator = sequence.iterator();
         int count = 0;
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (index == count++)
-                return element;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (index == count++)
+                    return element;
+            }
         }
         return null;
     }
@@ -486,7 +497,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T find(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T find(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return firstOrNull(sequence, predicate);
     }
 
@@ -496,7 +507,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T findLast(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T findLast(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return lastOrNull(sequence, predicate);
     }
 
@@ -512,9 +523,9 @@ public class Sequencex {
      *                                The operation is _terminal_.
      */
     @NotNull
-    public static <T> T first(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T first(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             throw new NoSuchElementException("Sequence is empty.");
         return iterator.next();
     }
@@ -527,9 +538,9 @@ public class Sequencex {
      *                                The operation is _terminal_.
      */
     @NotNull
-    public static <T> T first(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
+    public static <T> T first(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        while (iterator != null && iterator.hasNext()) {
             T element = iterator.next();
             if (predicate.accept(element)) return element;
         }
@@ -542,9 +553,9 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T firstOrNull(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T firstOrNull(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             return null;
         return iterator.next();
     }
@@ -555,11 +566,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T firstOrNull(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) return element;
+    public static <T> T firstOrNull(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) return element;
+            }
         }
         return null;
     }
@@ -573,14 +586,16 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int indexOf(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> int indexOf(@Nullable Sequence<T> sequence, @NotNull T element) {
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            if (element == item)
-                return index;
-            index++;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                if (element == item)
+                    return index;
+                index++;
+            }
         }
         return -1;
     }
@@ -590,14 +605,16 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int indexOfFirst(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> int indexOfFirst(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            if (predicate.accept(item))
-                return index;
-            index++;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                if (predicate.accept(item))
+                    return index;
+                index++;
+            }
         }
         return -1;
     }
@@ -607,15 +624,17 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int indexOfLast(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> int indexOfLast(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         int lastIndex = -1;
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            if (predicate.accept(item))
-                lastIndex = index;
-            index++;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                if (predicate.accept(item))
+                    lastIndex = index;
+                index++;
+            }
         }
         return lastIndex;
     }
@@ -632,9 +651,9 @@ public class Sequencex {
      *                                The operation is _terminal_.
      */
     @NotNull
-    public static <T> T last(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T last(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             throw new NoSuchElementException("Sequence is empty.");
         T last = iterator.next();
         while (iterator.hasNext())
@@ -650,16 +669,18 @@ public class Sequencex {
      *                                The operation is _terminal_.
      */
     @NotNull
-    public static <T> T last(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T last(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         @Nullable
         T last = null;
         boolean found = false;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) {
-                last = element;
-                found = true;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) {
+                    last = element;
+                    found = true;
+                }
             }
         }
         if (!found) throw new NoSuchElementException("Sequence contains no element matching the predicate.");
@@ -671,15 +692,17 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int lastIndexOf(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> int lastIndexOf(@Nullable Sequence<T> sequence, @NotNull T element) {
         int lastIndex = -1;
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T item = iterator.next();
-            if (element == item)
-                lastIndex = index;
-            index++;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T item = iterator.next();
+                if (element == item)
+                    lastIndex = index;
+                index++;
+            }
         }
         return lastIndex;
     }
@@ -690,9 +713,9 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T lastOrNull(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T lastOrNull(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             return null;
         T last = iterator.next();
         while (iterator.hasNext())
@@ -706,13 +729,15 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T lastOrNull(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T lastOrNull(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         @Nullable
         T last = null;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) last = element;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) last = element;
+            }
         }
         return last;
     }
@@ -727,9 +752,9 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> T single(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T single(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             throw new NoSuchElementException("Sequence is empty.");
         T single = iterator.next();
         if (iterator.hasNext())
@@ -743,17 +768,19 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> T single(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T single(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         @Nullable
         T single = null;
         boolean found = false;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) {
-                if (found) throw new IllegalArgumentException("Sequence contains more than one matching element.");
-                single = element;
-                found = true;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) {
+                    if (found) throw new IllegalArgumentException("Sequence contains more than one matching element.");
+                    single = element;
+                    found = true;
+                }
             }
         }
         if (!found) throw new NoSuchElementException("Sequence contains no element matching the predicate.");
@@ -766,9 +793,9 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T singleOrNull(@NotNull Sequence<T> sequence) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext())
+    public static <T> T singleOrNull(@Nullable Sequence<T> sequence) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext())
             return null;
         T single = iterator.next();
         if (iterator.hasNext())
@@ -782,17 +809,19 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @Nullable
-    public static <T> T singleOrNull(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> T singleOrNull(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         @Nullable
         T single = null;
         boolean found = false;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) {
-                if (found) return null;
-                single = element;
-                found = true;
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) {
+                    if (found) return null;
+                    single = element;
+                    found = true;
+                }
             }
         }
         if (!found) return null;
@@ -811,12 +840,12 @@ public class Sequencex {
      * @throws IllegalArgumentException if [n] is negative.
      */
     @NotNull
-    public static <T> Sequence<T> drop(@NotNull Sequence<T> sequence, final int n) {
+    public static <T> Sequence<T> drop(@Nullable Sequence<T> sequence, final int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than to zero.");
         }
         if (n == 0) {
-            return sequence;
+            return sequence != null ? sequence : Sequencex.<T>emptySequence();
         } else if (sequence instanceof DropTakeSequence) {
             return ((DropTakeSequence<T>) sequence).drop(n);
         } else {
@@ -830,7 +859,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> dropWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> Sequence<T> dropWhile(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new DropWhileSequence<T>(sequence, predicate);
     }
 
@@ -844,7 +873,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> take(@NotNull Sequence<T> sequence, final int n) {
+    public static <T> Sequence<T> take(@Nullable Sequence<T> sequence, final int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than to zero.");
         }
@@ -863,7 +892,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> takeWhile(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> Sequence<T> takeWhile(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new TakeWhileSequence<T>(sequence, predicate);
     }
 
@@ -877,7 +906,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> filter(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> Sequence<T> filter(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new FilteringSequence<T>(sequence, true, predicate);
     }
 
@@ -887,11 +916,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, C extends Collection<T>> C filterTo(@NotNull Sequence<T> sequence, @NotNull C destination, Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) destination.add(element);
+    public static <T, C extends Collection<T>> C filterTo(@Nullable Sequence<T> sequence, @NotNull C destination, Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) destination.add(element);
+            }
         }
         return destination;
     }
@@ -905,7 +936,7 @@ public class Sequencex {
      *                  The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> filterIndexed(@NotNull Sequence<T> sequence, @NotNull final IndexedPredicate<T> predicate) {
+    public static <T> Sequence<T> filterIndexed(@Nullable Sequence<T> sequence, @NotNull final IndexedPredicate<T> predicate) {
         return new TransformingSequence<IndexedValue<T>, T>(
                 new FilteringSequence<IndexedValue<T>>(new IndexingSequence<T>(sequence), true, new Predicate<IndexedValue<T>>() {
                     @Override
@@ -932,7 +963,7 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, C extends Collection<T>> C filterIndexedTo(@NotNull Sequence<T> sequence, @NotNull final C destination, @NotNull final IndexedPredicate<T> predicate) {
+    public static <T, C extends Collection<T>> C filterIndexedTo(@Nullable Sequence<T> sequence, @NotNull final C destination, @NotNull final IndexedPredicate<T> predicate) {
         forEachIndexed(sequence, new IndexedAction<T>() {
             @Override
             public void action(int index, @NotNull T element) {
@@ -969,7 +1000,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> filterIsInstance(@NotNull Sequence<T> sequence, @NotNull final Class<R> clazz) {
+    public static <T, R> Sequence<R> filterIsInstance(@Nullable Sequence<T> sequence, @NotNull final Class<R> clazz) {
         //noinspection unchecked
         return (Sequence<R>) filter(sequence, new Predicate<T>() {
             @Override
@@ -986,12 +1017,14 @@ public class Sequencex {
      */
     @NotNull
     public static <T, C extends Collection<R>, R> C filterIsInstanceTo(
-            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull final Class<R> klass) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (klass.isInstance(element)) //noinspection unchecked
-                destination.add((R) element);
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull final Class<R> klass) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (klass.isInstance(element)) //noinspection unchecked
+                    destination.add((R) element);
+            }
         }
         return destination;
     }
@@ -1002,7 +1035,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> filterNot(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> Sequence<T> filterNot(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         return new FilteringSequence<T>(sequence, false, predicate);
     }
 
@@ -1012,11 +1045,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, C extends Collection<T>> C filterNotTo(@NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (!predicate.accept(element)) destination.add(element);
+    public static <T, C extends Collection<T>> C filterNotTo(@Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (!predicate.accept(element)) destination.add(element);
+            }
         }
         return destination;
     }
@@ -1027,7 +1062,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> filterNotNull(@NotNull Sequence<T> sequence) {
+    public static <T> Sequence<T> filterNotNull(@Nullable Sequence<T> sequence) {
         return filterNot(sequence, new Predicate<T>() {
             @Override
             public boolean accept(@NotNull T t) {
@@ -1043,11 +1078,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <C extends Collection<T>, T> C filterNotNullTo(@NotNull Sequence<T> sequence, @NotNull C destination) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (element != null) destination.add(element);
+    public static <C extends Collection<T>, T> C filterNotNullTo(@Nullable Sequence<T> sequence, @NotNull C destination) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (element != null) destination.add(element);
+            }
         }
         return destination;
     }
@@ -1080,7 +1117,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T extends Comparable<T>> Sequence<T> sortedDescending(@NotNull Sequence<T> sequence) {
+    public static <T extends Comparable<T>> Sequence<T> sortedDescending(@Nullable Sequence<T> sequence) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
@@ -1095,7 +1132,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@NotNull Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedBy(@Nullable Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {
@@ -1112,7 +1149,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@NotNull Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
+    public static <T, R extends Comparable<R>> Sequence<T> sortedByDescending(@Nullable Sequence<T> sequence, @NotNull final NullableTransformer<T, R> transformer) {
         return sortedWith(sequence, new Comparator<T>() {
             @Override
             public int compare(@Nullable T o1, @Nullable T o2) {
@@ -1129,7 +1166,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> sortedWith(@NotNull final Sequence<T> sequence, @NotNull final Comparator<T> comparator) {
+    public static <T> Sequence<T> sortedWith(@Nullable final Sequence<T> sequence, @NotNull final Comparator<T> comparator) {
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -1156,7 +1193,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V> Map<K, V> associate(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Pair<K, V>> transform) {
+    public static <T, K, V> Map<K, V> associate(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Pair<K, V>> transform) {
         return associateTo(sequence, new LinkedHashMap<K, V>(), transform);
     }
 
@@ -1171,7 +1208,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K> Map<K, T> associateBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector) {
+    public static <T, K> Map<K, T> associateBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, K> keySelector) {
         return associateByTo(sequence, new LinkedHashMap<K, T>(), keySelector);
     }
 
@@ -1185,7 +1222,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V> Map<K, V> associateBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+    public static <T, K, V> Map<K, V> associateBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
         return associateByTo(sequence, new LinkedHashMap<K, V>(), keySelector, valueTransform);
     }
 
@@ -1198,13 +1235,15 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V, M extends Map<K, V>> M associateTo(@NotNull Sequence<T> sequence, @NotNull M destination,
+    public static <T, K, V, M extends Map<K, V>> M associateTo(@Nullable Sequence<T> sequence, @NotNull M destination,
                                                                @NotNull Transformer<T, Pair<K, V>> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Pair<K, V> pair = transform.transform(element);
-            destination.put(pair.first, pair.second);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                Pair<K, V> pair = transform.transform(element);
+                destination.put(pair.first, pair.second);
+            }
         }
         return destination;
     }
@@ -1219,11 +1258,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, M extends Map<K, T>> M associateByTo(@NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            destination.put(keySelector.transform(element), element);
+    public static <T, K, M extends Map<K, T>> M associateByTo(@Nullable Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                destination.put(keySelector.transform(element), element);
+            }
         }
         return destination;
     }
@@ -1238,11 +1279,13 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K, V, M extends Map<K, V>> M associateByTo(@NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            destination.put(keySelector.transform(element), valueTransform.transform(element));
+    public static <T, K, V, M extends Map<K, V>> M associateByTo(@Nullable Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                destination.put(keySelector.transform(element), valueTransform.transform(element));
+            }
         }
         return destination;
     }
@@ -1273,7 +1316,7 @@ public class Sequencex {
 //     * <p>
 //     * The operation is _terminal_.
 //     */
-//    public static <T> List<T> toList(@NotNull Sequence<T> sequence) {
+//    public static <T> List<T> toList(@Nullable Sequence<T> sequence) {
 //        return toCollection(sequence, new ArrayList<T>());
 //    }
 
@@ -1283,7 +1326,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> List<T> toMutableList(@NotNull Sequence<T> sequence) {
+    public static <T> List<T> toMutableList(@Nullable Sequence<T> sequence) {
         return toCollection(sequence, new ArrayList<T>());
     }
 
@@ -1295,7 +1338,7 @@ public class Sequencex {
 //     * The operation is _terminal_.
 //     */
 //    @NotNull
-//    public static <T> Set<T> toSet(@NotNull Sequence<T> sequence) {
+//    public static <T> Set<T> toSet(@Nullable Sequence<T> sequence) {
 //        return toCollection(sequence, new LinkedHashSet<T>());
 //    }
 
@@ -1307,12 +1350,14 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> Set<T> toMutableSet(@NotNull Sequence<T> sequence) {
+    public static <T> Set<T> toMutableSet(@Nullable Sequence<T> sequence) {
         Set<T> set = new LinkedHashSet<T>();
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            set.add(element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                set.add(element);
+            }
         }
         return set;
     }
@@ -1333,7 +1378,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T extends Comparable<T>> SortedSet<T> toSortedSet(@NotNull Sequence<T> sequence) {
+    public static <T extends Comparable<T>> SortedSet<T> toSortedSet(@Nullable Sequence<T> sequence) {
         return toCollection(sequence, new TreeSet<T>());
     }
 
@@ -1345,7 +1390,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> SortedSet<T> toSortedSet(@NotNull Sequence<T> sequence, @NotNull Comparator<T> comparator) {
+    public static <T> SortedSet<T> toSortedSet(@Nullable Sequence<T> sequence, @NotNull Comparator<T> comparator) {
         return toCollection(sequence, new TreeSet<T>(comparator));
     }
 
@@ -1385,7 +1430,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> flatMap(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Sequence<R>> transform) {
+    public static <T, R> Sequence<R> flatMap(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Sequence<R>> transform) {
         return new FlatteningSequence<T, Sequence<R>, R>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1402,7 +1447,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<R> flatMapOfIterable(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Iterable<R>> transform) {
+    public static <T, R> Sequence<R> flatMapOfIterable(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Iterable<R>> transform) {
         return new FlatteningSequence<T, Iterable<R>, R>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1419,15 +1464,17 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R, C extends Collection<R>> C flatMapTo(
-            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Sequence<R>> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Sequence<R> list = transform.transform(element);
-            Iterator<R> listIterator = list.iterator();
-            while (listIterator.hasNext()) {
-                R item = listIterator.next();
-                destination.add(item);
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Sequence<R>> transform) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                Sequence<R> list = transform.transform(element);
+                Iterator<R> listIterator = list.iterator();
+                while (listIterator.hasNext()) {
+                    R item = listIterator.next();
+                    destination.add(item);
+                }
             }
         }
         return destination;
@@ -1440,13 +1487,15 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R, C extends Collection<R>> C flatMapOfIterableTo(
-            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Iterable<R>> transform) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Iterable<R> list = transform.transform(element);
-            for (R item : list) {
-                destination.add(item);
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull Transformer<T, Iterable<R>> transform) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                Iterable<R> list = transform.transform(element);
+                for (R item : list) {
+                    destination.add(item);
+                }
             }
         }
         return destination;
@@ -1460,7 +1509,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMapIndexedOfIterable(
-            @NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+            @Nullable Sequence<T> sequence, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         return new IndexedFlatteningSequence<T, Iterable<R>, R>(sequence, transform, new Transformer<Iterable<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1478,7 +1527,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R> Sequence<R> flatMapIndexed(
-            @NotNull Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+            @Nullable Sequence<T> sequence, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
         return new IndexedFlatteningSequence<T, Sequence<R>, R>(sequence, transform, new Transformer<Sequence<R>, Iterator<R>>() {
             @NotNull
             @Override
@@ -1496,14 +1545,16 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R, C extends Collection<R>> C flatMapIndexedOfIterableTo(
-            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Iterable<R> list = transform.transform(index++, element);
-            for (R item : list) {
-                destination.add(item);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                Iterable<R> list = transform.transform(index++, element);
+                for (R item : list) {
+                    destination.add(item);
+                }
             }
         }
         return destination;
@@ -1517,16 +1568,18 @@ public class Sequencex {
      */
     @NotNull
     public static <T, R, C extends Collection<R>> C flatMapIndexedTo(
-            @NotNull Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
+            @Nullable Sequence<T> sequence, @NotNull C destination, @NotNull IndexedTransformer<T, Sequence<R>> transform) {
         int index = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            Sequence<R> list = transform.transform(index++, element);
-            Iterator<R> listIterator = list.iterator();
-            while (listIterator.hasNext()) {
-                R item = listIterator.next();
-                destination.add(item);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                Sequence<R> list = transform.transform(index++, element);
+                Iterator<R> listIterator = list.iterator();
+                while (listIterator.hasNext()) {
+                    R item = listIterator.next();
+                    destination.add(item);
+                }
             }
         }
         return destination;
@@ -1545,7 +1598,7 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, K> Map<K, List<T>> groupBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector) {
+    public static <T, K> Map<K, List<T>> groupBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, K> keySelector) {
         return groupByTo(sequence, new LinkedHashMap<K, List<T>>(), keySelector);
     }
 
@@ -1560,7 +1613,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, K, V> Map<K, List<V>> groupBy(
-            @NotNull Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+            @Nullable Sequence<T> sequence, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
         return groupByTo(sequence, new LinkedHashMap<K, List<V>>(), keySelector, valueTransform);
     }
 
@@ -1574,7 +1627,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, K, M extends Map<K, List<T>>> M groupByTo(
-            @NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
+            @Nullable Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector) {
         DefaultValue<List<T>> defaultValue = new DefaultValue<List<T>>() {
             @NotNull
             @Override
@@ -1582,17 +1635,19 @@ public class Sequencex {
                 return new ArrayList<T>();
             }
         };
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            K key = keySelector.transform(element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                K key = keySelector.transform(element);
 
-            List<T> list = destination.get(key);
-            if (list == null) {
-                list = defaultValue.get();
-                destination.put(key, list);
+                List<T> list = destination.get(key);
+                if (list == null) {
+                    list = defaultValue.get();
+                    destination.put(key, list);
+                }
+                list.add(element);
             }
-            list.add(element);
         }
         return destination;
     }
@@ -1608,7 +1663,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T, K, V, M extends Map<K, List<V>>> M groupByTo(
-            @NotNull Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
+            @Nullable Sequence<T> sequence, @NotNull M destination, @NotNull Transformer<T, K> keySelector, @NotNull Transformer<T, V> valueTransform) {
         DefaultValue<List<V>> defaultValue = new DefaultValue<List<V>>() {
             @NotNull
             @Override
@@ -1616,16 +1671,18 @@ public class Sequencex {
                 return new ArrayList<V>();
             }
         };
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            K key = keySelector.transform(element);
-            List<V> list = destination.get(key);
-            if (list == null) {
-                list = defaultValue.get();
-                destination.put(key, list);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                K key = keySelector.transform(element);
+                List<V> list = destination.get(key);
+                if (list == null) {
+                    list = defaultValue.get();
+                    destination.put(key, list);
+                }
+                list.add(valueTransform.transform(element));
             }
-            list.add(valueTransform.transform(element));
         }
         return destination;
     }
@@ -1782,7 +1839,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<IndexedValue<T>> withIndex(@NotNull Sequence<T> sequence) {
+    public static <T> Sequence<IndexedValue<T>> withIndex(@Nullable Sequence<T> sequence) {
         return new IndexingSequence<T>(sequence);
     }
 
@@ -1798,7 +1855,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> distinct(@NotNull Sequence<T> sequence) {
+    public static <T> Sequence<T> distinct(@Nullable Sequence<T> sequence) {
         return distinctBy(sequence, new Transformer<T, T>() {
             @NotNull
             @Override
@@ -1817,7 +1874,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T, K> Sequence<T> distinctBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, K> transformer) {
+    public static <T, K> Sequence<T> distinctBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, K> transformer) {
         return new DistinctSequence<T, K>(sequence, transformer);
     }
 
@@ -1830,11 +1887,13 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean all(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (!predicate.accept(element)) return false;
+    public static <T> boolean all(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (!predicate.accept(element)) return false;
+            }
         }
         return true;
     }
@@ -1848,8 +1907,8 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean any(@NotNull Sequence<T> sequence) {
-        return sequence.iterator().hasNext();
+    public static <T> boolean any(@Nullable Sequence<T> sequence) {
+        return sequence != null && sequence.iterator().hasNext();
     }
 
     /**
@@ -1857,11 +1916,13 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean any(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) return true;
+    public static <T> boolean any(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) return true;
+            }
         }
         return false;
     }
@@ -1936,13 +1997,15 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <T, R> R foldIndexed(@NotNull Sequence<T> sequence, @NotNull R initial, @NotNull IndexedOperation<T, R> operation) {
+    public static <T, R> R foldIndexed(@Nullable Sequence<T> sequence, @NotNull R initial, @NotNull IndexedOperation<T, R> operation) {
         int index = 0;
         R accumulator = initial;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            accumulator = operation.operation(index++, accumulator, element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                accumulator = operation.operation(index++, accumulator, element);
+            }
         }
         return accumulator;
     }
@@ -2592,8 +2655,8 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean none(@NotNull Sequence<T> sequence) {
-        return !sequence.iterator().hasNext();
+    public static <T> boolean none(@Nullable Sequence<T> sequence) {
+        return sequence == null || !sequence.iterator().hasNext();
     }
 
     /**
@@ -2601,11 +2664,13 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> boolean none(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) return false;
+    public static <T> boolean none(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) return false;
+            }
         }
         return true;
     }
@@ -2620,9 +2685,11 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <S, T extends S> S reduce(@NotNull Sequence<T> sequence, @NotNull Operation<T, S> operation) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext()) throw new UnsupportedOperationException("Empty sequence can't be reduced.");
+    public static <S, T extends S> S reduce(@Nullable Sequence<T> sequence, @NotNull Operation<T, S> operation) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext()) {
+            throw new UnsupportedOperationException("Empty sequence can't be reduced.");
+        }
         S accumulator = iterator.next();
         while (iterator.hasNext()) {
             accumulator = operation.operation(accumulator, iterator.next());
@@ -2640,9 +2707,11 @@ public class Sequencex {
      *                  The operation is _terminal_.
      */
     @NotNull
-    public static <S, T extends S> S reduceIndexed(@NotNull Sequence<T> sequence, @NotNull IndexedOperation<T, S> operation) {
-        Iterator<T> iterator = sequence.iterator();
-        if (!iterator.hasNext()) throw new UnsupportedOperationException("Empty sequence can't be reduced.");
+    public static <S, T extends S> S reduceIndexed(@Nullable Sequence<T> sequence, @NotNull IndexedOperation<T, S> operation) {
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator == null || !iterator.hasNext()) {
+            throw new UnsupportedOperationException("Empty sequence can't be reduced.");
+        }
         int index = 1;
         S accumulator = iterator.next();
         while (iterator.hasNext()) {
@@ -2660,12 +2729,14 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> int sumBy(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Integer> transformer) {
+    public static <T> int sumBy(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Integer> transformer) {
         int sum = 0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            sum += transformer.transform(element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                sum += transformer.transform(element);
+            }
         }
         return sum;
     }
@@ -2675,12 +2746,14 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T> double sumByDouble(@NotNull Sequence<T> sequence, @NotNull Transformer<T, Double> transformer) {
+    public static <T> double sumByDouble(@Nullable Sequence<T> sequence, @NotNull Transformer<T, Double> transformer) {
         double sum = 0.0;
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            sum += transformer.transform(element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                sum += transformer.transform(element);
+            }
         }
         return sum;
     }
@@ -2797,7 +2870,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> requireNoNulls(@NotNull final Sequence<T> sequence) {
+    public static <T> Sequence<T> requireNoNulls(@Nullable final Sequence<T> sequence) {
         return map(sequence, new Transformer<T, T>() {
             @NotNull
             @Override
@@ -2827,7 +2900,7 @@ public class Sequencex {
 // *
 // * @sample samples.collections.Collections.Transformations.chunked
 // */@NotNull
-//    public static <T> Sequence<List<T>> chunked(@NotNull Sequence<T> sequence, int size) {
+//    public static <T> Sequence<List<T>> chunked(@Nullable Sequence<T> sequence, int size) {
 //        return windowed(sequence, size, size, partialWindows = true)
 //    }
 //
@@ -2847,7 +2920,7 @@ public class Sequencex {
 // *
 // * @sample samples.text.Strings.chunkedTransform
 // */@NotNull
-//    public static <T, R> Sequence<R> chunked(@NotNull Sequence<T> sequence, int size, @NotNull Transformer<List<T>, R> transform) {
+//    public static <T, R> Sequence<R> chunked(@Nullable Sequence<T> sequence, int size, @NotNull Transformer<List<T>, R> transform) {
 //        return windowed(size, size, partialWindows = true, transform = transform)
 //    }
 
@@ -2857,7 +2930,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@NotNull final Sequence<T> sequence, @NotNull final T element) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final T element) {
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -2887,8 +2960,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@NotNull final Sequence<T> sequence, @NotNull final T[] elements) {
-        if (elements.length <= 0) return sequence;
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final T[] elements) {
+        if (elements == null || elements.length <= 0) return sequence != null ? sequence : Sequencex.<T>emptySequence();
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -2914,7 +2987,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@NotNull final Sequence<T> sequence, @NotNull final Iterable<T> elements) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final Iterable<T> elements) {
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -2933,19 +3006,23 @@ public class Sequencex {
                     }
                 } else {
                     other = new HashSet<T>();
-                    for (T item : elements) {
-                        other.add(item);
+                    if (elements != null) {
+                        for (T item : elements) {
+                            other.add(item);
+                        }
                     }
                 }
-                if (other.isEmpty())
-                    return sequence.iterator();
-                else
+                if (other.isEmpty()) {
+                    //noinspection unchecked
+                    return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
+                } else {
                     return filterNot(sequence, new Predicate<T>() {
                         @Override
                         public boolean accept(@NotNull T t) {
                             return other.contains(t);
                         }
                     }).iterator();
+                }
             }
         };
     }
@@ -2959,14 +3036,16 @@ public class Sequencex {
      * The operation is _intermediate_ for this sequence and _terminal_ and _stateful_ for the [elements] sequence.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@NotNull final Sequence<T> sequence, @NotNull final Sequence<T> elements) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final Sequence<T> elements) {
         return new Sequence<T>() {
             @NotNull
             @Override
             public Iterator<T> iterator() {
                 final Set<T> other = toHashSet(elements);
-                if (other.isEmpty())
-                    return sequence.iterator();
+                if (other.isEmpty()) {
+                    //noinspection unchecked
+                    return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
+                }
                 return filterNot(sequence, new Predicate<T>() {
                     @Override
                     public boolean accept(@NotNull T t) {
@@ -2983,7 +3062,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> minusElement(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> Sequence<T> minusElement(@Nullable Sequence<T> sequence, @Nullable T element) {
         return minus(sequence, element);
     }
 
@@ -2999,16 +3078,18 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T> Pair<List<T>, List<T>> partition(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public static <T> Pair<List<T>, List<T>> partition(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         List<T> first = new ArrayList<T>();
         List<T> second = new ArrayList<T>();
-        Iterator<T> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (predicate.accept(element)) {
-                first.add(element);
-            } else {
-                second.add(element);
+        Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                T element = iterator.next();
+                if (predicate.accept(element)) {
+                    first.add(element);
+                } else {
+                    second.add(element);
+                }
             }
         }
         return Pair.of(first, second);
@@ -3024,7 +3105,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable T element) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence, sequenceOf(element)));
     }
 
@@ -3037,7 +3119,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@NotNull Sequence<T> sequence, @NotNull T[] elements) {
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable T[] elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence, asSequence(elements)));
     }
 
@@ -3050,7 +3133,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@NotNull Sequence<T> sequence, @NotNull Iterable<T> elements) {
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable Iterable<T> elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence, asSequence(elements)));
     }
 
@@ -3063,7 +3147,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@NotNull Sequence<T> sequence, @NotNull Sequence<T> elements) {
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable Sequence<T> elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence, elements));
     }
 
@@ -3073,7 +3158,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plusElement(@NotNull Sequence<T> sequence, @NotNull T element) {
+    public static <T> Sequence<T> plusElement(@Nullable Sequence<T> sequence, @Nullable T element) {
         return plus(sequence, element);
     }
 
@@ -3096,7 +3181,7 @@ public class Sequencex {
 // * @sample samples.collections.Sequences.Transformations.takeWindows
 // */
 //    @SinceKotlin("1.2")
-//    public static <T> windowed(@NotNull Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false): Sequence<List<T>> {
+//    public static <T> windowed(@Nullable Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false): Sequence<List<T>> {
 //        return windowedSequence(size, step, partialWindows, reuseBuffer = false)
 //    }
 //
@@ -3118,7 +3203,7 @@ public class Sequencex {
 // * @sample samples.collections.Sequences.Transformations.averageWindows
 // */
 //    @SinceKotlin("1.2")
-//    public static <T, R> windowed(@NotNull Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false, transform: (List<T>) -> R): Sequence<R> {
+//    public static <T, R> windowed(@Nullable Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false, transform: (List<T>) -> R): Sequence<R> {
 //        return windowedSequence(size, step, partialWindows, reuseBuffer = true).map(transform)
 //    }
 //
@@ -3130,7 +3215,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> Sequence<Pair<T, R>> zip(@NotNull Sequence<T> sequence, @NotNull Sequence<R> other) {
+    public static <T, R> Sequence<Pair<T, R>> zip(@Nullable Sequence<T> sequence, @Nullable Sequence<R> other) {
         return new MergingSequence<T, R, Pair<T, R>>(sequence, other, new Transformer2<T, R, Pair<T, R>>() {
             @NotNull
             @Override
@@ -3148,7 +3233,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R, V> Sequence<V> zip(@NotNull Sequence<T> sequence, @NotNull Sequence<R> other, @NotNull Transformer2<T, R, V> transform) {
+    public static <T, R, V> Sequence<V> zip(@Nullable Sequence<T> sequence, @Nullable Sequence<R> other, @NotNull Transformer2<T, R, V> transform) {
         return new MergingSequence<T, R, V>(sequence, other, transform);
     }
 
@@ -3160,20 +3245,19 @@ public class Sequencex {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R> Pair<List<T>, List<R>> unzip(@NotNull Sequence<Pair<T, R>> sequence) {
+    public static <T, R> Pair<List<T>, List<R>> unzip(@Nullable Sequence<Pair<T, R>> sequence) {
         List<T> listT = new ArrayList<T>();
         List<R> listR = new ArrayList<R>();
-        Iterator<Pair<T, R>> iterator = sequence.iterator();
-        while (iterator.hasNext()) {
-            Pair<T, R> pair = iterator.next();
-            listT.add(pair.first);
-            listR.add(pair.second);
+        Iterator<Pair<T, R>> iterator = sequence != null ? sequence.iterator() : null;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                Pair<T, R> pair = iterator.next();
+                listT.add(pair.first);
+                listR.add(pair.second);
+            }
         }
         return Pair.of(listT, listR);
     }
-
-
-    /* ******************************************* joinTo ******************************************* */
 
 
 ///**
@@ -3184,7 +3268,7 @@ public class Sequencex {
 // * The operation is _intermediate_ and _stateless_.
 // */
 //@NotNull
-//    public static <T> Sequence<Pair<T, T>> zipWithNext(@NotNull Sequence<T> sequence) {
+//    public static <T> Sequence<Pair<T, T>> zipWithNext(@Nullable Sequence<T> sequence) {
 //        return zipWithNext(sequence, new Transformer2<T, T, Pair<T, T>>() {
 //            @NotNull
 //            @Override
@@ -3205,7 +3289,7 @@ public class Sequencex {
 // * @sample samples.collections.Collections.Transformations.zipWithNextToFindDeltas
 // */
 //@NotNull
-//    public static <T, R> Sequence<R> zipWithNext(@NotNull Sequence<T> sequence, @NotNull Transformer2<T, T, R> transform) {
+//    public static <T, R> Sequence<R> zipWithNext(@Nullable Sequence<T> sequence, @NotNull Transformer2<T, T, R> transform) {
 //        return buildSequence result@ {
 //            val iterator = iterator()
 //            if (!iterator.hasNext()) return@result
@@ -3217,6 +3301,9 @@ public class Sequencex {
 //            }
 //        }
 //    }
+
+
+    /* ******************************************* joinTo ******************************************* */
 
     /**
      * Appends the string from all the elements separated using [separator] and using the given [prefix] and [postfix] if supplied.

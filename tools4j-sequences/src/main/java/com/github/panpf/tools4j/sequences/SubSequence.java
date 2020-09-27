@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.sequences;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -27,12 +28,12 @@ import java.util.NoSuchElementException;
  */
 public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     private final int startIndex;
     private final int endIndex;
 
-    public SubSequence(@NotNull Sequence<T> sequence, final int startIndex, final int endIndex) {
+    public SubSequence(@Nullable Sequence<T> sequence, final int startIndex, final int endIndex) {
         if (startIndex < 0) {
             throw new IllegalArgumentException("Param 'startIndex' is less than to zero.");
         }
@@ -69,29 +70,31 @@ public class SubSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             private int position = 0;
 
             // Shouldn't be called from constructor to avoid premature iteration
             private void drop() {
-                while (position < startIndex && iterator.hasNext()) {
-                    iterator.next();
-                    position++;
+                if (iterator != null) {
+                    while (position < startIndex && iterator.hasNext()) {
+                        iterator.next();
+                        position++;
+                    }
                 }
             }
 
             @Override
             public boolean hasNext() {
                 drop();
-                return (position < endIndex) && iterator.hasNext();
+                return (position < endIndex) && iterator != null && iterator.hasNext();
             }
 
             @NotNull
             @Override
             public T next() {
                 drop();
-                if (position >= endIndex) throw new NoSuchElementException();
+                if (position >= endIndex || iterator == null) throw new NoSuchElementException();
                 position++;
                 return iterator.next();
             }

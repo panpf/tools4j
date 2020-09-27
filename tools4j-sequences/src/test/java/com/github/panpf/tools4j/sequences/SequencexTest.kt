@@ -53,6 +53,7 @@ class SequencexTest {
 
     @Test
     fun testAsSequence() {
+        // todo test nullable
         assertTwoEquals(
                 "4, 2, 1",
                 Hashtable(hashMapOf("2" to 2, "4" to 4, "1" to 1)).elements().asSequence().joinToString(),
@@ -241,6 +242,7 @@ class SequencexTest {
 
     @Test
     fun testFlatten() {
+        // todo test nullable and sync to CollectionxTest
         assertTwoEquals(
                 "a, b, c, d, e, f, g, h, i",
                 sequenceOf(
@@ -286,6 +288,7 @@ class SequencexTest {
 
     @Test
     fun testContains() {
+        // todo test nullable and sync to CollectionxTest
         val sequence = Sequencex.sequenceOf("a", "b", "c")
 
         assertTrue(Sequencex.contains(sequence, "a"))
@@ -296,6 +299,7 @@ class SequencexTest {
 
     @Test
     fun testElementAt() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("a", "b", "c")
         val sequence1 = Sequencex.sequenceOf("a", "b", "c")
 
@@ -320,6 +324,7 @@ class SequencexTest {
 
     @Test
     fun testFind() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
 
@@ -336,6 +341,7 @@ class SequencexTest {
 
     @Test
     fun testFirst() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence0 = sequenceOf<String>()
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
@@ -362,6 +368,7 @@ class SequencexTest {
 
     @Test
     fun testIndexOf() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
 
@@ -384,6 +391,7 @@ class SequencexTest {
 
     @Test
     fun testLast() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence0 = sequenceOf<String>()
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
@@ -416,6 +424,7 @@ class SequencexTest {
 
     @Test
     fun testSingle() {
+        // todo test nullable and sync to CollectionxTest
         val singleSequence0 = sequenceOf("cj")
         val singleSequence1 = Sequencex.sequenceOf("cj")
         val multiSequence0 = sequenceOf("aj", "bj", "cj", "bo")
@@ -466,6 +475,7 @@ class SequencexTest {
 
     @Test
     fun testDrop() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
 
@@ -537,6 +547,7 @@ class SequencexTest {
 
     @Test
     fun testTake() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
 
@@ -609,6 +620,7 @@ class SequencexTest {
     @Suppress("RedundantAsSequence")
     @Test
     fun testFilter() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bo", "cj", "do")
         val sequence1 = Sequencex.sequenceOf("aj", "bo", "cj", "do")
 
@@ -696,6 +708,7 @@ class SequencexTest {
 
     @Test
     fun testSort() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aaa", "h", "uuuu", "gg")
         val sequence1 = Sequencex.sequenceOf("aaa", "h", "uuuu", "gg")
 
@@ -723,6 +736,7 @@ class SequencexTest {
     @Test
     @Suppress("ReplaceAssociateFunction")
     fun testAssociate() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
 
@@ -783,6 +797,7 @@ class SequencexTest {
 
     @Test
     fun testTo() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
 
@@ -878,6 +893,7 @@ class SequencexTest {
 
     @Test
     fun testFlatMap() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
 
@@ -982,6 +998,7 @@ class SequencexTest {
 
     @Test
     fun testGroup() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
 
@@ -1024,7 +1041,7 @@ class SequencexTest {
 
     @Test
     fun testMap() {
-        // todo test sequence null, synchronize to CollectionxTest
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
 
@@ -1103,6 +1120,7 @@ class SequencexTest {
 
     @Test
     fun testWithIndex() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
 
@@ -1121,6 +1139,7 @@ class SequencexTest {
 
     @Test
     fun testDistinct() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1139,6 +1158,7 @@ class SequencexTest {
 
     @Test
     fun testAll() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1157,6 +1177,7 @@ class SequencexTest {
 
     @Test
     fun testAny() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1187,6 +1208,7 @@ class SequencexTest {
 
     @Test
     fun testCount() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1229,6 +1251,7 @@ class SequencexTest {
 
     @Test
     fun testFold() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1247,6 +1270,7 @@ class SequencexTest {
 
     @Test
     fun testEach() {
+        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1287,6 +1311,7 @@ class SequencexTest {
     @Test
     @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
     fun testMax() {
+        // todo test nullable and sync to CollectionxTest
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()
@@ -1382,6 +1407,7 @@ class SequencexTest {
     @Test
     @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
     fun testMin() {
+        // todo test nullable and sync to CollectionxTest
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()

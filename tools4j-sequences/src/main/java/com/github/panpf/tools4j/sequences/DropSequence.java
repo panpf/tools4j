@@ -17,8 +17,10 @@
 package com.github.panpf.tools4j.sequences;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence that skips the specified number of values from the underlying [sequence] and returns
@@ -26,11 +28,11 @@ import java.util.Iterator;
  */
 public class DropSequence<T> implements Sequence<T>, DropTakeSequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     private final int count;
 
-    public DropSequence(@NotNull Sequence<T> sequence, final int count) {
+    public DropSequence(@Nullable Sequence<T> sequence, final int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Param 'count' is less than to zero.");
         }
@@ -55,27 +57,34 @@ public class DropSequence<T> implements Sequence<T>, DropTakeSequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             private int left = count;
 
             // Shouldn't be called from constructor to avoid premature iteration
             private void drop() {
-                while (left > 0 && iterator.hasNext()) {
-                    iterator.next();
-                    left--;
+                if (iterator != null) {
+                    while (left > 0 && iterator.hasNext()) {
+                        iterator.next();
+                        left--;
+                    }
                 }
             }
 
             @Override
             public T next() {
                 drop();
-                return iterator.next();
+                if (iterator != null) {
+                    return iterator.next();
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
             public boolean hasNext() {
                 drop();
-                return iterator.hasNext();
+                return iterator != null && iterator.hasNext();
             }
 
             @Override

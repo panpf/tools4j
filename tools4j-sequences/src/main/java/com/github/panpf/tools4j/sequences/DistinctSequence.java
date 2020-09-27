@@ -18,17 +18,18 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.Transformer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 
 public class DistinctSequence<T, K> implements Sequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> source;
     @NotNull
     private final Transformer<T, K> keySelector;
 
-    public DistinctSequence(@NotNull Sequence<T> source, @NotNull Transformer<T, K> keySelector) {
+    public DistinctSequence(@Nullable Sequence<T> source, @NotNull Transformer<T, K> keySelector) {
         this.source = source;
         this.keySelector = keySelector;
     }
@@ -36,6 +37,6 @@ public class DistinctSequence<T, K> implements Sequence<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return new DistinctIterator<T, K>(source.iterator(), keySelector);
+        return new DistinctIterator<T, K>(source != null ? source.iterator() : null, keySelector);
     }
 }

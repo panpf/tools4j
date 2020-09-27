@@ -18,8 +18,10 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.IndexedValue;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence which combines values from the underlying [sequence] with their indices and returns them as
@@ -27,10 +29,10 @@ import java.util.Iterator;
  */
 public class IndexingSequence<T> implements Sequence<IndexedValue<T>> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
 
-    public IndexingSequence(@NotNull Sequence<T> sequence) {
+    public IndexingSequence(@Nullable Sequence<T> sequence) {
         this.sequence = sequence;
     }
 
@@ -38,19 +40,23 @@ public class IndexingSequence<T> implements Sequence<IndexedValue<T>> {
     @Override
     public Iterator<IndexedValue<T>> iterator() {
         return new Iterator<IndexedValue<T>>() {
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
 
             int index = 0;
 
             @Override
             public IndexedValue<T> next() {
-                return new IndexedValue<T>(index++, iterator.next());
+                if (iterator != null) {
+                    return new IndexedValue<T>(index++, iterator.next());
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
             public boolean hasNext() {
-                return iterator.hasNext();
+                return iterator != null && iterator.hasNext();
             }
 
             @Override

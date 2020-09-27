@@ -18,8 +18,10 @@ package com.github.panpf.tools4j.sequences;
 
 import com.github.panpf.tools4j.common.Transformer2;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence which takes the values from two parallel underlying sequences, passes them to the given
@@ -28,14 +30,14 @@ import java.util.Iterator;
  */
 public class MergingSequence<T1, T2, V> implements Sequence<V> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T1> sequence1;
-    @NotNull
+    @Nullable
     private final Sequence<T2> sequence2;
     @NotNull
     private final Transformer2<T1, T2, V> transform;
 
-    public MergingSequence(@NotNull Sequence<T1> sequence1, @NotNull Sequence<T2> sequence2, @NotNull Transformer2<T1, T2, V> transform) {
+    public MergingSequence(@Nullable Sequence<T1> sequence1, @Nullable Sequence<T2> sequence2, @NotNull Transformer2<T1, T2, V> transform) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
         this.transform = transform;
@@ -46,19 +48,23 @@ public class MergingSequence<T1, T2, V> implements Sequence<V> {
     public Iterator<V> iterator() {
         return new Iterator<V>() {
 
-            @NotNull
-            private final Iterator<T1> iterator1 = sequence1.iterator();
-            @NotNull
-            private final Iterator<T2> iterator2 = sequence2.iterator();
+            @Nullable
+            private final Iterator<T1> iterator1 = sequence1 != null ? sequence1.iterator() : null;
+            @Nullable
+            private final Iterator<T2> iterator2 = sequence2 != null ? sequence2.iterator() : null;
 
             @Override
             public V next() {
-                return transform.transform(iterator1.next(), iterator2.next());
+                if (iterator1 != null && iterator2 != null) {
+                    return transform.transform(iterator1.next(), iterator2.next());
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
             public boolean hasNext() {
-                return iterator1.hasNext() && iterator2.hasNext();
+                return iterator1 != null && iterator1.hasNext() && iterator2 != null && iterator2.hasNext();
             }
 
             @Override

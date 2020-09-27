@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
 
 public class FilteringSequence<T> implements Sequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     private final boolean sendWhen;
     @NotNull
@@ -38,7 +38,7 @@ public class FilteringSequence<T> implements Sequence<T> {
      * @param sendWhen If `true`, values for which the predicate returns `true` are returned. Otherwise,
      *                 values for which the predicate returns `false` are returned
      */
-    public FilteringSequence(@NotNull Sequence<T> sequence, boolean sendWhen, @NotNull Predicate<T> predicate) {
+    public FilteringSequence(@Nullable Sequence<T> sequence, boolean sendWhen, @NotNull Predicate<T> predicate) {
         this.sequence = sequence;
         this.sendWhen = sendWhen;
         this.predicate = predicate;
@@ -48,7 +48,7 @@ public class FilteringSequence<T> implements Sequence<T> {
      * A sequence that returns the values from the underlying [sequence] that either match or do not match
      * the specified [predicate].
      */
-    public FilteringSequence(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public FilteringSequence(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         this(sequence, true, predicate);
     }
 
@@ -56,19 +56,21 @@ public class FilteringSequence<T> implements Sequence<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             private int nextState = -1; // -1 for unknown, 0 for done, 1 for continue
             @Nullable
             T nextItem = null;
 
             private void calcNext() {
-                while (iterator.hasNext()) {
-                    T item = iterator.next();
-                    if (predicate.accept(item) == sendWhen) {
-                        nextItem = item;
-                        nextState = 1;
-                        return;
+                if (iterator != null) {
+                    while (iterator.hasNext()) {
+                        T item = iterator.next();
+                        if (predicate.accept(item) == sendWhen) {
+                            nextItem = item;
+                            nextState = 1;
+                            return;
+                        }
                     }
                 }
                 nextState = 0;

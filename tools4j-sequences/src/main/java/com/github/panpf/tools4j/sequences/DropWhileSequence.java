@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A sequence that skips the values from the underlying [sequence] while the given [predicate] returns `true` and returns
@@ -28,12 +29,12 @@ import java.util.Iterator;
  */
 public class DropWhileSequence<T> implements Sequence<T> {
 
-    @NotNull
+    @Nullable
     private final Sequence<T> sequence;
     @NotNull
     private final Predicate<T> predicate;
 
-    public DropWhileSequence(@NotNull Sequence<T> sequence, @NotNull Predicate<T> predicate) {
+    public DropWhileSequence(@Nullable Sequence<T> sequence, @NotNull Predicate<T> predicate) {
         this.sequence = sequence;
         this.predicate = predicate;
     }
@@ -43,19 +44,21 @@ public class DropWhileSequence<T> implements Sequence<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            @NotNull
-            private final Iterator<T> iterator = sequence.iterator();
+            @Nullable
+            private final Iterator<T> iterator = sequence != null ? sequence.iterator() : null;
             private int dropState = -1; // -1 for not dropping, 1 for nextItem, 0 for normal iteration
             @Nullable
             private T nextItem = null;
 
             private void drop() {
-                while (iterator.hasNext()) {
-                    T item = iterator.next();
-                    if (!predicate.accept(item)) {
-                        nextItem = item;
-                        dropState = 1;
-                        return;
+                if (iterator != null) {
+                    while (iterator.hasNext()) {
+                        T item = iterator.next();
+                        if (!predicate.accept(item)) {
+                            nextItem = item;
+                            dropState = 1;
+                            return;
+                        }
                     }
                 }
                 dropState = 0;
@@ -72,14 +75,18 @@ public class DropWhileSequence<T> implements Sequence<T> {
                     dropState = 0;
                     return result;
                 }
-                return iterator.next();
+                if (iterator != null) {
+                    return iterator.next();
+                } else {
+                    throw new NoSuchElementException();
+                }
             }
 
             @Override
             public boolean hasNext() {
                 if (dropState == -1)
                     drop();
-                return dropState == 1 || iterator.hasNext();
+                return dropState == 1 || (iterator != null && iterator.hasNext());
             }
 
             @Override
