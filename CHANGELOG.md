@@ -2,6 +2,7 @@
 * improve: remove the use of @SafeVarargs annotation
 * deprecated: Deprecated String?.orEmpty() method
 * improve: Most of Sequencex methods now accept nullable Sequence
+* change: Sequencex.sum(Sequence<Long>) rename to sumOfLong(Sequence<Long>)
 
 
 ## v1.0.0-rc01

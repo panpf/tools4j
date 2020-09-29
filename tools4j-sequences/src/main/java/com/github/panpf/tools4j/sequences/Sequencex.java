@@ -2814,7 +2814,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static long sum(@Nullable Sequence<Long> sequence) {
+    public static long sumOfLong(@Nullable Sequence<Long> sequence) {
         long sum = 0L;
         if (sequence != null) {
             Iterator<Long> iterator = sequence.iterator();
