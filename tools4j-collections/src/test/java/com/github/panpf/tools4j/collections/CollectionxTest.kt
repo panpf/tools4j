@@ -1350,4 +1350,118 @@ class CollectionxTest {
         )
         assertTwoEquals(null, null, Collectionx.minOfWithOrNull(nullList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
+
+    @Test
+    fun testNone() {
+        val normalList0 = listOf("6", "3", "7", "2", "1")
+        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
+        val emptyList0 = listOf<String>()
+        val emptyList1 = Collectionx.listOf<String>()
+        val nullList1: List<String>? = null
+
+        assertTwoEquals(false, normalList0.none(), Collectionx.none(normalList1))
+        assertTwoEquals(true, emptyList0.none(), Collectionx.none(emptyList1))
+        assertTrue(Collectionx.none(nullList1))
+
+        assertTwoEquals(true, normalList0.none{it.length > 1}, Collectionx.none(normalList1){it.length > 1})
+        assertTwoEquals(false, normalList0.none{ it.isNotEmpty() }, Collectionx.none(normalList1){ it.isNotEmpty() })
+        assertTwoEquals(true, emptyList0.none{it.length > 1}, Collectionx.none(emptyList1){it.length > 1})
+        assertTrue(Collectionx.none(nullList1){it.length > 1})
+    }
+
+    @Test
+    fun testReduce() {
+        val normalList0 = listOf("6", "3", "7", "2", "1")
+        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
+        val emptyList0 = listOf<String>()
+        val emptyList1 = Collectionx.listOf<String>()
+        val nullList1: List<String>? = null
+
+        assertTwoEquals("63721",
+                normalList0.reduce{it0, it1 -> it0 + it1},
+                Collectionx.reduce(normalList1){it0, it1 -> it0 + it1})
+        assertTwoThrow(UnsupportedOperationException::class,
+                {emptyList0.reduce{it0, it1 -> it0 + it1}},
+                {Collectionx.reduce(emptyList1){it0, it1 -> it0 + it1}})
+        assertThrow(UnsupportedOperationException::class)
+        { Collectionx.reduce(nullList1) { it0, it1 -> it0 + it1 } }
+
+        assertTwoEquals("613273241",
+                normalList0.reduceIndexed{i, it0, it1 -> it0 +i + it1},
+                Collectionx.reduceIndexed(normalList1){i, it0, it1 -> it0 +i + it1})
+        assertTwoThrow(UnsupportedOperationException::class,
+                {emptyList0.reduceIndexed{i, it0, it1 -> it0 +i + it1}},
+                {Collectionx.reduceIndexed(emptyList1){i, it0, it1 -> it0 +i + it1}})
+        assertThrow(UnsupportedOperationException::class)
+        { Collectionx.reduceIndexed(nullList1) { i, it0, it1 -> it0 +i + it1 } }
+    }
+
+    @Test
+    fun testSum() {
+        val normalList0 = listOf("6", "3", "7", "2", "1")
+        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
+        val emptyList0 = listOf<String>()
+        val emptyList1 = Collectionx.listOf<String>()
+        val nullList1: List<String>? = null
+        assertTwoEquals(19, normalList0.sumBy{it.toInt()}, Collectionx.sumBy(normalList1){it.toInt()})
+        assertTwoEquals(0, emptyList0.sumBy { it.toInt() }, Collectionx.sumBy(emptyList1) { it.toInt() })
+        assertEquals(0, Collectionx.sumBy(nullList1) { it.toInt() })
+        assertTwoEquals(19.0, normalList0.sumByDouble{it.toDouble()}, Collectionx.sumByDouble(normalList1){it.toDouble()})
+        assertTwoEquals(0.0, emptyList0.sumByDouble { it.toDouble() }, Collectionx.sumByDouble(emptyList1) { it.toDouble() })
+        assertTwoEquals(0.0, 0.0, Collectionx.sumByDouble(nullList1) { it.toDouble() })
+
+        val normalByteList0 = listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val normalByteList1 = Collectionx.listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val emptyByteList0 = listOf<Byte>()
+        val emptyByteList1 = Collectionx.listOf<Byte>()
+        val nullByteList1: List<Byte>? = null
+        assertTwoEquals(19, normalByteList0.sum(), Collectionx.sumOfByte(normalByteList1))
+        assertTwoEquals(0, emptyByteList0.sum(), Collectionx.sumOfByte(emptyByteList1))
+        assertTwoEquals(0, 0, Collectionx.sumOfByte(nullByteList1))
+
+        val normalShortList0 = listOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val normalShortList1 = Collectionx.listOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val emptyShortList0 = listOf<Short>()
+        val emptyShortList1 = Collectionx.listOf<Short>()
+        val nullShortList1: List<Short>? = null
+        assertTwoEquals(19, normalShortList0.sum(), Collectionx.sumOfShort(normalShortList1))
+        assertTwoEquals(0, emptyShortList0.sum(), Collectionx.sumOfShort(emptyShortList1))
+        assertTwoEquals(0, 0, Collectionx.sumOfShort(nullShortList1))
+
+        val normalIntList0 = listOf(6, 3, 7, 2, 1)
+        val normalIntList1 = Collectionx.listOf(6, 3, 7, 2, 1)
+        val emptyIntList0 = listOf<Int>()
+        val emptyIntList1 = Collectionx.listOf<Int>()
+        val nullIntList1: List<Int>? = null
+        assertTwoEquals(19, normalIntList0.sum(), Collectionx.sumOfInt(normalIntList1))
+        assertTwoEquals(0, emptyIntList0.sum(), Collectionx.sumOfInt(emptyIntList1))
+        assertTwoEquals(0, 0, Collectionx.sumOfInt(nullIntList1))
+
+        val normalLongList0 = listOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val normalLongList1 = Collectionx.listOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val emptyLongList0 = listOf<Long>()
+        val emptyLongList1 = Collectionx.listOf<Long>()
+        val nullLongList1: List<Long>? = null
+        assertTwoEquals(19.toLong(), normalLongList0.sum(), Collectionx.sumOfLong(normalLongList1))
+        assertTwoEquals(0.toLong(), emptyLongList0.sum(), Collectionx.sumOfLong(emptyLongList1))
+        assertTwoEquals(0.toLong(), 0.toLong(), Collectionx.sumOfLong(nullLongList1))
+
+        val normalFloatList0 = listOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val normalFloatList1 = Collectionx.listOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val emptyFloatList0 = listOf<Float>()
+        val emptyFloatList1 = Collectionx.listOf<Float>()
+        val nullFloatList1: List<Float>? = null
+        assertTwoEquals(19.toFloat(), normalFloatList0.sum(), Collectionx.sumOfFloat(normalFloatList1))
+        assertTwoEquals(0.toFloat(), emptyFloatList0.sum(), Collectionx.sumOfFloat(emptyFloatList1))
+        assertTwoEquals(0.toFloat(), 0.toFloat(), Collectionx.sumOfFloat(nullFloatList1))
+
+        val normalDoubleList0 = listOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val normalDoubleList1 = Collectionx.listOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val emptyDoubleList0 = listOf<Double>()
+        val emptyDoubleList1 = Collectionx.listOf<Double>()
+        val nullDoubleList1: List<Double>? = null
+        assertTwoEquals(19.toDouble(), normalDoubleList0.sum(), Collectionx.sumOfDouble(normalDoubleList1))
+        assertTwoEquals(0.toDouble(), emptyDoubleList0.sum(), Collectionx.sumOfDouble(emptyDoubleList1))
+        assertTwoEquals(0.toDouble(), 0.toDouble(), Collectionx.sumOfDouble(nullDoubleList1))
+    }
 }

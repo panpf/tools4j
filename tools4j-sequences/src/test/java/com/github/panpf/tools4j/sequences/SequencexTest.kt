@@ -1311,7 +1311,6 @@ class SequencexTest {
     @Test
     @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
     fun testMax() {
-        // todo test nullable and sync to CollectionxTest
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()
@@ -1407,7 +1406,6 @@ class SequencexTest {
     @Test
     @Suppress("RedundantSamConstructor", "RemoveExplicitTypeArguments")
     fun testMin() {
-        // todo test nullable and sync to CollectionxTest
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()
@@ -1498,6 +1496,120 @@ class SequencexTest {
                 Sequencex.minOfWithOrNull(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
         )
         assertTwoEquals(null, null, Sequencex.minOfWithOrNull(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+    }
+
+    @Test
+    fun testNone() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1: Sequence<String>? = null
+
+        assertTwoEquals(false, normalSequence0.none(), Sequencex.none(normalSequence1))
+        assertTwoEquals(true, emptySequence0.none(), Sequencex.none(emptySequence1))
+        assertTrue(Sequencex.none(nullSequence1))
+
+        assertTwoEquals(true, normalSequence0.none{it.length > 1}, Sequencex.none(normalSequence1){it.length > 1})
+        assertTwoEquals(false, normalSequence0.none{ it.isNotEmpty() }, Sequencex.none(normalSequence1){ it.isNotEmpty() })
+        assertTwoEquals(true, emptySequence0.none{it.length > 1}, Sequencex.none(emptySequence1){it.length > 1})
+        assertTrue(Sequencex.none(nullSequence1){it.length > 1})
+    }
+
+    @Test
+    fun testReduce() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1: Sequence<String>? = null
+
+        assertTwoEquals("63721",
+                normalSequence0.reduce{it0, it1 -> it0 + it1},
+                Sequencex.reduce(normalSequence1){it0, it1 -> it0 + it1})
+        assertTwoThrow(UnsupportedOperationException::class,
+                {emptySequence0.reduce{it0, it1 -> it0 + it1}},
+                {Sequencex.reduce(emptySequence1){it0, it1 -> it0 + it1}})
+        assertThrow(UnsupportedOperationException::class)
+        { Sequencex.reduce(nullSequence1) { it0, it1 -> it0 + it1 } }
+
+        assertTwoEquals("613273241",
+                normalSequence0.reduceIndexed{i, it0, it1 -> it0 +i + it1},
+                Sequencex.reduceIndexed(normalSequence1){i, it0, it1 -> it0 +i + it1})
+        assertTwoThrow(UnsupportedOperationException::class,
+                {emptySequence0.reduceIndexed{i, it0, it1 -> it0 +i + it1}},
+                {Sequencex.reduceIndexed(emptySequence1){i, it0, it1 -> it0 +i + it1}})
+        assertThrow(UnsupportedOperationException::class)
+        { Sequencex.reduceIndexed(nullSequence1) { i, it0, it1 -> it0 +i + it1 } }
+    }
+
+    @Test
+    fun testSum() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1: Sequence<String>? = null
+        assertTwoEquals(19, normalSequence0.sumBy{it.toInt()}, Sequencex.sumBy(normalSequence1){it.toInt()})
+        assertTwoEquals(0, emptySequence0.sumBy { it.toInt() }, Sequencex.sumBy(emptySequence1) { it.toInt() })
+        assertEquals(0, Sequencex.sumBy(nullSequence1) { it.toInt() })
+        assertTwoEquals(19.0, normalSequence0.sumByDouble{it.toDouble()}, Sequencex.sumByDouble(normalSequence1){it.toDouble()})
+        assertTwoEquals(0.0, emptySequence0.sumByDouble { it.toDouble() }, Sequencex.sumByDouble(emptySequence1) { it.toDouble() })
+        assertTwoEquals(0.0, 0.0, Sequencex.sumByDouble(nullSequence1) { it.toDouble() })
+
+        val normalByteSequence0 = sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val normalByteSequence1 = Sequencex.sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val emptyByteSequence0 = sequenceOf<Byte>()
+        val emptyByteSequence1 = Sequencex.sequenceOf<Byte>()
+        val nullByteSequence1: Sequence<Byte>? = null
+        assertTwoEquals(19, normalByteSequence0.sum(), Sequencex.sumOfByte(normalByteSequence1))
+        assertTwoEquals(0, emptyByteSequence0.sum(), Sequencex.sumOfByte(emptyByteSequence1))
+        assertTwoEquals(0, 0, Sequencex.sumOfByte(nullByteSequence1))
+
+        val normalShortSequence0 = sequenceOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val normalShortSequence1 = Sequencex.sequenceOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val emptyShortSequence0 = sequenceOf<Short>()
+        val emptyShortSequence1 = Sequencex.sequenceOf<Short>()
+        val nullShortSequence1: Sequence<Short>? = null
+        assertTwoEquals(19, normalShortSequence0.sum(), Sequencex.sumOfShort(normalShortSequence1))
+        assertTwoEquals(0, emptyShortSequence0.sum(), Sequencex.sumOfShort(emptyShortSequence1))
+        assertTwoEquals(0, 0, Sequencex.sumOfShort(nullShortSequence1))
+
+        val normalIntSequence0 = sequenceOf(6, 3, 7, 2, 1)
+        val normalIntSequence1 = Sequencex.sequenceOf(6, 3, 7, 2, 1)
+        val emptyIntSequence0 = sequenceOf<Int>()
+        val emptyIntSequence1 = Sequencex.sequenceOf<Int>()
+        val nullIntSequence1: Sequence<Int>? = null
+        assertTwoEquals(19, normalIntSequence0.sum(), Sequencex.sumOfInt(normalIntSequence1))
+        assertTwoEquals(0, emptyIntSequence0.sum(), Sequencex.sumOfInt(emptyIntSequence1))
+        assertTwoEquals(0, 0, Sequencex.sumOfInt(nullIntSequence1))
+
+        val normalLongSequence0 = sequenceOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val normalLongSequence1 = Sequencex.sequenceOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val emptyLongSequence0 = sequenceOf<Long>()
+        val emptyLongSequence1 = Sequencex.sequenceOf<Long>()
+        val nullLongSequence1: Sequence<Long>? = null
+        assertTwoEquals(19.toLong(), normalLongSequence0.sum(), Sequencex.sumOfLong(normalLongSequence1))
+        assertTwoEquals(0.toLong(), emptyLongSequence0.sum(), Sequencex.sumOfLong(emptyLongSequence1))
+        assertTwoEquals(0.toLong(), 0.toLong(), Sequencex.sumOfLong(nullLongSequence1))
+
+        val normalFloatSequence0 = sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val normalFloatSequence1 = Sequencex.sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val emptyFloatSequence0 = sequenceOf<Float>()
+        val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
+        val nullFloatSequence1: Sequence<Float>? = null
+        assertTwoEquals(19.toFloat(), normalFloatSequence0.sum(), Sequencex.sumOfFloat(normalFloatSequence1))
+        assertTwoEquals(0.toFloat(), emptyFloatSequence0.sum(), Sequencex.sumOfFloat(emptyFloatSequence1))
+        assertTwoEquals(0.toFloat(), 0.toFloat(), Sequencex.sumOfFloat(nullFloatSequence1))
+
+        val normalDoubleSequence0 = sequenceOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val normalDoubleSequence1 = Sequencex.sequenceOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val emptyDoubleSequence0 = sequenceOf<Double>()
+        val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
+        val nullDoubleSequence1: Sequence<Double>? = null
+        assertTwoEquals(19.toDouble(), normalDoubleSequence0.sum(), Sequencex.sumOfDouble(normalDoubleSequence1))
+        assertTwoEquals(0.toDouble(), emptyDoubleSequence0.sum(), Sequencex.sumOfDouble(emptyDoubleSequence1))
+        assertTwoEquals(0.toDouble(), 0.toDouble(), Sequencex.sumOfDouble(nullDoubleSequence1))
     }
 
 
