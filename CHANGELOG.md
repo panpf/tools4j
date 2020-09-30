@@ -3,6 +3,7 @@
 * deprecated: Deprecated String?.orEmpty() method
 * improve: Most of Sequencex methods now accept nullable Sequence
 * change: Sequencex.sum(Sequence<Long>) rename to sumOfLong(Sequence<Long>)
+* new: Collectionx added requireNoNulls(), unzip() method
 
 
 ## v1.0.0-rc01

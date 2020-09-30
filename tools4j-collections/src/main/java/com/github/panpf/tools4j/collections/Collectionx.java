@@ -59,8 +59,8 @@ public class Collectionx {
      * Creates a string from all the elements separated using ', ' and using the given '[' and ']' if supplied.
      */
     @NotNull
-    public static <T> String joinToArrayString(@Nullable Iterable<T> iterable, @Nullable Transformer<T, CharSequence> transform) {
-        return joinToString(iterable, ", ", "[", "]", -1, null, transform);
+    public static <T> String joinToArrayString(@Nullable Iterable<T> iterable, @NotNull Transformer<T, CharSequence> transform) {
+        return joinToString(iterable, null, "[", "]", -1, null, transform);
     }
 
     /**
@@ -68,7 +68,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> String joinToArrayString(@Nullable Iterable<T> iterable) {
-        return joinToString(iterable, ", ", "[", "]", -1, null, null);
+        return joinToString(iterable, null, "[", "]", -1, null, null);
     }
 
 
@@ -640,12 +640,14 @@ public class Collectionx {
      * The operation is _terminal_.
      */
     @NotNull
-    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@NotNull Iterable<T> iterable, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+    public static <T, R, C extends Collection<R>> C flatMapIndexedTo(@Nullable Iterable<T> iterable, @NotNull C destination, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         int index = 0;
-        for (T element : iterable) {
-            Iterable<R> list = transform.transform(index++, element);
-            for (R item : list) {
-                destination.add(item);
+        if (iterable != null) {
+            for (T element : iterable) {
+                Iterable<R> list = transform.transform(index++, element);
+                for (R item : list) {
+                    destination.add(item);
+                }
             }
         }
         return destination;
@@ -658,7 +660,7 @@ public class Collectionx {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T, R> List<R> flatMapIndexed(@NotNull Iterable<T> iterable, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
+    public static <T, R> List<R> flatMapIndexed(@Nullable Iterable<T> iterable, @NotNull IndexedTransformer<T, Iterable<R>> transform) {
         return flatMapIndexedTo(iterable, new ArrayList<R>(), transform);
     }
 
@@ -671,12 +673,12 @@ public class Collectionx {
      * into an [IndexedValue] containing the index of that element and the element itself.
      */
     @NotNull
-    public static <T> Iterable<IndexedValue<T>> withIndex(@NotNull final Iterable<T> iterable) {
+    public static <T> Iterable<IndexedValue<T>> withIndex(@Nullable final Iterable<T> iterable) {
         return new IndexingIterable<T>(new DefaultValue<Iterator<T>>() {
             @NotNull
             @Override
             public Iterator<T> get() {
-                return iterable.iterator();
+                return iterable != null ? iterable.iterator() : Collectionx.<T>emptyList().iterator();
             }
         });
     }
@@ -728,7 +730,29 @@ public class Collectionx {
      * elements will be appended, followed by the [truncated] string (which defaults to "...").
      */
     @NotNull
-    public static <T, A extends Appendable> A joinTo(@Nullable Iterable<T> iterable, @NotNull A buffer, @Nullable CharSequence separator) {
+    public static <T, A extends Appendable> A joinTo(@Nullable Iterable<T> iterable, @NotNull A buffer, @NotNull CharSequence separator, @NotNull Transformer<T, CharSequence> transform) {
+        return joinTo(iterable, buffer, separator, null, null, -1, null, transform);
+    }
+
+    /**
+     * Appends the string from all the elements separated using [separator] and using the given [prefix] and [postfix] if supplied.
+     * <p>
+     * If the collection could be huge, you can specify a non-negative value of [limit], in which case only the first [limit]
+     * elements will be appended, followed by the [truncated] string (which defaults to "...").
+     */
+    @NotNull
+    public static <T, A extends Appendable> A joinTo(@Nullable Iterable<T> iterable, @NotNull A buffer, @NotNull Transformer<T, CharSequence> transform) {
+        return joinTo(iterable, buffer, null, null, null, -1, null, transform);
+    }
+
+    /**
+     * Appends the string from all the elements separated using [separator] and using the given [prefix] and [postfix] if supplied.
+     * <p>
+     * If the collection could be huge, you can specify a non-negative value of [limit], in which case only the first [limit]
+     * elements will be appended, followed by the [truncated] string (which defaults to "...").
+     */
+    @NotNull
+    public static <T, A extends Appendable> A joinTo(@Nullable Iterable<T> iterable, @NotNull A buffer, @NotNull CharSequence separator) {
         return joinTo(iterable, buffer, separator, null, null, -1, null, null);
     }
 
@@ -763,7 +787,7 @@ public class Collectionx {
      * elements will be appended, followed by the [truncated] string (which defaults to "...").
      */
     @NotNull
-    public static <T> String joinToString(@Nullable Iterable<T> iterable, @Nullable CharSequence separator, @NotNull Transformer<T, CharSequence> transform) {
+    public static <T> String joinToString(@Nullable Iterable<T> iterable, @NotNull CharSequence separator, @NotNull Transformer<T, CharSequence> transform) {
         return joinToString(iterable, separator, null, null, -1, null, transform);
     }
 
@@ -785,7 +809,7 @@ public class Collectionx {
      * elements will be appended, followed by the [truncated] string (which defaults to "...").
      */
     @NotNull
-    public static <T> String joinToString(@Nullable Iterable<T> iterable, @Nullable CharSequence separator) {
+    public static <T> String joinToString(@Nullable Iterable<T> iterable, @NotNull CharSequence separator) {
         return joinToString(iterable, separator, null, null, -1, null, null);
     }
 
@@ -1043,6 +1067,37 @@ public class Collectionx {
             }
         }
         return sum;
+    }
+
+
+    /* ******************************************* require ******************************************* */
+
+    /**
+     * Returns an original collection containing all the non-`null` elements, throwing an [IllegalArgumentException] if there are any `null` elements.
+     */
+    @NotNull
+    public static <T> Iterable<T> requireNoNulls(@Nullable Iterable<T> iterable) {
+        if (iterable == null) return emptyList();
+        for (T element : iterable) {
+            if (element == null) {
+                throw new IllegalArgumentException("null element found in " + iterable + ".");
+            }
+        }
+        return iterable;
+    }
+
+    /**
+     * Returns an original collection containing all the non-`null` elements, throwing an [IllegalArgumentException] if there are any `null` elements.
+     */
+    @NotNull
+    public static <T> List<T> requireNoNulls(@Nullable List<T> list) {
+        if (list == null) return emptyList();
+        for (T element : list) {
+            if (element == null) {
+                throw new IllegalArgumentException("null element found in " + list + ".");
+            }
+        }
+        return list;
     }
 
 
@@ -2163,9 +2218,11 @@ public class Collectionx {
      * Performs the given [action] on each element and returns the collection itself afterwards.
      */
     @NotNull
-    public static <T> Iterable<T> onEach(@NotNull Iterable<T> iterable, @NotNull Action<T> action) {
-        for (T element : iterable) action.action(element);
-        return iterable;
+    public static <T> Iterable<T> onEach(@Nullable Iterable<T> iterable, @NotNull Action<T> action) {
+        if (iterable != null) {
+            for (T element : iterable) action.action(element);
+        }
+        return iterable != null ? iterable : Collectionx.<T>emptyList();
     }
 
     /**
@@ -2173,12 +2230,12 @@ public class Collectionx {
      * and returns the collection itself afterwards.
      *
      * @param action function that takes the index of an element and the element itself
-     *                 and performs the action on the element.
+     *               and performs the action on the element.
      */
     @NotNull
-    public static <T> Iterable<T> onEachIndexed(@NotNull Iterable<T> iterable, @NotNull IndexedAction<T> action) {
+    public static <T> Iterable<T> onEachIndexed(@Nullable Iterable<T> iterable, @NotNull IndexedAction<T> action) {
         forEachIndexed(iterable, action);
-        return iterable;
+        return iterable != null ? iterable : Collectionx.<T>emptyList();
     }
 
 
@@ -2265,8 +2322,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection without the first occurrence of the given [element].
      */
     @NotNull
-    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @Nullable final T element) {
-        if (element == null) return toList(iterable);
+    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @NotNull final T element) {
         ArrayList<T> result = new ArrayList<T>(collectionSizeOrDefault(iterable, 10));
         final boolean[] removed = new boolean[]{false};
         return filterTo(iterable, result, new Predicate<T>() {
@@ -2286,8 +2342,8 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection except the elements contained in the given [elements] array.
      */
     @NotNull
-    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @Nullable T[] elements) {
-        if (elements == null || elements.length <= 0) return toList(iterable);
+    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @NotNull T[] elements) {
+        if (elements.length <= 0) return toList(iterable);
         final HashSet<T> other = Arrayx.toHashSet(elements);
         return filterNot(iterable, new Predicate<T>() {
             @Override
@@ -2301,8 +2357,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection except the elements contained in the given [elements] collection.
      */
     @NotNull
-    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @Nullable Iterable<T> elements) {
-        if (elements == null) return toList(iterable);
+    public static <T> List<T> minus(@Nullable Iterable<T> iterable, @NotNull Iterable<T> elements) {
         final Collection<T> other = iterable != null ? convertToSetForSetOperationWith(elements, iterable) : null;
         if (other == null || other.isEmpty()) return toList(iterable);
         return filterNot(iterable, new Predicate<T>() {
@@ -2329,8 +2384,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then the given [element].
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable T element) {
-        if (element == null) return toList(collection);
+    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull T element) {
         ArrayList<T> result = new ArrayList<T>(count(collection) + 1);
         if (collection != null) result.addAll(collection);
         result.add(element);
@@ -2341,8 +2395,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then the given [element].
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @Nullable T element) {
-        if (element == null) return toList(iterable);
+    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull T element) {
         if (iterable instanceof Collection) {
             return plus(((Collection<T>) iterable), element);
         } else {
@@ -2357,8 +2410,8 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then all elements of the given [elements] array.
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable T[] elements) {
-        if (elements == null || elements.length <= 0) return toList(collection);
+    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull T[] elements) {
+        if (elements.length <= 0) return toList(collection);
         ArrayList<T> result = new ArrayList<T>(count(collection) + elements.length);
         addAll(result, collection);
         addAll(result, elements);
@@ -2369,8 +2422,8 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then all elements of the given [elements] array.
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @Nullable T[] elements) {
-        if (elements == null || elements.length <= 0) return toList(iterable);
+    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull T[] elements) {
+        if (elements.length <= 0) return toList(iterable);
         if (iterable instanceof Collection) {
             return plus(((Collection<T>) iterable), elements);
         } else {
@@ -2385,8 +2438,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then all elements of the given [elements] collection.
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @Nullable Iterable<T> elements) {
-        if (elements == null) return toList(collection);
+    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull Iterable<T> elements) {
         if (elements instanceof Collection) {
             ArrayList<T> result = new ArrayList<T>(count(collection) + ((Collection<T>) elements).size());
             addAll(result, collection);
@@ -2404,8 +2456,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then all elements of the given [elements] collection.
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @Nullable Iterable<T> elements) {
-        if (elements == null) return toList(iterable);
+    public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull Iterable<T> elements) {
         if (iterable instanceof Collection) {
             return plus((Collection<T>) iterable, elements);
         } else {
@@ -2420,7 +2471,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then the given [element].
      */
     @NotNull
-    public static <T> List<T> plusElement(@Nullable Collection<T> collection, @Nullable T element) {
+    public static <T> List<T> plusElement(@Nullable Collection<T> collection, @NotNull T element) {
         return plus(collection, element);
     }
 
@@ -2428,7 +2479,7 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then the given [element].
      */
     @NotNull
-    public static <T> List<T> plusElement(@Nullable Iterable<T> iterable, @Nullable T element) {
+    public static <T> List<T> plusElement(@Nullable Iterable<T> iterable, @NotNull T element) {
         return plus(iterable, element);
     }
 
@@ -2984,6 +3035,7 @@ public class Collectionx {
     public static <T> List<T> slice(@Nullable List<T> list, @NotNull Iterable<Integer> indices) {
         int size = collectionSizeOrDefault(indices, 10);
         if (size == 0) {
+            //noinspection unchecked
             return Collectionx.arrayListOf();
         } else {
             ArrayList<T> resultList = new ArrayList<T>(size);
@@ -3764,7 +3816,7 @@ public class Collectionx {
      * The returned list has length of the shortest collection.
      */
     @NotNull
-    public static <T, R> List<Pair<T, R>> zip(@NotNull Iterable<T> iterable, @NotNull R[] other) {
+    public static <T, R> List<Pair<T, R>> zip(@Nullable Iterable<T> iterable, @NotNull R[] other) {
         return zip(iterable, other, new Transformer2<T, R, Pair<T, R>>() {
             @NotNull
             @Override
@@ -3780,15 +3832,17 @@ public class Collectionx {
      * The returned list has length of the shortest collection.
      */
     @NotNull
-    public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, @NotNull R[] other, @NotNull Transformer2<T, R, V> transform) {
+    public static <T, R, V> List<V> zip(@Nullable Iterable<T> iterable, @NotNull R[] other, @NotNull Transformer2<T, R, V> transform) {
         int arraySize = other.length;
         List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), arraySize));
         int i = 0;
-        for (T element : iterable) {
-            if (i >= arraySize) {
-                break;
-            } else {
-                list.add(transform.transform(element, other[i++]));
+        if (iterable != null) {
+            for (T element : iterable) {
+                if (i >= arraySize) {
+                    break;
+                } else {
+                    list.add(transform.transform(element, other[i++]));
+                }
             }
         }
         return list;
@@ -3799,7 +3853,7 @@ public class Collectionx {
      * The returned list has length of the shortest collection.
      */
     @NotNull
-    public static <T, R> List<Pair<T, R>> zip(@NotNull Iterable<T> iterable, @NotNull Iterable<R> other) {
+    public static <T, R> List<Pair<T, R>> zip(@Nullable Iterable<T> iterable, @NotNull Iterable<R> other) {
         return zip(iterable, other, new Transformer2<T, R, Pair<T, R>>() {
             @NotNull
             @Override
@@ -3815,11 +3869,11 @@ public class Collectionx {
      * The returned list has length of the shortest collection.
      */
     @NotNull
-    public static <T, R, V> List<V> zip(@NotNull Iterable<T> iterable, Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
-        Iterator<T> first = iterable.iterator();
+    public static <T, R, V> List<V> zip(@Nullable Iterable<T> iterable, Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
+        Iterator<T> first = iterable != null ? iterable.iterator() : null;
         Iterator<R> second = other.iterator();
         List<V> list = new ArrayList<V>(Math.min(collectionSizeOrDefault(iterable, 10), collectionSizeOrDefault(other, 10)));
-        while (first.hasNext() && second.hasNext()) {
+        while (first != null && first.hasNext() && second.hasNext()) {
             list.add(transform.transform(first.next(), second.next()));
         }
         return list;
@@ -3831,7 +3885,7 @@ public class Collectionx {
      * The returned list is empty if this collection contains less than two elements.
      */
     @NotNull
-    public static <T> List<Pair<T, T>> zipWithNext(@NotNull Iterable<T> iterable) {
+    public static <T> List<Pair<T, T>> zipWithNext(@Nullable Iterable<T> iterable) {
         return zipWithNext(iterable, new Transformer2<T, T, Pair<T, T>>() {
             @NotNull
             @Override
@@ -3848,9 +3902,9 @@ public class Collectionx {
      * The returned list is empty if this collection contains less than two elements.
      */
     @NotNull
-    public static <T, R> List<R> zipWithNext(@NotNull Iterable<T> iterable, @NotNull Transformer2<T, T, R> transform) {
-        Iterator<T> iterator = iterable.iterator();
-        if (!iterator.hasNext()) return Collectionx.mutableListOf();
+    public static <T, R> List<R> zipWithNext(@Nullable Iterable<T> iterable, @NotNull Transformer2<T, T, R> transform) {
+        Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
+        if (iterator == null || !iterator.hasNext()) return Collectionx.mutableListOf();
         List<R> result = Collectionx.mutableListOf();
         T current = iterator.next();
         while (iterator.hasNext()) {
@@ -3859,6 +3913,25 @@ public class Collectionx {
             current = next;
         }
         return result;
+    }
+
+    /**
+     * Returns a pair of lists, where
+     * *first* list is built from the first values of each pair from this collection,
+     * *second* list is built from the second values of each pair from this collection.
+     */
+    @NotNull
+    public static <T, R> Pair<List<T>, List<R>> unzip(@Nullable Iterable<Pair<T, R>> iterable) {
+        int expectedSize = collectionSizeOrDefault(iterable, 10);
+        List<T> listT = new ArrayList<T>(expectedSize);
+        List<R> listR = new ArrayList<R>(expectedSize);
+        if (iterable != null) {
+            for (Pair<T, R> pair : iterable) {
+                listT.add(pair.first);
+                listR.add(pair.second);
+            }
+        }
+        return Pair.of(listT, listR);
     }
 
 

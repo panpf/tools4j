@@ -131,8 +131,8 @@ Dependencies：
     * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight, reduceRightIndexed, slice, take, 
     * takeLast, takeLastWhile, takeWhile, distinct, distinctBy, intersect, retainAll, associateTo, 
     * associate, associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile, single, 
-    * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, zip, 
-    * zipWithNext, iterator, to\*Array, flatten
+    * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, zip, unzip 
+    * zipWithNext, iterator, to\*Array, flatten, requireNoNulls
 * Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
     * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo, eachCount, eachCountTo
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
