@@ -28,21 +28,32 @@ import kotlin.collections.HashMap
 import com.github.panpf.tools4j.common.Pair as Pair2
 
 class SequencexTest {
-    // todo Complete test
 
     @Test
     fun testJoinToArrayString() {
-        assertEquals(
-                "[22, 333, 1, 55555]",
-                Sequencex.joinToArrayString(Sequencex.asSequence(arrayOf("22", "333", "1", "55555")))
-        )
-        assertEquals(
-                "[2, 3, 1, 5]",
-                Sequencex.joinToArrayString(
-                        Sequencex.asSequence(arrayOf("22", "333", "1", "55555")),
-                        { t -> t.length.toString() }
-                )
-        )
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("[60, 30, 70, 20, 10]",
+                normalSequence0.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
+                Sequencex.joinToArrayString(normalSequence1) { it + "0" })
+        assertTwoEquals("[]",
+                emptySequence0.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
+                Sequencex.joinToArrayString(emptySequence1) { it + "0" })
+        assertEquals("[]",
+                Sequencex.joinToArrayString(nullSequence0) { it + "0" })
+
+        assertTwoEquals("[6, 3, 7, 2, 1]",
+                normalSequence0.joinToString(prefix = "[", postfix = "]"),
+                Sequencex.joinToArrayString(normalSequence1))
+        assertTwoEquals("[]",
+                emptySequence0.joinToString(prefix = "[", postfix = "]"),
+                Sequencex.joinToArrayString(emptySequence1))
+        assertEquals("[]",
+                Sequencex.joinToArrayString(nullSequence0))
     }
 
     /*
@@ -1333,14 +1344,14 @@ class SequencexTest {
         val sequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
-        val nullSequence1: Sequence<String>? = null
+        val nullSequence0: Sequence<String>? = null
         assertTwoEquals("7", sequence0.maxOrNull(), Sequencex.maxOrNull(sequence1))
         assertTwoEquals(null, emptySequence0.maxOrNull(), Sequencex.maxOrNull(emptySequence1))
-        assertTwoEquals(null, null, Sequencex.maxOrNull(nullSequence1))
+        assertTwoEquals(null, null, Sequencex.maxOrNull(nullSequence0))
 
         assertTwoEquals("7", sequence0.maxByOrNull { it.toInt() }, Sequencex.maxByOrNull(sequence1) { it.toInt() })
         assertTwoEquals(null, emptySequence0.maxByOrNull { it.toInt() }, Sequencex.maxByOrNull(emptySequence1) { it.toInt() })
-        assertTwoEquals(null, null, Sequencex.maxByOrNull(nullSequence1) { it.toInt() })
+        assertTwoEquals(null, null, Sequencex.maxByOrNull(nullSequence0) { it.toInt() })
 
         assertTwoEquals("1",
                 sequence0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
@@ -1350,7 +1361,7 @@ class SequencexTest {
                 Sequencex.maxWithOrNull(emptySequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
                 null,
-                Sequencex.maxWithOrNull(nullSequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                Sequencex.maxWithOrNull(nullSequence0) { it0, it1 -> it0.compareTo(it1) * -1 })
 
         assertTwoEquals(7.0,
                 sequence0.maxOf { it.toDouble() },
@@ -1358,7 +1369,7 @@ class SequencexTest {
         assertTwoThrow(NoSuchElementException::class,
                 { emptySequence0.maxOf { it.toDouble() } },
                 { Sequencex.maxOfDouble(emptySequence1) { it.toDouble() } })
-        assertThrow(NoSuchElementException::class) { Sequencex.maxOfDouble(nullSequence1) { it.toDouble() } }
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfDouble(nullSequence0) { it.toDouble() } }
 
         assertTwoEquals(7.0f,
                 sequence0.maxOf { it.toFloat() },
@@ -1366,23 +1377,23 @@ class SequencexTest {
         assertTwoThrow(NoSuchElementException::class,
                 { emptySequence0.maxOf { it.toFloat() } },
                 { Sequencex.maxOfFloat(emptySequence1) { it.toFloat() } })
-        assertThrow(NoSuchElementException::class) { Sequencex.maxOfFloat(nullSequence1) { it.toFloat() } }
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfFloat(nullSequence0) { it.toFloat() } }
 
         assertTwoEquals(7.0, sequence0.maxOfOrNull { it.toDouble() }, Sequencex.maxOfDoubleOrNull(sequence1) { it.toDouble() })
         assertTwoEquals(null, emptySequence0.maxOfOrNull { it.toDouble() }, Sequencex.maxOfDoubleOrNull(emptySequence1) { it.toDouble() })
-        assertTwoEquals(null, null, Sequencex.maxOfDoubleOrNull(nullSequence1) { it.toDouble() })
+        assertTwoEquals(null, null, Sequencex.maxOfDoubleOrNull(nullSequence0) { it.toDouble() })
 
         assertTwoEquals(7.0f, sequence0.maxOfOrNull { it.toFloat() }, Sequencex.maxOfFloatOrNull(sequence1) { it.toFloat() })
         assertTwoEquals(null, emptySequence0.maxOfOrNull { it.toFloat() }, Sequencex.maxOfFloatOrNull(emptySequence1) { it.toFloat() })
-        assertTwoEquals(null, null, Sequencex.maxOfFloatOrNull(nullSequence1) { it.toFloat() })
+        assertTwoEquals(null, null, Sequencex.maxOfFloatOrNull(nullSequence0) { it.toFloat() })
 
         assertTwoEquals("7", sequence0.maxOf { it }, Sequencex.maxOf(sequence1) { it })
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.maxOf { it } }, { Sequencex.maxOf(emptySequence1) { it } })
-        assertThrow(NoSuchElementException::class) { Sequencex.maxOf(nullSequence1) { it } }
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOf(nullSequence0) { it } }
 
         assertTwoEquals("7", sequence0.maxOfOrNull { it }, Sequencex.maxOfOrNull(sequence1) { it })
         assertTwoEquals(null, emptySequence0.maxOfOrNull { it }, Sequencex.maxOfOrNull(emptySequence1) { it })
-        assertTwoEquals(null, null, Sequencex.maxOfOrNull(nullSequence1) { it })
+        assertTwoEquals(null, null, Sequencex.maxOfOrNull(nullSequence0) { it })
 
         assertTwoEquals("1",
                 sequence0.maxOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
@@ -1391,7 +1402,7 @@ class SequencexTest {
                 { emptySequence0.maxOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
                 { Sequencex.maxOfWith(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
         )
-        assertThrow(NoSuchElementException::class) { Sequencex.maxOfWith(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        assertThrow(NoSuchElementException::class) { Sequencex.maxOfWith(nullSequence0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
 
         assertTwoEquals("1",
                 sequence0.maxOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
@@ -1400,7 +1411,7 @@ class SequencexTest {
                 emptySequence0.maxOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
                 Sequencex.maxOfWithOrNull(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
         )
-        assertTwoEquals(null, null, Sequencex.maxOfWithOrNull(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null, null, Sequencex.maxOfWithOrNull(nullSequence0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 
     @Test
@@ -1428,14 +1439,14 @@ class SequencexTest {
         val sequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
-        val nullSequence1: Sequence<String>? = null
+        val nullSequence0: Sequence<String>? = null
         assertTwoEquals("1", sequence0.minOrNull(), Sequencex.minOrNull(sequence1))
         assertTwoEquals(null, emptySequence0.minOrNull(), Sequencex.minOrNull(emptySequence1))
-        assertTwoEquals(null, null, Sequencex.minOrNull(nullSequence1))
+        assertTwoEquals(null, null, Sequencex.minOrNull(nullSequence0))
 
         assertTwoEquals("1", sequence0.minByOrNull { it.toInt() }, Sequencex.minByOrNull(sequence1) { it.toInt() })
         assertTwoEquals(null, emptySequence0.minByOrNull { it.toInt() }, Sequencex.minByOrNull(emptySequence1) { it.toInt() })
-        assertTwoEquals(null, null, Sequencex.minByOrNull(nullSequence1) { it.toInt() })
+        assertTwoEquals(null, null, Sequencex.minByOrNull(nullSequence0) { it.toInt() })
 
         assertTwoEquals("7",
                 sequence0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
@@ -1445,7 +1456,7 @@ class SequencexTest {
                 Sequencex.minWithOrNull(emptySequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
                 null,
-                Sequencex.minWithOrNull(nullSequence1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                Sequencex.minWithOrNull(nullSequence0) { it0, it1 -> it0.compareTo(it1) * -1 })
 
         assertTwoEquals(1.0,
                 sequence0.minOf { it.toDouble() },
@@ -1453,7 +1464,7 @@ class SequencexTest {
         assertTwoThrow(NoSuchElementException::class,
                 { emptySequence0.minOf { it.toDouble() } },
                 { Sequencex.minOfDouble(emptySequence1) { it.toDouble() } })
-        assertThrow(NoSuchElementException::class) { Sequencex.minOfDouble(nullSequence1) { it.toDouble() } }
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfDouble(nullSequence0) { it.toDouble() } }
 
         assertTwoEquals(1.0f,
                 sequence0.minOf { it.toFloat() },
@@ -1461,23 +1472,23 @@ class SequencexTest {
         assertTwoThrow(NoSuchElementException::class,
                 { emptySequence0.minOf { it.toFloat() } },
                 { Sequencex.minOfFloat(emptySequence1) { it.toFloat() } })
-        assertThrow(NoSuchElementException::class) { Sequencex.minOfFloat(nullSequence1) { it.toFloat() } }
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfFloat(nullSequence0) { it.toFloat() } }
 
         assertTwoEquals(1.0, sequence0.minOfOrNull { it.toDouble() }, Sequencex.minOfDoubleOrNull(sequence1) { it.toDouble() })
         assertTwoEquals(null, emptySequence0.minOfOrNull { it.toDouble() }, Sequencex.minOfDoubleOrNull(emptySequence1) { it.toDouble() })
-        assertTwoEquals(null, null, Sequencex.minOfDoubleOrNull(nullSequence1) { it.toDouble() })
+        assertTwoEquals(null, null, Sequencex.minOfDoubleOrNull(nullSequence0) { it.toDouble() })
 
         assertTwoEquals(1.0f, sequence0.minOfOrNull { it.toFloat() }, Sequencex.minOfFloatOrNull(sequence1) { it.toFloat() })
         assertTwoEquals(null, emptySequence0.minOfOrNull { it.toFloat() }, Sequencex.minOfFloatOrNull(emptySequence1) { it.toFloat() })
-        assertTwoEquals(null, null, Sequencex.minOfFloatOrNull(nullSequence1) { it.toFloat() })
+        assertTwoEquals(null, null, Sequencex.minOfFloatOrNull(nullSequence0) { it.toFloat() })
 
         assertTwoEquals("1", sequence0.minOf { it }, Sequencex.minOf(sequence1) { it })
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.minOf { it } }, { Sequencex.minOf(emptySequence1) { it } })
-        assertThrow(NoSuchElementException::class) { Sequencex.minOf(nullSequence1) { it } }
+        assertThrow(NoSuchElementException::class) { Sequencex.minOf(nullSequence0) { it } }
 
         assertTwoEquals("1", sequence0.minOfOrNull { it }, Sequencex.minOfOrNull(sequence1) { it })
         assertTwoEquals(null, emptySequence0.minOfOrNull { it }, Sequencex.minOfOrNull(emptySequence1) { it })
-        assertTwoEquals(null, null, Sequencex.minOfOrNull(nullSequence1) { it })
+        assertTwoEquals(null, null, Sequencex.minOfOrNull(nullSequence0) { it })
 
         assertTwoEquals("7",
                 sequence0.minOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
@@ -1486,7 +1497,7 @@ class SequencexTest {
                 { emptySequence0.minOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
                 { Sequencex.minOfWith(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
         )
-        assertThrow(NoSuchElementException::class) { Sequencex.minOfWith(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        assertThrow(NoSuchElementException::class) { Sequencex.minOfWith(nullSequence0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
 
         assertTwoEquals("7",
                 sequence0.minOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
@@ -1495,7 +1506,7 @@ class SequencexTest {
                 emptySequence0.minOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
                 Sequencex.minOfWithOrNull(emptySequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
         )
-        assertTwoEquals(null, null, Sequencex.minOfWithOrNull(nullSequence1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null, null, Sequencex.minOfWithOrNull(nullSequence0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 
     @Test
@@ -1504,16 +1515,16 @@ class SequencexTest {
         val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
-        val nullSequence1: Sequence<String>? = null
+        val nullSequence0: Sequence<String>? = null
 
         assertTwoEquals(false, normalSequence0.none(), Sequencex.none(normalSequence1))
         assertTwoEquals(true, emptySequence0.none(), Sequencex.none(emptySequence1))
-        assertTrue(Sequencex.none(nullSequence1))
+        assertTrue(Sequencex.none(nullSequence0))
 
-        assertTwoEquals(true, normalSequence0.none{it.length > 1}, Sequencex.none(normalSequence1){it.length > 1})
-        assertTwoEquals(false, normalSequence0.none{ it.isNotEmpty() }, Sequencex.none(normalSequence1){ it.isNotEmpty() })
-        assertTwoEquals(true, emptySequence0.none{it.length > 1}, Sequencex.none(emptySequence1){it.length > 1})
-        assertTrue(Sequencex.none(nullSequence1){it.length > 1})
+        assertTwoEquals(true, normalSequence0.none { it.length > 1 }, Sequencex.none(normalSequence1) { it.length > 1 })
+        assertTwoEquals(false, normalSequence0.none { it.isNotEmpty() }, Sequencex.none(normalSequence1) { it.isNotEmpty() })
+        assertTwoEquals(true, emptySequence0.none { it.length > 1 }, Sequencex.none(emptySequence1) { it.length > 1 })
+        assertTrue(Sequencex.none(nullSequence0) { it.length > 1 })
     }
 
     @Test
@@ -1522,25 +1533,25 @@ class SequencexTest {
         val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
-        val nullSequence1: Sequence<String>? = null
+        val nullSequence0: Sequence<String>? = null
 
         assertTwoEquals("63721",
-                normalSequence0.reduce{it0, it1 -> it0 + it1},
-                Sequencex.reduce(normalSequence1){it0, it1 -> it0 + it1})
+                normalSequence0.reduce { it0, it1 -> it0 + it1 },
+                Sequencex.reduce(normalSequence1) { it0, it1 -> it0 + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
-                {emptySequence0.reduce{it0, it1 -> it0 + it1}},
-                {Sequencex.reduce(emptySequence1){it0, it1 -> it0 + it1}})
+                { emptySequence0.reduce { it0, it1 -> it0 + it1 } },
+                { Sequencex.reduce(emptySequence1) { it0, it1 -> it0 + it1 } })
         assertThrow(UnsupportedOperationException::class)
-        { Sequencex.reduce(nullSequence1) { it0, it1 -> it0 + it1 } }
+        { Sequencex.reduce(nullSequence0) { it0, it1 -> it0 + it1 } }
 
         assertTwoEquals("613273241",
-                normalSequence0.reduceIndexed{i, it0, it1 -> it0 +i + it1},
-                Sequencex.reduceIndexed(normalSequence1){i, it0, it1 -> it0 +i + it1})
+                normalSequence0.reduceIndexed { i, it0, it1 -> it0 + i + it1 },
+                Sequencex.reduceIndexed(normalSequence1) { i, it0, it1 -> it0 + i + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
-                {emptySequence0.reduceIndexed{i, it0, it1 -> it0 +i + it1}},
-                {Sequencex.reduceIndexed(emptySequence1){i, it0, it1 -> it0 +i + it1}})
+                { emptySequence0.reduceIndexed { i, it0, it1 -> it0 + i + it1 } },
+                { Sequencex.reduceIndexed(emptySequence1) { i, it0, it1 -> it0 + i + it1 } })
         assertThrow(UnsupportedOperationException::class)
-        { Sequencex.reduceIndexed(nullSequence1) { i, it0, it1 -> it0 +i + it1 } }
+        { Sequencex.reduceIndexed(nullSequence0) { i, it0, it1 -> it0 + i + it1 } }
     }
 
     @Test
@@ -1549,13 +1560,13 @@ class SequencexTest {
         val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
-        val nullSequence1: Sequence<String>? = null
-        assertTwoEquals(19, normalSequence0.sumBy{it.toInt()}, Sequencex.sumBy(normalSequence1){it.toInt()})
+        val nullSequence0: Sequence<String>? = null
+        assertTwoEquals(19, normalSequence0.sumBy { it.toInt() }, Sequencex.sumBy(normalSequence1) { it.toInt() })
         assertTwoEquals(0, emptySequence0.sumBy { it.toInt() }, Sequencex.sumBy(emptySequence1) { it.toInt() })
-        assertEquals(0, Sequencex.sumBy(nullSequence1) { it.toInt() })
-        assertTwoEquals(19.0, normalSequence0.sumByDouble{it.toDouble()}, Sequencex.sumByDouble(normalSequence1){it.toDouble()})
+        assertEquals(0, Sequencex.sumBy(nullSequence0) { it.toInt() })
+        assertTwoEquals(19.0, normalSequence0.sumByDouble { it.toDouble() }, Sequencex.sumByDouble(normalSequence1) { it.toDouble() })
         assertTwoEquals(0.0, emptySequence0.sumByDouble { it.toDouble() }, Sequencex.sumByDouble(emptySequence1) { it.toDouble() })
-        assertTwoEquals(0.0, 0.0, Sequencex.sumByDouble(nullSequence1) { it.toDouble() })
+        assertTwoEquals(0.0, 0.0, Sequencex.sumByDouble(nullSequence0) { it.toDouble() })
 
         val normalByteSequence0 = sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
         val normalByteSequence1 = Sequencex.sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
@@ -1610,6 +1621,381 @@ class SequencexTest {
         assertTwoEquals(19.toDouble(), normalDoubleSequence0.sum(), Sequencex.sumOfDouble(normalDoubleSequence1))
         assertTwoEquals(0.toDouble(), emptyDoubleSequence0.sum(), Sequencex.sumOfDouble(emptyDoubleSequence1))
         assertTwoEquals(0.toDouble(), 0.toDouble(), Sequencex.sumOfDouble(nullDoubleSequence1))
+    }
+
+    @Test
+    fun testRequireNoNulls() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val nullableSequence0 = sequenceOf("6", null, "7", "2", null)
+        val nullableSequence1 = Sequencex.sequenceOf("6", null, "7", "2", null)
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.requireNoNulls().joinToString(),
+                Sequencex.joinToString(Sequencex.requireNoNulls(normalSequence1)))
+        assertTwoThrow(IllegalArgumentException::class,
+                { nullableSequence0.requireNoNulls().joinToString() },
+                { Sequencex.joinToString(Sequencex.requireNoNulls(nullableSequence1)) })
+        assertTwoEquals("",
+                emptySequence0.requireNoNulls().joinToString(),
+                Sequencex.joinToString(Sequencex.requireNoNulls(emptySequence1)))
+        assertEquals("", Sequencex.joinToString(Sequencex.requireNoNulls(nullSequence0)))
+    }
+
+    @Test
+    fun testMinus() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("6, 7, 2, 1",
+                normalSequence0.minus("3").joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, "3")))
+        assertTwoEquals("",
+                emptySequence0.minus("3").joinToString(),
+                Sequencex.joinToString(Sequencex.minus(emptySequence1, "3")))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, "3")))
+
+        assertTwoEquals("6, 7, 2",
+                normalSequence0.minus(arrayOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, arrayOf("3", "1"))))
+        assertTwoEquals("",
+                emptySequence0.minus(arrayOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(emptySequence1, arrayOf("3", "1"))))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, arrayOf("3", "1"))))
+
+        assertTwoEquals("6, 7, 2",
+                normalSequence0.minus(listOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, listOf("3", "1"))))
+        assertTwoEquals("",
+                emptySequence0.minus(listOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(emptySequence1, listOf("3", "1"))))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, listOf("3", "1"))))
+
+        assertTwoEquals("6, 7, 2",
+                normalSequence0.minus(sequenceOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, Sequencex.sequenceOf("3", "1"))))
+        assertTwoEquals("",
+                emptySequence0.minus(sequenceOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(emptySequence1, Sequencex.sequenceOf("3", "1"))))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, Sequencex.sequenceOf("3", "1"))))
+
+        assertTwoEquals("6, 7, 2, 1",
+                normalSequence0.minusElement("3").joinToString(),
+                Sequencex.joinToString(Sequencex.minusElement(normalSequence1, "3")))
+        assertTwoEquals("",
+                emptySequence0.minusElement("3").joinToString(),
+                Sequencex.joinToString(Sequencex.minusElement(emptySequence1, "3")))
+        assertEquals("", Sequencex.joinToString(Sequencex.minusElement(nullSequence0, "3")))
+    }
+
+    @Test
+    fun testPartition() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("([6, 2], [3, 7, 1])",
+                normalSequence0.partition { it.toInt() % 2 == 0 }.toString(),
+                Sequencex.partition(normalSequence1) { it.toInt() % 2 == 0 }.toString())
+        assertTwoEquals("([], [])",
+                emptySequence0.partition { it.toInt() % 2 == 0 }.toString(),
+                Sequencex.partition(emptySequence1) { it.toInt() % 2 == 0 }.toString())
+        assertEquals("([], [])", Sequencex.partition(nullSequence0) { it.toInt() % 2 == 0 }.toString())
+    }
+
+    @Test
+    fun testPlus() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("6, 3, 7, 2, 1, 9",
+                normalSequence0.plus("9").joinToString(),
+                Sequencex.joinToString(Sequencex.plus(normalSequence1, "9")))
+        assertTwoEquals("9",
+                emptySequence0.plus("9").joinToString(),
+                Sequencex.joinToString(Sequencex.plus(emptySequence1, "9")))
+        assertEquals("9", Sequencex.joinToString(Sequencex.plus(nullSequence0, "9")))
+
+        assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
+                normalSequence0.plus(arrayOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(normalSequence1, arrayOf("9", "4"))))
+        assertTwoEquals("9, 4",
+                emptySequence0.plus(arrayOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(emptySequence1, arrayOf("9", "4"))))
+        assertEquals("9, 4", Sequencex.joinToString(Sequencex.plus(nullSequence0, arrayOf("9", "4"))))
+
+        assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
+                normalSequence0.plus(listOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(normalSequence1, listOf("9", "4"))))
+        assertTwoEquals("9, 4",
+                emptySequence0.plus(listOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(emptySequence1, listOf("9", "4"))))
+        assertEquals("9, 4", Sequencex.joinToString(Sequencex.plus(nullSequence0, listOf("9", "4"))))
+
+        assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
+                normalSequence0.plus(sequenceOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(normalSequence1, Sequencex.sequenceOf("9", "4"))))
+        assertTwoEquals("9, 4",
+                emptySequence0.plus(sequenceOf("9", "4")).joinToString(),
+                Sequencex.joinToString(Sequencex.plus(emptySequence1, Sequencex.sequenceOf("9", "4"))))
+        assertEquals("9, 4", Sequencex.joinToString(Sequencex.plus(nullSequence0, Sequencex.sequenceOf("9", "4"))))
+
+        assertTwoEquals("6, 3, 7, 2, 1, 9",
+                normalSequence0.plusElement("9").joinToString(),
+                Sequencex.joinToString(Sequencex.plusElement(normalSequence1, "9")))
+        assertTwoEquals("9",
+                emptySequence0.plusElement("9").joinToString(),
+                Sequencex.joinToString(Sequencex.plusElement(emptySequence1, "9")))
+        assertEquals("9", Sequencex.joinToString(Sequencex.plusElement(nullSequence0, "9")))
+    }
+
+    @Test
+    fun testZip() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence00 = sequenceOf("4", "9", "5")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence11 = Sequencex.sequenceOf("4", "9", "5")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("(6, 4), (3, 9), (7, 5)",
+                normalSequence0.zip(normalSequence00).joinToString(),
+                Sequencex.joinToString(Sequencex.zip(normalSequence1, normalSequence11)))
+        assertTwoEquals("",
+                emptySequence0.zip(normalSequence00).joinToString(),
+                Sequencex.joinToString(Sequencex.zip(emptySequence1, normalSequence11)))
+        assertEquals("", Sequencex.joinToString(Sequencex.zip(nullSequence0, normalSequence11)))
+
+        assertTwoEquals("64, 39, 75",
+                normalSequence0.zip(normalSequence00) { it0, it1 -> it0 + it1 }.joinToString(),
+                Sequencex.joinToString(Sequencex.zip(normalSequence1, normalSequence11) { it0, it1 -> it0 + it1 }))
+        assertTwoEquals("",
+                emptySequence0.zip(normalSequence00) { it0, it1 -> it0 + it1 }.joinToString(),
+                Sequencex.joinToString(Sequencex.zip(emptySequence1, normalSequence11) { it0, it1 -> it0 + it1 }))
+        assertEquals("", Sequencex.joinToString(Sequencex.zip(nullSequence0, normalSequence11) { it0, it1 -> it0 + it1 }))
+
+        assertTwoEquals("([6, 3, 7], [4, 9, 5])",
+                normalSequence0.zip(normalSequence00).unzip().toString(),
+                Sequencex.unzip(Sequencex.zip(normalSequence1, normalSequence11)).toString())
+        assertTwoEquals("([], [])",
+                sequenceOf<Pair<String, String>>().unzip().toString(),
+                Sequencex.unzip(Sequencex.sequenceOf<com.github.panpf.tools4j.common.Pair<String, String>>()).toString())
+        assertEquals("([], [])", Sequencex.unzip(null as Sequence<com.github.panpf.tools4j.common.Pair<String, String>>?).toString())
+    }
+
+    @Test
+    fun testJoinTo() {
+        val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
+        val normalSequence1 = Sequencex.sequenceOf("6", "3", "7", "2", "1")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence0: Sequence<String>? = null
+
+        assertTwoEquals("^60:30:70:20:***$",
+                normalSequence0.joinTo(buffer = StringBuilder(), separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), ":", "^", "$", 4, "***", { it + "0" }).toString())
+        assertTwoEquals("^60, 30, 70, 20, ***$",
+                normalSequence0.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, "^", "$", 4, "***", { it + "0" }).toString())
+        assertTwoEquals("60, 30, 70, 20, ***$",
+                normalSequence0.joinTo(buffer = StringBuilder(), postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, "$", 4, "***", { it + "0" }).toString())
+        assertTwoEquals("60, 30, 70, 20, ***",
+                normalSequence0.joinTo(buffer = StringBuilder(), limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, 4, "***", { it + "0" }).toString())
+        assertTwoEquals("60, 30, 70, 20, ...",
+                normalSequence0.joinTo(buffer = StringBuilder(), limit = 4, transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, 4, null, { it + "0" }).toString())
+        assertTwoEquals("60, 30, 70, 20, 10",
+                normalSequence0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, -1, null, { it + "0" }).toString())
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.joinTo(buffer = StringBuilder()).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, -1, null, null).toString())
+        assertTwoEquals("^$",
+                emptySequence0.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$").toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder(), null, "^", "$", -1, null, null).toString())
+        assertTwoEquals("",
+                emptySequence0.joinTo(buffer = StringBuilder()).toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder(), null, null, null, -1, null, null).toString())
+        assertEquals("^$",
+                Sequencex.joinTo(nullSequence0, StringBuilder(), null, "^", "$", -1, null, null).toString())
+        assertEquals("",
+                Sequencex.joinTo(nullSequence0, StringBuilder(), null, null, null, -1, null, null).toString())
+
+        assertTwoEquals("60,30,70,20,10",
+                normalSequence0.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), ",", { it + "0" }).toString())
+        assertTwoEquals("",
+                emptySequence0.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder(), ",", { it + "0" }).toString())
+        assertEquals("",
+                Sequencex.joinTo(nullSequence0, StringBuilder(), ",", { it + "0" }).toString())
+
+        assertTwoEquals("60, 30, 70, 20, 10",
+                normalSequence0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), { it + "0" }).toString())
+        assertTwoEquals("",
+                emptySequence0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder(), { it + "0" }).toString())
+        assertEquals("",
+                Sequencex.joinTo(nullSequence0, StringBuilder(), { it + "0" }).toString())
+
+        assertTwoEquals("6,3,7,2,1",
+                normalSequence0.joinTo(buffer = StringBuilder(), separator = ",").toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), ",").toString())
+        assertTwoEquals("",
+                emptySequence0.joinTo(buffer = StringBuilder(), separator = ",").toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder(), ",").toString())
+        assertEquals("",
+                Sequencex.joinTo(nullSequence0, StringBuilder(), ",").toString())
+
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.joinTo(buffer = StringBuilder()).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder()).toString())
+        assertTwoEquals("",
+                emptySequence0.joinTo(buffer = StringBuilder()).toString(),
+                Sequencex.joinTo(emptySequence1, StringBuilder()).toString())
+        assertEquals("",
+                Sequencex.joinTo(nullSequence0, StringBuilder()).toString())
+
+
+        assertTwoEquals("^60:30:70:20:***$",
+                normalSequence0.joinToString(separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, ":", "^", "$", 4, "***") { it + "0" })
+        assertTwoEquals("^60, 30, 70, 20, ***$",
+                normalSequence0.joinToString(prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, null, "^", "$", 4, "***") { it + "0" })
+        assertTwoEquals("60, 30, 70, 20, ***$",
+                normalSequence0.joinToString(postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, null, null, "$", 4, "***") { it + "0" })
+        assertTwoEquals("60, 30, 70, 20, ***",
+                normalSequence0.joinToString(limit = 4, truncated = "***", transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, null, null, null, 4, "***") { it + "0" })
+        assertTwoEquals("60, 30, 70, 20, ...",
+                normalSequence0.joinToString(limit = 4, transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, null, null, null, 4, null) { it + "0" })
+        assertTwoEquals("60, 30, 70, 20, 10",
+                normalSequence0.joinToString(transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, null, null, null, -1, null) { it + "0" })
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.joinToString(),
+                Sequencex.joinToString(normalSequence1, null, null, null, -1, null, null))
+        assertTwoEquals("^$",
+                emptySequence0.joinToString(prefix = "^", postfix = "$"),
+                Sequencex.joinToString(emptySequence1, null, "^", "$", -1, null, null))
+        assertTwoEquals("",
+                emptySequence0.joinToString(),
+                Sequencex.joinToString(emptySequence1, null, null, null, -1, null, null))
+        assertEquals("^$",
+                Sequencex.joinToString(nullSequence0, null, "^", "$", -1, null, null))
+        assertEquals("",
+                Sequencex.joinToString(nullSequence0, null, null, null, -1, null, null))
+
+        assertTwoEquals("60,30,70,20,10",
+                normalSequence0.joinToString(separator = ",", transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1, ",") { it + "0" })
+        assertTwoEquals("",
+                emptySequence0.joinToString(separator = ",", transform = { it + "0" }),
+                Sequencex.joinToString(emptySequence1, ",") { it + "0" })
+        assertEquals("",
+                Sequencex.joinToString(nullSequence0, ",") { it + "0" })
+
+        assertTwoEquals("60, 30, 70, 20, 10",
+                normalSequence0.joinToString(transform = { it + "0" }),
+                Sequencex.joinToString(normalSequence1) { it + "0" })
+        assertTwoEquals("",
+                emptySequence0.joinToString(transform = { it + "0" }),
+                Sequencex.joinToString(emptySequence1) { it + "0" })
+        assertEquals("",
+                Sequencex.joinToString(nullSequence0) { it + "0" })
+
+        assertTwoEquals("6,3,7,2,1",
+                normalSequence0.joinToString(separator = ","),
+                Sequencex.joinToString(normalSequence1, ","))
+        assertTwoEquals("",
+                emptySequence0.joinToString(separator = ","),
+                Sequencex.joinToString(emptySequence1, ","))
+        assertEquals("",
+                Sequencex.joinToString(nullSequence0, ","))
+
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.joinToString(),
+                Sequencex.joinToString(normalSequence1))
+        assertTwoEquals("",
+                emptySequence0.joinToString(),
+                Sequencex.joinToString(emptySequence1))
+        assertEquals("",
+                Sequencex.joinToString(nullSequence0))
+    }
+
+    @Test
+    fun testAverage() {
+        val normalByteSequence0 = sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val normalByteSequence1 = Sequencex.sequenceOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val emptyByteSequence0 = sequenceOf<Byte>()
+        val emptyByteSequence1 = Sequencex.sequenceOf<Byte>()
+        val nullByteSequence1: Sequence<Byte>? = null
+        assertTwoEquals(3.8, normalByteSequence0.average(), Sequencex.averageOfByte(normalByteSequence1))
+        assertTwoEquals(Double.NaN, emptyByteSequence0.average(), Sequencex.averageOfByte(emptyByteSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfByte(nullByteSequence1))
+
+        val normalShortSequence0 = sequenceOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val normalShortSequence1 = Sequencex.sequenceOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val emptyShortSequence0 = sequenceOf<Short>()
+        val emptyShortSequence1 = Sequencex.sequenceOf<Short>()
+        val nullShortSequence1: Sequence<Short>? = null
+        assertTwoEquals(3.8, normalShortSequence0.average(), Sequencex.averageOfShort(normalShortSequence1))
+        assertTwoEquals(Double.NaN, emptyShortSequence0.average(), Sequencex.averageOfShort(emptyShortSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfShort(nullShortSequence1))
+
+        val normalIntSequence0 = sequenceOf(6, 3, 7, 2, 1)
+        val normalIntSequence1 = Sequencex.sequenceOf(6, 3, 7, 2, 1)
+        val emptyIntSequence0 = sequenceOf<Int>()
+        val emptyIntSequence1 = Sequencex.sequenceOf<Int>()
+        val nullIntSequence1: Sequence<Int>? = null
+        assertTwoEquals(3.8, normalIntSequence0.average(), Sequencex.averageOfInt(normalIntSequence1))
+        assertTwoEquals(Double.NaN, emptyIntSequence0.average(), Sequencex.averageOfInt(emptyIntSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfInt(nullIntSequence1))
+
+        val normalLongSequence0 = sequenceOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val normalLongSequence1 = Sequencex.sequenceOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val emptyLongSequence0 = sequenceOf<Long>()
+        val emptyLongSequence1 = Sequencex.sequenceOf<Long>()
+        val nullLongSequence1: Sequence<Long>? = null
+        assertTwoEquals(3.8, normalLongSequence0.average(), Sequencex.averageOfLong(normalLongSequence1))
+        assertTwoEquals(Double.NaN, emptyLongSequence0.average(), Sequencex.averageOfLong(emptyLongSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfLong(nullLongSequence1))
+
+        val normalFloatSequence0 = sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val normalFloatSequence1 = Sequencex.sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val emptyFloatSequence0 = sequenceOf<Float>()
+        val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
+        val nullFloatSequence1: Sequence<Float>? = null
+        assertTwoEquals(3.8, normalFloatSequence0.average(), Sequencex.averageOfFloat(normalFloatSequence1))
+        assertTwoEquals(Double.NaN, emptyFloatSequence0.average(), Sequencex.averageOfFloat(emptyFloatSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfFloat(nullFloatSequence1))
+
+        val normalDoubleSequence0 = sequenceOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val normalDoubleSequence1 = Sequencex.sequenceOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val emptyDoubleSequence0 = sequenceOf<Double>()
+        val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
+        val nullDoubleSequence1: Sequence<Double>? = null
+        assertTwoEquals(3.8, normalDoubleSequence0.average(), Sequencex.averageOfDouble(normalDoubleSequence1))
+        assertTwoEquals(Double.NaN, emptyDoubleSequence0.average(), Sequencex.averageOfDouble(emptyDoubleSequence1))
+        assertTwoEquals(Double.NaN, Double.NaN, Sequencex.averageOfDouble(nullDoubleSequence1))
     }
 
 
