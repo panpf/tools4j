@@ -40,8 +40,8 @@ public class Sequencex {
      * Creates a string from all the elements separated using ', ' and using the given '[' and ']' if supplied.
      */
     @NotNull
-    public static <T> String joinToArrayString(@Nullable Sequence<T> sequence, @Nullable Transformer<T, CharSequence> transform) {
-        return joinToString(sequence, ", ", "[", "]", -1, "...", transform);
+    public static <T> String joinToArrayString(@Nullable Sequence<T> sequence, @NotNull Transformer<T, CharSequence> transform) {
+        return joinToString(sequence, null, "[", "]", -1, null, transform);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> String joinToArrayString(@Nullable Sequence<T> sequence) {
-        return joinToString(sequence, ", ", "[", "]", -1, "...", null);
+        return joinToString(sequence, null, "[", "]", -1, null, null);
     }
 
 
@@ -99,8 +99,7 @@ public class Sequencex {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                //noinspection unchecked
-                return iterator != null ? iterator : (Iterator<T>) emptySequence().iterator();
+                return iterator != null ? iterator : Sequencex.<T>emptySequence().iterator();
             }
         });
     }
@@ -114,8 +113,7 @@ public class Sequencex {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                //noinspection unchecked
-                return iterable != null ? iterable.iterator() : (Iterator<T>) emptySequence().iterator();
+                return iterable != null ? iterable.iterator() : Sequencex.<T>emptySequence().iterator();
             }
         };
     }
@@ -272,8 +270,7 @@ public class Sequencex {
             @NotNull
             @Override
             public Iterator<T> iterator() {
-                //noinspection unchecked
-                return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
+                return sequence != null ? sequence.iterator() : Sequencex.<T>emptySequence().iterator();
             }
         };
     }
@@ -287,8 +284,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> sequenceOf(T... elements) {
-        //noinspection unchecked
-        return elements.length > 0 ? asSequence(elements) : (Sequence<T>) emptySequence();
+        return elements.length > 0 ? asSequence(elements) : Sequencex.<T>emptySequence();
     }
 
     /**
@@ -878,7 +874,7 @@ public class Sequencex {
             throw new IllegalArgumentException("Param 'n' is less than to zero.");
         }
         if (n == 0) {
-            return emptySequence();
+            return Sequencex.<T>emptySequence();
         } else if (sequence instanceof DropTakeSequence) {
             return ((DropTakeSequence<T>) sequence).take(n);
         } else {
@@ -2930,7 +2926,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final T element) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @NotNull final T element) {
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -2960,8 +2956,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final T[] elements) {
-        if (elements == null || elements.length <= 0) return sequence != null ? sequence : Sequencex.<T>emptySequence();
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @NotNull final T[] elements) {
+        if (elements.length <= 0) return sequence != null ? sequence : Sequencex.<T>emptySequence();
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -2987,7 +2983,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateful_.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final Iterable<T> elements) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @NotNull final Iterable<T> elements) {
         return new Sequence<T>() {
             @NotNull
             @Override
@@ -3006,15 +3002,12 @@ public class Sequencex {
                     }
                 } else {
                     other = new HashSet<T>();
-                    if (elements != null) {
-                        for (T item : elements) {
-                            other.add(item);
-                        }
+                    for (T item : elements) {
+                        other.add(item);
                     }
                 }
                 if (other.isEmpty()) {
-                    //noinspection unchecked
-                    return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
+                    return sequence != null ? sequence.iterator() : Sequencex.<T>emptySequence().iterator();
                 } else {
                     return filterNot(sequence, new Predicate<T>() {
                         @Override
@@ -3036,15 +3029,14 @@ public class Sequencex {
      * The operation is _intermediate_ for this sequence and _terminal_ and _stateful_ for the [elements] sequence.
      */
     @NotNull
-    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @Nullable final Sequence<T> elements) {
+    public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @NotNull final Sequence<T> elements) {
         return new Sequence<T>() {
             @NotNull
             @Override
             public Iterator<T> iterator() {
                 final Set<T> other = toHashSet(elements);
                 if (other.isEmpty()) {
-                    //noinspection unchecked
-                    return sequence != null ? sequence.iterator() : (Iterator<T>) emptySequence().iterator();
+                    return sequence != null ? sequence.iterator() : Sequencex.<T>emptySequence().iterator();
                 }
                 return filterNot(sequence, new Predicate<T>() {
                     @Override
@@ -3062,7 +3054,7 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> minusElement(@Nullable Sequence<T> sequence, @Nullable T element) {
+    public static <T> Sequence<T> minusElement(@Nullable Sequence<T> sequence, @NotNull T element) {
         return minus(sequence, element);
     }
 
@@ -3105,9 +3097,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable T element) {
-        //noinspection unchecked
-        return flatten(sequenceOf(sequence, sequenceOf(element)));
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull T element) {
+        return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), sequenceOf(element)));
     }
 
     /**
@@ -3119,9 +3110,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable T[] elements) {
-        //noinspection unchecked
-        return flatten(sequenceOf(sequence, asSequence(elements)));
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull T[] elements) {
+        return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), asSequence(elements)));
     }
 
     /**
@@ -3133,9 +3123,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable Iterable<T> elements) {
-        //noinspection unchecked
-        return flatten(sequenceOf(sequence, asSequence(elements)));
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull Iterable<T> elements) {
+        return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), asSequence(elements)));
     }
 
     /**
@@ -3147,9 +3136,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @Nullable Sequence<T> elements) {
-        //noinspection unchecked
-        return flatten(sequenceOf(sequence, elements));
+    public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull Sequence<T> elements) {
+        return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), elements));
     }
 
     /**
@@ -3158,8 +3146,8 @@ public class Sequencex {
      * The operation is _intermediate_ and _stateless_.
      */
     @NotNull
-    public static <T> Sequence<T> plusElement(@Nullable Sequence<T> sequence, @Nullable T element) {
-        return plus(sequence, element);
+    public static <T> Sequence<T> plusElement(@Nullable Sequence<T> sequence, @NotNull T element) {
+        return plus(sequence != null ? sequence : Sequencex.<T>emptySequence(), element);
     }
 
 
@@ -3368,7 +3356,20 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T, A extends Appendable> A joinTo(@Nullable Sequence<T> sequence, @NotNull A buffer, @Nullable Transformer<T, CharSequence> transform) {
+    public static <T, A extends Appendable> A joinTo(
+            @Nullable Sequence<T> sequence, @NotNull A buffer, @NotNull CharSequence separator, @NotNull Transformer<T, CharSequence> transform) {
+        return joinTo(sequence, buffer, separator, null, null, -1, null, transform);
+    }
+
+    /**
+     * Appends the string from all the elements separated using [separator] and using the given [prefix] and [postfix] if supplied.
+     * <p>
+     * If the collection could be huge, you can specify a non-negative value of [limit], in which case only the first [limit]
+     * elements will be appended, followed by the [truncated] string (which defaults to "...").
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static <T, A extends Appendable> A joinTo(@Nullable Sequence<T> sequence, @NotNull A buffer, @NotNull Transformer<T, CharSequence> transform) {
         return joinTo(sequence, buffer, null, null, null, -1, null, transform);
     }
 
@@ -3380,7 +3381,7 @@ public class Sequencex {
      * <p>
      * The operation is _terminal_.
      */
-    public static <T, A extends Appendable> A joinTo(@Nullable Sequence<T> sequence, @NotNull A buffer, @Nullable CharSequence separator) {
+    public static <T, A extends Appendable> A joinTo(@Nullable Sequence<T> sequence, @NotNull A buffer, @NotNull CharSequence separator) {
         return joinTo(sequence, buffer, separator, null, null, -1, null, null);
     }
 
@@ -3408,6 +3409,18 @@ public class Sequencex {
                                           @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                           @Nullable CharSequence truncated, @Nullable Transformer<T, CharSequence> transform) {
         return joinTo(sequence, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
+    }
+
+    /**
+     * Creates a string from all the elements separated using [separator] and using the given [prefix] and [postfix] if supplied.
+     * <p>
+     * If the collection could be huge, you can specify a non-negative value of [limit], in which case only the first [limit]
+     * elements will be appended, followed by the [truncated] string (which defaults to "...").
+     * <p>
+     * The operation is _terminal_.
+     */
+    public static <T> String joinToString(@Nullable Sequence<T> sequence, @NotNull CharSequence separator, @Nullable Transformer<T, CharSequence> transform) {
+        return joinTo(sequence, new StringBuilder(), separator, null, null, -1, null, transform).toString();
     }
 
     /**
