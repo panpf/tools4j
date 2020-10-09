@@ -2293,19 +2293,19 @@ public class Stringx {
     }
 
     /**
-     * Returns a substring specified by the given [range] of indices.
-     */
-    @NotNull
-    public static String substring(@Nullable String string, @NotNull IntRange range) {
-        return orEmpty(string).substring(range.getStart(), range.getEndInclusive() + 1);
-    }
-
-    /**
      * Returns a subsequence of this char sequence specified by the given [range] of indices.
      */
     @NotNull
     public static CharSequence subSequence(@Nullable CharSequence charSequence, int start, int end) {
         return orEmpty(charSequence).subSequence(start, end);
+    }
+
+    /**
+     * Returns a substring specified by the given [range] of indices.
+     */
+    @NotNull
+    public static String substring(@Nullable String string, @NotNull IntRange range) {
+        return orEmpty(string).substring(range.getStart(), range.getEndInclusive() + 1);
     }
 
     /**
@@ -4413,7 +4413,7 @@ public class Stringx {
      * Returns the largest character or `null` if there are no characters.
      */
     @Nullable
-    public static Character max(@Nullable CharSequence charSequence) {
+    public static Character maxOrNull(@Nullable CharSequence charSequence) {
         if (isNullOrEmpty(charSequence)) return null;
         char max = charSequence.charAt(0);
         for (int i = 1, lastIndex = lastIndex(charSequence); i <= lastIndex; i++) {
@@ -4423,11 +4423,12 @@ public class Stringx {
         return max;
     }
 
+
     /**
      * Returns the first character yielding the largest value of the given function or `null` if there are no characters.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character maxBy(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
+    public static <R extends Comparable<R>> Character maxByOrNull(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
         if (isNullOrEmpty(charSequence)) return null;
         char maxElem = charSequence.charAt(0);
         R maxValue = selector.transform(maxElem);
@@ -4446,7 +4447,7 @@ public class Stringx {
      * Returns the first character having the largest value according to the provided [comparator] or `null` if there are no characters.
      */
     @Nullable
-    public static Character maxWith(@Nullable CharSequence charSequence, Comparator<Character> comparator) {
+    public static Character maxWithOrNull(@Nullable CharSequence charSequence, Comparator<Character> comparator) {
         if (isNullOrEmpty(charSequence)) return null;
         char max = charSequence.charAt(0);
         for (int i = 1, lastIndex = lastIndex(charSequence); i <= lastIndex; i++) {
@@ -4454,6 +4455,36 @@ public class Stringx {
             if (comparator.compare(max, e) < 0) max = e;
         }
         return max;
+    }
+
+    /**
+     * Returns the largest character or `null` if there are no characters.
+     * @deprecated Please use maxOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static Character max(@Nullable CharSequence charSequence) {
+        return maxOrNull(charSequence);
+    }
+
+    /**
+     * Returns the first character yielding the largest value of the given function or `null` if there are no characters.
+     * @deprecated Please use maxByOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static <R extends Comparable<R>> Character maxBy(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
+        return maxByOrNull(charSequence, selector);
+    }
+
+    /**
+     * Returns the first character having the largest value according to the provided [comparator] or `null` if there are no characters.
+     * @deprecated Please use maxWithOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static Character maxWith(@Nullable CharSequence charSequence, Comparator<Character> comparator) {
+        return maxWithOrNull(charSequence, comparator);
     }
 
 
@@ -4464,7 +4495,7 @@ public class Stringx {
      * Returns the smallest character or `null` if there are no characters.
      */
     @Nullable
-    public static Character min(@Nullable CharSequence charSequence) {
+    public static Character minOrNull(@Nullable CharSequence charSequence) {
         if (isNullOrEmpty(charSequence)) return null;
         char min = charSequence.charAt(0);
         for (int i = 1, lastIndex = lastIndex(charSequence); i <= lastIndex; i++) {
@@ -4478,7 +4509,7 @@ public class Stringx {
      * Returns the first character yielding the smallest value of the given function or `null` if there are no characters.
      */
     @Nullable
-    public static <R extends Comparable<R>> Character minBy(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
+    public static <R extends Comparable<R>> Character minByOrNull(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
         if (isNullOrEmpty(charSequence)) return null;
         char minElem = charSequence.charAt(0);
         R minValue = selector.transform(minElem);
@@ -4497,7 +4528,7 @@ public class Stringx {
      * Returns the first character having the smallest value according to the provided [comparator] or `null` if there are no characters.
      */
     @Nullable
-    public static Character minWith(@Nullable CharSequence charSequence, @NotNull Comparator<Character> comparator) {
+    public static Character minWithOrNull(@Nullable CharSequence charSequence, @NotNull Comparator<Character> comparator) {
         if (isNullOrEmpty(charSequence)) return null;
         char min = charSequence.charAt(0);
         for (int i = 1, lastIndex = lastIndex(charSequence); i <= lastIndex; i++) {
@@ -4505,6 +4536,37 @@ public class Stringx {
             if (comparator.compare(min, e) > 0) min = e;
         }
         return min;
+    }
+
+
+    /**
+     * Returns the smallest character or `null` if there are no characters.
+     * @deprecated Please use minOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static Character min(@Nullable CharSequence charSequence) {
+        return minOrNull(charSequence);
+    }
+
+    /**
+     * Returns the first character yielding the smallest value of the given function or `null` if there are no characters.
+     * @deprecated Please use minByOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static <R extends Comparable<R>> Character minBy(@Nullable CharSequence charSequence, @NotNull Transformer<Character, R> selector) {
+        return minByOrNull(charSequence, selector);
+    }
+
+    /**
+     * Returns the first character having the smallest value according to the provided [comparator] or `null` if there are no characters.
+     * @deprecated Please use minWithOrNull instead
+     */
+    @Nullable
+    @Deprecated
+    public static Character minWith(@Nullable CharSequence charSequence, @NotNull Comparator<Character> comparator) {
+        return minWithOrNull(charSequence, comparator);
     }
 
 

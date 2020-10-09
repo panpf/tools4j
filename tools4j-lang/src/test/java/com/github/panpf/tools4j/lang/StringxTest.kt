@@ -34,12 +34,15 @@ class StringxTest {
         /**
          * Email address
          */
+        @Suppress("HasPlatformType")
         val EMAIL = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
 
         /**
          * IP v4
          */
+        @Suppress("HasPlatformType")
         val IPV4 = Pattern.compile("((?:(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d))\\.){3}(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d)))")
+
         private const val BLANK = "     "
         private val BLANK_CHAR_SEQUENCE: CharSequence = "     "
         private const val SPACE = " "
@@ -912,10 +915,12 @@ class StringxTest {
     }
 
     @Test
-    fun testSubstring() {
+    fun testSub() {
         assertTwoEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), MyIntRange(3, 8)).toString(), StringBuilder("0123456789").subSequence(3..8).toString())
+        assertTwoEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), 3, 9).toString(), StringBuilder("0123456789").subSequence(3, 9).toString())
 
         assertTwoEquals("345678", Stringx.substring("0123456789", MyIntRange(3, 8)), "0123456789".substring(3..8))
+        assertTwoEquals("345678", Stringx.substring("0123456789", 3, 9), "0123456789".substring(3, 9))
         assertTwoEquals("345678", Stringx.substring(StringBuilder("0123456789"), 3, 9), StringBuilder("0123456789").substring(3, 9))
         assertTwoEquals("345678", Stringx.substring(StringBuilder("0123456789"), MyIntRange(3, 8)), StringBuilder("0123456789").substring(3..8))
 
@@ -1547,7 +1552,7 @@ class StringxTest {
         val source = "0123456789"
         assertEquals(
                 source.associate { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
-                Stringx.associate(source) { Pair<String, Int>(it.toString(), it.toInt()) }.toList())
+                Stringx.associate(source) { Pair(it.toString(), it.toInt()) }.toList())
         assertEquals(
                 source.associateBy { it.toString() }.toList(),
                 Stringx.associateBy(source) { it.toString() }.toList())
@@ -1556,7 +1561,7 @@ class StringxTest {
                 Stringx.associateBy(source, { it.toString() }) { it.toInt() }.toList())
         assertEquals(
                 source.associateTo(LinkedHashMap()) { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
-                Stringx.associateTo(source, LinkedHashMap()) { Pair<String, Int>(it.toString(), it.toInt()) }.toList())
+                Stringx.associateTo(source, LinkedHashMap()) { Pair(it.toString(), it.toInt()) }.toList())
         assertEquals(
                 source.associateByTo(LinkedHashMap()) { it.toString() }.toList(),
                 Stringx.associateByTo(source, LinkedHashMap()) { it.toString() }.toList())
@@ -1575,7 +1580,7 @@ class StringxTest {
         assertEquals("0", Stringx.toSet("0").joinToString(""))
         assertTwoEquals(source, Stringx.toHashSet(source).joinToString(""), source.toHashSet().joinToString(""))
         assertTwoEquals(source, Stringx.toSortedSet(source).joinToString(""), source.toSortedSet().joinToString(""))
-        assertTwoEquals(source, Stringx.toCollection(source, LinkedList<Char>()).joinToString(""), source.toCollection(LinkedList()).joinToString(""))
+        assertTwoEquals(source, Stringx.toCollection(source, LinkedList()).joinToString(""), source.toCollection(LinkedList()).joinToString(""))
     }
 
     @Test
@@ -1599,7 +1604,7 @@ class StringxTest {
 
         assertTwoEquals(listOf("1", "2", "2", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "5",
                 "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7",
-                "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"), Stringx.flatMapTo(source, ArrayList<String>()) {
+                "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"), Stringx.flatMapTo(source, ArrayList()) {
             LinkedList<String>().apply {
                 for (int in 0 until it.toString().toInt()) {
                     add(it.toString())
@@ -1851,32 +1856,78 @@ class StringxTest {
     @Test
     fun testMax() {
         val source = "1365268945336"
+
+        assertTwoEquals('9', Stringx.maxOrNull(source), source.maxOrNull())
+        assertTwoEquals(null, Stringx.maxOrNull(""), "".maxOrNull())
+        assertNull(Stringx.maxOrNull(null))
+
+        assertTwoEquals('9', Stringx.maxByOrNull(source) { it.toString().toInt() }, source.maxByOrNull { it.toString().toInt() })
+        assertTwoEquals(null, Stringx.maxByOrNull("") { it.toString().toInt() }, "".maxByOrNull { it.toString().toInt() })
+        assertNull(Stringx.maxByOrNull(null) { it.toString().toInt() })
+
+        assertTwoEquals('9', Stringx.maxWithOrNull(source) { it1, it2 -> it1 - it2 }, source.maxWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(null, Stringx.maxWithOrNull("") { it1, it2 -> it1 - it2 }, "".maxWithOrNull { o1, o2 -> o1 - o2 })
+        assertNull(Stringx.maxWithOrNull(null) { it1, it2 -> it1 - it2 })
+
+
+        @Suppress("DEPRECATION")
         assertTwoEquals('9', Stringx.max(source), source.max())
+        @Suppress("DEPRECATION")
         assertTwoEquals(null, Stringx.max(""), "".max())
+        @Suppress("DEPRECATION")
         assertNull(Stringx.max(null))
 
+        @Suppress("DEPRECATION")
         assertTwoEquals('9', Stringx.maxBy(source) { it.toString().toInt() }, source.maxBy { it.toString().toInt() })
+        @Suppress("DEPRECATION")
         assertTwoEquals(null, Stringx.maxBy("") { it.toString().toInt() }, "".maxBy { it.toString().toInt() })
+        @Suppress("DEPRECATION")
         assertNull(Stringx.maxBy(null) { it.toString().toInt() })
 
-        assertTwoEquals('9', Stringx.maxWith(source) { it1, it2 -> it1 - it2 }, source.maxWith(kotlin.Comparator { o1, o2 -> o1 - o2 }))
-        assertTwoEquals(null, Stringx.maxWith("") { it1, it2 -> it1 - it2 }, "".maxWith(kotlin.Comparator { o1, o2 -> o1 - o2 }))
+        @Suppress("DEPRECATION")
+        assertTwoEquals('9', Stringx.maxWith(source) { it1, it2 -> it1 - it2 }, source.maxWith { o1, o2 -> o1 - o2 })
+        @Suppress("DEPRECATION")
+        assertTwoEquals(null, Stringx.maxWith("") { it1, it2 -> it1 - it2 }, "".maxWith { o1, o2 -> o1 - o2 })
+        @Suppress("DEPRECATION")
         assertNull(Stringx.maxWith(null) { it1, it2 -> it1 - it2 })
     }
 
     @Test
     fun testMin() {
         val source = "3652689453361"
+
+        assertTwoEquals('1', Stringx.minOrNull(source), source.minOrNull())
+        assertTwoEquals(null, Stringx.minOrNull(""), "".minOrNull())
+        assertNull(Stringx.minOrNull(null))
+
+        assertTwoEquals('1', Stringx.minByOrNull(source) { it.toString().toInt() }, source.minByOrNull { it.toString().toInt() })
+        assertTwoEquals(null, Stringx.minByOrNull("") { it.toString().toInt() }, "".minByOrNull { it.toString().toInt() })
+        assertNull(Stringx.minByOrNull(null) { it.toString().toInt() })
+
+        assertTwoEquals('1', Stringx.minWithOrNull(source) { it1, it2 -> it1 - it2 }, source.minWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(null, Stringx.minWithOrNull("") { it1, it2 -> it1 - it2 }, "".minWithOrNull { o1, o2 -> o1 - o2 })
+        assertNull(Stringx.minWithOrNull(null) { it1, it2 -> it1 - it2 })
+
+
+        @Suppress("DEPRECATION")
         assertTwoEquals('1', Stringx.min(source), source.min())
+        @Suppress("DEPRECATION")
         assertTwoEquals(null, Stringx.min(""), "".min())
+        @Suppress("DEPRECATION")
         assertNull(Stringx.min(null))
 
+        @Suppress("DEPRECATION")
         assertTwoEquals('1', Stringx.minBy(source) { it.toString().toInt() }, source.minBy { it.toString().toInt() })
+        @Suppress("DEPRECATION")
         assertTwoEquals(null, Stringx.minBy("") { it.toString().toInt() }, "".minBy { it.toString().toInt() })
+        @Suppress("DEPRECATION")
         assertNull(Stringx.minBy(null) { it.toString().toInt() })
 
-        assertTwoEquals('1', Stringx.minWith(source) { it1, it2 -> it1 - it2 }, source.minWith(kotlin.Comparator { o1, o2 -> o1 - o2 }))
-        assertTwoEquals(null, Stringx.minWith("") { it1, it2 -> it1 - it2 }, "".minWith(kotlin.Comparator { o1, o2 -> o1 - o2 }))
+        @Suppress("DEPRECATION")
+        assertTwoEquals('1', Stringx.minWith(source) { it1, it2 -> it1 - it2 }, source.minWith { o1, o2 -> o1 - o2 })
+        @Suppress("DEPRECATION")
+        assertTwoEquals(null, Stringx.minWith("") { it1, it2 -> it1 - it2 }, "".minWith { o1, o2 -> o1 - o2 })
+        @Suppress("DEPRECATION")
         assertNull(Stringx.minWith(null) { it1, it2 -> it1 - it2 })
     }
 

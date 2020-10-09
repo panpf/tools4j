@@ -4,6 +4,8 @@
 * improve: Most of Sequencex methods now accept nullable Sequence
 * change: Sequencex.sum(Sequence<Long>) rename to sumOfLong(Sequence<Long>)
 * new: Collectionx added requireNoNulls(), unzip() method
+* new: Stringx added maxOrNull, maxWithOrNull, maxByOrNull, minOrNull, minWithOrNull, minByOrNull
+* deprecated: Deprecated Stringx`s max, maxWith, maxBy, min, minWith, minBy method
 
 
 ## v1.0.0-rc01

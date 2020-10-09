@@ -218,10 +218,10 @@ Dependencies：
     * associateTo, associate, associateByTo, associateBy, toCollection, toHashSet, toList, toSet, toSortedSet,
     * flatMap, flatMapTo, groupBy, groupByTo, mapTo, map, mapIndexedTo, mapIndexed, mapNotNullTo, 
     * mapNotNull, mapIndexedNotNullTo, mapIndexedNotNull, withIndex, all, any, count, fold, 
-    * foldIndexed, foldRight, foldRightIndexed, forEach, forEachIndexed, max, maxBy, maxWith, 
-    * min, minBy, minWith, none, onEach, reduce, reduceIndexed, reduceRight, reduceRightIndexed, 
-    * sumBy, sumByDouble, chunked, chunkedIterable, partition, windowed, windowedIterable, 
-    * zip, zipWithNext, asIterable
+    * foldIndexed, foldRight, foldRightIndexed, forEach, forEachIndexed, maxOrNull, maxWithOrNull, 
+    * maxByOrNull, minOrNull, minWithOrNull, minByOrNull, none, onEach, reduce, reduceIndexed, 
+    * reduceRight, reduceRightIndexed, sumBy, sumByDouble, chunked, chunkedIterable, partition, 
+    * windowed, windowedIterable, zip, zipWithNext, asIterable
 * Throwablex: [Throwablex.java] ([Test][ThrowablexTest.kt]) | [Throwablex.kt] ([Test][ThrowablexKtxTest.kt])
     * stackTraceToString
 
