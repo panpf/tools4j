@@ -329,7 +329,9 @@ class StringxTest {
 
     @Test
     fun testOrAndTo() {
+        @Suppress("DEPRECATION")
         assertEquals("今".orEmpty(), "今")
+        @Suppress("DEPRECATION")
         assertEquals(null.orEmpty(), "")
         assertEquals(("今" as CharSequence).orEmpty(), "今")
         assertEquals((null as CharSequence?).orEmpty(), "")
