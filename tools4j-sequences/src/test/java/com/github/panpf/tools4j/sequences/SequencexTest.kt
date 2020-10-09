@@ -1603,6 +1603,12 @@ class SequencexTest {
         assertTwoEquals(19.toLong(), normalLongSequence0.sum(), Sequencex.sumOfLong(normalLongSequence1))
         assertTwoEquals(0.toLong(), emptyLongSequence0.sum(), Sequencex.sumOfLong(emptyLongSequence1))
         assertTwoEquals(0.toLong(), 0.toLong(), Sequencex.sumOfLong(nullLongSequence1))
+        @Suppress("DEPRECATION")
+        assertTwoEquals(19.toLong(), normalLongSequence0.sum(), Sequencex.sum(normalLongSequence1))
+        @Suppress("DEPRECATION")
+        assertTwoEquals(0.toLong(), emptyLongSequence0.sum(), Sequencex.sum(emptyLongSequence1))
+        @Suppress("DEPRECATION")
+        assertTwoEquals(0.toLong(), 0.toLong(), Sequencex.sum(nullLongSequence1))
 
         val normalFloatSequence0 = sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
         val normalFloatSequence1 = Sequencex.sequenceOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())

@@ -2826,6 +2826,17 @@ public class Sequencex {
      * Returns the sum of all elements in the sequence.
      * <p>
      * The operation is _terminal_.
+     * @deprecated Please use sumOfLong instead
+     */
+    @Deprecated
+    public static long sum(@Nullable Sequence<Long> sequence) {
+        return sumOfLong(sequence);
+    }
+
+    /**
+     * Returns the sum of all elements in the sequence.
+     * <p>
+     * The operation is _terminal_.
      */
     public static float sumOfFloat(@Nullable Sequence<Float> sequence) {
         float sum = 0.0f;

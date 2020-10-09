@@ -2,10 +2,11 @@
 * improve: remove the use of @SafeVarargs annotation
 * deprecated: Deprecated String?.orEmpty() method
 * improve: Most of Sequencex methods now accept nullable Sequence
-* change: Sequencex.sum(Sequence<Long>) rename to sumOfLong(Sequence<Long>)
 * new: Collectionx added requireNoNulls(), unzip() method
-* new: Stringx added maxOrNull, maxWithOrNull, maxByOrNull, minOrNull, minWithOrNull, minByOrNull
+* new: Stringx added maxOrNull, maxWithOrNull, maxByOrNull, minOrNull, minWithOrNull, minByOrNull method
 * deprecated: Deprecated Stringx`s max, maxWith, maxBy, min, minWith, minBy method
+* new: Sequencex added sumOfLong method
+* deprecated: Deprecated Sequencex sum method
 
 
 ## v1.0.0-rc01
