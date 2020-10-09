@@ -116,7 +116,7 @@ Dependencies：
 * Collectionx: [Collectionx.java] | [Collectionx.kt]
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
     * isNotEmpty, orEmpty, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
-    * mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
+    * emptySet, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
     * filterIndexedTo, filterIsInstanceTo, filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
     * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo, 
     * mapIndexedNotNull, flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, joinTo, joinToString, count, 
@@ -136,7 +136,7 @@ Dependencies：
 * Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
     * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo, eachCount, eachCountTo
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
-    * builder, isNullOrEmpty, isNotNullOrEmpty, immutableMapOf, mutableMapOf, hashMapOf, linkedMapOf, 
+    * builder, isNullOrEmpty, isNotNullOrEmpty, emptyMap, immutableMapOf, mutableMapOf, hashMapOf, linkedMapOf, 
     * sortedMapOf, isEmpty, isNotEmpty, orEmpty, putAll, plus, plusAssign, remove, minus, minusAssign, set,
     * get, getOrElse, getValue, getOrPut, contains, containsKey, containsValue, all, any, count, forEach, 
     * onEach, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minByOrNull, 

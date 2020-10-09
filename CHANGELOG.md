@@ -7,6 +7,7 @@
 * deprecated: Deprecated Stringx`s max, maxWith, maxBy, min, minWith, minBy method
 * new: Sequencex added sumOfLong method
 * deprecated: Deprecated Sequencex sum method
+* new: Collectionx added emptySet method, Mapx added emptyMap method
 
 
 ## v1.0.0-rc01

@@ -209,11 +209,20 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> emptyList() {
         //noinspection unchecked
-        return (List<T>) EmptyList.INSTANCE;
+        return (List<T>) Collections.emptyList();
     }
 
 
     /* ******************************************* setOf ******************************************* */
+
+
+    /**
+     * Returns an empty read-only set.  The returned set is serializable (JVM).
+     */
+    public static <T> Set<T> emptySet() {
+        //noinspection unchecked
+        return (Set<T>) Collections.EMPTY_SET;
+    }
 
 
     /**

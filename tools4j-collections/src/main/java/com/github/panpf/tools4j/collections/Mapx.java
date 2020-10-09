@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
+import kotlin.Suppress;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,6 +70,16 @@ public class Mapx {
 
     /* ******************************************* mapOf ****************************************** */
 
+    /**
+     * Returns an empty read-only map of specified type.
+     *
+     * The returned map is serializable (JVM).
+     */
+    @NotNull
+    public static  <K, V> Map<K, V> emptyMap(){
+        return (Map<K, V>) Collections.emptyMap();
+    }
+
 
     /**
      * Returns an empty read-only map.
@@ -78,7 +89,7 @@ public class Mapx {
     @NotNull
     public static <K, V> Map<K, V> immutableMapOf() {
         //noinspection unchecked
-        return Collections.EMPTY_MAP;
+        return emptyMap();
     }
 
     /**
@@ -105,7 +116,7 @@ public class Mapx {
     @NotNull
     public static <K, V> Map<K, V> immutableMapOf(@NotNull Pair<K, V>... pairs) {
         //noinspection unchecked
-        return pairs.length > 0 ? toMap(pairs, new LinkedHashMap<K, V>(capacity(pairs.length))) : (Map<K, V>) Collections.EMPTY_MAP;
+        return pairs.length > 0 ? toMap(pairs, new LinkedHashMap<K, V>(capacity(pairs.length))) : (Map<K, V>) emptyMap();
     }
 
     /**
