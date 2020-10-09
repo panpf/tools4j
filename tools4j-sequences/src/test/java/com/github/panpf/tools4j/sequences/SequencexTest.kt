@@ -64,21 +64,30 @@ class SequencexTest {
 
     @Test
     fun testAsSequence() {
-        // todo test nullable
         assertTwoEquals(
                 "4, 2, 1",
                 Hashtable(hashMapOf("2" to 2, "4" to 4, "1" to 1)).elements().asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(Hashtable(hashMapOf("2" to 2, "4" to 4, "1" to 1)).elements()))
         )
-
+        assertEquals(
+                "",
+                Sequencex.joinToString(Sequencex.asSequence(null as Enumeration<String>?))
+        )
         assertThrow(UnsupportedOperationException::class) {
             Sequencex.asSequence(Hashtable(hashMapOf("2" to 2, "4" to 4, "1" to 1)).elements()).iterator().remove()
+        }
+        assertThrow(NoSuchElementException::class) {
+            Sequencex.asSequence(null as Enumeration<String>?).iterator().next()
         }
 
         assertTwoEquals(
                 "2, 4, 1",
                 listOf("2", "4", "1").iterator().asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(listOf("2", "4", "1").iterator()))
+        )
+        assertEquals(
+                "",
+                Sequencex.joinToString(Sequencex.asSequence(null as Iterator<String>?))
         )
 
         @Suppress("RedundantAsSequence")
@@ -87,12 +96,21 @@ class SequencexTest {
                 listOf("2", "4", "1").asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(listOf("2", "4", "1")))
         )
+        assertEquals(
+                "",
+                Sequencex.joinToString(Sequencex.asSequence(null as Iterable<String>?))
+        )
 
         @Suppress("RedundantAsSequence")
         assertTwoEquals(
                 "2, 4, 1",
                 listOf("2", "4", "1").asSequence().asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(Sequencex.asSequence(listOf("2", "4", "1"))))
+        )
+        @Suppress("RedundantAsSequence")
+        assertEquals(
+                "",
+                Sequencex.joinToString(Sequencex.asSequence(null as Sequence<String>?))
         )
 
         @Suppress("RedundantAsSequence")
@@ -101,11 +119,9 @@ class SequencexTest {
                 mapOf("2" to "22", "4" to "4444", "1" to "1").asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(mapOf("2" to "22", "4" to "4444", "1" to "1")))
         )
-
         @Suppress("RedundantAsSequence")
-        assertTwoEquals(
+        assertEquals(
                 "",
-                mapOf<String, String>().asSequence().joinToString(),
                 Sequencex.joinToString(Sequencex.asSequence(null as Map<String, String>?))
         )
 
@@ -180,6 +196,11 @@ class SequencexTest {
                 "a, h, t",
                 charArrayOf('a', 'h', 't').asSequence().asIterable().joinToString(),
                 Sequencex.asIterable(Sequencex.asSequence(charArrayOf('a', 'h', 't'))).joinToString()
+        )
+        @Suppress("RedundantAsSequence")
+        assertEquals(
+                "",
+                Sequencex.asIterable(null as Sequence<String>?).joinToString()
         )
     }
 
@@ -310,9 +331,9 @@ class SequencexTest {
 
     @Test
     fun testElementAt() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("a", "b", "c")
         val sequence1 = Sequencex.sequenceOf("a", "b", "c")
+        val nullSequence = null as Sequence<String>?
 
         assertTwoEquals("a", sequence0.elementAt(0), Sequencex.elementAt(sequence1, 0))
         assertTwoEquals("b", sequence0.elementAt(1), Sequencex.elementAt(sequence1, 1))
@@ -325,12 +346,22 @@ class SequencexTest {
         assertTwoEquals("c", sequence0.elementAtOrElse(2) { "j" }, Sequencex.elementAtOrElse(sequence1, 2) { "j" })
         assertTwoEquals("j", sequence0.elementAtOrElse(-1) { "j" }, Sequencex.elementAtOrElse(sequence1, -1) { "j" })
         assertTwoEquals("k", sequence0.elementAtOrElse(3) { "k" }, Sequencex.elementAtOrElse(sequence1, 3) { "k" })
+        assertEquals("x", Sequencex.elementAtOrElse(nullSequence, 0) { "x" })
+        assertEquals("y", Sequencex.elementAtOrElse(nullSequence, 1) { "y" })
+        assertEquals("z", Sequencex.elementAtOrElse(nullSequence, 2) { "z" })
+        assertEquals("j", Sequencex.elementAtOrElse(nullSequence, -1) { "j" })
+        assertEquals("k", Sequencex.elementAtOrElse(nullSequence, 3) { "k" })
 
         assertTwoEquals("a", sequence0.elementAtOrNull(0), Sequencex.elementAtOrNull(sequence1, 0))
         assertTwoEquals("b", sequence0.elementAtOrNull(1), Sequencex.elementAtOrNull(sequence1, 1))
         assertTwoEquals("c", sequence0.elementAtOrNull(2), Sequencex.elementAtOrNull(sequence1, 2))
         assertTwoEquals(null, sequence0.elementAtOrNull(-1), Sequencex.elementAtOrNull(sequence1, -1))
         assertTwoEquals(null, sequence0.elementAtOrNull(3), Sequencex.elementAtOrNull(sequence1, 3))
+        assertNull(Sequencex.elementAtOrNull(nullSequence, 0))
+        assertNull(Sequencex.elementAtOrNull(nullSequence, 1))
+        assertNull(Sequencex.elementAtOrNull(nullSequence, 2))
+        assertNull(Sequencex.elementAtOrNull(nullSequence, -1))
+        assertNull(Sequencex.elementAtOrNull(nullSequence, 3))
     }
 
     @Test
@@ -352,143 +383,160 @@ class SequencexTest {
 
     @Test
     fun testFirst() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence0 = sequenceOf<String>()
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals("aj", sequence0.first(), Sequencex.first(sequence1))
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.first() }, { Sequencex.first(emptySequence1) })
+        assertThrow(NoSuchElementException::class) { Sequencex.first(nullSequence1) }
 
         assertTwoEquals("aj", sequence0.first { it.startsWith("a") }, Sequencex.first(sequence1) { it.startsWith("a") })
         assertTwoEquals("bj", sequence0.first { it.startsWith("b") }, Sequencex.first(sequence1) { it.startsWith("b") })
         assertTwoEquals("cj", sequence0.first { it.startsWith("c") }, Sequencex.first(sequence1) { it.startsWith("c") })
         assertTwoThrow(NoSuchElementException::class, { sequence0.first { it.startsWith("k") } }, { Sequencex.first(sequence1) { it.startsWith("k") } })
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.first { it.startsWith("a") } }, { Sequencex.first(emptySequence1) { it.startsWith("a") } })
+        assertThrow(NoSuchElementException::class) { Sequencex.first(nullSequence1) { it.startsWith("a") } }
 
         assertTwoEquals("aj", sequence0.firstOrNull(), Sequencex.firstOrNull(sequence1))
         assertTwoEquals(null, emptySequence0.firstOrNull(), Sequencex.firstOrNull(emptySequence1))
+        assertNull(Sequencex.firstOrNull(nullSequence1))
 
         assertTwoEquals("aj", sequence0.firstOrNull { it.startsWith("a") }, Sequencex.firstOrNull(sequence1) { it.startsWith("a") })
         assertTwoEquals("bj", sequence0.firstOrNull { it.startsWith("b") }, Sequencex.firstOrNull(sequence1) { it.startsWith("b") })
         assertTwoEquals("cj", sequence0.firstOrNull { it.startsWith("c") }, Sequencex.firstOrNull(sequence1) { it.startsWith("c") })
         assertTwoEquals(null, sequence0.firstOrNull { it.startsWith("k") }, Sequencex.firstOrNull(sequence1) { it.startsWith("k") })
         assertTwoEquals(null, emptySequence0.firstOrNull { it.startsWith("k") }, Sequencex.firstOrNull(emptySequence1) { it.startsWith("k") })
+        assertNull(Sequencex.firstOrNull(nullSequence1) { it.startsWith("k") })
     }
 
     @Test
     fun testIndexOf() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(0, sequence0.indexOf("aj"), Sequencex.indexOf(sequence1, "aj"))
         assertTwoEquals(1, sequence0.indexOf("bj"), Sequencex.indexOf(sequence1, "bj"))
         assertTwoEquals(2, sequence0.indexOf("cj"), Sequencex.indexOf(sequence1, "cj"))
         assertTwoEquals(3, sequence0.indexOf("bo"), Sequencex.indexOf(sequence1, "bo"))
         assertTwoEquals(-1, sequence0.indexOf("bb"), Sequencex.indexOf(sequence1, "bb"))
+        assertEquals(-1, Sequencex.indexOf(nullSequence1, "bb"))
 
         assertTwoEquals(0, sequence0.indexOfFirst { it.startsWith("a") }, Sequencex.indexOfFirst(sequence1) { it.startsWith("a") })
         assertTwoEquals(1, sequence0.indexOfFirst { it.startsWith("b") }, Sequencex.indexOfFirst(sequence1) { it.startsWith("b") })
         assertTwoEquals(2, sequence0.indexOfFirst { it.startsWith("c") }, Sequencex.indexOfFirst(sequence1) { it.startsWith("c") })
         assertTwoEquals(-1, sequence0.indexOfFirst { it.startsWith("k") }, Sequencex.indexOfFirst(sequence1) { it.startsWith("k") })
+        assertEquals(-1, Sequencex.indexOfFirst(nullSequence1) { it.startsWith("k") })
 
         assertTwoEquals(0, sequence0.indexOfLast { it.startsWith("a") }, Sequencex.indexOfLast(sequence1) { it.startsWith("a") })
         assertTwoEquals(3, sequence0.indexOfLast { it.startsWith("b") }, Sequencex.indexOfLast(sequence1) { it.startsWith("b") })
         assertTwoEquals(2, sequence0.indexOfLast { it.startsWith("c") }, Sequencex.indexOfLast(sequence1) { it.startsWith("c") })
         assertTwoEquals(-1, sequence0.indexOfLast { it.startsWith("k") }, Sequencex.indexOfLast(sequence1) { it.startsWith("k") })
+        assertEquals(-1, Sequencex.indexOfLast(nullSequence1) { it.startsWith("k") })
     }
 
     @Test
     fun testLast() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence0 = sequenceOf<String>()
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals("bo", sequence0.last(), Sequencex.last(sequence1))
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.last() }, { Sequencex.last(emptySequence1) })
+        assertThrow(NoSuchElementException::class) { Sequencex.last(nullSequence1) }
 
         assertTwoEquals("aj", sequence0.last { it.startsWith("a") }, Sequencex.last(sequence1) { it.startsWith("a") })
         assertTwoEquals("bo", sequence0.last { it.startsWith("b") }, Sequencex.last(sequence1) { it.startsWith("b") })
         assertTwoEquals("cj", sequence0.last { it.startsWith("c") }, Sequencex.last(sequence1) { it.startsWith("c") })
         assertTwoThrow(NoSuchElementException::class, { sequence0.last { it.startsWith("k") } }, { Sequencex.last(sequence1) { it.startsWith("k") } })
         assertTwoThrow(NoSuchElementException::class, { emptySequence0.last { it.startsWith("a") } }, { Sequencex.last(emptySequence1) { it.startsWith("a") } })
+        assertThrow(NoSuchElementException::class) { Sequencex.last(nullSequence1) { it.startsWith("a") } }
 
         assertTwoEquals("bo", sequence0.lastOrNull(), Sequencex.lastOrNull(sequence1))
         assertTwoEquals(null, emptySequence0.lastOrNull(), Sequencex.lastOrNull(emptySequence1))
+        assertNull(Sequencex.lastOrNull(nullSequence1))
 
         assertTwoEquals("aj", sequence0.lastOrNull { it.startsWith("a") }, Sequencex.lastOrNull(sequence1) { it.startsWith("a") })
         assertTwoEquals("bo", sequence0.lastOrNull { it.startsWith("b") }, Sequencex.lastOrNull(sequence1) { it.startsWith("b") })
         assertTwoEquals("cj", sequence0.lastOrNull { it.startsWith("c") }, Sequencex.lastOrNull(sequence1) { it.startsWith("c") })
         assertTwoEquals(null, sequence0.lastOrNull { it.startsWith("k") }, Sequencex.lastOrNull(sequence1) { it.startsWith("k") })
         assertTwoEquals(null, emptySequence0.lastOrNull { it.startsWith("k") }, Sequencex.lastOrNull(emptySequence1) { it.startsWith("k") })
+        assertNull(Sequencex.lastOrNull(nullSequence1) { it.startsWith("k") })
 
         assertTwoEquals(0, sequence0.lastIndexOf("aj"), Sequencex.lastIndexOf(sequence1, "aj"))
         assertTwoEquals(1, sequence0.lastIndexOf("bj"), Sequencex.lastIndexOf(sequence1, "bj"))
         assertTwoEquals(2, sequence0.lastIndexOf("cj"), Sequencex.lastIndexOf(sequence1, "cj"))
         assertTwoEquals(3, sequence0.lastIndexOf("bo"), Sequencex.lastIndexOf(sequence1, "bo"))
         assertTwoEquals(-1, sequence0.lastIndexOf("bb"), Sequencex.lastIndexOf(sequence1, "bb"))
+        assertEquals(-1, Sequencex.lastIndexOf(nullSequence1, "bb"))
     }
 
     @Test
     fun testSingle() {
-        // todo test nullable and sync to CollectionxTest
         val singleSequence0 = sequenceOf("cj")
         val singleSequence1 = Sequencex.sequenceOf("cj")
         val multiSequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val multiSequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
         val emptySequence0 = sequenceOf<String>()
         val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals("cj", singleSequence0.single(), Sequencex.single(singleSequence1))
-        assertTwoThrow(NoSuchElementException::class, { emptySequence0.single() }, { Sequencex.single(emptySequence1) })
         assertTwoThrow(IllegalArgumentException::class, { multiSequence0.single() }, { Sequencex.single(multiSequence1) })
+        assertTwoThrow(NoSuchElementException::class, { emptySequence0.single() }, { Sequencex.single(emptySequence1) })
+        assertThrow(NoSuchElementException::class) { Sequencex.single(nullSequence1) }
 
         assertTwoEquals("cj",
                 singleSequence0.single { it.startsWith("c") },
                 Sequencex.single(singleSequence1) { it.startsWith("c") })
-        assertTwoThrow(NoSuchElementException::class,
-                { singleSequence0.single { it.startsWith("b") } },
-                { Sequencex.single(singleSequence1) { it.startsWith("b") } })
-        assertTwoThrow(NoSuchElementException::class,
-                { emptySequence0.single { it.startsWith("c") } },
-                { Sequencex.single(emptySequence1) { it.startsWith("c") } })
         assertTwoEquals("cj",
                 multiSequence0.single { it.startsWith("c") },
                 Sequencex.single(multiSequence1) { it.startsWith("c") })
         assertTwoThrow(IllegalArgumentException::class,
                 { multiSequence0.single { it.startsWith("b") } },
                 { Sequencex.single(multiSequence1) { it.startsWith("b") } })
+        assertTwoThrow(NoSuchElementException::class,
+                { singleSequence0.single { it.startsWith("b") } },
+                { Sequencex.single(singleSequence1) { it.startsWith("b") } })
+        assertTwoThrow(NoSuchElementException::class,
+                { emptySequence0.single { it.startsWith("c") } },
+                { Sequencex.single(emptySequence1) { it.startsWith("c") } })
+        assertThrow(NoSuchElementException::class) { Sequencex.single(nullSequence1) { it.startsWith("b") } }
 
         assertTwoEquals("cj", singleSequence0.singleOrNull(), Sequencex.singleOrNull(singleSequence1))
-        assertTwoEquals(null, emptySequence0.singleOrNull(), Sequencex.singleOrNull(emptySequence1))
         assertTwoEquals(null, multiSequence0.singleOrNull(), Sequencex.singleOrNull(multiSequence1))
+        assertTwoEquals(null, emptySequence0.singleOrNull(), Sequencex.singleOrNull(emptySequence1))
+        assertNull(Sequencex.singleOrNull(nullSequence1))
 
         assertTwoEquals("cj",
                 singleSequence0.singleOrNull { it.startsWith("c") },
                 Sequencex.singleOrNull(singleSequence1) { it.startsWith("c") })
-        assertTwoEquals(null,
-                singleSequence0.singleOrNull { it.startsWith("b") },
-                Sequencex.singleOrNull(singleSequence1) { it.startsWith("b") })
-        assertTwoEquals(null,
-                emptySequence0.singleOrNull { it.startsWith("c") },
-                Sequencex.singleOrNull(emptySequence1) { it.startsWith("c") })
         assertTwoEquals("cj",
                 multiSequence0.singleOrNull { it.startsWith("c") },
                 Sequencex.singleOrNull(multiSequence1) { it.startsWith("c") })
         assertTwoEquals(null,
                 multiSequence0.singleOrNull { it.startsWith("b") },
                 Sequencex.singleOrNull(multiSequence1) { it.startsWith("b") })
+        assertTwoEquals(null,
+                singleSequence0.singleOrNull { it.startsWith("b") },
+                Sequencex.singleOrNull(singleSequence1) { it.startsWith("b") })
+        assertTwoEquals(null,
+                emptySequence0.singleOrNull { it.startsWith("c") },
+                Sequencex.singleOrNull(emptySequence1) { it.startsWith("c") })
+        assertEquals(null,
+                Sequencex.singleOrNull(nullSequence1) { it.startsWith("b") })
     }
 
     @Test
     fun testDrop() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
+        val nullSequence1 = null as Sequence<String>?
 
         /*
          * drop 系列的方法表示从列表头部开始跳过部分元素
@@ -503,6 +551,7 @@ class SequencexTest {
 
         assertTrue(sequence0 === sequence0.drop(0))
         assertTrue(sequence1 === Sequencex.drop(sequence1, 0))
+        assertTrue(Sequencex.emptySequence<String>() === Sequencex.drop(nullSequence1, 0))
 
         assertTwoEquals("bj, cj, dj",
                 sequence0.drop(1).joinToString(),
