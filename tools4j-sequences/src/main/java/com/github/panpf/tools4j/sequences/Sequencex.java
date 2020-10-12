@@ -874,7 +874,7 @@ public class Sequencex {
             throw new IllegalArgumentException("Param 'n' is less than to zero.");
         }
         if (n == 0) {
-            return Sequencex.<T>emptySequence();
+            return Sequencex.emptySequence();
         } else if (sequence instanceof DropTakeSequence) {
             return ((DropTakeSequence<T>) sequence).take(n);
         } else {
@@ -2826,6 +2826,7 @@ public class Sequencex {
      * Returns the sum of all elements in the sequence.
      * <p>
      * The operation is _terminal_.
+     *
      * @deprecated Please use sumOfLong instead
      */
     @Deprecated
@@ -2968,21 +2969,23 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> minus(@Nullable final Sequence<T> sequence, @NotNull final T[] elements) {
-        if (elements.length <= 0) return sequence != null ? sequence : Sequencex.<T>emptySequence();
-        return new Sequence<T>() {
-            @NotNull
-            @Override
-            public Iterator<T> iterator() {
-                final Set<T> other = new HashSet<T>();
-                Collections.addAll(other, elements);
-                return filterNot(sequence, new Predicate<T>() {
-                    @Override
-                    public boolean accept(@NotNull T t) {
-                        return other.contains(t);
-                    }
-                }).iterator();
-            }
-        };
+        if (elements.length > 0) {
+            return new Sequence<T>() {
+                @NotNull
+                @Override
+                public Iterator<T> iterator() {
+                    final Set<T> other = new HashSet<T>();
+                    Collections.addAll(other, elements);
+                    return filterNot(sequence, new Predicate<T>() {
+                        @Override
+                        public boolean accept(@NotNull T t) {
+                            return other.contains(t);
+                        }
+                    }).iterator();
+                }
+            };
+        }
+        return sequence != null ? sequence : Sequencex.<T>emptySequence();
     }
 
     /**
@@ -3109,6 +3112,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull T element) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), sequenceOf(element)));
     }
 
@@ -3122,6 +3126,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull T[] elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), asSequence(elements)));
     }
 
@@ -3135,6 +3140,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull Iterable<T> elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), asSequence(elements)));
     }
 
@@ -3148,6 +3154,7 @@ public class Sequencex {
      */
     @NotNull
     public static <T> Sequence<T> plus(@Nullable Sequence<T> sequence, @NotNull Sequence<T> elements) {
+        //noinspection unchecked
         return flatten(sequenceOf(sequence != null ? sequence : Sequencex.<T>emptySequence(), elements));
     }
 
@@ -3322,39 +3329,37 @@ public class Sequencex {
 
         try {
             buffer.append(prefix);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int count = 0;
-        if (sequence != null) {
-            Iterator<T> iterator = sequence.iterator();
-            while (iterator.hasNext()) {
-                T element = iterator.next();
-                if (++count > 1) {
-                    try {
+            int count = 0;
+            if (sequence != null) {
+                Iterator<T> iterator = sequence.iterator();
+                while (iterator.hasNext()) {
+                    T element = iterator.next();
+                    if (++count > 1) {
                         buffer.append(separator);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    }
+                    if (limit < 0 || count <= limit) {
+                        if (element == null) {
+                            buffer.append("null");
+                        } else if (transform != null) {
+                            buffer.append(transform.transform(element));
+                        } else if (element instanceof CharSequence) {
+                            buffer.append((CharSequence) element);
+                        } else if (element instanceof Character) {
+                            buffer.append((Character) element);
+                        } else {
+                            buffer.append(element.toString());
+                        }
+                    } else {
+                        break;
                     }
                 }
-                if (limit < 0 || count <= limit) {
-                    appendElement(buffer, element, transform);
-                } else {
-                    break;
-                }
             }
-        }
-        if (limit >= 0 && count > limit) {
-            try {
+            if (limit >= 0 && count > limit) {
                 buffer.append(truncated);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-        try {
             buffer.append(postfix);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return buffer;
     }
@@ -3586,21 +3591,5 @@ public class Sequencex {
             }
         }
         return count == 0 ? Double.NaN : sum / count;
-    }
-
-    private static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {
-        try {
-            if (transform != null) {
-                appendable.append(transform.transform(element));
-            } else if (element instanceof CharSequence) {
-                appendable.append((CharSequence) element);
-            } else if (element instanceof Character) {
-                appendable.append((Character) element);
-            } else {
-                appendable.append(element.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

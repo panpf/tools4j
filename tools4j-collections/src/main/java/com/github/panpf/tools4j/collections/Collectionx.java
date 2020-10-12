@@ -711,24 +711,38 @@ public class Collectionx {
         if (postfix == null) postfix = "";
         if (truncated == null) truncated = "...";
 
-        appendElement(buffer, prefix, null);
-        int count = 0;
-        if (iterable != null) {
-            for (T element : iterable) {
-                if (++count > 1) {
-                    appendElement(buffer, separator, null);
-                }
-                if (limit < 0 || count <= limit) {
-                    appendElement(buffer, element, transform);
-                } else {
-                    break;
+        try {
+            buffer.append(prefix);
+            int count = 0;
+            if (iterable != null) {
+                for (T element : iterable) {
+                    if (++count > 1) {
+                        buffer.append(separator);
+                    }
+                    if (limit < 0 || count <= limit) {
+                        if (element == null) {
+                            buffer.append("null");
+                        } else if (transform != null) {
+                            buffer.append(transform.transform(element));
+                        } else if (element instanceof CharSequence) {
+                            buffer.append((CharSequence) element);
+                        } else if (element instanceof Character) {
+                            buffer.append((Character) element);
+                        } else {
+                            buffer.append(element.toString());
+                        }
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) {
+                buffer.append(truncated);
+            }
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        if (limit >= 0 && count > limit) {
-            appendElement(buffer, truncated, null);
-        }
-        appendElement(buffer, postfix, null);
         return buffer;
     }
 

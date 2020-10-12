@@ -75,7 +75,10 @@ public class Filex {
     @NotNull
     public static File createNewFileOrThrow(@NotNull File file) throws IOException {
         if (file.exists()) return file;
-        mkdirsOrThrow(file.getParentFile());
+        File parentFile = file.getParentFile();
+        if (parentFile != null) {
+            mkdirsOrThrow(parentFile);
+        }
 
         try {
             //noinspection ResultOfMethodCallIgnored
