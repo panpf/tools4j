@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.sequences;
+package com.github.panpf.tools4j.iterable;
 
-import com.github.panpf.tools4j.common.Transformer;
-import com.github.panpf.tools4j.iterable.DistinctIterator;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class DistinctSequence<T, K> implements Sequence<T> {
+public class ConstrainedOnceIterable<T> implements Iterable<T> {
 
-    @Nullable
-    private final Sequence<T> source;
     @NotNull
-    private final Transformer<T, K> keySelector;
+    private final AtomicReference<Iterable<T>> iterableRef;
 
-    public DistinctSequence(@Nullable Sequence<T> source, @NotNull Transformer<T, K> keySelector) {
-        this.source = source;
-        this.keySelector = keySelector;
+    public ConstrainedOnceIterable(@NotNull Iterable<T> sequence) {
+        this.iterableRef = new AtomicReference<Iterable<T>>(sequence);
     }
 
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return new DistinctIterator<T, K>(source != null ? source.iterator() : null, keySelector);
+        Iterable<T> iterable = iterableRef.getAndSet(null);
+        if (iterable == null) {
+            throw new IllegalStateException("This sequence can be consumed only once.");
+        }
+        return iterable.iterator();
     }
 }

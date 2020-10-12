@@ -16,66 +16,50 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class IndexingIterableTest {
 
-    private val normalCharSequence = "faf54c32"
-    private val normalCharSequenceToString = "IndexedValue{index=0, value=f}, IndexedValue{index=1, value=a}, IndexedValue{index=2, value=f}, IndexedValue{index=3, value=5}, IndexedValue{index=4, value=4}, IndexedValue{index=5, value=c}, IndexedValue{index=6, value=3}, IndexedValue{index=7, value=2}"
-    private val nullCharSequence = null as CharSequence?
-    private val nullCharSequenceToString = ""
-    private val emptyCharSequence = ""
-    private val emptyCharSequenceToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalCharSequenceToString, IndexingIterable<Char> { CharSequenceIterator(normalCharSequence) }.iterator().asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalCharSequence = "faf54c32"
+        val nullCharSequence = null as CharSequence?
+        val emptyCharSequence = ""
 
-        try {
-            IndexingIterable<Char> { CharSequenceIterator(normalCharSequence) }.iterator().next()
-        } catch (e: Exception) {
-            Assert.fail()
+        assertEquals(
+                "IndexedValue{index=0, value=f}, IndexedValue{index=1, value=a}, IndexedValue{index=2, value=f}, IndexedValue{index=3, value=5}, IndexedValue{index=4, value=4}, IndexedValue{index=5, value=c}, IndexedValue{index=6, value=3}, IndexedValue{index=7, value=2}",
+                IndexingIterable {
+                    CharSequenceIterator(normalCharSequence)
+                }.iterator().asSequence().joinToString { it.toString() })
+        assertNoThrow {
+            IndexingIterable { CharSequenceIterator(normalCharSequence) }.iterator().next()
         }
-    }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullCharSequenceToString, IndexingIterable<Char> { CharSequenceIterator(nullCharSequence) }.iterator().asSequence().joinToString { it.toString() })
-
-        try {
-            IndexingIterable<Char> { CharSequenceIterator(nullCharSequence) }.iterator().next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
+        assertEquals("", IndexingIterable {
+            CharSequenceIterator(nullCharSequence)
+        }.iterator().asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) {
+            IndexingIterable { CharSequenceIterator(nullCharSequence) }.iterator().next()
         }
-    }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyCharSequenceToString, IndexingIterable<Char> { CharSequenceIterator(emptyCharSequence) }.iterator().asSequence().joinToString { it.toString() })
-
-        try {
-            IndexingIterable<Char> { CharSequenceIterator(emptyCharSequence) }.iterator().next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
+        assertEquals("", IndexingIterable {
+            CharSequenceIterator(emptyCharSequence)
+        }.iterator().asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) {
+            IndexingIterable { CharSequenceIterator(emptyCharSequence) }.iterator().next()
         }
-    }
 
-    @Test
-    fun testRemove() {
-        try {
-            IndexingIterable<Char> { CharSequenceIterator(normalCharSequence) }.iterator().remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
+        assertThrow(UnsupportedOperationException::class) {
+            IndexingIterable { CharSequenceIterator(normalCharSequence) }.iterator().remove()
+        }
+
+        val iterator = IndexingIterable { mutableListOf(1, 2, 3).iterator() }.iterator()
+        while (iterator.hasNext()) {
+            iterator.next()
+            iterator.remove()
         }
     }
 }

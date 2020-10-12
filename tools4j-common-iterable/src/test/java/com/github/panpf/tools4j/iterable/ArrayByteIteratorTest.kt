@@ -16,66 +16,29 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ArrayByteIteratorTest {
 
-    private val normalByteArray = byteArrayOf(3, 4, 2, 9)
-    private val normalByteArrayToString = "3, 4, 2, 9"
-    private val nullByteArray = null as ByteArray?
-    private val nullByteArrayToString = ""
-    private val emptyByteArray = byteArrayOf()
-    private val emptyByteArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalByteArrayToString, ArrayByteIterator(normalByteArray).asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalByteArray = byteArrayOf(3, 4, 2, 9)
+        val nullByteArray = null as ByteArray?
+        val emptyByteArray = byteArrayOf()
 
-        try {
-            ArrayByteIterator(normalByteArray).next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("3, 4, 2, 9", ArrayByteIterator(normalByteArray).asSequence().joinToString { it.toString() })
+        assertNoThrow { ArrayByteIterator(normalByteArray).next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullByteArrayToString, ArrayByteIterator(nullByteArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayByteIterator(nullByteArray).asSequence().joinToString { it.toString() })
 
-        try {
-            ArrayByteIterator(nullByteArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertThrow(NoSuchElementException::class) { ArrayByteIterator(nullByteArray).next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyByteArrayToString, ArrayByteIterator(emptyByteArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayByteIterator(emptyByteArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayByteIterator(emptyByteArray).next() }
 
-        try {
-            ArrayByteIterator(emptyByteArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            ArrayByteIterator(normalByteArray).remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { ArrayByteIterator(normalByteArray).remove() }
     }
 }

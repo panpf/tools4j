@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.collections;
+package com.github.panpf.tools4j.common;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public interface ReduceOperation<T, K, S> {
-
-    @NotNull
-    S operation(@NotNull K key, @NotNull S accumulator, @NotNull T element);
+public interface InitialValue<R> {
+    @Nullable
+    R get();
 }

@@ -16,66 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ArrayFloatIteratorTest {
 
-    private val normalFloatArray = floatArrayOf(4.5f, 6.8f, 2.3f, 0.6f)
-    private val normalFloatArrayToString = "4.5, 6.8, 2.3, 0.6"
-    private val nullFloatArray = null as FloatArray?
-    private val nullFloatArrayToString = ""
-    private val emptyFloatArray = floatArrayOf()
-    private val emptyFloatArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalFloatArrayToString, ArrayFloatIterator(normalFloatArray).asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalFloatArray = floatArrayOf(4.5f, 6.8f, 2.3f, 0.6f)
+        val nullFloatArray = null as FloatArray?
+        val emptyFloatArray = floatArrayOf()
 
-        try {
-            ArrayFloatIterator(normalFloatArray).next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("4.5, 6.8, 2.3, 0.6", ArrayFloatIterator(normalFloatArray).asSequence().joinToString { it.toString() })
+        assertNoThrow { ArrayFloatIterator(normalFloatArray).next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullFloatArrayToString, ArrayFloatIterator(nullFloatArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayFloatIterator(nullFloatArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayFloatIterator(nullFloatArray).next() }
 
-        try {
-            ArrayFloatIterator(nullFloatArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertEquals("", ArrayFloatIterator(emptyFloatArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayFloatIterator(emptyFloatArray).next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyFloatArrayToString, ArrayFloatIterator(emptyFloatArray).asSequence().joinToString { it.toString() })
-
-        try {
-            ArrayFloatIterator(emptyFloatArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            ArrayFloatIterator(normalFloatArray).remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { ArrayFloatIterator(normalFloatArray).remove() }
     }
 }

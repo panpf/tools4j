@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.sequences;
+package com.github.panpf.tools4j.iterable;
 
 import com.github.panpf.tools4j.common.Transformer;
 import com.github.panpf.tools4j.iterable.AbstractIterator;

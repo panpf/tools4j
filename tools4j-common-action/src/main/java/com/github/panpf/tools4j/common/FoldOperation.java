@@ -14,28 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.io;
+package com.github.panpf.tools4j.common;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicReference;
-
-public class ConstrainedOnceIterable<T> implements Iterable<T> {
-
-    private final AtomicReference<Iterable<T>> iterableRef;
-
-    public ConstrainedOnceIterable(Iterable<T> sequence) {
-        this.iterableRef = new AtomicReference<Iterable<T>>(sequence);
-    }
+public interface FoldOperation<T, K, R> {
 
     @NotNull
-    @Override
-    public Iterator<T> iterator() {
-        Iterable<T> iterable = iterableRef.getAndSet(null);
-        if (iterable == null) {
-            throw new IllegalStateException("This sequence can be consumed only once.");
-        }
-        return iterable.iterator();
-    }
+    R operation(@NotNull K key, @NotNull R accumulator, @NotNull T element);
 }

@@ -16,6 +16,8 @@
 
 package com.github.panpf.tools4j.sequences
 
+import com.github.panpf.tools4j.common.InitialValue
+import com.github.panpf.tools4j.common.NextValue
 import com.github.panpf.tools4j.iterable.EmptyIterator
 import com.github.panpf.tools4j.test.ktx.assertNoThrow
 import com.github.panpf.tools4j.test.ktx.assertThrow

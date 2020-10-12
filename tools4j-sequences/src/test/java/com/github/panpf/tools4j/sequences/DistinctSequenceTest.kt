@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.sequences;
+package com.github.panpf.tools4j.sequences
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.junit.Assert
+import org.junit.Test
 
-public interface NextValue<T> {
-    @Nullable
-    T next(@NotNull T t);
+class DistinctSequenceTest {
+
+    @Test
+    fun test() {
+        val sequence = Sequencex.sequenceOf("4", "5", "4", "5", "3", "1", "4")
+        val nullSequence1 = null as Sequence<String>?
+
+        Assert.assertEquals("4, 5, 3, 1", Sequencex.joinToString(DistinctSequence(sequence) { it }))
+        Assert.assertEquals("", Sequencex.joinToString(DistinctSequence(nullSequence1) { it }))
+    }
 }

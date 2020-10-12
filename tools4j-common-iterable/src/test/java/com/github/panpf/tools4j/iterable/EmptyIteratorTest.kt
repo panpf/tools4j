@@ -16,34 +16,30 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 class EmptyIteratorTest {
 
     @Test
-    fun testNormal() {
-        Assert.assertEquals("", EmptyIterator.INSTANCE.asSequence().joinToString { it.toString() })
+    fun test() {
+        assertEquals("", EmptyIterator.INSTANCE.asSequence().joinToString { it.toString() })
 
-        try {
-            EmptyIterator.INSTANCE.next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
+        assertThrow(NoSuchElementException::class) { EmptyIterator.INSTANCE.previous() }
+        assertThrow(NoSuchElementException::class) { EmptyIterator.INSTANCE.next() }
 
-    @Test
-    fun testRemove() {
-        try {
-            EmptyIterator.INSTANCE.remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { EmptyIterator.INSTANCE.remove() }
+
+        assertNoThrow { EmptyIterator.INSTANCE.set(null) }
+        assertNoThrow { EmptyIterator.INSTANCE.add(null) }
+
+        assertFalse(EmptyIterator.INSTANCE.hasPrevious())
+        assertFalse(EmptyIterator.INSTANCE.hasNext())
+
+        assertEquals(-1, EmptyIterator.INSTANCE.nextIndex())
+        assertEquals(-1, EmptyIterator.INSTANCE.previousIndex())
     }
 }

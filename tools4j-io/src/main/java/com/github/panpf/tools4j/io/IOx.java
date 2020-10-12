@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.io;
 
 import com.github.panpf.tools4j.common.Action;
 import com.github.panpf.tools4j.common.Transformer;
+import com.github.panpf.tools4j.iterable.ConstrainedOnceIterable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -510,7 +511,9 @@ public class IOx {
      * @return a sequence of corresponding file lines. The sequence returned can be iterated only once.
      */
     @NotNull
+    @SuppressWarnings("rawtypes")
     public static Iterable<String> lineIterable(@NotNull BufferedReader bufferedReader) {
+        //noinspection unchecked
         return new ConstrainedOnceIterable(new LinesIterable(bufferedReader));
     }
 

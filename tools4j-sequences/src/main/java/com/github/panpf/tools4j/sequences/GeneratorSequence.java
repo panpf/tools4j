@@ -16,6 +16,8 @@
 
 package com.github.panpf.tools4j.sequences;
 
+import com.github.panpf.tools4j.common.InitialValue;
+import com.github.panpf.tools4j.common.NextValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

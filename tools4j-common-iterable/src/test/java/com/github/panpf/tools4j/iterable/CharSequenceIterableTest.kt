@@ -16,66 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CharSequenceIterableTest {
 
-    private val normalCharSequence = "faf54c32"
-    private val normalCharSequenceToString = "f, a, f, 5, 4, c, 3, 2"
-    private val nullCharSequence = null as CharSequence?
-    private val nullCharSequenceToString = ""
-    private val emptyCharSequence = ""
-    private val emptyCharSequenceToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalCharSequenceToString, CharSequenceIterable(normalCharSequence).iterator().asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalCharSequence = "faf54c32"
+        val nullCharSequence = null as CharSequence?
+        val emptyCharSequence = ""
 
-        try {
-            CharSequenceIterable(normalCharSequence).iterator().next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("f, a, f, 5, 4, c, 3, 2", CharSequenceIterable(normalCharSequence).iterator().asSequence().joinToString { it.toString() })
+        assertNoThrow { CharSequenceIterable(normalCharSequence).iterator().next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullCharSequenceToString, CharSequenceIterable(nullCharSequence).iterator().asSequence().joinToString { it.toString() })
+        assertEquals("", CharSequenceIterable(nullCharSequence).iterator().asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { CharSequenceIterable(nullCharSequence).iterator().next() }
 
-        try {
-            CharSequenceIterable(nullCharSequence).iterator().next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertEquals("", CharSequenceIterable(emptyCharSequence).iterator().asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { CharSequenceIterable(emptyCharSequence).iterator().next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyCharSequenceToString, CharSequenceIterable(emptyCharSequence).iterator().asSequence().joinToString { it.toString() })
-
-        try {
-            CharSequenceIterable(emptyCharSequence).iterator().next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            CharSequenceIterable(normalCharSequence).iterator().remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { CharSequenceIterable(normalCharSequence).iterator().remove() }
     }
 }

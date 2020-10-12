@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.panpf.tools4j.collections;
+package com.github.panpf.tools4j.iterable
 
-import org.jetbrains.annotations.NotNull;
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Test
 
-public interface FoldOperation<T, K, R> {
+class ConstrainedOnceIterableTest {
 
-    @NotNull
-    R operation(@NotNull K key, @NotNull R accumulator, @NotNull T element);
+    @Test
+    fun test() {
+        val list = listOf(1, 2, 3, 5)
+        val iterable = ConstrainedOnceIterable(list)
+
+        assertNoThrow { iterable.iterator() }
+        assertThrow(IllegalStateException::class) { iterable.iterator() }
+    }
 }

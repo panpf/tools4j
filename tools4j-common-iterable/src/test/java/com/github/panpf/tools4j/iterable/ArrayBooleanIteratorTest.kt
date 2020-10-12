@@ -16,66 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ArrayBooleanIteratorTest {
 
-    private val normalBooleanArray = booleanArrayOf(true, false, false, true)
-    private val normalBooleanArrayToString = "true, false, false, true"
-    private val nullBooleanArray = null as BooleanArray?
-    private val nullBooleanArrayToString = ""
-    private val emptyBooleanArray = booleanArrayOf()
-    private val emptyBooleanArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalBooleanArrayToString, ArrayBooleanIterator(normalBooleanArray).asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalBooleanArray = booleanArrayOf(true, false, false, true)
+        val nullBooleanArray = null as BooleanArray?
+        val emptyBooleanArray = booleanArrayOf()
 
-        try {
-            ArrayBooleanIterator(normalBooleanArray).next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("true, false, false, true", ArrayBooleanIterator(normalBooleanArray).asSequence().joinToString { it.toString() })
+        assertNoThrow { ArrayBooleanIterator(normalBooleanArray).next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullBooleanArrayToString, ArrayBooleanIterator(nullBooleanArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayBooleanIterator(nullBooleanArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayBooleanIterator(nullBooleanArray).next() }
 
-        try {
-            ArrayBooleanIterator(nullBooleanArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertEquals("", ArrayBooleanIterator(emptyBooleanArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayBooleanIterator(emptyBooleanArray).next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyBooleanArrayToString, ArrayBooleanIterator(emptyBooleanArray).asSequence().joinToString { it.toString() })
-
-        try {
-            ArrayBooleanIterator(emptyBooleanArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            ArrayBooleanIterator(booleanArrayOf(true, false, false, true)).remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { ArrayBooleanIterator(booleanArrayOf(true, false, false, true)).remove() }
     }
 }

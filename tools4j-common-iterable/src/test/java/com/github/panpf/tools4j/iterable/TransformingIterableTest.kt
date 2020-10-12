@@ -16,50 +16,36 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TransformingIterableTest {
 
-    private val normalArray = arrayOf("faf54c32", "faf54ce", "fa32")
-    private val normalArrayToString = "8, 7, 4"
-    private val emptyArray = arrayOf<String>()
-    private val emptyArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalArrayToString, TransformingIterable(normalArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalArray = arrayOf("faf54c32", "faf54ce", "fa32")
+        val emptyArray = arrayOf<String>()
 
-        try {
-            TransformingIterable(normalArray.asIterable()) { it.length }.iterator().next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("8, 7, 4",
+                TransformingIterable(normalArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
+        assertNoThrow { TransformingIterable(normalArray.asIterable()) { it.length }.iterator().next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyArrayToString, TransformingIterable(emptyArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
-
-        try {
+        assertEquals("",
+                TransformingIterable(emptyArray.asIterable()) { it.length }.iterator().asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) {
             TransformingIterable(emptyArray.asIterable()) { it.length }.iterator().next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
         }
-    }
 
-    @Test
-    fun testRemove() {
-        try {
+        assertThrow(UnsupportedOperationException::class) {
             TransformingIterable(normalArray.asIterable()) { it.length }.iterator().remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
+        }
+
+        val iterator = TransformingIterable(mutableListOf(1, 2, 3)) { it }.iterator()
+        while (iterator.hasNext()) {
+            iterator.next()
+            iterator.remove()
         }
     }
 }

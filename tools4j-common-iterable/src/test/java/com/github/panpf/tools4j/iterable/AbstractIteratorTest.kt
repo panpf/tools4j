@@ -16,45 +16,36 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 class AbstractIteratorTest {
 
     @Test
-    fun testNormal() {
-        Assert.assertEquals("1, 2, 3, 4, 5, 6, 7, 8, 9, 10", IntTestIterator(1, 10).asSequence().joinToString { it.toString() })
-    }
+    fun test() {
+        assertEquals("1, 2, 3, 4, 5, 6, 7, 8, 9, 10", IntTestIterator(1, 10).asSequence().joinToString { it.toString() })
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals("", IntTestIterator(1, 0).asSequence().joinToString { it.toString() })
+        assertEquals("", IntTestIterator(1, 0).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { IntTestIterator(1, 0).next() }
+        assertFalse(IntTestIterator(1, 0).apply { hasNext() }.hasNext())
 
-        try {
-            IntTestIterator(1, 0).next()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
+        assertThrow(NoSuchElementException::class) { NullTestIterator().next() }
+
+        assertThrow(IllegalStateException::class) {
+            val iterator = FailedTestIterator()
+            try {
+                iterator.hasNext()
+            } catch (e: Exception) {
             }
-        }
-
-        Assert.assertFalse(IntTestIterator(1, 0).apply { hasNext() }.hasNext())
-    }
-
-    @Test
-    fun testNull() {
-        try {
-            NullTestIterator().next()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
+            iterator.next()
         }
     }
 
     class IntTestIterator(start: Int, private val end: Int) : AbstractIterator<Int>() {
 
-        var currentValue: Int = start
+        private var currentValue: Int = start
 
         override fun remove() {
             throw UnsupportedOperationException("remove")
@@ -71,7 +62,7 @@ class AbstractIteratorTest {
         }
     }
 
-    class NullTestIterator() : AbstractIterator<Int>() {
+    class NullTestIterator : AbstractIterator<Int>() {
 
         override fun remove() {
             throw UnsupportedOperationException("remove")
@@ -79,6 +70,17 @@ class AbstractIteratorTest {
 
         override fun computeNext() {
             setNext(null)
+        }
+    }
+
+    class FailedTestIterator : AbstractIterator<Int>() {
+
+        override fun remove() {
+            throw UnsupportedOperationException("remove")
+        }
+
+        override fun computeNext() {
+            throw RuntimeException()
         }
     }
 }

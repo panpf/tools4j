@@ -16,66 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ArrayShortIteratorTest {
 
-    private val normalShortArray = shortArrayOf(4, 6, 2, 0)
-    private val normalShortArrayToString = "4, 6, 2, 0"
-    private val nullShortArray = null as ShortArray?
-    private val nullShortArrayToString = ""
-    private val emptyShortArray = shortArrayOf()
-    private val emptyShortArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalShortArrayToString, ArrayShortIterator(normalShortArray).asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalShortArray = shortArrayOf(4, 6, 2, 0)
+        val nullShortArray = null as ShortArray?
+        val emptyShortArray = shortArrayOf()
 
-        try {
-            ArrayShortIterator(normalShortArray).next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("4, 6, 2, 0", ArrayShortIterator(normalShortArray).asSequence().joinToString { it.toString() })
+        assertNoThrow { ArrayShortIterator(normalShortArray).next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullShortArrayToString, ArrayShortIterator(nullShortArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayShortIterator(nullShortArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayShortIterator(nullShortArray).next() }
 
-        try {
-            ArrayShortIterator(nullShortArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertEquals("", ArrayShortIterator(emptyShortArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayShortIterator(emptyShortArray).next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyShortArrayToString, ArrayShortIterator(emptyShortArray).asSequence().joinToString { it.toString() })
-
-        try {
-            ArrayShortIterator(emptyShortArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            ArrayShortIterator(normalShortArray).remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { ArrayShortIterator(normalShortArray).remove() }
     }
 }

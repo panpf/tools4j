@@ -16,66 +16,28 @@
 
 package com.github.panpf.tools4j.iterable
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ArrayDoubleIteratorTest {
 
-    private val normalDoubleArray = doubleArrayOf(4.5, 6.8, 2.3, 0.6)
-    private val normalDoubleArrayToString = "4.5, 6.8, 2.3, 0.6"
-    private val nullDoubleArray = null as DoubleArray?
-    private val nullDoubleArrayToString = ""
-    private val emptyDoubleArray = doubleArrayOf()
-    private val emptyDoubleArrayToString = ""
-
     @Test
-    fun testNormal() {
-        Assert.assertEquals(normalDoubleArrayToString, ArrayDoubleIterator(normalDoubleArray).asSequence().joinToString { it.toString() })
+    fun test() {
+        val normalDoubleArray = doubleArrayOf(4.5, 6.8, 2.3, 0.6)
+        val nullDoubleArray = null as DoubleArray?
+        val emptyDoubleArray = doubleArrayOf()
 
-        try {
-            ArrayDoubleIterator(normalDoubleArray).next()
-        } catch (e: Exception) {
-            Assert.fail()
-        }
-    }
+        assertEquals("4.5, 6.8, 2.3, 0.6", ArrayDoubleIterator(normalDoubleArray).asSequence().joinToString { it.toString() })
+        assertNoThrow { ArrayDoubleIterator(normalDoubleArray).next() }
 
-    @Test
-    fun testNull() {
-        Assert.assertEquals(nullDoubleArrayToString, ArrayDoubleIterator(nullDoubleArray).asSequence().joinToString { it.toString() })
+        assertEquals("", ArrayDoubleIterator(nullDoubleArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayDoubleIterator(nullDoubleArray).next() }
 
-        try {
-            ArrayDoubleIterator(nullDoubleArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (!(e is NoSuchElementException && e.message == "elements is null")) {
-                Assert.fail()
-            }
-        }
-    }
+        assertEquals("", ArrayDoubleIterator(emptyDoubleArray).asSequence().joinToString { it.toString() })
+        assertThrow(NoSuchElementException::class) { ArrayDoubleIterator(emptyDoubleArray).next() }
 
-    @Test
-    fun testEmpty() {
-        Assert.assertEquals(emptyDoubleArrayToString, ArrayDoubleIterator(emptyDoubleArray).asSequence().joinToString { it.toString() })
-
-        try {
-            ArrayDoubleIterator(emptyDoubleArray).next()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is NoSuchElementException) {
-                Assert.fail()
-            }
-        }
-    }
-
-    @Test
-    fun testRemove() {
-        try {
-            ArrayDoubleIterator(normalDoubleArray).remove()
-            Assert.fail()
-        } catch (e: Exception) {
-            if (e !is UnsupportedOperationException) {
-                Assert.fail()
-            }
-        }
+        assertThrow(UnsupportedOperationException::class) { ArrayDoubleIterator(normalDoubleArray).remove() }
     }
 }
