@@ -23,6 +23,7 @@ import com.github.panpf.tools4j.test.ktx.assertTwoEquals
 import com.github.panpf.tools4j.test.ktx.assertTwoThrow
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.IOException
 import java.util.*
 import kotlin.collections.HashMap
 import com.github.panpf.tools4j.common.Pair as Pair2
@@ -274,7 +275,6 @@ class SequencexTest {
 
     @Test
     fun testFlatten() {
-        // todo test nullable and sync to CollectionxTest
         assertTwoEquals(
                 "a, b, c, d, e, f, g, h, i",
                 sequenceOf(
@@ -320,7 +320,6 @@ class SequencexTest {
 
     @Test
     fun testContains() {
-        // todo test nullable and sync to CollectionxTest
         val sequence = Sequencex.sequenceOf("a", "b", "c")
 
         assertTrue(Sequencex.contains(sequence, "a"))
@@ -366,7 +365,6 @@ class SequencexTest {
 
     @Test
     fun testFind() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "bo")
 
@@ -607,7 +605,6 @@ class SequencexTest {
 
     @Test
     fun testTake() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "cj", "dj")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "cj", "dj")
 
@@ -677,12 +674,12 @@ class SequencexTest {
                 Sequencex.joinToString(Sequencex.take(Sequencex.takeWhile(sequence1) { !it.startsWith("d") }, 2)))
     }
 
-    @Suppress("RedundantAsSequence")
     @Test
+    @Suppress("RedundantAsSequence")
     fun testFilter() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bo", "cj", "do")
         val sequence1 = Sequencex.sequenceOf("aj", "bo", "cj", "do")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals("aj, cj",
                 sequence0.filter { it.endsWith("j") }.joinToString(),
@@ -690,13 +687,15 @@ class SequencexTest {
 
         val filterToDestination = ArrayList<String>()
         val filterToDestination1 = ArrayList<String>()
+        val filterToDestinationNull1 = ArrayList<String>()
         val filterToDestinationResult = sequence0.filterTo(filterToDestination) { it.endsWith("j") }
         val filterToDestinationResult1 = Sequencex.filterTo(sequence1, filterToDestination1) { it.endsWith("j") }
-        assertTwoEquals("aj, cj",
-                filterToDestinationResult.asSequence().joinToString(),
-                Sequencex.joinToString(Sequencex.asSequence(filterToDestinationResult1)))
+        val filterToDestinationNullResult1 = Sequencex.filterTo(nullSequence1, filterToDestinationNull1) { it.endsWith("j") }
+        assertTwoEquals("aj, cj", filterToDestinationResult.joinToString(), filterToDestinationResult1.joinToString())
         assertTrue(filterToDestination === filterToDestinationResult)
         assertTrue(filterToDestination1 === filterToDestinationResult1)
+        assertEquals("", filterToDestinationNullResult1.joinToString())
+        assertTrue(filterToDestinationNull1 === filterToDestinationNullResult1)
 
         assertTwoEquals("bo, do",
                 sequence0.filterIndexed { index, _ -> (index % 2) != 0 }.joinToString(),
@@ -706,9 +705,7 @@ class SequencexTest {
         val filterIndexedToDestination1 = ArrayList<String>()
         val filterIndexedToDestinationResult = sequence0.filterIndexedTo(filterIndexedToDestination) { index, _ -> (index % 2) != 0 }
         val filterIndexedToDestinationResult1 = Sequencex.filterIndexedTo(sequence1, filterIndexedToDestination1) { index, _ -> (index % 2) != 0 }
-        assertTwoEquals("bo, do",
-                filterIndexedToDestinationResult.asSequence().joinToString(),
-                Sequencex.joinToString(Sequencex.asSequence(filterIndexedToDestinationResult1)))
+        assertTwoEquals("bo, do", filterIndexedToDestinationResult.joinToString(), filterIndexedToDestinationResult1.joinToString())
         assertTrue(filterIndexedToDestination === filterIndexedToDestinationResult)
         assertTrue(filterIndexedToDestination1 === filterIndexedToDestinationResult1)
 
@@ -725,13 +722,15 @@ class SequencexTest {
 
         @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination = ArrayList<Integer>()
         @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestination1 = arrayListOf<Integer>()
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestinationNull1 = arrayListOf<Integer>()
         val filterIsInstanceToDestinationResult = anySequence0.filterIsInstanceTo(filterIsInstanceToDestination, Integer::class.java)
         val filterIsInstanceToDestinationResult1 = Sequencex.filterIsInstanceTo(anySequence1, filterIsInstanceToDestination1, Integer::class.java)
-        assertTwoEquals("4, 76",
-                filterIsInstanceToDestinationResult.asSequence().joinToString(),
-                Sequencex.joinToString(Sequencex.asSequence(filterIsInstanceToDestinationResult1)))
+        val filterIsInstanceToDestinationNullResult1 = Sequencex.filterIsInstanceTo(nullSequence1, filterIsInstanceToDestinationNull1, Integer::class.java)
+        assertTwoEquals("4, 76", filterIsInstanceToDestinationResult.joinToString(), filterIsInstanceToDestinationResult1.joinToString())
         assertTrue(filterIsInstanceToDestination === filterIsInstanceToDestinationResult)
         assertTrue(filterIsInstanceToDestination1 === filterIsInstanceToDestinationResult1)
+        assertEquals("", filterIsInstanceToDestinationNullResult1.joinToString())
+        assertTrue(filterIsInstanceToDestinationNull1 === filterIsInstanceToDestinationNullResult1)
 
         assertTwoEquals("bo, do",
                 sequence0.filterNot { it.endsWith("j") }.joinToString(),
@@ -739,13 +738,15 @@ class SequencexTest {
 
         val filterNotToDestination = ArrayList<String>()
         val filterNotToDestination1 = ArrayList<String>()
+        val filterNotToDestinationNull1 = ArrayList<String>()
         val filterNotToDestinationResult = sequence0.filterNotTo(filterNotToDestination) { it.endsWith("j") }
         val filterNotToDestinationResult1 = Sequencex.filterNotTo(sequence1, filterNotToDestination1) { it.endsWith("j") }
-        assertTwoEquals("bo, do",
-                filterNotToDestinationResult.asSequence().joinToString(),
-                Sequencex.joinToString(Sequencex.asSequence(filterNotToDestinationResult1)))
+        val filterNotToDestinationNullResult1 = Sequencex.filterNotTo(nullSequence1, filterNotToDestinationNull1) { it.endsWith("j") }
+        assertTwoEquals("bo, do", filterNotToDestinationResult.joinToString(), filterNotToDestinationResult1.joinToString())
         assertTrue(filterNotToDestination === filterNotToDestinationResult)
         assertTrue(filterNotToDestination1 === filterNotToDestinationResult1)
+        assertEquals("", filterNotToDestinationNullResult1.joinToString())
+        assertTrue(filterNotToDestinationNull1 === filterNotToDestinationNullResult1)
 
 
         val notNullSequence0 = sequenceOf(null, "f", null, "gsdg")
@@ -757,48 +758,62 @@ class SequencexTest {
 
         val filterNotNullToDestination = ArrayList<String>()
         val filterNotNullToDestination1 = ArrayList<String>()
+        val filterNotNullToDestinationNull1 = ArrayList<String>()
         val filterNotNullToDestinationResult = notNullSequence0.filterNotNullTo(filterNotNullToDestination)
         val filterNotNullToDestinationResult1 = Sequencex.filterNotNullTo(notNullSequence1, filterNotNullToDestination1)
-        assertTwoEquals("f, gsdg",
-                filterNotNullToDestinationResult.asSequence().joinToString(),
-                Sequencex.joinToString(Sequencex.asSequence(filterNotNullToDestinationResult1)))
+        val filterNotNullToDestinationNullResult1 = Sequencex.filterNotNullTo(nullSequence1, filterNotNullToDestinationNull1)
+        assertTwoEquals("f, gsdg", filterNotNullToDestinationResult.joinToString(), filterNotNullToDestinationResult1.joinToString())
         assertTrue(filterNotNullToDestination === filterNotNullToDestinationResult)
         assertTrue(filterNotNullToDestination1 === filterNotNullToDestinationResult1)
+        assertEquals("", filterNotNullToDestinationNullResult1.joinToString())
+        assertTrue(filterNotNullToDestinationNull1 === filterNotNullToDestinationNullResult1)
     }
 
     @Test
     fun testSort() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aaa", "h", "uuuu", "gg")
         val sequence1 = Sequencex.sequenceOf("aaa", "h", "uuuu", "gg")
+        val nullableSequence0 = sequenceOf("aaa", null, null, "gg", null)
+        val nullableSequence1 = Sequencex.sequenceOf("aaa", null, null, "gg", null)
 
         assertTwoEquals("aaa, gg, h, uuuu",
                 sequence0.sorted().joinToString(),
                 Sequencex.joinToString(Sequencex.sorted(sequence1)))
+        assertThrow(NullPointerException::class) { Sequencex.joinToString(Sequencex.sorted(nullableSequence1)) }
 
         assertTwoEquals("uuuu, h, gg, aaa",
                 sequence0.sortedDescending().joinToString(),
                 Sequencex.joinToString(Sequencex.sortedDescending(sequence1)))
+        assertThrow(NullPointerException::class) { Sequencex.joinToString(Sequencex.sortedDescending(nullableSequence1)) }
 
         assertTwoEquals("h, gg, aaa, uuuu",
                 sequence0.sortedBy { it.length }.joinToString(),
                 Sequencex.joinToString(Sequencex.sortedBy(sequence1) { it.length }))
+        assertTwoEquals("null, null, null, gg, aaa",
+                nullableSequence0.sortedBy { it?.length ?: 0 }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedBy(nullableSequence1) { it.length }))
 
         assertTwoEquals("uuuu, aaa, gg, h",
                 sequence0.sortedByDescending { it.length }.joinToString(),
                 Sequencex.joinToString(Sequencex.sortedByDescending(sequence1) { it.length }))
+        assertTwoEquals("aaa, gg, null, null, null",
+                nullableSequence0.sortedByDescending { it?.length ?: 0 }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedByDescending(nullableSequence1) { it.length }))
 
         assertTwoEquals("aaa, gg, h, uuuu",
                 sequence0.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
                 Sequencex.joinToString(Sequencex.sortedWith(sequence1) { it1, it2 -> it1.compareTo(it2) }))
+        assertTwoEquals("null, null, null, aaa, gg",
+                nullableSequence0.sortedWith { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }.joinToString(),
+                Sequencex.joinToString(Sequencex.sortedWith(nullableSequence1) { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }))
     }
 
     @Test
     @Suppress("ReplaceAssociateFunction")
     fun testAssociate() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
@@ -820,46 +835,52 @@ class SequencexTest {
 
         val associateToMap0 = HashMap<String, String>()
         val associateToMap1 = HashMap<String, String>()
+        val associateToMapNull1 = HashMap<String, String>()
         val associateToMapResult0 = sequence0.associateTo(associateToMap0) { it.first().toString() to it }
         val associateToMapResult1 = Sequencex.associateTo(sequence1, associateToMap1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
-        assertTwoEquals(
-                mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                associateToMap0,
-                associateToMap1,
-        )
+        val associateToMapResultNull1 = Sequencex.associateTo(nullSequence1, associateToMapNull1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
+        assertTwoEquals(mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"), associateToMap0, associateToMap1)
         assertTrue(associateToMap0 === associateToMapResult0)
         assertTrue(associateToMap1 === associateToMapResult1)
+        assertEquals(mapOf<String, String>(), associateToMapResultNull1)
+        assertTrue(associateToMapNull1 === associateToMapResultNull1)
 
         val associateByTo1Map0 = HashMap<String, String>()
         val associateByTo1Map1 = HashMap<String, String>()
+        val associateByTo1MapNull1 = HashMap<String, String>()
         val associateByTo1MapResult0 = sequence0.associateByTo(associateByTo1Map0) { it.first().toString() }
         val associateByTo1MapResult1 = Sequencex.associateByTo(sequence1, associateByTo1Map1) { it.first().toString() }
+        val associateByTo1MapResultNull1 = Sequencex.associateByTo(nullSequence1, associateByTo1MapNull1) { it.first().toString() }
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                associateByTo1Map0,
-                associateByTo1Map1,
+                associateByTo1Map0, associateByTo1Map1,
         )
         assertTrue(associateByTo1Map0 === associateByTo1MapResult0)
         assertTrue(associateByTo1Map1 === associateByTo1MapResult1)
+        assertEquals(mapOf<String, String>(), associateByTo1MapResultNull1)
+        assertTrue(associateByTo1MapNull1 === associateByTo1MapResultNull1)
 
         val associateByTo2Map0 = HashMap<String, String>()
         val associateByTo2Map1 = HashMap<String, String>()
+        val associateByTo2MapNull1 = HashMap<String, String>()
         val associateByTo2MapResult0 = sequence0.associateByTo(associateByTo2Map0, { it.first().toString() }, { it })
         val associateByTo2MapResult1 = Sequencex.associateByTo(sequence1, associateByTo2Map1, { it.first().toString() }, { it })
+        val associateByTo2MapResultNull1 = Sequencex.associateByTo(nullSequence1, associateByTo2MapNull1, { it.first().toString() }, { it })
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                associateByTo2Map0,
-                associateByTo2Map1,
+                associateByTo2Map0, associateByTo2Map1,
         )
         assertTrue(associateByTo2Map0 === associateByTo2MapResult0)
         assertTrue(associateByTo2Map1 === associateByTo2MapResult1)
+        assertEquals(mapOf<String, String>(), associateByTo2MapResultNull1)
+        assertTrue(associateByTo2MapNull1 === associateByTo2MapResultNull1)
     }
 
     @Test
     fun testTo() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+        val nullSequence1 = null as Sequence<Pair2<Int, String>>?
 
         assertTwoEquals(
                 listOf("aj", "bj", "ao", "bo"),
@@ -871,6 +892,7 @@ class SequencexTest {
                 sequence0.toCollection(LinkedList()) is LinkedList,
                 Sequencex.toCollection(sequence1, LinkedList()) is LinkedList
         )
+        assertEquals(listOf<String>(), Sequencex.toCollection(nullSequence1, LinkedList()))
 
         assertTwoEquals(
                 listOf("aj", "bj", "ao", "bo"),
@@ -893,6 +915,7 @@ class SequencexTest {
                 sequence0.toMutableSet() is LinkedHashSet,
                 Sequencex.toMutableSet(sequence1) is LinkedHashSet
         )
+        assertEquals(linkedSetOf<String>(), Sequencex.toMutableSet(nullSequence1))
 
         assertTwoEquals(
                 hashSetOf("aj", "bj", "ao", "bo"),
@@ -949,13 +972,14 @@ class SequencexTest {
                 sequenceOf(1 to "a", 3 to "c", 8 to "h").toMap(HashMap()) is HashMap,
                 Sequencex.toMap(Sequencex.sequenceOf(Pair2.of(1, "a"), Pair2.of(3, "c"), Pair2.of(8, "h")), HashMap()) is HashMap,
         )
+        assertEquals(mapOf<Int, String>(), Sequencex.toMap(nullSequence1, HashMap()))
     }
 
     @Test
     fun testFlatMap() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
@@ -972,9 +996,11 @@ class SequencexTest {
         )
 
         val flatMapToList0 = ArrayList<String>()
-        val flatMapToListResult0 = sequence0.flatMapTo(flatMapToList0) { it -> it.toCharArray().map { it.toString() } }
         val flatMapToList1 = ArrayList<String>()
+        val flatMapToListNull1 = ArrayList<String>()
+        val flatMapToListResult0 = sequence0.flatMapTo(flatMapToList0) { it -> it.toCharArray().map { it.toString() } }
         val flatMapToListResult1 = Sequencex.flatMapOfIterableTo(sequence1, flatMapToList1) { it -> it.toCharArray().map { it.toString() } }
+        val flatMapToListResultNull1 = Sequencex.flatMapOfIterableTo(nullSequence1, flatMapToListNull1) { it -> it.toCharArray().map { it.toString() } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "a, j, b, j, a, o, b, o",
@@ -987,11 +1013,17 @@ class SequencexTest {
                 flatMapToList0 === flatMapToListResult0,
                 flatMapToList1 === flatMapToListResult1,
         )
+        @Suppress("USELESS_IS_CHECK")
+        assertEquals("", flatMapToListResultNull1.joinToString())
+        @Suppress("USELESS_IS_CHECK")
+        assertTrue(flatMapToListNull1 === flatMapToListResultNull1)
 
         val flatMapToList2 = ArrayList<String>()
-        val flatMapToListResult2 = sequence0.flatMapTo(flatMapToList2) { it -> it.toCharArray().asSequence().map { it.toString() } }
         val flatMapToList3 = ArrayList<String>()
+        val flatMapToListNull3 = ArrayList<String>()
+        val flatMapToListResult2 = sequence0.flatMapTo(flatMapToList2) { it -> it.toCharArray().asSequence().map { it.toString() } }
         val flatMapToListResult3 = Sequencex.flatMapTo(sequence1, flatMapToList3) { it -> Sequencex.map(Sequencex.asSequence(it.toCharArray())) { it.toString() } }
+        val flatMapToListResultNull3 = Sequencex.flatMapTo(nullSequence1, flatMapToListNull3) { it -> Sequencex.map(Sequencex.asSequence(it.toCharArray())) { it.toString() } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "a, j, b, j, a, o, b, o",
@@ -1004,6 +1036,10 @@ class SequencexTest {
                 flatMapToList2 === flatMapToListResult2,
                 flatMapToList3 === flatMapToListResult3,
         )
+        @Suppress("USELESS_IS_CHECK")
+        assertEquals("", flatMapToListResultNull1.joinToString())
+        @Suppress("USELESS_IS_CHECK")
+        assertTrue(flatMapToListNull3 === flatMapToListResultNull3)
 
 
 
@@ -1022,9 +1058,11 @@ class SequencexTest {
         )
 
         val flatMapIndexedToList0 = ArrayList<String>()
-        val flatMapIndexedToListResult0 = sequence0.flatMapIndexedTo(flatMapIndexedToList0) { index, it -> it.toCharArray().map { "${index}-$it" } }
         val flatMapIndexedToList1 = ArrayList<String>()
+        val flatMapIndexedToListNull1 = ArrayList<String>()
+        val flatMapIndexedToListResult0 = sequence0.flatMapIndexedTo(flatMapIndexedToList0) { index, it -> it.toCharArray().map { "${index}-$it" } }
         val flatMapIndexedToListResult1 = Sequencex.flatMapIndexedOfIterableTo(sequence1, flatMapIndexedToList1) { index, it -> it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToListResultNull1 = Sequencex.flatMapIndexedOfIterableTo(nullSequence1, flatMapIndexedToListNull1) { index, it -> it.toCharArray().map { "${index}-$it" } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
@@ -1037,11 +1075,17 @@ class SequencexTest {
                 flatMapIndexedToList0 === flatMapIndexedToListResult0,
                 flatMapIndexedToList1 === flatMapIndexedToListResult1,
         )
+        @Suppress("USELESS_IS_CHECK")
+        assertEquals("", flatMapIndexedToListResultNull1.joinToString())
+        @Suppress("USELESS_IS_CHECK")
+        assertTrue(flatMapIndexedToListNull1 === flatMapIndexedToListResultNull1)
 
         val flatMapIndexedToList2 = ArrayList<String>()
-        val flatMapIndexedToListResult2 = sequence0.flatMapIndexedTo(flatMapIndexedToList2) { index, it -> it.toCharArray().asSequence().map { "${index}-$it" } }
         val flatMapIndexedToList3 = ArrayList<String>()
+        val flatMapIndexedToListNull3 = ArrayList<String>()
+        val flatMapIndexedToListResult2 = sequence0.flatMapIndexedTo(flatMapIndexedToList2) { index, it -> it.toCharArray().asSequence().map { "${index}-$it" } }
         val flatMapIndexedToListResult3 = Sequencex.flatMapIndexedTo(sequence1, flatMapIndexedToList3) { index, it -> Sequencex.map(Sequencex.asSequence(it.toCharArray())) { "${index}-$it" } }
+        val flatMapIndexedToListResultNull3 = Sequencex.flatMapIndexedTo(nullSequence1, flatMapIndexedToListNull3) { index, it -> Sequencex.map(Sequencex.asSequence(it.toCharArray())) { "${index}-$it" } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
@@ -1054,13 +1098,17 @@ class SequencexTest {
                 flatMapIndexedToList2 === flatMapIndexedToListResult2,
                 flatMapIndexedToList3 === flatMapIndexedToListResult3,
         )
+        @Suppress("USELESS_IS_CHECK")
+        assertEquals("", flatMapIndexedToListResultNull3.joinToString())
+        @Suppress("USELESS_IS_CHECK")
+        assertTrue(flatMapIndexedToListNull3 === flatMapIndexedToListResultNull3)
     }
 
     @Test
     fun testGroup() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(
                 "{a=[aj, ao], b=[bj, bo]}",
@@ -1076,34 +1124,34 @@ class SequencexTest {
 
         val groupByToMap0 = HashMap<Char, MutableList<String>>()
         val groupByToMap1 = HashMap<Char, List<String>>()
+        val groupByToMapNull1 = HashMap<Char, List<String>>()
         val groupByToMapResult0 = sequence0.groupByTo(groupByToMap0) { it.first() }
         val groupByToMapResult1 = Sequencex.groupByTo(sequence1, groupByToMap1) { it.first() }
-        assertTwoEquals(
-                "{a=[aj, ao], b=[bj, bo]}",
-                groupByToMap0.toString(),
-                groupByToMap1.toString(),
-        )
+        val groupByToMapResultNull1 = Sequencex.groupByTo(nullSequence1, groupByToMapNull1) { it.first() }
+        assertTwoEquals("{a=[aj, ao], b=[bj, bo]}", groupByToMap0.toString(), groupByToMap1.toString())
         assertTrue(groupByToMap0 === groupByToMapResult0)
         assertTrue(groupByToMap1 === groupByToMapResult1)
+        assertEquals("{}", groupByToMapNull1.toString())
+        assertTrue(groupByToMapNull1 === groupByToMapResultNull1)
 
         val groupByToMap2 = HashMap<Char, MutableList<Char>>()
         val groupByToMap3 = HashMap<Char, List<Char>>()
+        val groupByToMapNull3 = HashMap<Char, List<Char>>()
         val groupByToMapResult2 = sequence0.groupByTo(groupByToMap2, { it.first() }, { it.last() })
         val groupByToMapResult3 = Sequencex.groupByTo(sequence1, groupByToMap3, { it.first() }, { it.last() })
-        assertTwoEquals(
-                "{a=[j, o], b=[j, o]}",
-                groupByToMap2.toString(),
-                groupByToMap3.toString(),
-        )
+        val groupByToMapResultNull3 = Sequencex.groupByTo(nullSequence1, groupByToMapNull3, { it.first() }, { it.last() })
+        assertTwoEquals("{a=[j, o], b=[j, o]}", groupByToMap2.toString(), groupByToMap3.toString())
         assertTrue(groupByToMap2 === groupByToMapResult2)
         assertTrue(groupByToMap3 === groupByToMapResult3)
+        assertEquals("{}", groupByToMapNull3.toString())
+        assertTrue(groupByToMapNull3 === groupByToMapResultNull3)
     }
 
     @Test
     fun testMap() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(
                 "a, b, a, c, b",
@@ -1131,8 +1179,10 @@ class SequencexTest {
 
         val mapToList0 = ArrayList<Char>()
         val mapToList1 = ArrayList<Char>()
+        val mapToListNull1 = ArrayList<Char>()
         val mapToListResult0 = sequence0.mapTo(mapToList0) { it.first() }
         val mapToListResult1 = Sequencex.mapTo(sequence1, mapToList1) { it.first() }
+        val mapToListResultNull1 = Sequencex.mapTo(nullSequence1, mapToListNull1) { it.first() }
         assertTwoEquals(
                 "[a, b, a, c, b]",
                 mapToList0.toString(),
@@ -1140,11 +1190,15 @@ class SequencexTest {
         )
         assertTrue(mapToList0 === mapToListResult0)
         assertTrue(mapToList1 === mapToListResult1)
+        assertEquals("[]", mapToListNull1.toString())
+        assertTrue(mapToListNull1 === mapToListResultNull1)
 
         val mapNotNullToList0 = ArrayList<Char>()
         val mapNotNullToList1 = ArrayList<Char>()
+        val mapNotNullToListNull1 = ArrayList<Char>()
         val mapNotNullToListResult0 = sequence0.mapNotNullTo(mapNotNullToList0) { if (it != "cc") it.first() else null }
         val mapNotNullToListResult1 = Sequencex.mapNotNullTo(sequence1, mapNotNullToList1) { if (it != "cc") it.first() else null }
+        val mapNotNullToListResultNull1 = Sequencex.mapNotNullTo(nullSequence1, mapNotNullToListNull1) { if (it != "cc") it.first() else null }
         assertTwoEquals(
                 "[a, b, a, b]",
                 mapNotNullToList0.toString(),
@@ -1152,11 +1206,18 @@ class SequencexTest {
         )
         assertTrue(mapNotNullToList0 === mapNotNullToListResult0)
         assertTrue(mapNotNullToList1 === mapNotNullToListResult1)
+        assertEquals(
+                "[]",
+                mapNotNullToListNull1.toString(),
+        )
+        assertTrue(mapNotNullToListNull1 === mapNotNullToListResultNull1)
 
         val mapIndexedToList0 = ArrayList<String>()
         val mapIndexedToList1 = ArrayList<String>()
+        val mapIndexedToListNull1 = ArrayList<String>()
         val mapIndexedToListResult0 = sequence0.mapIndexedTo(mapIndexedToList0) { index, s -> "$index:${s.first()}" }
         val mapIndexedToListResult1 = Sequencex.mapIndexedTo(sequence1, mapIndexedToList1) { index, s -> "$index:${s.first()}" }
+        val mapIndexedToListResultNull1 = Sequencex.mapIndexedTo(nullSequence1, mapIndexedToListNull1) { index, s -> "$index:${s.first()}" }
         assertTwoEquals(
                 "[0:a, 1:b, 2:a, 3:c, 4:b]",
                 mapIndexedToList0.toString(),
@@ -1164,11 +1225,15 @@ class SequencexTest {
         )
         assertTrue(mapIndexedToList0 === mapIndexedToListResult0)
         assertTrue(mapIndexedToList1 === mapIndexedToListResult1)
+        assertEquals("[]", mapIndexedToListNull1.toString())
+        assertTrue(mapIndexedToListNull1 === mapIndexedToListResultNull1)
 
         val mapIndexedNotNullToList0 = ArrayList<String>()
         val mapIndexedNotNullToList1 = ArrayList<String>()
+        val mapIndexedNotNullToListNull1 = ArrayList<String>()
         val mapIndexedNotNullToListResult0 = sequence0.mapIndexedNotNullTo(mapIndexedNotNullToList0) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
         val mapIndexedNotNullToListResult1 = Sequencex.mapIndexedNotNullTo(sequence1, mapIndexedNotNullToList1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        val mapIndexedNotNullToListResultNull1 = Sequencex.mapIndexedNotNullTo(nullSequence1, mapIndexedNotNullToListNull1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
         assertTwoEquals(
                 "[0:a, 1:b, 2:a, 4:b]",
                 mapIndexedNotNullToList0.toString(),
@@ -1176,11 +1241,12 @@ class SequencexTest {
         )
         assertTrue(mapIndexedNotNullToList0 === mapIndexedNotNullToListResult0)
         assertTrue(mapIndexedNotNullToList1 === mapIndexedNotNullToListResult1)
+        assertEquals("[]", mapIndexedNotNullToListNull1.toString())
+        assertTrue(mapIndexedNotNullToListNull1 === mapIndexedNotNullToListResultNull1)
     }
 
     @Test
     fun testWithIndex() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "ao", "cc", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "ao", "cc", "bo")
 
@@ -1199,7 +1265,6 @@ class SequencexTest {
 
     @Test
     fun testDistinct() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1218,15 +1283,25 @@ class SequencexTest {
 
     @Test
     fun testAll() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(
                 true,
                 sequence0.all { it -> it.all { it.isLetter() } },
                 Sequencex.all(sequence1) { it -> it.all { it.isLetter() } },
         )
+
+        assertTwoEquals(
+                true,
+                emptySequence0.all { it -> it.all { it.isLetter() } },
+                Sequencex.all(emptySequence1) { it -> it.all { it.isLetter() } },
+        )
+
+        assertTrue(Sequencex.all(nullSequence1) { it.last() == 'j' })
 
         assertTwoEquals(
                 false,
@@ -1237,38 +1312,33 @@ class SequencexTest {
 
     @Test
     fun testAny() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
-        assertTwoEquals(
-                true,
-                sequence0.any(),
-                Sequencex.any(sequence1),
-        )
-
+        assertTwoEquals(true, sequence0.any(), Sequencex.any(sequence1))
+        assertTwoEquals(false, emptySequence0.any(), Sequencex.any(emptySequence1))
+        assertFalse(Sequencex.any(nullSequence1))
         assertTwoEquals(
                 false,
                 sequenceOf<String>().any(),
                 Sequencex.any(Sequencex.sequenceOf<String>()),
         )
 
-        assertTwoEquals(
-                true,
-                sequence0.any { it.last() == 'j' },
-                Sequencex.any(sequence1) { it.last() == 'j' },
-        )
-
+        assertTwoEquals(true, sequence0.any { it.last() == 'j' }, Sequencex.any(sequence1) { it.last() == 'j' })
+        assertTwoEquals(false, emptySequence0.any { it.last() == 'j' }, Sequencex.any(emptySequence1) { it.last() == 'j' })
+        assertFalse(Sequencex.any(nullSequence1) { it -> it.all { it.isDigit() } })
         assertTwoEquals(
                 false,
                 sequence0.any { it -> it.all { it.isDigit() } },
-                Sequencex.any(sequence1) { it -> it.all { it.isDigit() } },
+                Sequencex.any(sequence1) { it -> it.all { it.isDigit() } }
         )
     }
 
     @Test
     fun testCount() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1311,14 +1381,18 @@ class SequencexTest {
 
     @Test
     fun testFold() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
+        val nullSequence1 = null as Sequence<String>?
 
         assertTwoEquals(
                 "^ajbjajbjbo",
                 sequence0.fold("^") { r, t -> r + t },
                 Sequencex.fold(sequence1, "^") { r, t -> r + t },
+        )
+        assertEquals(
+                "^",
+                Sequencex.fold(nullSequence1, "^") { r, t -> r + t },
         )
 
         assertTwoEquals(
@@ -1326,11 +1400,14 @@ class SequencexTest {
                 sequence0.foldIndexed("^") { i, r, t -> r + i.toString() + t },
                 Sequencex.foldIndexed(sequence1, "^") { i, r, t -> r + i.toString() + t },
         )
+        assertEquals(
+                "^",
+                Sequencex.foldIndexed(nullSequence1, "^") { i, r, t -> r + i.toString() + t },
+        )
     }
 
     @Test
     fun testEach() {
-        // todo test nullable and sync to CollectionxTest
         val sequence0 = sequenceOf("aj", "bj", "aj", "bj", "bo")
         val sequence1 = Sequencex.sequenceOf("aj", "bj", "aj", "bj", "bo")
 
@@ -1373,19 +1450,31 @@ class SequencexTest {
     fun testMax() {
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val nanDoubleSequence0 = sequenceOf(Double.NaN, 3.0, 3.2, 5.6, 1.1)
+        val nanDoubleSequence1 = Sequencex.sequenceOf(Double.NaN, 3.0, 3.2, 5.6, 1.1)
+        val nanDoubleSequence00 = sequenceOf(3.0, 3.2, Double.NaN, 5.6, 1.1)
+        val nanDoubleSequence11 = Sequencex.sequenceOf(3.0, 3.2, Double.NaN, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()
         val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
         val nullDoubleSequence1: Sequence<Double>? = null
         assertTwoEquals(5.6, doubleSequence0.maxOrNull(), Sequencex.maxDoubleOrNull(doubleSequence1))
+        assertTwoEquals(Double.NaN, nanDoubleSequence0.maxOrNull(), Sequencex.maxDoubleOrNull(nanDoubleSequence1))
+        assertTwoEquals(Double.NaN, nanDoubleSequence00.maxOrNull(), Sequencex.maxDoubleOrNull(nanDoubleSequence11))
         assertTwoEquals(null, emptyDoubleSequence0.maxOrNull(), Sequencex.maxDoubleOrNull(emptyDoubleSequence1))
         assertTwoEquals(null, null, Sequencex.maxDoubleOrNull(nullDoubleSequence1))
 
         val floatSequence0 = sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
         val floatSequence1 = Sequencex.sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val nanFloatSequence0 = sequenceOf(Float.NaN, 3.0f, 3.2f, 5.6f, 1.1f)
+        val nanFloatSequence1 = Sequencex.sequenceOf(Float.NaN, 3.0f, 3.2f, 5.6f, 1.1f)
+        val nanFloatSequence00 = sequenceOf(3.0f, 3.2f, Float.NaN, 5.6f, 1.1f)
+        val nanFloatSequence11 = Sequencex.sequenceOf(3.0f, 3.2f, Float.NaN, 5.6f, 1.1f)
         val emptyFloatSequence0 = sequenceOf<Float>()
         val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
         val nullFloatSequence1: Sequence<Float>? = null
         assertTwoEquals(5.6f, floatSequence0.maxOrNull(), Sequencex.maxFloatOrNull(floatSequence1))
+        assertTwoEquals(Float.NaN, nanFloatSequence0.maxOrNull(), Sequencex.maxFloatOrNull(nanFloatSequence1))
+        assertTwoEquals(Float.NaN, nanFloatSequence00.maxOrNull(), Sequencex.maxFloatOrNull(nanFloatSequence11))
         assertTwoEquals(null, emptyFloatSequence0.maxOrNull(), Sequencex.maxFloatOrNull(emptyFloatSequence1))
         assertTwoEquals(null, null, Sequencex.maxFloatOrNull(nullFloatSequence1))
 
@@ -1468,19 +1557,31 @@ class SequencexTest {
     fun testMin() {
         val doubleSequence0 = sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
         val doubleSequence1 = Sequencex.sequenceOf(3.2, 3.3, 3.0, 5.6, 1.1)
+        val nanDoubleSequence0 = sequenceOf(Double.NaN, 3.0, 3.2, 5.6, 1.1)
+        val nanDoubleSequence1 = Sequencex.sequenceOf(Double.NaN, 3.0, 3.2, 5.6, 1.1)
+        val nanDoubleSequence00 = sequenceOf(3.0, 3.2, Double.NaN, 5.6, 1.1)
+        val nanDoubleSequence11 = Sequencex.sequenceOf(3.0, 3.2, Double.NaN, 5.6, 1.1)
         val emptyDoubleSequence0 = sequenceOf<Double>()
         val emptyDoubleSequence1 = Sequencex.sequenceOf<Double>()
         val nullDoubleSequence1: Sequence<Double>? = null
         assertTwoEquals(1.1, doubleSequence0.minOrNull(), Sequencex.minDoubleOrNull(doubleSequence1))
+        assertTwoEquals(Double.NaN, nanDoubleSequence0.minOrNull(), Sequencex.minDoubleOrNull(nanDoubleSequence1))
+        assertTwoEquals(Double.NaN, nanDoubleSequence00.minOrNull(), Sequencex.minDoubleOrNull(nanDoubleSequence11))
         assertTwoEquals(null, emptyDoubleSequence0.minOrNull(), Sequencex.minDoubleOrNull(emptyDoubleSequence1))
         assertTwoEquals(null, null, Sequencex.minDoubleOrNull(nullDoubleSequence1))
 
         val floatSequence0 = sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
         val floatSequence1 = Sequencex.sequenceOf(3.2f, 3.3f, 3.0f, 5.6f, 1.1f)
+        val nanFloatSequence0 = sequenceOf(Float.NaN, 3.0f, 3.2f, 5.6f, 1.1f)
+        val nanFloatSequence1 = Sequencex.sequenceOf(Float.NaN, 3.0f, 3.2f, 5.6f, 1.1f)
+        val nanFloatSequence00 = sequenceOf(3.0f, 3.2f, Float.NaN, 5.6f, 1.1f)
+        val nanFloatSequence11 = Sequencex.sequenceOf(3.0f, 3.2f, Float.NaN, 5.6f, 1.1f)
         val emptyFloatSequence0 = sequenceOf<Float>()
         val emptyFloatSequence1 = Sequencex.sequenceOf<Float>()
         val nullFloatSequence1: Sequence<Float>? = null
         assertTwoEquals(1.1f, floatSequence0.minOrNull(), Sequencex.minFloatOrNull(floatSequence1))
+        assertTwoEquals(Float.NaN, nanFloatSequence0.minOrNull(), Sequencex.minFloatOrNull(nanFloatSequence1))
+        assertTwoEquals(Float.NaN, nanFloatSequence00.minOrNull(), Sequencex.minFloatOrNull(nanFloatSequence11))
         assertTwoEquals(null, emptyFloatSequence0.minOrNull(), Sequencex.minFloatOrNull(emptyFloatSequence1))
         assertTwoEquals(null, null, Sequencex.minFloatOrNull(nullFloatSequence1))
 
@@ -1719,26 +1820,53 @@ class SequencexTest {
         assertTwoEquals("6, 7, 2",
                 normalSequence0.minus(arrayOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(normalSequence1, arrayOf("3", "1"))))
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.minus(arrayOf()).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, arrayOf<String>())))
         assertTwoEquals("",
                 emptySequence0.minus(arrayOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(emptySequence1, arrayOf("3", "1"))))
         assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, arrayOf("3", "1"))))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, arrayOf<String>())))
 
         assertTwoEquals("6, 7, 2",
                 normalSequence0.minus(listOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(normalSequence1, listOf("3", "1"))))
+        assertTwoEquals("6, 7, 2",
+                normalSequence0.minus(setOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, setOf("3", "1"))))
+        assertTwoEquals("6, 7, 2",
+                normalSequence0.minus(arrayListOf("3", "1")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, arrayListOf("3", "1"))))
+        assertTwoEquals("6, 7",
+                normalSequence0.minus(arrayListOf("3", "1", "2")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, arrayListOf("3", "1", "2"))))
+        assertTwoEquals("6, 7",
+                normalSequence0.minus(listOf("3", "1", "2")).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, listOf("3", "1", "2"))))
+        assertTwoEquals("6, 7",
+                normalSequence0.minus(com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it }).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it })))
         assertTwoEquals("",
                 emptySequence0.minus(listOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(emptySequence1, listOf("3", "1"))))
         assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, listOf("3", "1"))))
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.minus(listOf()).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, listOf<String>())))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, listOf<String>())))
 
         assertTwoEquals("6, 7, 2",
                 normalSequence0.minus(sequenceOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(normalSequence1, Sequencex.sequenceOf("3", "1"))))
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalSequence0.minus(sequenceOf()).joinToString(),
+                Sequencex.joinToString(Sequencex.minus(normalSequence1, Sequencex.sequenceOf())))
         assertTwoEquals("",
                 emptySequence0.minus(sequenceOf("3", "1")).joinToString(),
                 Sequencex.joinToString(Sequencex.minus(emptySequence1, Sequencex.sequenceOf("3", "1"))))
         assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, Sequencex.sequenceOf("3", "1"))))
+        assertEquals("", Sequencex.joinToString(Sequencex.minus(nullSequence0, Sequencex.sequenceOf())))
 
         assertTwoEquals("6, 7, 2, 1",
                 normalSequence0.minusElement("3").joinToString(),
@@ -1874,6 +2002,9 @@ class SequencexTest {
                 normalSequence0.joinTo(buffer = StringBuilder(), limit = 4, transform = { it + "0" }).toString(),
                 Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, 4, null, { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, 10",
+                normalSequence0.joinTo(buffer = StringBuilder(), limit = 5, transform = { it + "0" }).toString(),
+                Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, 5, null, { it + "0" }).toString())
+        assertTwoEquals("60, 30, 70, 20, 10",
                 normalSequence0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
                 Sequencex.joinTo(normalSequence1, StringBuilder(), null, null, null, -1, null, { it + "0" }).toString())
         assertTwoEquals("6, 3, 7, 2, 1",
@@ -1925,6 +2056,9 @@ class SequencexTest {
                 Sequencex.joinTo(emptySequence1, StringBuilder()).toString())
         assertEquals("",
                 Sequencex.joinTo(nullSequence0, StringBuilder()).toString())
+
+        assertThrow(IOException::class) { emptySequence0.joinTo(buffer = ExceptionAppendable()).toString() }
+        assertThrow(RuntimeException::class) { Sequencex.joinTo(emptySequence1, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
 
 
         assertTwoEquals("^60:30:70:20:***$",
@@ -2059,6 +2193,20 @@ class SequencexTest {
 
         override fun get(): Int? {
             return if (next <= end) next++ else null
+        }
+    }
+
+    class ExceptionAppendable : Appendable {
+        override fun append(csq: CharSequence?): java.lang.Appendable {
+            throw IOException()
+        }
+
+        override fun append(csq: CharSequence?, start: Int, end: Int): java.lang.Appendable {
+            throw IOException()
+        }
+
+        override fun append(c: Char): java.lang.Appendable {
+            throw IOException()
         }
     }
 }
