@@ -24,6 +24,9 @@ import java.net.URL;
 
 public class Environmentx {
 
+    private Environmentx() {
+
+    }
 
     /**
      * Get the dir of the workspace
