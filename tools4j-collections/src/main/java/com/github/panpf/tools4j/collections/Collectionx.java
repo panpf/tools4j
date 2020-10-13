@@ -148,28 +148,14 @@ public class Collectionx {
      * Returns a new read-only list of given elements.  The returned list is serializable (JVM).
      */
     @NotNull
-    public static <T> List<T> listOf(T... elements) {
-        //noinspection unchecked
-        return (elements != null ? elements.length : 0) > 0 ? Arrayx.asList(elements) : (List<T>) emptyList();
-    }
-
-
-    /**
-     * Returns an empty read-only list.  The returned list is serializable (JVM).
-     */
-    @NotNull
-    public static <T> List<T> immutableListOf() {
-        //noinspection unchecked
-        return (List<T>) Collections.EMPTY_LIST;
-    }
-
-    /**
-     * Returns an immutable list containing only the specified object [element].
-     * The returned list is serializable.
-     */
-    @NotNull
-    public static <T> List<T> immutableListOf(@Nullable T element) {
-        return Collections.singletonList(element);
+    public static <T> List<T> listOf(@NotNull T... elements) {
+        if (elements.length == 0) {
+            return emptyList();
+        } else if (elements.length == 1) {
+            return Collections.singletonList(elements[0]);
+        } else {
+            return Arrays.asList(elements);
+        }
     }
 
     /**
@@ -177,16 +163,13 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<T> immutableListOf(@NotNull T... elements) {
-        //noinspection unchecked
-        return elements.length > 0 ? Arrays.asList(elements) : (List<T>) Collections.EMPTY_LIST;
-    }
-
-    /**
-     * Returns a new readable and writable list of given elements
-     */
-    @NotNull
-    public static <T> List<T> mutableListOf(@NotNull T... elements) {
-        return arrayListOf(elements);
+        if (elements.length == 0) {
+            return emptyList();
+        } else if (elements.length == 1) {
+            return Collections.singletonList(elements[0]);
+        } else {
+            return Arrays.asList(elements);
+        }
     }
 
     /**
@@ -204,12 +187,25 @@ public class Collectionx {
     }
 
     /**
+     * Returns a new readable and writable list of given elements
+     */
+    @NotNull
+    public static <T> List<T> mutableListOf(@NotNull T... elements) {
+        if (elements.length > 0) {
+            ArrayList<T> list = new ArrayList<T>(elements.length);
+            addAll(list, elements);
+            return list;
+        } else {
+            return new ArrayList<T>(0);
+        }
+    }
+
+    /**
      * Returns an empty read-only list.  The returned list is serializable (JVM).
      */
     @NotNull
     public static <T> List<T> emptyList() {
-        //noinspection unchecked
-        return (List<T>) Collections.emptyList();
+        return Collections.emptyList();
     }
 
 
@@ -224,34 +220,17 @@ public class Collectionx {
         return (Set<T>) Collections.EMPTY_SET;
     }
 
-
-    /**
-     * Returns a new read-only set of given elements
-     */
-    @NotNull
-    public static <T> Set<T> immutableSetOf() {
-        //noinspection unchecked
-        return (Set<T>) Collections.EMPTY_SET;
-    }
-
-    /**
-     * Returns a new read-only set of given elements
-     */
-    @NotNull
-    public static <T> Set<T> immutableSetOf(@Nullable T element) {
-        return Collections.singleton(element);
-    }
-
     /**
      * Returns a new read-only set of given elements
      */
     @NotNull
     public static <T> Set<T> immutableSetOf(@NotNull T... elements) {
-        if (elements.length > 0) {
-            return Arrayx.toCollection(elements, new LinkedHashSet<T>());
+        if (elements.length == 0) {
+            return emptySet();
+        } else if (elements.length == 1) {
+            return Collections.singleton(elements[0]);
         } else {
-            //noinspection unchecked
-            return Collections.EMPTY_SET;
+            return Arrayx.toCollection(elements, new LinkedHashSet<T>());
         }
     }
 
@@ -259,24 +238,12 @@ public class Collectionx {
      * Returns a new readable and writable set of given elements
      */
     @NotNull
-    public static <T> Set<T> mutableSetOf() {
-        return new LinkedHashSet<T>();
-    }
-
-    /**
-     * Returns a new readable and writable set of given elements
-     */
-    @NotNull
     public static <T> Set<T> mutableSetOf(@NotNull T... elements) {
-        return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
-    }
-
-    /**
-     * Returns an empty new [HashSet]
-     */
-    @NotNull
-    public static <T> HashSet<T> hashSetOf() {
-        return new HashSet<T>();
+        if (elements.length == 0) {
+            return new LinkedHashSet<T>();
+        } else {
+            return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
+        }
     }
 
     /**
@@ -284,15 +251,11 @@ public class Collectionx {
      */
     @NotNull
     public static <T> HashSet<T> hashSetOf(@NotNull T... elements) {
-        return Arrayx.toCollection(elements, new HashSet<T>(Mapx.capacity(elements.length)));
-    }
-
-    /**
-     * Returns an empty new [LinkedHashSet]
-     */
-    @NotNull
-    public static <T> LinkedHashSet<T> linkedSetOf() {
-        return new LinkedHashSet<T>();
+        if (elements.length == 0) {
+            return new HashSet<T>();
+        } else {
+            return Arrayx.toCollection(elements, new HashSet<T>(Mapx.capacity(elements.length)));
+        }
     }
 
     /**
@@ -301,7 +264,11 @@ public class Collectionx {
      */
     @NotNull
     public static <T> LinkedHashSet<T> linkedSetOf(@NotNull T... elements) {
-        return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
+        if (elements.length == 0) {
+            return new LinkedHashSet<T>();
+        } else {
+            return Arrayx.toCollection(elements, new LinkedHashSet<T>(Mapx.capacity(elements.length)));
+        }
     }
 
     /**
@@ -452,22 +419,9 @@ public class Collectionx {
         return filterIsInstanceTo(iterable, new ArrayList<R>(), clazz);
     }
 
-    public static <T> boolean filterInPlace(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate, boolean predicateResultToRemove) {
-        boolean result = false;
-        if (iterable != null) {
-            Iterator<T> iterator = iterable.iterator();
-            while (iterator.hasNext()) {
-                if (predicate.accept(iterator.next()) == predicateResultToRemove) {
-                    iterator.remove();
-                    result = true;
-                }
-            }
-        }
-        return result;
-    }
-
-    private static <T> boolean filterInPlace(@Nullable List<T> list, @NotNull Predicate<T> predicate, boolean predicateResultToRemove) {
-        if (list instanceof RandomAccess) {
+    private static <T> boolean filterInPlace(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate, boolean predicateResultToRemove) {
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
             int writeIndex = 0;
             for (int readIndex = 0, size = list.size(); readIndex < size; readIndex++) {
                 T element = list.get(readIndex);
@@ -488,7 +442,17 @@ public class Collectionx {
                 return false;
             }
         } else {
-            return filterInPlace(((Iterable<T>) list), predicate, predicateResultToRemove);
+            boolean result = false;
+            if (iterable != null) {
+                Iterator<T> iterator = iterable.iterator();
+                while (iterator.hasNext()) {
+                    if (predicate.accept(iterator.next()) == predicateResultToRemove) {
+                        iterator.remove();
+                        result = true;
+                    }
+                }
+            }
+            return result;
         }
     }
 
