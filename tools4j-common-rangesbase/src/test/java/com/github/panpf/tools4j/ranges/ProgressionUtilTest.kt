@@ -16,43 +16,79 @@
 
 package com.github.panpf.tools4j.ranges
 
-import org.junit.Assert
+import com.github.panpf.tools4j.test.ktx.assertThrow
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ProgressionUtilTest {
 
     @Test
-    fun testGetProgressionLastElement() {
-        Assert.assertEquals(10, ProgressionUtil.getProgressionLastElement(0, 10, 1))
-        Assert.assertEquals(10, ProgressionUtil.getProgressionLastElement(0, 11, 2))
-        try {
-            ProgressionUtil.getProgressionLastElement(0, 10, 0)
-            Assert.fail()
-        } catch (e: IllegalArgumentException) {
+    fun testIntGetProgressionLastElement() {
+        assertEquals(11, ProgressionUtil.getProgressionLastElement(0, 11, 1))
+        assertEquals(11, ProgressionUtil.getProgressionLastElement(0, 11, -1))
+        assertEquals(10, ProgressionUtil.getProgressionLastElement(0, 11, 2))
+        assertEquals(12, ProgressionUtil.getProgressionLastElement(0, 11, -2))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(0, 11, 0)
         }
 
-        Assert.assertEquals(10L, ProgressionUtil.getProgressionLastElement(0L, 10L, 1L))
-        Assert.assertEquals(10L, ProgressionUtil.getProgressionLastElement(0L, 11L, 2L))
-        try {
-            ProgressionUtil.getProgressionLastElement(0L, 10L, 0L)
-            Assert.fail()
-        } catch (e: IllegalArgumentException) {
+        assertEquals(0, ProgressionUtil.getProgressionLastElement(11, 0, 1))
+        assertEquals(0, ProgressionUtil.getProgressionLastElement(11, 0, -1))
+        assertEquals(-1, ProgressionUtil.getProgressionLastElement(11, 0, 2))
+        assertEquals(1, ProgressionUtil.getProgressionLastElement(11, 0, -2))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(11, 0, 0)
         }
 
-        Assert.assertEquals(0, ProgressionUtil.getProgressionLastElement(10, 0, -1))
-        Assert.assertEquals(1, ProgressionUtil.getProgressionLastElement(11, 0, -2))
-        try {
-            ProgressionUtil.getProgressionLastElement(10, 0, 0)
-            Assert.fail()
-        } catch (e: IllegalArgumentException) {
+        assertEquals(-11, ProgressionUtil.getProgressionLastElement(0, -11, 1))
+        assertEquals(-11, ProgressionUtil.getProgressionLastElement(0, -11, -1))
+        assertEquals(-12, ProgressionUtil.getProgressionLastElement(0, -11, 2))
+        assertEquals(-10, ProgressionUtil.getProgressionLastElement(0, -11, -2))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(0, -11, 0)
         }
 
-        Assert.assertEquals(0L, ProgressionUtil.getProgressionLastElement(10L, 0L, -1L))
-        Assert.assertEquals(1L, ProgressionUtil.getProgressionLastElement(11L, 0L, -2L))
-        try {
-            ProgressionUtil.getProgressionLastElement(10L, 0L, 0L)
-            Assert.fail()
-        } catch (e: IllegalArgumentException) {
+        assertEquals(0, ProgressionUtil.getProgressionLastElement(-11, 0, 1))
+        assertEquals(0, ProgressionUtil.getProgressionLastElement(-11, 0, -1))
+        assertEquals(-1, ProgressionUtil.getProgressionLastElement(-11, 0, 2))
+        assertEquals(1, ProgressionUtil.getProgressionLastElement(-11, 0, -2))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(-11, 0, 0)
+        }
+    }
+
+    @Test
+    fun testLongGetProgressionLastElement() {
+        assertEquals(11L, ProgressionUtil.getProgressionLastElement(0L, 11L, 1L))
+        assertEquals(11L, ProgressionUtil.getProgressionLastElement(0L, 11L, -1L))
+        assertEquals(10L, ProgressionUtil.getProgressionLastElement(0L, 11L, 2L))
+        assertEquals(12, ProgressionUtil.getProgressionLastElement(0L, 11L, -2L))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(0L, 11L, 0L)
+        }
+
+        assertEquals(0L, ProgressionUtil.getProgressionLastElement(11L, 0L, 1L))
+        assertEquals(0L, ProgressionUtil.getProgressionLastElement(11L, 0L, -1L))
+        assertEquals(-1L, ProgressionUtil.getProgressionLastElement(11L, 0L, 2L))
+        assertEquals(1L, ProgressionUtil.getProgressionLastElement(11L, 0L, -2L))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(11L, 0L, 0L)
+        }
+
+        assertEquals(-11L, ProgressionUtil.getProgressionLastElement(0L, -11L, 1L))
+        assertEquals(-11L, ProgressionUtil.getProgressionLastElement(0L, -11L, -1L))
+        assertEquals(-12, ProgressionUtil.getProgressionLastElement(0L, -11L, 2L))
+        assertEquals(-10L, ProgressionUtil.getProgressionLastElement(0L, -11L, -2L))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(0L, -11L, 0L)
+        }
+
+        assertEquals(0L, ProgressionUtil.getProgressionLastElement(-11L, 0L, 1L))
+        assertEquals(0L, ProgressionUtil.getProgressionLastElement(-11L, 0L, -1L))
+        assertEquals(-1L, ProgressionUtil.getProgressionLastElement(-11L, 0L, 2L))
+        assertEquals(1L, ProgressionUtil.getProgressionLastElement(-11L, 0L, -2L))
+        assertThrow(IllegalArgumentException::class) {
+            ProgressionUtil.getProgressionLastElement(-11L, 0L, 0L)
         }
     }
 }

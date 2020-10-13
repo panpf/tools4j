@@ -18,6 +18,7 @@
 
 package com.github.panpf.tools4j.ranges
 
+import com.github.panpf.tools4j.test.ktx.assertThrow
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*
@@ -28,10 +29,8 @@ class IntProgressionTest {
     fun testFromClosedRange() {
         IntProgression.fromClosedRange(10, 15, 1)
         IntProgression.fromClosedRange(10, 15, -1)
-        try {
+        assertThrow(IllegalArgumentException::class) {
             IntProgression.fromClosedRange(10, 15, 0)
-            fail()
-        } catch (e: Exception) {
         }
     }
 
@@ -45,15 +44,11 @@ class IntProgressionTest {
 
         val iterator = IntProgression(10, 10, 1).iterator()
         iterator.next()
-        try {
+        assertThrow(NoSuchElementException::class) {
             iterator.next()
-            fail()
-        } catch (e: Exception) {
         }
-        try {
+        assertThrow(UnsupportedOperationException::class) {
             iterator.remove()
-            fail()
-        } catch (e: Exception) {
         }
     }
 
@@ -94,6 +89,8 @@ class IntProgressionTest {
         assertFalse(IntProgression(10, 15, 1) == IntProgression(11, 15, 1))
         assertFalse(IntProgression(10, 15, 1) == IntProgression(10, 16, 1))
         assertFalse(IntProgression(10, 15, 1) == IntProgression(10, 15, 2))
+        assertFalse(IntProgression(0, 0, 1) == IntProgression(0, 0, 2))
+        assertFalse(IntProgression(10, 15, 1) == IntProgression(11, 16, 2))
         assertTrue(IntProgression(10, 15, 1) == IntProgression(10, 15, 1))
     }
 

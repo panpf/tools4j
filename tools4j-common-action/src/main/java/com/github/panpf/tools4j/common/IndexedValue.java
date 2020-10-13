@@ -18,7 +18,7 @@ package com.github.panpf.tools4j.common;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public class IndexedValue<T> {
 
@@ -42,7 +42,7 @@ public class IndexedValue<T> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, value);
+        return Arrays.hashCode(new Object[]{index, value});
     }
 
     @NotNull
