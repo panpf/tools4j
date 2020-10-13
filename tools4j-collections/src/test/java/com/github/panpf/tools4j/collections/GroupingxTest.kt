@@ -16,17 +16,51 @@
 
 package com.github.panpf.tools4j.collections
 
-import com.github.panpf.tools4j.test.ktx.*
+import com.github.panpf.tools4j.test.ktx.assertTwoEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GroupingxTest {
+
+    @Test
+    fun testGroupingBy() {
+        val charSequence = "13652689453"
+        val stringArray = arrayOf("ab", "ba", "ab", "ba", "ba")
+        val stringList = listOf("ab", "ba", "ab", "ba", "ba")
+        assertTwoEquals("{1=1, 3=2, 6=2, 5=2, 2=1, 8=1, 9=1, 4=1}",
+                charSequence.groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy(charSequence) { it }).toString())
+        assertTwoEquals("{}",
+                "".groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy("") { it }).toString())
+        assertEquals("{}",
+                Groupingx.eachCount(Groupingx.groupingBy(null as CharSequence?) { it }).toString())
+
+        assertTwoEquals("{ab=2, ba=3}",
+                stringArray.groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy(stringArray) { it }).toString())
+        assertTwoEquals("{}",
+                arrayOf<String>().groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy(arrayOf<String>()) { it }).toString())
+        assertEquals("{}",
+                Groupingx.eachCount(Groupingx.groupingBy(null as Array<String>?) { it }).toString())
+
+        assertTwoEquals("{ab=2, ba=3}",
+                stringList.groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy(stringList) { it }).toString())
+        assertTwoEquals("{}",
+                listOf<String>().groupingBy { it }.eachCount().toString(),
+                Groupingx.eachCount(Groupingx.groupingBy(listOf<String>()) { it }).toString())
+        assertEquals("{}",
+                Groupingx.eachCount(Groupingx.groupingBy(null as List<String>?) { it }).toString())
+    }
 
     @Test
     fun testAggregate() {
         val list = listOf("王五", "张三", "李四", "赵六", "李四", "王五", "张三", "李四", "张三")
         assertTwoEquals(
                 mapOf("王" to 2, "张" to 3, "李" to 3, "赵" to 1),
-                com.github.panpf.tools4j.collections.Groupingx.aggregate(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }) { _, accumulator: Int?, _, _ ->
+                Groupingx.aggregate(Groupingx.groupingBy(list) { it.first().toString() }) { _, accumulator: Int?, _, _ ->
                     (accumulator ?: 0) + 1
                 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.aggregate { _, accumulator: Int?, _, _ ->
@@ -35,7 +69,7 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to 2, "张" to 3, "李" to 3, "赵" to 1),
-                com.github.panpf.tools4j.collections.Groupingx.aggregateTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()) { _, accumulator: Int?, _, _ ->
+                Groupingx.aggregateTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()) { _, accumulator: Int?, _, _ ->
                     (accumulator ?: 0) + 1
                 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.aggregateTo(LinkedHashMap()) { _, accumulator: Int?, _, _ ->
@@ -44,7 +78,7 @@ class GroupingxTest {
 
         assertTwoEquals(
                 LinkedHashMap<String, Int>(),
-                com.github.panpf.tools4j.collections.Groupingx.aggregateTo(null as com.github.panpf.tools4j.collections.Grouping<String, String>?, LinkedHashMap()) { _, accumulator: Int?, _, _ ->
+                Groupingx.aggregateTo(null as Grouping<String, String>?, LinkedHashMap()) { _, accumulator: Int?, _, _ ->
                     (accumulator ?: 0) + 1
                 }.toSortedMap(),
                 listOf<String>().groupingBy { it.first().toString() }.aggregateTo(LinkedHashMap()) { _, accumulator: Int?, _, _ ->
@@ -53,7 +87,7 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to 2, "张" to 3, "李" to 3, "赵" to 1),
-                com.github.panpf.tools4j.collections.Groupingx.aggregateTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap<String, Int?>().apply { put("王", null) }) { _, accumulator: Int?, _, _ ->
+                Groupingx.aggregateTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap<String, Int?>().apply { put("王", null) }) { _, accumulator: Int?, _, _ ->
                     (accumulator ?: 0) + 1
                 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.aggregateTo(LinkedHashMap<String, Int?>().apply { put("王", null) }) { _, accumulator: Int?, _, _ ->
@@ -67,21 +101,21 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to 12, "张" to 13, "李" to 13, "赵" to 11),
-                com.github.panpf.tools4j.collections.Groupingx.fold(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, { _, _ -> 10 }) { _, accumulator: Int, _ -> accumulator + 1 }.toSortedMap(),
+                Groupingx.fold(Groupingx.groupingBy(list) { it.first().toString() }, { _, _ -> 10 }) { _, accumulator: Int, _ -> accumulator + 1 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.fold({ _, _ -> 10 }) { _, accumulator: Int, _ ->
                     accumulator + 1
                 }.toSortedMap())
 
         assertTwoEquals(
                 mapOf("王" to 12, "张" to 13, "李" to 13, "赵" to 11),
-                com.github.panpf.tools4j.collections.Groupingx.fold(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, 10) { accumulator: Int, _ -> accumulator + 1 }.toSortedMap(),
+                Groupingx.fold(Groupingx.groupingBy(list) { it.first().toString() }, 10) { accumulator: Int, _ -> accumulator + 1 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.fold(10) { accumulator: Int, _ ->
                     accumulator + 1
                 }.toSortedMap())
 
         assertTwoEquals(
                 mapOf("王" to 12, "张" to 13, "李" to 13, "赵" to 11),
-                com.github.panpf.tools4j.collections.Groupingx.foldTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap(), { _, _ -> 10 }) { _, accumulator: Int, _ ->
+                Groupingx.foldTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap(), { _, _ -> 10 }) { _, accumulator: Int, _ ->
                     accumulator + 1
                 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.foldTo(LinkedHashMap(), { _, _ -> 10 }) { _, accumulator: Int, _ ->
@@ -90,7 +124,7 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to 12, "张" to 13, "李" to 13, "赵" to 11),
-                com.github.panpf.tools4j.collections.Groupingx.foldTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap(), 10) { accumulator: Int, _ ->
+                Groupingx.foldTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap(), 10) { accumulator: Int, _ ->
                     accumulator + 1
                 }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.foldTo(LinkedHashMap(), 10) { accumulator: Int, _ ->
@@ -104,12 +138,12 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to "王五王五", "张" to "张三张三张三", "李" to "李四李四李四", "赵" to "赵六"),
-                com.github.panpf.tools4j.collections.Groupingx.reduce(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }) { _, accumulator, element -> accumulator + element }.toSortedMap(),
+                Groupingx.reduce(Groupingx.groupingBy(list) { it.first().toString() }) { _, accumulator, element -> accumulator + element }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.reduce { _, accumulator, element -> accumulator + element }.toSortedMap())
 
         assertTwoEquals(
                 mapOf("王" to "王五王五", "张" to "张三张三张三", "李" to "李四李四李四", "赵" to "赵六"),
-                com.github.panpf.tools4j.collections.Groupingx.reduceTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()) { _, accumulator, element -> accumulator + element }.toSortedMap(),
+                Groupingx.reduceTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()) { _, accumulator, element -> accumulator + element }.toSortedMap(),
                 list.groupingBy { it.first().toString() }.reduceTo(LinkedHashMap()) { _, accumulator, element -> accumulator + element }.toSortedMap())
     }
 
@@ -119,36 +153,12 @@ class GroupingxTest {
 
         assertTwoEquals(
                 mapOf("王" to 2, "张" to 3, "李" to 3, "赵" to 1),
-                com.github.panpf.tools4j.collections.Groupingx.eachCount(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }).toSortedMap(),
+                Groupingx.eachCount(Groupingx.groupingBy(list) { it.first().toString() }).toSortedMap(),
                 list.groupingBy { it.first().toString() }.eachCount().toSortedMap())
 
         assertTwoEquals(
                 mapOf("王" to 2, "张" to 3, "李" to 3, "赵" to 1),
-                com.github.panpf.tools4j.collections.Groupingx.eachCountTo(com.github.panpf.tools4j.collections.Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()).toSortedMap(),
+                Groupingx.eachCountTo(Groupingx.groupingBy(list) { it.first().toString() }, LinkedHashMap()).toSortedMap(),
                 list.groupingBy { it.first().toString() }.eachCountTo(LinkedHashMap()).toSortedMap())
-    }
-
-    @Test
-    fun testGroupingString() {
-        val source = "1365268945336807532324589"
-        val map2 = sortedMapOf("0" to listOf("0")
-                , "1" to listOf("1")
-                , "2" to listOf("2", "2", "2")
-                , "3" to listOf("3", "3", "3", "3", "3")
-                , "4" to listOf("4", "4")
-                , "5" to listOf("5", "5", "5", "5")
-                , "6" to listOf("6", "6", "6")
-                , "7" to listOf("7")
-                , "8" to listOf("8", "8", "8")
-                , "9" to listOf("9", "9"))
-
-        val destination = java.util.LinkedHashMap<String, MutableList<String>>()
-        val grouping = com.github.panpf.tools4j.collections.Groupingx.groupingBy(source) { it.toString() }
-        for (element in grouping.sourceIterator()) {
-            val key = grouping.keyOf(element)
-            val list = destination.getOrPut(key) { ArrayList() }
-            list.add(element.toString())
-        }
-        assertTwoEquals(map2, destination, source.groupByTo(java.util.LinkedHashMap(), { it.toString() }) { it.toString() }.toSortedMap())
     }
 }
