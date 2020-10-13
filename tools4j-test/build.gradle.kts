@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("jacoco")
+    id("kotlin")
 }
 
 group = "com.github.panpf.tools4j"
@@ -14,6 +15,8 @@ configure<JavaPluginConvention> {
 dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
     api("junit:junit:${property("JUNIT_VERSION")}")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
 }
 
 tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))

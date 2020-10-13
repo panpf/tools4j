@@ -8,6 +8,7 @@
 * new: Sequencex added sumOfLong method
 * deprecated: Deprecated Sequencex sum method
 * new: Collectionx added emptySet method, Mapx added emptyMap method
+* new: Assertx added assertTwoNoThrow method
 
 
 ## v1.0.0-rc01

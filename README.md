@@ -292,8 +292,8 @@ Dependencies：
     * minusElement, partition, plus, plusElement, zip, unzip, joinTo, joinToString, averageOf
 
 ### tools4j-test
-* Assertx: [Assertx.java] | [Assertx.kt]
-    * assertTwoEquals, assertAllNotNull, assertAllNull, assertNoThrow, assertThrow, assertTwoThrow
+* Assertx: [Assertx.java] ([Test][AssertxTest.kt]) | [Assertx.kt] ([Test][AssertxKtxTest.kt])
+    * assertTwoEquals, assertAllNull, assertAllNotNull, assertThrow, assertNoThrow, assertTwoThrow, assertTwoNoThrow
 
 ### tools4j-zip
 * Zipx: [Zipx.java] ([Test][ZipxTest.kt]) | [Zipx.kt] ([Test][ZipxKtxTest.kt])
