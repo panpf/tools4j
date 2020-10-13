@@ -84,18 +84,19 @@ Dependencies：
 
 ## Modules
 
-`Representatives with the (Test) tag have passed the test and can be used with confidence.`
-
 ### tools4j-annotation
+![TestCoverage](https://img.shields.io/badge/TestCoverage-61%25-green.svg)
 * Annotationx: [Annotationx.java] ([Test][AnnotationxTest.kt]) | [Annotationx.kt] ([Test][AnnotationxKtxTest.kt])
     * getAnnotationFromEnum
 
 ### tools4j-base64
+![TestCoverage](https://img.shields.io/badge/TestCoverage-86%25-green.svg)
 * Base64x: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xKtxTest.kt])
     * encode, encodeToString, decode, decodeToString
 
 ### tools4j-collections
-* Arrayx: [Arrayx.java] | [Arrayx.kt]
+![TestCoverage](https://img.shields.io/badge/TestCoverage-16%25-red.svg)
+* Arrayx: [Arrayx.java] ([Test][ArrayxTest.kt]) | [Arrayx.kt] ([Test][ArrayxKtxTest.kt])
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, arrayOf, isEmpty, isNotEmpty, orEmpty, 
     * toTypedArray, toCollection, toList, toSet, toHashSet, asList, map, mapTo, mapIndexed, mapIndexedTo, 
     * mapNotNull, mapNotNullTo, mapIndexedNotNull, reverse, reversed, sort, sortDescending, sortWith, 
@@ -113,7 +114,7 @@ Dependencies：
     * takeLastWhile, takeWhile, distinct, distinctBy, withIndex, contentHashCode, contentDeepEquals, 
     * contentDeepHashCode, contentDeepToString, contentToString, contentEquals, binarySearch, copyOf, 
     * copyOfRange, slice, sliceArray, associate, associateBy, associateByTo, associateTo
-* Collectionx: [Collectionx.java] | [Collectionx.kt]
+* Collectionx: [Collectionx.java] ([Test][CollectionxTest.kt]) | [Collectionx.kt] ([Test][CollectionxKtxTest.kt])
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
     * isNotEmpty, orEmpty, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
     * emptySet, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
@@ -145,29 +146,38 @@ Dependencies：
     * mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo, mapNotNull, flatMapTo, flatMap, capacity
 
 ### tools4j-compare
+![TestCoverage](https://img.shields.io/badge/TestCoverage-81%25-green.svg)
 * Comparex: [Comparex.java] ([Test][ComparexTest.kt])
     * areEqual, compareValues, compareValuesBy, compareBy,
     * compareByDescending, naturalOrder, reverseOrder, maxOf, minOf
 
 ### tools4j-crypto
+![TestCoverage](https://img.shields.io/badge/TestCoverage-81%25-green.svg)
 * Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxKtxTest.kt])
     * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt, encryptToBase64, decrypt, 
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxKtxTest.kt])
+* Desx: Test coverage 80%. [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxKtxTest.kt])
     * createKeyByPassword, encrypt, encryptToBase64, decrypt, 
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxKtxTest.kt])
+* Keyx: Test coverage 100%. [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxKtxTest.kt])
     * toBase64, toBytes
-* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxKtxTest.kt])
+* Rsax: Test coverage 84%. [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxKtxTest.kt])
     * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64, verify, verifyFromBase64, 
     * encrypt, encryptToBase64, decrypt, decryptFromBase64, decryptToString, decryptToStringFromBase64
 
 ### tools4j-date
+![TestCoverage](https://img.shields.io/badge/TestCoverage-94%25-green.svg)
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexKtxTest.kt])
     * createCalendar, toDate, format, formatTimeLength, getCalendarField,
     * addToDate, addCalendarField, isSame\[Year, Month...\], differField,
 
+### tools4j-environment
+![TestCoverage](https://img.shields.io/badge/TestCoverage-52%25-green.svg)
+* Environmentx: [Environmentx.java] ([Test][EnvironmentxTest.kt])
+    * getWorkspaceDir, isClassInJar, getClassInDir, getClassInJarFile
+
 ### tools4j-io
+![TestCoverage](https://img.shields.io/badge/TestCoverage-85%25-green.svg)
 * Filex: [Filex.java] ([Test][FilexTest.kt]) | [Filex.kt] ([Test][FilexKtxTest.kt])
     * mkdirsOrThrow, mkdirsOrCheck, createNewFileOrThrow, createNewFileOrCheck, ensureFileNotExist, 
     * ensureDirNotExist, clean, cleanRecursively, lengthRecursively, listRecursively, listFilesRecursively, 
@@ -180,16 +190,17 @@ Dependencies：
     * inputStream, bufferedInputStream, reader, bufferedReader, readBytes, readText, readLines, useLines,
     * forEachBlock, forEachLine, outputStream, bufferedOutputStream, writer, bufferedWriter, printWriter, 
     * writeBytes, appendBytes, writeText, appendText, walk, walkTopDown, walkBottomUp
-* IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
+* IOx: Test coverage 92%. [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
     * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose, writeBytesAndClose, 
     * writeTextAndClose, writeCharAndClose, writeCharsAndClose, copyTo, inputStream, byteInputStream, 
     * reader, writer, buffered, bufferedReader, bufferedWriter, readLines, readBytes, readText, 
     * lineIterable, useLines, forEachLine
 
 ### tools4j-lang
+![TestCoverage](https://img.shields.io/badge/TestCoverage-98%25-green.svg)
 * Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxKtxTest.kt])
     * isTrue, isFalse, isNullOrTrue, isNullOrFalse
-* Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxKtxTest.kt])
+* Charx: Test coverage 98%. [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxKtxTest.kt])
     * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr, isNotDigit, digitOr, isNotLetter, 
     * letterOr, isNotLetterOrDigit, letterOrDigitOr, isDigit, isLetter, isLetterOrDigit, equals
 * Numberx: [Numberx.java] ([Test][NumberxTest.kt]) | [Numberx.kt] ([Test][NumberxKtxTest.kt])
@@ -226,10 +237,12 @@ Dependencies：
     * stackTraceToString
 
 ### tools4j-math
+![TestCoverage](https://img.shields.io/badge/TestCoverage-98%25-green.svg)
 * Mathx: [Mathx.java] ([Test][MathxTest.kt]) | [Mathx.kt] ([Test][MathxKtxTest.kt])
     * divide, divideToInt, divideToLong, scale, proportion, percent, format, formatPercentWith
 
 ### tools4j-net
+![TestCoverage](https://img.shields.io/badge/TestCoverage-93%25-green.svg)
 * Netx: [Netx.java] ([Test][NetxTest.kt])
     * isIPV4, isIPV6, isMacAddress, getLocalIPAddress, getLocalIPV4Address, getExternalIPV4AddressFrom, 
     * getExternalIPV4AddressFromSohu, getExternalIPV4Address, getCityFromSohu, getCity, ipStringToLong,
@@ -237,19 +250,23 @@ Dependencies：
     * guessFileNameFromUrl
 
 ### tools4j-premise
+![TestCoverage](https://img.shields.io/badge/TestCoverage-100%25-green.svg)
 * Premisex: [Premisex.java] ([Test][PremisexTest.kt]) | [Premisex.kt] ([Test][PremisexKtxTest.kt])
     * require, check, requireNotNull, checkNotNull
 
 ### tools4j-ranges
+![TestCoverage](https://img.shields.io/badge/TestCoverage-100%25-green.svg)
 * Rangex: [Rangex.java] ([Test][RangexTest.kt]) | [Rangex.kt] ([Test][RangexKtxTest.kt])
     * rangeTo, until, downTo, requireInRange, requireNotInRange, in, notIn,
     * reversed, step, coerceAtLeast, coerceAtMost, coerceIn
 
 ### tools4j-ranges-date
+![TestCoverage](https://img.shields.io/badge/TestCoverage-68%25-green.svg)
 * DateRangex: [DateRangex.java] ([Test][DateRangexTest.kt]) | [DateRangex.kt] ([Test][DateRangexKtxTest.kt])
     * \[Year, Month...\]RangeTo, \[Year, Month...\]Until, \[Year, Month...\]DownTo, reversed, step
 
 ### tools4j-reflect
+![TestCoverage](https://img.shields.io/badge/TestCoverage-91%25-green.svg)
 * Reflectx: [Reflectx.java] ([Test][ReflectxTest.kt]) | [Reflectx.kt] ([Test][ReflectxKtxTest.kt])
     * getDeclaredFieldRecursive, getDeclaredFieldsRecursive, getFieldValue, getStaticFieldValue, 
     * setFieldValue, setStaticFieldValue, getDeclaredMethodRecursive, getDeclaredMethodsRecursive, 
@@ -257,23 +274,23 @@ Dependencies：
     * getClassHierarchy, isTypeArray, isTypeCollection
 
 ### tools4j-regex
+![TestCoverage](https://img.shields.io/badge/TestCoverage-94%25-green.svg)
 * Regexx: [Regexx.java] ([Test][RegexxTest.kt]) | [Regexx.kt] ([Test][RegexxKtxTest.kt])
     * matches, find, lookingAt, getFirst, getAll, firstGroup, allGroup, replaceFirst, replaceAll, IPV4, IPV6, 
     *  MAC_ADDRESS, CHINESE, CHINESE_SYMBOL, BLANK, EMAIL, URI, FLOAT_NUMBER, INTEGER
 
 ### tools4j-resources
+![TestCoverage](https://img.shields.io/badge/TestCoverage-61%25-green.svg)
 * ResourcesCacheHelper: [ResourcesCacheHelper.java] ([Test][ResourcesCacheHelperTest.kt])
     * getFile, getDir, getResourcesDir
 
-### tools4j-environment
-* Environmentx: [Environmentx.java] ([Test][EnvironmentxTest.kt])
-    * getWorkspaceDir, isClassInJar, getClassInDir, getClassInJarFile
-
 ### tools4j-security
+![TestCoverage](https://img.shields.io/badge/TestCoverage-68%25-green.svg)
 * MessageDigestx: [MessageDigestx.java] ([Test][MessageDigestxTest.kt]) | [MessageDigestx.kt] ([Test][MessageDigestxKtxTest.kt])
     * getDigest, getMD5, getMD5_16, getSHA1, getSHA256, getSHA512
 
 ### tools4j-sequences
+![TestCoverage](https://img.shields.io/badge/TestCoverage-92%25-green.svg)
 * Sequencex: [Sequencex.java] | [Sequencex.kt]
     * joinToArrayString, asSequence, asIterable, sequenceOf, emptySequence, constrainOnce, 
     * generateSequence, flatten, contains, elementAt, elementAtOrElse, elementAtOrNull, find, 
@@ -292,10 +309,12 @@ Dependencies：
     * minusElement, partition, plus, plusElement, zip, unzip, joinTo, joinToString, averageOf
 
 ### tools4j-test
+![TestCoverage](https://img.shields.io/badge/TestCoverage-87%25-green.svg)
 * Assertx: [Assertx.java] ([Test][AssertxTest.kt]) | [Assertx.kt] ([Test][AssertxKtxTest.kt])
     * assertTwoEquals, assertAllNull, assertAllNotNull, assertThrow, assertNoThrow, assertTwoThrow, assertTwoNoThrow
 
 ### tools4j-zip
+![TestCoverage](https://img.shields.io/badge/TestCoverage-85%25-green.svg)
 * Zipx: [Zipx.java] ([Test][ZipxTest.kt]) | [Zipx.kt] ([Test][ZipxKtxTest.kt])
     * compress, decompress, gzipCompress, gzipDecompress, compressFilesTo, compressFilesTo, 
     * compressFileTo, compressFile, compressChildFileTo, compressChildFile, decompressTo, 
@@ -480,7 +499,9 @@ Please view the [CHANGELOG.md] file
 [SequencexKtxTest.kt]: tools4j-sequences/src/test/java/com/github/panpf/tools4j/sequences/SequencexTest.kt
 
 [Assertx.java]: tools4j-test/src/main/java/com/github/panpf/tools4j/test/Assertx.java
+[AssertxTest.kt]: tools4j-test/src/test/java/com/github/panpf/tools4j/test/AssertxTest.kt
 [Assertx.kt]: tools4j-test-ktx/src/main/java/com/github/panpf/tools4j/test/ktx/Assertx.kt
+[AssertxKtxTest.kt]: tools4j-test-ktx/src/test/java/com/github/panpf/tools4j/test/ktx/AssertxTest.kt
 
 [Zipx.java]: tools4j-zip/src/main/java/com/github/panpf/tools4j/zip/Zipx.java
 [ZipxTest.kt]: tools4j-zip/src/test/java/com/github/panpf/tools4j/zip/ZipxTest.kt
