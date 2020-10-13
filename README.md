@@ -156,12 +156,12 @@ Dependencies：
 * Aesx: [Aesx.java] ([Test][AesxTest.kt]) | [Aesx.kt] ([Test][AesxKtxTest.kt])
     * createKey, createKeyByPassword, keyFromBytes, keyFromBase64, encrypt, encryptToBase64, decrypt, 
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Desx: Test coverage 80%. [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxKtxTest.kt])
+* Desx: [Desx.java] ([Test][DesxTest.kt]) | [Desx.kt] ([Test][DesxKtxTest.kt])
     * createKeyByPassword, encrypt, encryptToBase64, decrypt, 
     * decryptFromBase64, decryptToString, decryptToStringFromBase64
-* Keyx: Test coverage 100%. [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxKtxTest.kt])
+* Keyx: [Keyx.java] ([Test][KeyxTest.kt]) | [Keyx.kt] ([Test][KeyxKtxTest.kt])
     * toBase64, toBytes
-* Rsax: Test coverage 84%. [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxKtxTest.kt])
+* Rsax: [Rsax.java] ([Test][RsaxTest.kt]) | [Rsax.kt] ([Test][RsaxKtxTest.kt])
     * createKey, pubKeyFromBase64, priKeyFromBase64, sign, signToBase64, verify, verifyFromBase64, 
     * encrypt, encryptToBase64, decrypt, decryptFromBase64, decryptToString, decryptToStringFromBase64
 
@@ -190,7 +190,7 @@ Dependencies：
     * inputStream, bufferedInputStream, reader, bufferedReader, readBytes, readText, readLines, useLines,
     * forEachBlock, forEachLine, outputStream, bufferedOutputStream, writer, bufferedWriter, printWriter, 
     * writeBytes, appendBytes, writeText, appendText, walk, walkTopDown, walkBottomUp
-* IOx: Test coverage 92%. [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
+* IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
     * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose, writeBytesAndClose, 
     * writeTextAndClose, writeCharAndClose, writeCharsAndClose, copyTo, inputStream, byteInputStream, 
     * reader, writer, buffered, bufferedReader, bufferedWriter, readLines, readBytes, readText, 
@@ -200,7 +200,7 @@ Dependencies：
 ![TestCoverage](https://img.shields.io/badge/TestCoverage-98%25-green.svg)
 * Booleanx: [Booleanx.java] ([Test][BooleanxTest.kt]) | [Booleanx.kt] ([Test][BooleanxKtxTest.kt])
     * isTrue, isFalse, isNullOrTrue, isNullOrFalse
-* Charx: Test coverage 98%. [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxKtxTest.kt])
+* Charx: [Charx.java] ([Test][CharxTest.kt]) | [Charx.kt] ([Test][CharxKtxTest.kt])
     * isBlank, isNotBlank, notBlankOr, isChinese, isNotChinese, chineseOr, isNotDigit, digitOr, isNotLetter, 
     * letterOr, isNotLetterOrDigit, letterOrDigitOr, isDigit, isLetter, isLetterOrDigit, equals
 * Numberx: [Numberx.java] ([Test][NumberxTest.kt]) | [Numberx.kt] ([Test][NumberxKtxTest.kt])
