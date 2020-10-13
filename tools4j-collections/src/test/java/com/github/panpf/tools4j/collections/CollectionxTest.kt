@@ -19,6 +19,7 @@
 package com.github.panpf.tools4j.collections
 
 import com.github.panpf.tools4j.iterable.CharSequenceIterable
+import com.github.panpf.tools4j.test.ktx.assertNoThrow
 import com.github.panpf.tools4j.test.ktx.assertThrow
 import com.github.panpf.tools4j.test.ktx.assertTwoEquals
 import com.github.panpf.tools4j.test.ktx.assertTwoThrow
@@ -47,29 +48,27 @@ class CollectionxTest {
 
     @Test
     fun testJoinToArrayString() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("[60, 30, 70, 20, 10]",
-                normalList0.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
-                Collectionx.joinToArrayString(normalList1) { it + "0" })
+                normalList.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
+                Collectionx.joinToArrayString(normalList) { it + "0" })
         assertTwoEquals("[]",
-                emptyList0.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
-                Collectionx.joinToArrayString(emptyList1) { it + "0" })
+                emptyList.joinToString(transform = { it + "0" }, prefix = "[", postfix = "]"),
+                Collectionx.joinToArrayString(emptyList) { it + "0" })
         assertEquals("[]",
-                Collectionx.joinToArrayString(nullList0) { it + "0" })
+                Collectionx.joinToArrayString(nullList) { it + "0" })
 
         assertTwoEquals("[6, 3, 7, 2, 1]",
-                normalList0.joinToString(prefix = "[", postfix = "]"),
-                Collectionx.joinToArrayString(normalList1))
+                normalList.joinToString(prefix = "[", postfix = "]"),
+                Collectionx.joinToArrayString(normalList))
         assertTwoEquals("[]",
-                emptyList0.joinToString(prefix = "[", postfix = "]"),
-                Collectionx.joinToArrayString(emptyList1))
+                emptyList.joinToString(prefix = "[", postfix = "]"),
+                Collectionx.joinToArrayString(emptyList))
         assertEquals("[]",
-                Collectionx.joinToArrayString(nullList0))
+                Collectionx.joinToArrayString(nullList))
     }
 
     @Test
@@ -118,146 +117,133 @@ class CollectionxTest {
 
     @Test
     fun testListOf() {
+        assertTwoEquals(0, Collectionx.listOf<String>().size, listOf<String>().size)
+        assertTwoEquals("EmptyList", Collectionx.listOf<String>()::class.simpleName, listOf<String>()::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.listOf<String>().add("3") }
+
+        assertTwoEquals(0, Collectionx.listOf(*arrayOf<String>()).size, listOf(*arrayOf<String>()).size)
+        assertEquals("EmptyList", Collectionx.listOf(*arrayOf<String>())::class.simpleName, listOf(*arrayOf<String>())::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.listOf(*arrayOf<String>()).add("3") }
+
+        assertTwoEquals(1, Collectionx.listOf(null as String?).size, listOf(null as String?).size)
+        assertTwoEquals(Collections.singletonList(null as String?)::class, Collectionx.listOf(null as String?)::class, listOf(null as String?)::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.listOf(null as String?).add("3") }
+
+        assertTwoEquals(1, Collectionx.listOf("1").size, listOf("1").size)
+        assertTwoEquals(Collections.singletonList("1")::class, Collectionx.listOf("1")::class, listOf("1")::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.listOf("1").add("3") }
+
+        assertTwoEquals(2, Collectionx.listOf("1", "2").size, listOf("1", "2").size)
+        assertTwoEquals("ArrayList", Collectionx.listOf("1", "2")::class.simpleName, listOf("1", "2")::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.listOf("1", "2").add("3") }
+
+
         assertTwoEquals(0, Collectionx.immutableListOf<String>().size, listOf<String>().size)
-        assertEquals(Collections.EMPTY_LIST::class.java.name, Collectionx.immutableListOf<String>()::class.java.name)
-        assertEquals(emptyList<String>()::class.java.name, listOf<String>()::class.java.name)
-        try {
-            Collectionx.immutableListOf<String>().add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(1, Collectionx.immutableListOf("1").size, listOf("1").size)
-        assertTwoEquals(Collections.singletonList("1")::class.java.name, Collectionx.immutableListOf("1")::class.java.name, listOf("1")::class.java.name)
-        try {
-            Collectionx.immutableListOf("1").add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(1, Collectionx.immutableListOf(null as String?).size, listOf(null as String?).size)
-        assertTwoEquals(Collections.singletonList("1")::class.java.name, Collectionx.immutableListOf(null as String?)::class.java.name, listOf(null as String?)::class.java.name)
-        try {
-            Collectionx.immutableListOf(null as String?).add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(2, Collectionx.immutableListOf("1", "2").size, listOf("1", "2").size)
-        assertTwoEquals(listOf("1", "2")::class.java.name, Collectionx.immutableListOf("1", "2")::class.java.name, listOf("1", "2")::class.java.name)
-        try {
-            Collectionx.immutableListOf("1", "2").add("3")
-            fail()
-        } catch (e: Exception) {
-        }
+        assertTwoEquals("EmptyList", Collectionx.immutableListOf<String>()::class.simpleName, listOf<String>()::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableListOf<String>().add("3") }
 
         assertTwoEquals(0, Collectionx.immutableListOf(*arrayOf<String>()).size, listOf(*arrayOf<String>()).size)
-        assertEquals(Collections.EMPTY_LIST::class.java.name, Collectionx.immutableListOf(*arrayOf<String>())::class.java.name)
-        assertEquals(emptyList<String>()::class.java.name, listOf(*arrayOf<String>())::class.java.name)
-        try {
-            Collectionx.immutableListOf(*arrayOf<String>()).add("3")
-            fail()
-        } catch (e: Exception) {
-        }
+        assertEquals("EmptyList", Collectionx.immutableListOf(*arrayOf<String>())::class.simpleName, listOf(*arrayOf<String>())::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableListOf(*arrayOf<String>()).add("3") }
+
+        assertTwoEquals(1, Collectionx.immutableListOf(null as String?).size, listOf(null as String?).size)
+        assertTwoEquals(Collections.singletonList(null as String?)::class, Collectionx.immutableListOf(null as String?)::class, listOf(null as String?)::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableListOf(null as String?).add("3") }
+
+        assertTwoEquals(1, Collectionx.immutableListOf("1").size, listOf("1").size)
+        assertTwoEquals(Collections.singletonList("1")::class, Collectionx.immutableListOf("1")::class, listOf("1")::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableListOf("1").add("3") }
+
+        assertTwoEquals(2, Collectionx.immutableListOf("1", "2").size, listOf("1", "2").size)
+        assertTwoEquals("ArrayList", Collectionx.immutableListOf("1", "2")::class.simpleName, listOf("1", "2")::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableListOf("1", "2").add("3") }
 
 
         assertTwoEquals(0, Collectionx.mutableListOf<String>().size, mutableListOf<String>().size)
-        assertTwoEquals(ArrayList::class.java.name, Collectionx.mutableListOf<String>()::class.java.name, mutableListOf<String>()::class.java.name)
+        assertTwoEquals(ArrayList::class, Collectionx.mutableListOf<String>()::class, mutableListOf<String>()::class)
         assertTwoEquals(1, Collectionx.mutableListOf<String>().apply { add("3") }.size, mutableListOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.mutableListOf("1", "2").size, mutableListOf("1", "2").size)
-        assertTwoEquals(ArrayList::class.java.name, Collectionx.mutableListOf("1", "2")::class.java.name, mutableListOf("1", "2")::class.java.name)
+        assertTwoEquals(ArrayList::class, Collectionx.mutableListOf("1", "2")::class, mutableListOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.mutableListOf("1", "2").apply { add("3") }.size, mutableListOf("1", "2").apply { add("3") }.size)
 
 
         assertTwoEquals(0, Collectionx.arrayListOf<String>().size, arrayListOf<String>().size)
-        assertTwoEquals(ArrayList::class.java.name, Collectionx.arrayListOf<String>()::class.java.name, arrayListOf<String>()::class.java.name)
+        assertTwoEquals(ArrayList::class, Collectionx.arrayListOf<String>()::class, arrayListOf<String>()::class)
         assertTwoEquals(1, Collectionx.arrayListOf<String>().apply { add("3") }.size, arrayListOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.arrayListOf("1", "2").size, arrayListOf("1", "2").size)
-        assertTwoEquals(ArrayList::class.java.name, Collectionx.arrayListOf("1", "2")::class.java.name, arrayListOf("1", "2")::class.java.name)
+        assertTwoEquals(ArrayList::class, Collectionx.arrayListOf("1", "2")::class, arrayListOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.arrayListOf("1", "2").apply { add("3") }.size, arrayListOf("1", "2").apply { add("3") }.size)
+
+        assertTwoEquals(0, Collectionx.emptyList<String>().size, emptyList<String>().size)
+        assertTwoEquals("EmptyList", Collectionx.emptyList<String>()::class.simpleName, emptyList<String>()::class.simpleName)
     }
 
     @Test
     fun testSetOf() {
         assertTwoEquals(0, Collectionx.immutableSetOf<String>().size, setOf<String>().size)
-        assertEquals(Collections.EMPTY_SET::class.java.name, Collectionx.immutableSetOf<String>()::class.java.name)
-        assertEquals(emptySet<String>()::class.java.name, setOf<String>()::class.java.name)
-        try {
-            Collectionx.immutableSetOf<String>().add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(1, Collectionx.immutableSetOf("1").size, setOf("1").size)
-        assertTwoEquals(Collections.singleton("1")::class.java.name, Collectionx.immutableSetOf("1")::class.java.name, setOf("1")::class.java.name)
-        try {
-            Collectionx.immutableSetOf("1").add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(1, Collectionx.immutableSetOf(null as String?).size, setOf(null as String?).size)
-        assertTwoEquals(Collections.singleton("1")::class.java.name, Collectionx.immutableSetOf(null as String?)::class.java.name, setOf(null as String?)::class.java.name)
-        try {
-            Collectionx.immutableSetOf(null as String?).add("3")
-            fail()
-        } catch (e: Exception) {
-        }
-
-        assertTwoEquals(2, Collectionx.immutableSetOf("1", "2").size, setOf("1", "2").size)
-        assertTwoEquals(LinkedHashSet::class.java.name, Collectionx.immutableSetOf("1", "2")::class.java.name, setOf("1", "2")::class.java.name)
-        Collectionx.immutableSetOf("1", "2").add("3")
-        (setOf("1", "2") as LinkedHashSet).add("3")
+        assertEquals("EmptySet", Collectionx.immutableSetOf<String>()::class.simpleName, setOf<String>()::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableSetOf<String>().add("3") }
 
         assertTwoEquals(0, Collectionx.immutableSetOf(*arrayOf<String>()).size, setOf(*arrayOf<String>()).size)
-        assertEquals(Collections.EMPTY_SET::class.java.name, Collectionx.immutableSetOf(*arrayOf<String>())::class.java.name)
-        assertEquals(emptySet<String>()::class.java.name, setOf(*arrayOf<String>())::class.java.name)
-        try {
-            Collectionx.immutableSetOf(*arrayOf<String>()).add("3")
-            fail()
-        } catch (e: Exception) {
-        }
+        assertEquals("EmptySet", Collectionx.immutableSetOf(*arrayOf<String>())::class.simpleName, setOf(*arrayOf<String>())::class.simpleName)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableSetOf(*arrayOf<String>()).add("3") }
+
+        assertTwoEquals(1, Collectionx.immutableSetOf(null as String?).size, setOf(null as String?).size)
+        assertTwoEquals(Collections.singleton(null as String?)::class, Collectionx.immutableSetOf(null as String?)::class, setOf(null as String?)::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableSetOf(null as String?).add("3") }
+
+        assertTwoEquals(1, Collectionx.immutableSetOf("1").size, setOf("1").size)
+        assertTwoEquals(Collections.singleton("1")::class, Collectionx.immutableSetOf("1")::class, setOf("1")::class)
+        assertThrow(UnsupportedOperationException::class) { Collectionx.immutableSetOf("1").add("3") }
+
+        assertTwoEquals(2, Collectionx.immutableSetOf("1", "2").size, setOf("1", "2").size)
+        assertTwoEquals(LinkedHashSet::class, Collectionx.immutableSetOf("1", "2")::class, setOf("1", "2")::class)
+        assertNoThrow { Collectionx.immutableSetOf("1", "2").add("3") }
+        assertNoThrow { (setOf("1", "2") as LinkedHashSet).add("3") }
 
 
         assertTwoEquals(0, Collectionx.mutableSetOf<String>().size, mutableSetOf<String>().size)
-        assertTwoEquals(java.util.LinkedHashSet::class.java.name, Collectionx.mutableSetOf<String>()::class.java.name, mutableSetOf<String>()::class.java.name)
+        assertTwoEquals(java.util.LinkedHashSet::class, Collectionx.mutableSetOf<String>()::class, mutableSetOf<String>()::class)
         assertTwoEquals(1, Collectionx.mutableSetOf<String>().apply { add("3") }.size, mutableSetOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.mutableSetOf("1", "2").size, mutableSetOf("1", "2").size)
-        assertTwoEquals(java.util.LinkedHashSet::class.java.name, Collectionx.mutableSetOf("1", "2")::class.java.name, mutableSetOf("1", "2")::class.java.name)
+        assertTwoEquals(java.util.LinkedHashSet::class, Collectionx.mutableSetOf("1", "2")::class, mutableSetOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.mutableSetOf("1", "2").apply { add("3") }.size, mutableSetOf("1", "2").apply { add("3") }.size)
 
 
         assertTwoEquals(0, Collectionx.hashSetOf<String>().size, hashSetOf<String>().size)
-        assertTwoEquals(HashSet::class.java.name, Collectionx.hashSetOf<String>()::class.java.name, hashSetOf<String>()::class.java.name)
+        assertTwoEquals(HashSet::class, Collectionx.hashSetOf<String>()::class, hashSetOf<String>()::class)
         assertTwoEquals(1, Collectionx.hashSetOf<String>().apply { add("3") }.size, hashSetOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.hashSetOf("1", "2").size, hashSetOf("1", "2").size)
-        assertTwoEquals(HashSet::class.java.name, Collectionx.hashSetOf("1", "2")::class.java.name, hashSetOf("1", "2")::class.java.name)
+        assertTwoEquals(HashSet::class, Collectionx.hashSetOf("1", "2")::class, hashSetOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.hashSetOf("1", "2").apply { add("3") }.size, hashSetOf("1", "2").apply { add("3") }.size)
 
 
         assertTwoEquals(0, Collectionx.linkedSetOf<String>().size, linkedSetOf<String>().size)
-        assertTwoEquals(java.util.LinkedHashSet::class.java.name, Collectionx.linkedSetOf<String>()::class.java.name, linkedSetOf<String>()::class.java.name)
+        assertTwoEquals(java.util.LinkedHashSet::class, Collectionx.linkedSetOf<String>()::class, linkedSetOf<String>()::class)
         assertTwoEquals(1, Collectionx.linkedSetOf<String>().apply { add("3") }.size, linkedSetOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.linkedSetOf("1", "2").size, linkedSetOf("1", "2").size)
-        assertTwoEquals(java.util.LinkedHashSet::class.java.name, Collectionx.linkedSetOf("1", "2")::class.java.name, linkedSetOf("1", "2")::class.java.name)
+        assertTwoEquals(java.util.LinkedHashSet::class, Collectionx.linkedSetOf("1", "2")::class, linkedSetOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.linkedSetOf("1", "2").apply { add("3") }.size, linkedSetOf("1", "2").apply { add("3") }.size)
 
 
         assertTwoEquals(0, Collectionx.sortedSetOf<String>().size, sortedSetOf<String>().size)
-        assertTwoEquals(java.util.TreeSet::class.java.name, Collectionx.sortedSetOf<String>()::class.java.name, sortedSetOf<String>()::class.java.name)
+        assertTwoEquals(java.util.TreeSet::class, Collectionx.sortedSetOf<String>()::class, sortedSetOf<String>()::class)
         assertTwoEquals(1, Collectionx.sortedSetOf<String>().apply { add("3") }.size, sortedSetOf<String>().apply { add("3") }.size)
 
         assertTwoEquals(2, Collectionx.sortedSetOf("1", "2").size, sortedSetOf("1", "2").size)
-        assertTwoEquals(java.util.TreeSet::class.java.name, Collectionx.sortedSetOf("1", "2")::class.java.name, sortedSetOf("1", "2")::class.java.name)
+        assertTwoEquals(java.util.TreeSet::class, Collectionx.sortedSetOf("1", "2")::class, sortedSetOf("1", "2")::class)
         assertTwoEquals(3, Collectionx.sortedSetOf("1", "2").apply { add("3") }.size, sortedSetOf("1", "2").apply { add("3") }.size)
 
         assertTwoEquals("2,1", Collectionx.sortedSetOf({ it1, it2 -> (it1.toInt() - it2.toInt()) * -1 }, "1", "2").joinToString(","),
                 sortedSetOf(Comparator { it1, it2 -> (it1.toInt() - it2.toInt()) * -1 }, "1", "2").joinToString(","))
+
+        assertTwoEquals(0, Collectionx.emptySet<String>().size, emptySet<String>().size)
+        assertTwoEquals("EmptySet", Collectionx.emptySet<String>()::class.simpleName, emptySet<String>()::class.simpleName)
     }
 
     @Test
@@ -338,32 +324,31 @@ class CollectionxTest {
 
     @Test
     fun testElementAt() {
-        val list0 = listOf("a", "b", "c")
-        val list1 = Collectionx.listOf("a", "b", "c")
+        val normalList = listOf("a", "b", "c")
         val nullList = null as List<String>?
 
-        assertTwoEquals("a", list0.elementAt(0), Collectionx.elementAt(list1, 0))
-        assertTwoEquals("b", list0.elementAt(1), Collectionx.elementAt(list1, 1))
-        assertTwoEquals("c", list0.elementAt(2), Collectionx.elementAt(list1, 2))
-        assertTwoThrow(ArrayIndexOutOfBoundsException::class, { list0.elementAt(-1) }, { Collectionx.elementAt(list1, -1) })
-        assertTwoThrow(ArrayIndexOutOfBoundsException::class, { list0.elementAt(3) }, { Collectionx.elementAt(list1, 3) })
+        assertTwoEquals("a", normalList.elementAt(0), Collectionx.elementAt(normalList, 0))
+        assertTwoEquals("b", normalList.elementAt(1), Collectionx.elementAt(normalList, 1))
+        assertTwoEquals("c", normalList.elementAt(2), Collectionx.elementAt(normalList, 2))
+        assertTwoThrow(ArrayIndexOutOfBoundsException::class, { normalList.elementAt(-1) }, { Collectionx.elementAt(normalList, -1) })
+        assertTwoThrow(ArrayIndexOutOfBoundsException::class, { normalList.elementAt(3) }, { Collectionx.elementAt(normalList, 3) })
 
-        assertTwoEquals("a", list0.elementAtOrElse(0) { "j" }, Collectionx.elementAtOrElse(list1, 0) { "j" })
-        assertTwoEquals("b", list0.elementAtOrElse(1) { "k" }, Collectionx.elementAtOrElse(list1, 1) { "j" })
-        assertTwoEquals("c", list0.elementAtOrElse(2) { "j" }, Collectionx.elementAtOrElse(list1, 2) { "j" })
-        assertTwoEquals("j", list0.elementAtOrElse(-1) { "j" }, Collectionx.elementAtOrElse(list1, -1) { "j" })
-        assertTwoEquals("k", list0.elementAtOrElse(3) { "k" }, Collectionx.elementAtOrElse(list1, 3) { "k" })
+        assertTwoEquals("a", normalList.elementAtOrElse(0) { "j" }, Collectionx.elementAtOrElse(normalList, 0) { "j" })
+        assertTwoEquals("b", normalList.elementAtOrElse(1) { "k" }, Collectionx.elementAtOrElse(normalList, 1) { "j" })
+        assertTwoEquals("c", normalList.elementAtOrElse(2) { "j" }, Collectionx.elementAtOrElse(normalList, 2) { "j" })
+        assertTwoEquals("j", normalList.elementAtOrElse(-1) { "j" }, Collectionx.elementAtOrElse(normalList, -1) { "j" })
+        assertTwoEquals("k", normalList.elementAtOrElse(3) { "k" }, Collectionx.elementAtOrElse(normalList, 3) { "k" })
         assertEquals("x", Collectionx.elementAtOrElse(nullList, 0) { "x" })
         assertEquals("y", Collectionx.elementAtOrElse(nullList, 1) { "y" })
         assertEquals("z", Collectionx.elementAtOrElse(nullList, 2) { "z" })
         assertEquals("j", Collectionx.elementAtOrElse(nullList, -1) { "j" })
         assertEquals("k", Collectionx.elementAtOrElse(nullList, 3) { "k" })
 
-        assertTwoEquals("a", list0.elementAtOrNull(0), Collectionx.elementAtOrNull(list1, 0))
-        assertTwoEquals("b", list0.elementAtOrNull(1), Collectionx.elementAtOrNull(list1, 1))
-        assertTwoEquals("c", list0.elementAtOrNull(2), Collectionx.elementAtOrNull(list1, 2))
-        assertTwoEquals(null, list0.elementAtOrNull(-1), Collectionx.elementAtOrNull(list1, -1))
-        assertTwoEquals(null, list0.elementAtOrNull(3), Collectionx.elementAtOrNull(list1, 3))
+        assertTwoEquals("a", normalList.elementAtOrNull(0), Collectionx.elementAtOrNull(normalList, 0))
+        assertTwoEquals("b", normalList.elementAtOrNull(1), Collectionx.elementAtOrNull(normalList, 1))
+        assertTwoEquals("c", normalList.elementAtOrNull(2), Collectionx.elementAtOrNull(normalList, 2))
+        assertTwoEquals(null, normalList.elementAtOrNull(-1), Collectionx.elementAtOrNull(normalList, -1))
+        assertTwoEquals(null, normalList.elementAtOrNull(3), Collectionx.elementAtOrNull(normalList, 3))
         assertNull(Collectionx.elementAtOrNull(nullList, 0))
         assertNull(Collectionx.elementAtOrNull(nullList, 1))
         assertNull(Collectionx.elementAtOrNull(nullList, 2))
@@ -373,113 +358,199 @@ class CollectionxTest {
 
     @Test
     fun testFind() {
-        val list0 = listOf("aj", "bj", "cj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "bo")
+        val normalList = listOf("aj", "bj", "cj", "bo")
+        val normalIterable = normalList as Iterable<String>
 
-        assertTwoEquals("aj", list0.find { it.startsWith("a") }, Collectionx.find(list1) { it.startsWith("a") })
-        assertTwoEquals("bj", list0.find { it.startsWith("b") }, Collectionx.find(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.find { it.startsWith("c") }, Collectionx.find(list1) { it.startsWith("c") })
-        assertTwoEquals(null, list0.find { it.startsWith("k") }, Collectionx.find(list1) { it.startsWith("k") })
+        assertTwoEquals("aj", normalList.find { it.startsWith("a") }, Collectionx.find(normalList) { it.startsWith("a") })
+        assertTwoEquals("bj", normalList.find { it.startsWith("b") }, Collectionx.find(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.find { it.startsWith("c") }, Collectionx.find(normalList) { it.startsWith("c") })
+        assertTwoEquals(null, normalList.find { it.startsWith("k") }, Collectionx.find(normalList) { it.startsWith("k") })
 
-        assertTwoEquals("aj", list0.findLast { it.startsWith("a") }, Collectionx.findLast(list1) { it.startsWith("a") })
-        assertTwoEquals("bo", list0.findLast { it.startsWith("b") }, Collectionx.findLast(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.findLast { it.startsWith("c") }, Collectionx.findLast(list1) { it.startsWith("c") })
-        assertTwoEquals(null, list0.findLast { it.startsWith("k") }, Collectionx.findLast(list1) { it.startsWith("k") })
+        assertTwoEquals("aj", normalIterable.findLast { it.startsWith("a") }, Collectionx.findLast(normalIterable) { it.startsWith("a") })
+        assertTwoEquals("bo", normalIterable.findLast { it.startsWith("b") }, Collectionx.findLast(normalIterable) { it.startsWith("b") })
+        assertTwoEquals("cj", normalIterable.findLast { it.startsWith("c") }, Collectionx.findLast(normalIterable) { it.startsWith("c") })
+        assertTwoEquals(null, normalIterable.findLast { it.startsWith("k") }, Collectionx.findLast(normalIterable) { it.startsWith("k") })
+
+        assertTwoEquals("aj", normalList.findLast { it.startsWith("a") }, Collectionx.findLast(normalList) { it.startsWith("a") })
+        assertTwoEquals("bo", normalList.findLast { it.startsWith("b") }, Collectionx.findLast(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.findLast { it.startsWith("c") }, Collectionx.findLast(normalList) { it.startsWith("c") })
+        assertTwoEquals(null, normalList.findLast { it.startsWith("k") }, Collectionx.findLast(normalList) { it.startsWith("k") })
+    }
+
+    @Test
+    fun testGet() {
+        val normalList = listOf("aj", "bj", "cj", "bo")
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
+
+        assertTwoEquals("aj", normalList.getOrElse(0) { it.toString() }, Collectionx.getOrElse(normalList, 0) { it.toString() })
+        assertTwoEquals("bj", normalList.getOrElse(1) { it.toString() }, Collectionx.getOrElse(normalList, 1) { it.toString() })
+        assertTwoEquals("-1", normalList.getOrElse(-1) { it.toString() }, Collectionx.getOrElse(normalList, -1) { it.toString() })
+        assertTwoEquals("5", normalList.getOrElse(5) { it.toString() }, Collectionx.getOrElse(normalList, 5) { it.toString() })
+        assertTwoEquals("0", emptyList.getOrElse(0) { it.toString() }, Collectionx.getOrElse(emptyList, 0) { it.toString() })
+        assertEquals("0", Collectionx.getOrElse(nullList, 0) { it.toString() })
+
+        assertTwoEquals("aj", normalList.getOrNull(0), Collectionx.getOrNull(normalList, 0))
+        assertTwoEquals("bj", normalList.getOrNull(1), Collectionx.getOrNull(normalList, 1))
+        assertTwoEquals(null, normalList.getOrNull(-1), Collectionx.getOrNull(normalList, -1))
+        assertTwoEquals(null, normalList.getOrNull(5), Collectionx.getOrNull(normalList, 5))
+        assertTwoEquals(null, emptyList.getOrNull(0), Collectionx.getOrNull(emptyList, 0))
+        assertNull(Collectionx.getOrNull(nullList, 0))
     }
 
     @Test
     fun testFirst() {
-        val list0 = listOf("aj", "bj", "cj", "bo")
-        val emptyList0 = listOf<String>()
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "bo")
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "cj", "bo")
+        val normalAsIterable = normalList as Iterable<String>
+        val normalIterable = object: Iterable<String>{
+            override fun iterator(): Iterator<String> {
+                return normalList.iterator()
+            }
+        }
+        val emptyList = listOf<String>()
+        val emptyIterable = object: Iterable<String>{
+            override fun iterator(): Iterator<String> {
+                return emptyList.iterator()
+            }
+        }
+        val nullList = null as List<String>?
+        val nullIterable = nullList as Iterable<String>?
 
-        assertTwoEquals("aj", list0.first(), Collectionx.first(list1))
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.first() }, { Collectionx.first(emptyList1) })
-        assertThrow(NoSuchElementException::class) { Collectionx.first(nullList1) }
+        assertTwoEquals("aj", normalList.first(), Collectionx.first(normalList))
+        assertTwoThrow(NoSuchElementException::class, { emptyList.first() }, { Collectionx.first(emptyList) })
+        assertThrow(NoSuchElementException::class) { Collectionx.first(nullList) }
 
-        assertTwoEquals("aj", list0.first { it.startsWith("a") }, Collectionx.first(list1) { it.startsWith("a") })
-        assertTwoEquals("bj", list0.first { it.startsWith("b") }, Collectionx.first(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.first { it.startsWith("c") }, Collectionx.first(list1) { it.startsWith("c") })
-        assertTwoThrow(NoSuchElementException::class, { list0.first { it.startsWith("k") } }, { Collectionx.first(list1) { it.startsWith("k") } })
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.first { it.startsWith("a") } }, { Collectionx.first(emptyList1) { it.startsWith("a") } })
-        assertThrow(NoSuchElementException::class) { Collectionx.first(nullList1) { it.startsWith("a") } }
+        assertTwoEquals("aj", normalAsIterable.first(), Collectionx.first(normalAsIterable))
+        assertTwoEquals("aj", normalIterable.first(), Collectionx.first(normalIterable))
+        assertTwoThrow(NoSuchElementException::class, { emptyIterable.first() }, { Collectionx.first(emptyIterable) })
+        assertThrow(NoSuchElementException::class) { Collectionx.first(nullIterable) }
 
-        assertTwoEquals("aj", list0.firstOrNull(), Collectionx.firstOrNull(list1))
-        assertTwoEquals(null, emptyList0.firstOrNull(), Collectionx.firstOrNull(emptyList1))
-        assertNull(Collectionx.firstOrNull(nullList1))
+        assertTwoEquals("aj", normalList.first { it.startsWith("a") }, Collectionx.first(normalList) { it.startsWith("a") })
+        assertTwoEquals("bj", normalList.first { it.startsWith("b") }, Collectionx.first(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.first { it.startsWith("c") }, Collectionx.first(normalList) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class, { normalList.first { it.startsWith("k") } }, { Collectionx.first(normalList) { it.startsWith("k") } })
+        assertTwoThrow(NoSuchElementException::class, { emptyList.first { it.startsWith("a") } }, { Collectionx.first(emptyList) { it.startsWith("a") } })
+        assertThrow(NoSuchElementException::class) { Collectionx.first(nullList) { it.startsWith("a") } }
 
-        assertTwoEquals("aj", list0.firstOrNull { it.startsWith("a") }, Collectionx.firstOrNull(list1) { it.startsWith("a") })
-        assertTwoEquals("bj", list0.firstOrNull { it.startsWith("b") }, Collectionx.firstOrNull(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.firstOrNull { it.startsWith("c") }, Collectionx.firstOrNull(list1) { it.startsWith("c") })
-        assertTwoEquals(null, list0.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(list1) { it.startsWith("k") })
-        assertTwoEquals(null, emptyList0.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(emptyList1) { it.startsWith("k") })
-        assertNull(Collectionx.firstOrNull(nullList1) { it.startsWith("k") })
+        assertTwoEquals("aj", normalList.firstOrNull(), Collectionx.firstOrNull(normalList))
+        assertTwoEquals(null, emptyList.firstOrNull(), Collectionx.firstOrNull(emptyList))
+        assertNull(Collectionx.firstOrNull(nullList))
+
+        assertTwoEquals("aj", normalAsIterable.firstOrNull(), Collectionx.firstOrNull(normalAsIterable))
+        assertTwoEquals("aj", normalIterable.firstOrNull(), Collectionx.firstOrNull(normalIterable))
+        assertTwoEquals(null, emptyIterable.firstOrNull(), Collectionx.firstOrNull(emptyIterable))
+        assertNull(Collectionx.firstOrNull(nullIterable))
+
+        assertTwoEquals("aj", normalList.firstOrNull { it.startsWith("a") }, Collectionx.firstOrNull(normalList) { it.startsWith("a") })
+        assertTwoEquals("bj", normalList.firstOrNull { it.startsWith("b") }, Collectionx.firstOrNull(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.firstOrNull { it.startsWith("c") }, Collectionx.firstOrNull(normalList) { it.startsWith("c") })
+        assertTwoEquals(null, normalList.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(normalList) { it.startsWith("k") })
+        assertTwoEquals(null, emptyList.firstOrNull { it.startsWith("k") }, Collectionx.firstOrNull(emptyList) { it.startsWith("k") })
+        assertNull(Collectionx.firstOrNull(nullList) { it.startsWith("k") })
     }
 
     @Test
     fun testIndexOf() {
-        val list0 = listOf("aj", "bj", "cj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "cj", "bo")
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
 
-        assertTwoEquals(0, list0.indexOf("aj"), Collectionx.indexOf(list1, "aj"))
-        assertTwoEquals(1, list0.indexOf("bj"), Collectionx.indexOf(list1, "bj"))
-        assertTwoEquals(2, list0.indexOf("cj"), Collectionx.indexOf(list1, "cj"))
-        assertTwoEquals(3, list0.indexOf("bo"), Collectionx.indexOf(list1, "bo"))
-        assertTwoEquals(-1, list0.indexOf("bb"), Collectionx.indexOf(list1, "bb"))
-        assertEquals(-1, Collectionx.indexOf(nullList1, "bb"))
+        assertTwoEquals(0, normalList.indexOf("aj"), Collectionx.indexOf(normalList, "aj"))
+        assertTwoEquals(1, normalList.indexOf("bj"), Collectionx.indexOf(normalList, "bj"))
+        assertTwoEquals(2, normalList.indexOf("cj"), Collectionx.indexOf(normalList, "cj"))
+        assertTwoEquals(3, normalList.indexOf("bo"), Collectionx.indexOf(normalList, "bo"))
+        assertTwoEquals(-1, normalList.indexOf("bb"), Collectionx.indexOf(normalList, "bb"))
+        assertTwoEquals(-1, emptyList.indexOf("bb"), Collectionx.indexOf(emptyList, "bb"))
+        assertEquals(-1, Collectionx.indexOf(nullList, "bb"))
 
-        assertTwoEquals(0, list0.indexOfFirst { it.startsWith("a") }, Collectionx.indexOfFirst(list1) { it.startsWith("a") })
-        assertTwoEquals(1, list0.indexOfFirst { it.startsWith("b") }, Collectionx.indexOfFirst(list1) { it.startsWith("b") })
-        assertTwoEquals(2, list0.indexOfFirst { it.startsWith("c") }, Collectionx.indexOfFirst(list1) { it.startsWith("c") })
-        assertTwoEquals(-1, list0.indexOfFirst { it.startsWith("k") }, Collectionx.indexOfFirst(list1) { it.startsWith("k") })
-        assertEquals(-1, Collectionx.indexOfFirst(nullList1) { it.startsWith("k") })
+        assertTwoEquals(0, normalList.indexOfFirst { it.startsWith("a") }, Collectionx.indexOfFirst(normalList) { it.startsWith("a") })
+        assertTwoEquals(1, normalList.indexOfFirst { it.startsWith("b") }, Collectionx.indexOfFirst(normalList) { it.startsWith("b") })
+        assertTwoEquals(2, normalList.indexOfFirst { it.startsWith("c") }, Collectionx.indexOfFirst(normalList) { it.startsWith("c") })
+        assertTwoEquals(-1, normalList.indexOfFirst { it.startsWith("k") }, Collectionx.indexOfFirst(normalList) { it.startsWith("k") })
+        assertTwoEquals(-1, emptyList.indexOfFirst { it.startsWith("k") }, Collectionx.indexOfFirst(emptyList) { it.startsWith("k") })
+        assertEquals(-1, Collectionx.indexOfFirst(nullList) { it.startsWith("k") })
 
-        assertTwoEquals(0, list0.indexOfLast { it.startsWith("a") }, Collectionx.indexOfLast(list1) { it.startsWith("a") })
-        assertTwoEquals(3, list0.indexOfLast { it.startsWith("b") }, Collectionx.indexOfLast(list1) { it.startsWith("b") })
-        assertTwoEquals(2, list0.indexOfLast { it.startsWith("c") }, Collectionx.indexOfLast(list1) { it.startsWith("c") })
-        assertTwoEquals(-1, list0.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(list1) { it.startsWith("k") })
-        assertEquals(-1, Collectionx.indexOfLast(nullList1) { it.startsWith("k") })
+        assertTwoEquals(0, normalList.indexOfLast { it.startsWith("a") }, Collectionx.indexOfLast(normalList) { it.startsWith("a") })
+        assertTwoEquals(3, normalList.indexOfLast { it.startsWith("b") }, Collectionx.indexOfLast(normalList) { it.startsWith("b") })
+        assertTwoEquals(2, normalList.indexOfLast { it.startsWith("c") }, Collectionx.indexOfLast(normalList) { it.startsWith("c") })
+        assertTwoEquals(-1, normalList.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(normalList) { it.startsWith("k") })
+        assertTwoEquals(-1, emptyList.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(emptyList) { it.startsWith("k") })
+        assertEquals(-1, Collectionx.indexOfLast(nullList) { it.startsWith("k") })
+
+        assertTwoEquals(0, normalList.lastIndexOf("aj"), Collectionx.lastIndexOf(normalList, "aj"))
+        assertTwoEquals(1, normalList.lastIndexOf("bj"), Collectionx.lastIndexOf(normalList, "bj"))
+        assertTwoEquals(2, normalList.lastIndexOf("cj"), Collectionx.lastIndexOf(normalList, "cj"))
+        assertTwoEquals(3, normalList.lastIndexOf("bo"), Collectionx.lastIndexOf(normalList, "bo"))
+        assertTwoEquals(-1, normalList.lastIndexOf("bb"), Collectionx.lastIndexOf(normalList, "bb"))
+        assertTwoEquals(-1, emptyList.lastIndexOf("bb"), Collectionx.lastIndexOf(emptyList, "bb"))
+        assertEquals(-1, Collectionx.lastIndexOf(nullList, "bb"))
     }
 
     @Test
     fun testLast() {
-        val list0 = listOf("aj", "bj", "cj", "bo")
-        val emptyList0 = listOf<String>()
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "bo")
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "cj", "bo")
+        val normalAsIterable = normalList as Iterable<String>
+        val normalIterable = object: Iterable<String>{
+            override fun iterator(): Iterator<String> {
+                return normalList.iterator()
+            }
+        }
+        val emptyList = listOf<String>()
+        val emptyAsIterable = emptyList as Iterable<String>
+        val emptyIterable = object: Iterable<String>{
+            override fun iterator(): Iterator<String> {
+                return emptyList.iterator()
+            }
+        }
+        val nullList = null as List<String>?
+        val nullIterable = nullList as Iterable<String>?
 
-        assertTwoEquals("bo", list0.last(), Collectionx.last(list1))
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.last() }, { Collectionx.last(emptyList1) })
-        assertThrow(NoSuchElementException::class) { Collectionx.last(nullList1) }
+        assertTwoEquals("bo", normalList.last(), Collectionx.last(normalList))
+        assertTwoThrow(NoSuchElementException::class, { emptyList.last() }, { Collectionx.last(emptyList) })
+        assertThrow(NoSuchElementException::class) { Collectionx.last(nullList) }
 
-        assertTwoEquals("aj", list0.last { it.startsWith("a") }, Collectionx.last(list1) { it.startsWith("a") })
-        assertTwoEquals("bo", list0.last { it.startsWith("b") }, Collectionx.last(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.last { it.startsWith("c") }, Collectionx.last(list1) { it.startsWith("c") })
-        assertTwoThrow(NoSuchElementException::class, { list0.last { it.startsWith("k") } }, { Collectionx.last(list1) { it.startsWith("k") } })
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.last { it.startsWith("a") } }, { Collectionx.last(emptyList1) { it.startsWith("a") } })
-        assertThrow(NoSuchElementException::class) { Collectionx.last(nullList1) { it.startsWith("a") } }
+        assertTwoEquals("bo", normalAsIterable.last(), Collectionx.last(normalAsIterable))
+        assertTwoEquals("bo", normalIterable.last(), Collectionx.last(normalIterable))
+        assertTwoThrow(NoSuchElementException::class, { emptyIterable.last() }, { Collectionx.last(emptyIterable) })
+        assertThrow(NoSuchElementException::class) { Collectionx.last(nullIterable) }
 
-        assertTwoEquals("bo", list0.lastOrNull(), Collectionx.lastOrNull(list1))
-        assertTwoEquals(null, emptyList0.lastOrNull(), Collectionx.lastOrNull(emptyList1))
-        assertNull(Collectionx.lastOrNull(nullList1))
+        assertTwoEquals("aj", normalList.last { it.startsWith("a") }, Collectionx.last(normalList) { it.startsWith("a") })
+        assertTwoEquals("bo", normalList.last { it.startsWith("b") }, Collectionx.last(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.last { it.startsWith("c") }, Collectionx.last(normalList) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class, { normalList.last { it.startsWith("k") } }, { Collectionx.last(normalList) { it.startsWith("k") } })
+        assertTwoThrow(NoSuchElementException::class, { emptyList.last { it.startsWith("a") } }, { Collectionx.last(emptyList) { it.startsWith("a") } })
+        assertThrow(NoSuchElementException::class) { Collectionx.last(nullList) { it.startsWith("a") } }
 
-        assertTwoEquals("aj", list0.lastOrNull { it.startsWith("a") }, Collectionx.lastOrNull(list1) { it.startsWith("a") })
-        assertTwoEquals("bo", list0.lastOrNull { it.startsWith("b") }, Collectionx.lastOrNull(list1) { it.startsWith("b") })
-        assertTwoEquals("cj", list0.lastOrNull { it.startsWith("c") }, Collectionx.lastOrNull(list1) { it.startsWith("c") })
-        assertTwoEquals(null, list0.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(list1) { it.startsWith("k") })
-        assertTwoEquals(null, emptyList0.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(emptyList1) { it.startsWith("k") })
-        assertNull(Collectionx.lastOrNull(nullList1) { it.startsWith("k") })
+        assertTwoEquals("aj", normalIterable.last { it.startsWith("a") }, Collectionx.last(normalIterable) { it.startsWith("a") })
+        assertTwoEquals("bo", normalIterable.last { it.startsWith("b") }, Collectionx.last(normalIterable) { it.startsWith("b") })
+        assertTwoEquals("cj", normalIterable.last { it.startsWith("c") }, Collectionx.last(normalIterable) { it.startsWith("c") })
+        assertTwoThrow(NoSuchElementException::class, { normalIterable.last { it.startsWith("k") } }, { Collectionx.last(normalIterable) { it.startsWith("k") } })
+        assertTwoThrow(NoSuchElementException::class, { emptyIterable.last { it.startsWith("a") } }, { Collectionx.last(emptyIterable) { it.startsWith("a") } })
+        assertThrow(NoSuchElementException::class) { Collectionx.last(nullIterable) { it.startsWith("a") } }
 
-        assertTwoEquals(0, list0.lastIndexOf("aj"), Collectionx.lastIndexOf(list1, "aj"))
-        assertTwoEquals(1, list0.lastIndexOf("bj"), Collectionx.lastIndexOf(list1, "bj"))
-        assertTwoEquals(2, list0.lastIndexOf("cj"), Collectionx.lastIndexOf(list1, "cj"))
-        assertTwoEquals(3, list0.lastIndexOf("bo"), Collectionx.lastIndexOf(list1, "bo"))
-        assertTwoEquals(-1, list0.lastIndexOf("bb"), Collectionx.lastIndexOf(list1, "bb"))
-        assertEquals(-1, Collectionx.lastIndexOf(nullList1, "bb"))
+        assertTwoEquals("bo", normalList.lastOrNull(), Collectionx.lastOrNull(normalList))
+        assertTwoEquals(null, emptyList.lastOrNull(), Collectionx.lastOrNull(emptyList))
+        assertNull(Collectionx.lastOrNull(nullList))
+
+        assertTwoEquals("bo", normalAsIterable.lastOrNull(), Collectionx.lastOrNull(normalAsIterable))
+        assertTwoEquals("bo", normalIterable.lastOrNull(), Collectionx.lastOrNull(normalIterable))
+        assertTwoEquals(null, emptyAsIterable.lastOrNull(), Collectionx.lastOrNull(emptyAsIterable))
+        assertTwoEquals(null, emptyIterable.lastOrNull(), Collectionx.lastOrNull(emptyIterable))
+        assertNull(Collectionx.lastOrNull(nullIterable))
+
+        assertTwoEquals("aj", normalList.lastOrNull { it.startsWith("a") }, Collectionx.lastOrNull(normalList) { it.startsWith("a") })
+        assertTwoEquals("bo", normalList.lastOrNull { it.startsWith("b") }, Collectionx.lastOrNull(normalList) { it.startsWith("b") })
+        assertTwoEquals("cj", normalList.lastOrNull { it.startsWith("c") }, Collectionx.lastOrNull(normalList) { it.startsWith("c") })
+        assertTwoEquals(null, normalList.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(normalList) { it.startsWith("k") })
+        assertTwoEquals(null, emptyList.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(emptyList) { it.startsWith("k") })
+        assertNull(Collectionx.lastOrNull(nullList) { it.startsWith("k") })
+
+        assertTwoEquals("aj", normalIterable.lastOrNull { it.startsWith("a") }, Collectionx.lastOrNull(normalIterable) { it.startsWith("a") })
+        assertTwoEquals("bo", normalIterable.lastOrNull { it.startsWith("b") }, Collectionx.lastOrNull(normalIterable) { it.startsWith("b") })
+        assertTwoEquals("cj", normalIterable.lastOrNull { it.startsWith("c") }, Collectionx.lastOrNull(normalIterable) { it.startsWith("c") })
+        assertTwoEquals(null, normalIterable.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(normalIterable) { it.startsWith("k") })
+        assertTwoEquals(null, emptyIterable.lastOrNull { it.startsWith("k") }, Collectionx.lastOrNull(emptyIterable) { it.startsWith("k") })
+        assertNull(Collectionx.lastOrNull(nullIterable) { it.startsWith("k") })
     }
 
     @Test
@@ -490,12 +561,12 @@ class CollectionxTest {
         val multiIterable1 = Collectionx.listOf("aj", "bj", "cj", "bo")
         val emptyIterable0 = listOf<String>()
         val emptyIterable1 = Collectionx.listOf<String>()
-        val nullList1 = null as List<String>?
+        val nullList = null as List<String>?
 
         assertTwoEquals("cj", singleIterable0.single(), Collectionx.single(singleIterable1))
         assertTwoThrow(IllegalArgumentException::class, { multiIterable0.single() }, { Collectionx.single(multiIterable1) })
         assertTwoThrow(NoSuchElementException::class, { emptyIterable0.single() }, { Collectionx.single(emptyIterable1) })
-        assertThrow(NoSuchElementException::class) { Collectionx.single(nullList1) }
+        assertThrow(NoSuchElementException::class) { Collectionx.single(nullList) }
 
         assertTwoEquals("cj",
                 singleIterable0.single { it.startsWith("c") },
@@ -512,12 +583,12 @@ class CollectionxTest {
         assertTwoThrow(NoSuchElementException::class,
                 { emptyIterable0.single { it.startsWith("c") } },
                 { Collectionx.single(emptyIterable1) { it.startsWith("c") } })
-        assertThrow(NoSuchElementException::class) { Collectionx.single(nullList1) { it.startsWith("b") } }
+        assertThrow(NoSuchElementException::class) { Collectionx.single(nullList) { it.startsWith("b") } }
 
         assertTwoEquals("cj", singleIterable0.singleOrNull(), Collectionx.singleOrNull(singleIterable1))
         assertTwoEquals(null, multiIterable0.singleOrNull(), Collectionx.singleOrNull(multiIterable1))
         assertTwoEquals(null, emptyIterable0.singleOrNull(), Collectionx.singleOrNull(emptyIterable1))
-        assertNull(Collectionx.singleOrNull(nullList1))
+        assertNull(Collectionx.singleOrNull(nullList))
 
         assertTwoEquals("cj",
                 singleIterable0.singleOrNull { it.startsWith("c") },
@@ -535,14 +606,13 @@ class CollectionxTest {
                 emptyIterable0.singleOrNull { it.startsWith("c") },
                 Collectionx.singleOrNull(emptyIterable1) { it.startsWith("c") })
         assertEquals(null,
-                Collectionx.singleOrNull(nullList1) { it.startsWith("b") })
+                Collectionx.singleOrNull(nullList) { it.startsWith("b") })
     }
 
     @Test
     fun testDrop() {
-        val list0 = listOf("aj", "bj", "cj", "dj")
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "dj")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "cj", "dj")
+        val nullList = null as List<String>?
 
         /*
          * drop 系列的方法表示从列表头部开始跳过部分元素
@@ -551,72 +621,71 @@ class CollectionxTest {
         // drop 方法的意思是从列表头部开始跳过多少个元素
 
         assertTwoThrow(IllegalArgumentException::class,
-                { list0.drop(-1) },
-                { Collectionx.drop(list1, -1) }
+                { normalList.drop(-1) },
+                { Collectionx.drop(normalList, -1) }
         )
 
-        assertTrue(list0 == list0.drop(0))
-        assertTrue(list1 == Collectionx.drop(list1, 0))
-        assertTrue(list0 !== list0.drop(0))
-        assertTrue(list1 !== Collectionx.drop(list1, 0))
-        assertTrue(Collectionx.drop(nullList1, 0).isEmpty())
+        assertTrue(normalList == normalList.drop(0))
+        assertTrue(normalList == Collectionx.drop(normalList, 0))
+        assertTrue(normalList !== normalList.drop(0))
+        assertTrue(normalList !== Collectionx.drop(normalList, 0))
+        assertTrue(Collectionx.drop(nullList, 0).isEmpty())
 
         assertTwoEquals("bj, cj, dj",
-                list0.drop(1).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(list1, 1)))
+                normalList.drop(1).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(normalList, 1)))
 
         assertTwoEquals("cj, dj",
-                list0.drop(2).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(list1, 2)))
+                normalList.drop(2).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(normalList, 2)))
 
         assertTwoEquals("dj",
-                list0.drop(3).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(list1, 3)))
+                normalList.drop(3).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(normalList, 3)))
 
         assertTwoEquals("",
-                list0.drop(4).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(list1, 4)))
+                normalList.drop(4).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(normalList, 4)))
 
         assertTwoEquals("",
-                list0.drop(5).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(list1, 5)))
+                normalList.drop(5).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(normalList, 5)))
 
         assertTwoEquals("",
-                list0.drop(5).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(Collectionx.drop(list1, 5), 5)))
+                normalList.drop(5).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(Collectionx.drop(normalList, 5), 5)))
 
         // dropWhile 方法的意思是从不符合条件的元素开始往后遍历
 
         assertTwoEquals("aj, bj, cj, dj",
-                list0.dropWhile { !it.startsWith("a") }.joinToString(),
-                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("a") }))
+                normalList.dropWhile { !it.startsWith("a") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(normalList) { !it.startsWith("a") }))
 
         assertTwoEquals("bj, cj, dj",
-                list0.dropWhile { !it.startsWith("b") }.joinToString(),
-                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("b") }))
+                normalList.dropWhile { !it.startsWith("b") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(normalList) { !it.startsWith("b") }))
 
         assertTwoEquals("cj, dj",
-                list0.dropWhile { !it.startsWith("c") }.joinToString(),
-                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("c") }))
+                normalList.dropWhile { !it.startsWith("c") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(normalList) { !it.startsWith("c") }))
 
         assertTwoEquals("dj",
-                list0.dropWhile { !it.startsWith("d") }.joinToString(),
-                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("d") }))
+                normalList.dropWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(normalList) { !it.startsWith("d") }))
 
         assertTwoEquals("",
-                list0.dropWhile { !it.startsWith("e") }.joinToString(),
-                Collectionx.joinToString(Collectionx.dropWhile(list1) { !it.startsWith("e") }))
+                normalList.dropWhile { !it.startsWith("e") }.joinToString(),
+                Collectionx.joinToString(Collectionx.dropWhile(normalList) { !it.startsWith("e") }))
 
 
         assertTwoEquals("dj",
-                list0.dropWhile { !it.startsWith("b") }.drop(2).joinToString(),
-                Collectionx.joinToString(Collectionx.drop(Collectionx.dropWhile(list1) { !it.startsWith("b") }, 2)))
+                normalList.dropWhile { !it.startsWith("b") }.drop(2).joinToString(),
+                Collectionx.joinToString(Collectionx.drop(Collectionx.dropWhile(normalList) { !it.startsWith("b") }, 2)))
     }
 
     @Test
     fun testTake() {
-        val list0 = listOf("aj", "bj", "cj", "dj")
-        val list1 = Collectionx.listOf("aj", "bj", "cj", "dj")
+        val normalList = listOf("aj", "bj", "cj", "dj")
 
         /*
          * take 系列的方法表示从列表头部开始取部分元素
@@ -625,81 +694,80 @@ class CollectionxTest {
         // take 方法的意思是从列表头部开始取多少个元素
 
         assertTwoThrow(IllegalArgumentException::class,
-                { list0.take(-1) },
-                { Collectionx.take(list1, -1) }
+                { normalList.take(-1) },
+                { Collectionx.take(normalList, -1) }
         )
 
-        assertTrue(emptyList<String>() === list0.take(0))
-        assertTrue(Collectionx.emptyList<String>() === Collectionx.take(list1, 0))
+        assertTrue(emptyList<String>() === normalList.take(0))
+        assertTrue(Collectionx.emptyList<String>() === Collectionx.take(normalList, 0))
 
         assertTwoEquals("aj",
-                list0.take(1).joinToString(),
-                Collectionx.joinToString(Collectionx.take(list1, 1)))
+                normalList.take(1).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalList, 1)))
 
         assertTwoEquals("aj, bj",
-                list0.take(2).joinToString(),
-                Collectionx.joinToString(Collectionx.take(list1, 2)))
+                normalList.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalList, 2)))
 
         assertTwoEquals("aj, bj, cj",
-                list0.take(3).joinToString(),
-                Collectionx.joinToString(Collectionx.take(list1, 3)))
+                normalList.take(3).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalList, 3)))
 
         assertTwoEquals("aj, bj, cj, dj",
-                list0.take(4).joinToString(),
-                Collectionx.joinToString(Collectionx.take(list1, 4)))
+                normalList.take(4).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalList, 4)))
 
         assertTwoEquals("aj, bj, cj, dj",
-                list0.take(5).joinToString(),
-                Collectionx.joinToString(Collectionx.take(list1, 5)))
+                normalList.take(5).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalList, 5)))
 
         assertTwoEquals("aj, bj, cj, dj",
-                list0.take(5).joinToString(),
-                Collectionx.joinToString(Collectionx.take(Collectionx.take(list1, 5), 5)))
+                normalList.take(5).joinToString(),
+                Collectionx.joinToString(Collectionx.take(Collectionx.take(normalList, 5), 5)))
 
         // takeWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
 
         assertTwoEquals("",
-                list0.takeWhile { !it.startsWith("a") }.joinToString(),
-                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("a") }))
+                normalList.takeWhile { !it.startsWith("a") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("a") }))
 
         assertTwoEquals("aj",
-                list0.takeWhile { !it.startsWith("b") }.joinToString(),
-                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("b") }))
+                normalList.takeWhile { !it.startsWith("b") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("b") }))
 
         assertTwoEquals("aj, bj",
-                list0.takeWhile { !it.startsWith("c") }.joinToString(),
-                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("c") }))
+                normalList.takeWhile { !it.startsWith("c") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("c") }))
 
         assertTwoEquals("aj, bj, cj",
-                list0.takeWhile { !it.startsWith("d") }.joinToString(),
-                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("d") }))
+                normalList.takeWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("d") }))
 
         assertTwoEquals("aj, bj, cj, dj",
-                list0.takeWhile { !it.startsWith("e") }.joinToString(),
-                Collectionx.joinToString(Collectionx.takeWhile(list1) { !it.startsWith("e") }))
+                normalList.takeWhile { !it.startsWith("e") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("e") }))
 
 
         assertTwoEquals("aj, bj",
-                list0.takeWhile { !it.startsWith("d") }.take(2).joinToString(),
-                Collectionx.joinToString(Collectionx.take(Collectionx.takeWhile(list1) { !it.startsWith("d") }, 2)))
+                normalList.takeWhile { !it.startsWith("d") }.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(Collectionx.takeWhile(normalList) { !it.startsWith("d") }, 2)))
     }
 
     @Test
     fun testFilter() {
-        val list0 = listOf("aj", "bo", "cj", "do")
-        val list1 = Collectionx.listOf("aj", "bo", "cj", "do")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bo", "cj", "do")
+        val nullList = null as List<String>?
 
         assertTwoEquals("aj, cj",
-                list0.filter { it.endsWith("j") }.joinToString(),
-                Collectionx.joinToString(Collectionx.filter(list1) { it.endsWith("j") }))
+                normalList.filter { it.endsWith("j") }.joinToString(),
+                Collectionx.joinToString(Collectionx.filter(normalList) { it.endsWith("j") }))
 
         val filterToDestination = java.util.ArrayList<String>()
         val filterToDestination1 = java.util.ArrayList<String>()
         val filterToDestinationNull1 = java.util.ArrayList<String>()
-        val filterToDestinationResult = list0.filterTo(filterToDestination) { it.endsWith("j") }
-        val filterToDestinationResult1 = Collectionx.filterTo(list1, filterToDestination1) { it.endsWith("j") }
-        val filterToDestinationNullResult1 = Collectionx.filterTo(nullList1, filterToDestinationNull1) { it.endsWith("j") }
+        val filterToDestinationResult = normalList.filterTo(filterToDestination) { it.endsWith("j") }
+        val filterToDestinationResult1 = Collectionx.filterTo(normalList, filterToDestination1) { it.endsWith("j") }
+        val filterToDestinationNullResult1 = Collectionx.filterTo(nullList, filterToDestinationNull1) { it.endsWith("j") }
         assertTwoEquals("aj, cj", filterToDestinationResult.joinToString(), filterToDestinationResult1.joinToString())
         assertTrue(filterToDestination === filterToDestinationResult)
         assertTrue(filterToDestination1 === filterToDestinationResult1)
@@ -707,16 +775,20 @@ class CollectionxTest {
         assertTrue(filterToDestinationNull1 === filterToDestinationNullResult1)
 
         assertTwoEquals("bo, do",
-                list0.filterIndexed { index, _ -> (index % 2) != 0 }.joinToString(),
-                Collectionx.joinToString(Collectionx.filterIndexed(list1) { index, _ -> (index % 2) != 0 }))
+                normalList.filterIndexed { index, _ -> (index % 2) != 0 }.joinToString(),
+                Collectionx.joinToString(Collectionx.filterIndexed(normalList) { index, _ -> (index % 2) != 0 }))
 
         val filterIndexedToDestination = java.util.ArrayList<String>()
         val filterIndexedToDestination1 = java.util.ArrayList<String>()
-        val filterIndexedToDestinationResult = list0.filterIndexedTo(filterIndexedToDestination) { index, _ -> (index % 2) != 0 }
-        val filterIndexedToDestinationResult1 = Collectionx.filterIndexedTo(list1, filterIndexedToDestination1) { index, _ -> (index % 2) != 0 }
+        val filterIndexedToDestinationNull1 = java.util.ArrayList<String>()
+        val filterIndexedToDestinationResult = normalList.filterIndexedTo(filterIndexedToDestination) { index, _ -> (index % 2) != 0 }
+        val filterIndexedToDestinationResult1 = Collectionx.filterIndexedTo(normalList, filterIndexedToDestination1) { index, _ -> (index % 2) != 0 }
+        val filterIndexedToDestinationNullResult1 = Collectionx.filterIndexedTo(nullList, filterIndexedToDestinationNull1) { index, _ -> (index % 2) != 0 }
         assertTwoEquals("bo, do", filterIndexedToDestinationResult.joinToString(), filterIndexedToDestinationResult1.joinToString())
         assertTrue(filterIndexedToDestination === filterIndexedToDestinationResult)
         assertTrue(filterIndexedToDestination1 === filterIndexedToDestinationResult1)
+        assertEquals("", filterIndexedToDestinationNullResult1.joinToString())
+        assertTrue(filterIndexedToDestinationNull1 === filterIndexedToDestinationNullResult1)
 
 
         val anyList0 = listOf(4, "f", 76, "gsdg")
@@ -734,7 +806,7 @@ class CollectionxTest {
         @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val filterIsInstanceToDestinationNull1 = arrayListOf<Integer>()
         val filterIsInstanceToDestinationResult = anyList0.filterIsInstanceTo(filterIsInstanceToDestination, Integer::class.java)
         val filterIsInstanceToDestinationResult1 = Collectionx.filterIsInstanceTo(anyList1, filterIsInstanceToDestination1, Integer::class.java)
-        val filterIsInstanceToDestinationNullResult1 = Collectionx.filterIsInstanceTo(nullList1, filterIsInstanceToDestinationNull1, Integer::class.java)
+        val filterIsInstanceToDestinationNullResult1 = Collectionx.filterIsInstanceTo(nullList, filterIsInstanceToDestinationNull1, Integer::class.java)
         assertTwoEquals("4, 76", filterIsInstanceToDestinationResult.joinToString(), filterIsInstanceToDestinationResult1.joinToString())
         assertTrue(filterIsInstanceToDestination === filterIsInstanceToDestinationResult)
         assertTrue(filterIsInstanceToDestination1 === filterIsInstanceToDestinationResult1)
@@ -742,15 +814,15 @@ class CollectionxTest {
         assertTrue(filterIsInstanceToDestinationNull1 === filterIsInstanceToDestinationNullResult1)
 
         assertTwoEquals("bo, do",
-                list0.filterNot { it.endsWith("j") }.joinToString(),
-                Collectionx.joinToString(Collectionx.filterNot(list1) { it.endsWith("j") }))
+                normalList.filterNot { it.endsWith("j") }.joinToString(),
+                Collectionx.joinToString(Collectionx.filterNot(normalList) { it.endsWith("j") }))
 
         val filterNotToDestination = java.util.ArrayList<String>()
         val filterNotToDestination1 = java.util.ArrayList<String>()
         val filterNotToDestinationNull1 = java.util.ArrayList<String>()
-        val filterNotToDestinationResult = list0.filterNotTo(filterNotToDestination) { it.endsWith("j") }
-        val filterNotToDestinationResult1 = Collectionx.filterNotTo(list1, filterNotToDestination1) { it.endsWith("j") }
-        val filterNotToDestinationNullResult1 = Collectionx.filterNotTo(nullList1, filterNotToDestinationNull1) { it.endsWith("j") }
+        val filterNotToDestinationResult = normalList.filterNotTo(filterNotToDestination) { it.endsWith("j") }
+        val filterNotToDestinationResult1 = Collectionx.filterNotTo(normalList, filterNotToDestination1) { it.endsWith("j") }
+        val filterNotToDestinationNullResult1 = Collectionx.filterNotTo(nullList, filterNotToDestinationNull1) { it.endsWith("j") }
         assertTwoEquals("bo, do", filterNotToDestinationResult.joinToString(), filterNotToDestinationResult1.joinToString())
         assertTrue(filterNotToDestination === filterNotToDestinationResult)
         assertTrue(filterNotToDestination1 === filterNotToDestinationResult1)
@@ -770,7 +842,7 @@ class CollectionxTest {
         val filterNotNullToDestinationNull1 = java.util.ArrayList<String>()
         val filterNotNullToDestinationResult = notNullList0.filterNotNullTo(filterNotNullToDestination)
         val filterNotNullToDestinationResult1 = Collectionx.filterNotNullTo(notNullList1, filterNotNullToDestination1)
-        val filterNotNullToDestinationNullResult1 = Collectionx.filterNotNullTo(nullList1, filterNotNullToDestinationNull1)
+        val filterNotNullToDestinationNullResult1 = Collectionx.filterNotNullTo(nullList, filterNotNullToDestinationNull1)
         assertTwoEquals("f, gsdg", filterNotNullToDestinationResult.joinToString(), filterNotNullToDestinationResult1.joinToString())
         assertTrue(filterNotNullToDestination === filterNotNullToDestinationResult)
         assertTrue(filterNotNullToDestination1 === filterNotNullToDestinationResult1)
@@ -780,74 +852,71 @@ class CollectionxTest {
 
     @Test
     fun testSort() {
-        val list0 = listOf("aaa", "h", "uuuu", "gg")
-        val list1 = Collectionx.listOf("aaa", "h", "uuuu", "gg")
-        val nullableList0 = listOf("aaa", null, null, "gg", null)
-        val nullableList1 = Collectionx.listOf<String>("aaa", null, null, "gg", null)
+        val normalList = listOf("aaa", "h", "uuuu", "gg")
+        val nullableList = Collectionx.listOf<String>("aaa", null, null, "gg", null)
 
         assertTwoEquals("aaa, gg, h, uuuu",
-                list0.sorted().joinToString(),
-                Collectionx.joinToString(Collectionx.sorted(list1)))
-        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sorted(nullableList1)) }
+                normalList.sorted().joinToString(),
+                Collectionx.joinToString(Collectionx.sorted(normalList)))
+        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sorted(nullableList)) }
 
         assertTwoEquals("uuuu, h, gg, aaa",
-                list0.sortedDescending().joinToString(),
-                Collectionx.joinToString(Collectionx.sortedDescending(list1)))
-        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sortedDescending(nullableList1)) }
+                normalList.sortedDescending().joinToString(),
+                Collectionx.joinToString(Collectionx.sortedDescending(normalList)))
+        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sortedDescending(nullableList)) }
 
         assertTwoEquals("h, gg, aaa, uuuu",
-                list0.sortedBy { it.length }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedBy(list1) { it.length }))
+                normalList.sortedBy { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedBy(normalList) { it.length }))
         assertTwoEquals("null, null, null, gg, aaa",
-                nullableList0.sortedBy { it?.length ?: 0 }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedBy(nullableList1) { it.length }))
+                nullableList.sortedBy { it?.length ?: 0 }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedBy(nullableList) { it.length }))
 
         assertTwoEquals("uuuu, aaa, gg, h",
-                list0.sortedByDescending { it.length }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedByDescending(list1) { it.length }))
+                normalList.sortedByDescending { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedByDescending(normalList) { it.length }))
         assertTwoEquals("aaa, gg, null, null, null",
-                nullableList0.sortedByDescending { it?.length ?: 0 }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedByDescending(nullableList1) { it.length }))
+                nullableList.sortedByDescending { it?.length ?: 0 }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedByDescending(nullableList) { it.length }))
 
         assertTwoEquals("aaa, gg, h, uuuu",
-                list0.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedWith(list1) { it1, it2 -> it1.compareTo(it2) }))
+                normalList.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(normalList) { it1, it2 -> it1.compareTo(it2) }))
         assertTwoEquals("null, null, null, aaa, gg",
-                nullableList0.sortedWith { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedWith(nullableList1) { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }))
+                nullableList.sortedWith { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(nullableList) { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }))
     }
 
     @Test
     @Suppress("ReplaceAssociateFunction")
     fun testAssociate() {
-        val list0 = listOf("aj", "bj", "ao", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "ao", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "ao", "bo")
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                list0.associate { it.first().toString() to it },
-                Collectionx.associate(list1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) },
+                normalList.associate { it.first().toString() to it },
+                Collectionx.associate(normalList) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) },
         )
 
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                list0.associateBy { it.first().toString() },
-                Collectionx.associateBy(list1) { it.first().toString() },
+                normalList.associateBy { it.first().toString() },
+                Collectionx.associateBy(normalList) { it.first().toString() },
         )
 
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
-                list0.associateBy({ it.first().toString() }, { it }),
-                Collectionx.associateBy(list1, { it.first().toString() }, { it }),
+                normalList.associateBy({ it.first().toString() }, { it }),
+                Collectionx.associateBy(normalList, { it.first().toString() }, { it }),
         )
 
         val associateToMap0 = HashMap<String, String>()
         val associateToMap1 = HashMap<String, String>()
         val associateToMapNull1 = HashMap<String, String>()
-        val associateToMapResult0 = list0.associateTo(associateToMap0) { it.first().toString() to it }
-        val associateToMapResult1 = Collectionx.associateTo(list1, associateToMap1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
-        val associateToMapResultNull1 = Collectionx.associateTo(nullList1, associateToMapNull1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
+        val associateToMapResult0 = normalList.associateTo(associateToMap0) { it.first().toString() to it }
+        val associateToMapResult1 = Collectionx.associateTo(normalList, associateToMap1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
+        val associateToMapResultNull1 = Collectionx.associateTo(nullList, associateToMapNull1) { com.github.panpf.tools4j.common.Pair.of(it.first().toString(), it) }
         assertTwoEquals(mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"), associateToMap0, associateToMap1)
         assertTrue(associateToMap0 === associateToMapResult0)
         assertTrue(associateToMap1 === associateToMapResult1)
@@ -857,9 +926,9 @@ class CollectionxTest {
         val associateByTo1Map0 = HashMap<String, String>()
         val associateByTo1Map1 = HashMap<String, String>()
         val associateByTo1MapNull1 = HashMap<String, String>()
-        val associateByTo1MapResult0 = list0.associateByTo(associateByTo1Map0) { it.first().toString() }
-        val associateByTo1MapResult1 = Collectionx.associateByTo(list1, associateByTo1Map1) { it.first().toString() }
-        val associateByTo1MapResultNull1 = Collectionx.associateByTo(nullList1, associateByTo1MapNull1) { it.first().toString() }
+        val associateByTo1MapResult0 = normalList.associateByTo(associateByTo1Map0) { it.first().toString() }
+        val associateByTo1MapResult1 = Collectionx.associateByTo(normalList, associateByTo1Map1) { it.first().toString() }
+        val associateByTo1MapResultNull1 = Collectionx.associateByTo(nullList, associateByTo1MapNull1) { it.first().toString() }
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
                 associateByTo1Map0, associateByTo1Map1,
@@ -872,9 +941,9 @@ class CollectionxTest {
         val associateByTo2Map0 = HashMap<String, String>()
         val associateByTo2Map1 = HashMap<String, String>()
         val associateByTo2MapNull1 = HashMap<String, String>()
-        val associateByTo2MapResult0 = list0.associateByTo(associateByTo2Map0, { it.first().toString() }, { it })
-        val associateByTo2MapResult1 = Collectionx.associateByTo(list1, associateByTo2Map1, { it.first().toString() }, { it })
-        val associateByTo2MapResultNull1 = Collectionx.associateByTo(nullList1, associateByTo2MapNull1, { it.first().toString() }, { it })
+        val associateByTo2MapResult0 = normalList.associateByTo(associateByTo2Map0, { it.first().toString() }, { it })
+        val associateByTo2MapResult1 = Collectionx.associateByTo(normalList, associateByTo2Map1, { it.first().toString() }, { it })
+        val associateByTo2MapResultNull1 = Collectionx.associateByTo(nullList, associateByTo2MapNull1, { it.first().toString() }, { it })
         assertTwoEquals(
                 mapOf("a" to "aj", "b" to "bj", "a" to "ao", "b" to "bo"),
                 associateByTo2Map0, associateByTo2Map1,
@@ -887,23 +956,22 @@ class CollectionxTest {
 
     @Test
     fun testFlatMap() {
-        val list0 = listOf("aj", "bj", "ao", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "ao", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "ao", "bo")
+        val nullList = null as List<String>?
 
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "a, j, b, j, a, o, b, o",
-                list0.flatMap { it -> it.toCharArray().map { it.toString() } }.joinToString(),
-                Collectionx.joinToString(Collectionx.flatMap(list1) { it -> it.toCharArray().map { it.toString() } }),
+                normalList.flatMap { it -> it.toCharArray().map { it.toString() } }.joinToString(),
+                Collectionx.joinToString(Collectionx.flatMap(normalList) { it -> it.toCharArray().map { it.toString() } }),
         )
 
         val flatMapToList0 = ArrayList<String>()
         val flatMapToList1 = ArrayList<String>()
         val flatMapToListNull1 = ArrayList<String>()
-        val flatMapToListResult0 = list0.flatMapTo(flatMapToList0) { it -> it.toCharArray().map { it.toString() } }
-        val flatMapToListResult1 = Collectionx.flatMapTo(list1, flatMapToList1) { it -> it.toCharArray().map { it.toString() } }
-        val flatMapToListResultNull1 = Collectionx.flatMapTo(nullList1, flatMapToListNull1) { it -> it.toCharArray().map { it.toString() } }
+        val flatMapToListResult0 = normalList.flatMapTo(flatMapToList0) { it -> it.toCharArray().map { it.toString() } }
+        val flatMapToListResult1 = Collectionx.flatMapTo(normalList, flatMapToList1) { it -> it.toCharArray().map { it.toString() } }
+        val flatMapToListResultNull1 = Collectionx.flatMapTo(nullList, flatMapToListNull1) { it -> it.toCharArray().map { it.toString() } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "a, j, b, j, a, o, b, o",
@@ -924,16 +992,16 @@ class CollectionxTest {
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
-                list0.flatMapIndexed { index, it -> it.toCharArray().map { "${index}-$it" } }.joinToString(),
-                Collectionx.joinToString(Collectionx.flatMapIndexed(list1) { index, it -> it.toCharArray().map { "${index}-$it" } }),
+                normalList.flatMapIndexed { index, it -> it.toCharArray().map { "${index}-$it" } }.joinToString(),
+                Collectionx.joinToString(Collectionx.flatMapIndexed(normalList) { index, it -> it.toCharArray().map { "${index}-$it" } }),
         )
 
         val flatMapIndexedToList0 = ArrayList<String>()
         val flatMapIndexedToList1 = ArrayList<String>()
         val flatMapIndexedToListNull1 = ArrayList<String>()
-        val flatMapIndexedToListResult0 = list0.flatMapIndexedTo(flatMapIndexedToList0) { index, it -> it.toCharArray().map { "${index}-$it" } }
-        val flatMapIndexedToListResult1 = Collectionx.flatMapIndexedTo(list1, flatMapIndexedToList1) { index, it -> it.toCharArray().map { "${index}-$it" } }
-        val flatMapIndexedToListResultNull1 = Collectionx.flatMapIndexedTo(nullList1, flatMapIndexedToListNull1) { index, it -> it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToListResult0 = normalList.flatMapIndexedTo(flatMapIndexedToList0) { index, it -> it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToListResult1 = Collectionx.flatMapIndexedTo(normalList, flatMapIndexedToList1) { index, it -> it.toCharArray().map { "${index}-$it" } }
+        val flatMapIndexedToListResultNull1 = Collectionx.flatMapIndexedTo(nullList, flatMapIndexedToListNull1) { index, it -> it.toCharArray().map { "${index}-$it" } }
         @Suppress("USELESS_IS_CHECK")
         assertTwoEquals(
                 "0-a, 0-j, 1-b, 1-j, 2-a, 2-o, 3-b, 3-o",
@@ -954,28 +1022,27 @@ class CollectionxTest {
 
     @Test
     fun testGroup() {
-        val list0 = listOf("aj", "bj", "ao", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "ao", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "ao", "bo")
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 "{a=[aj, ao], b=[bj, bo]}",
-                list0.groupBy { it.first() }.toString(),
-                Collectionx.groupBy(list1) { it.first() }.toString(),
+                normalList.groupBy { it.first() }.toString(),
+                Collectionx.groupBy(normalList) { it.first() }.toString(),
         )
 
         assertTwoEquals(
                 "{a=[j, o], b=[j, o]}",
-                list0.groupBy({ it.first() }, { it.last() }).toString(),
-                Collectionx.groupBy(list1, { it.first() }, { it.last() }).toString(),
+                normalList.groupBy({ it.first() }, { it.last() }).toString(),
+                Collectionx.groupBy(normalList, { it.first() }, { it.last() }).toString(),
         )
 
         val groupByToMap0 = HashMap<Char, MutableList<String>>()
         val groupByToMap1 = HashMap<Char, List<String>>()
         val groupByToMapNull1 = HashMap<Char, List<String>>()
-        val groupByToMapResult0 = list0.groupByTo(groupByToMap0) { it.first() }
-        val groupByToMapResult1 = Collectionx.groupByTo(list1, groupByToMap1) { it.first() }
-        val groupByToMapResultNull1 = Collectionx.groupByTo(nullList1, groupByToMapNull1) { it.first() }
+        val groupByToMapResult0 = normalList.groupByTo(groupByToMap0) { it.first() }
+        val groupByToMapResult1 = Collectionx.groupByTo(normalList, groupByToMap1) { it.first() }
+        val groupByToMapResultNull1 = Collectionx.groupByTo(nullList, groupByToMapNull1) { it.first() }
         assertTwoEquals("{a=[aj, ao], b=[bj, bo]}", groupByToMap0.toString(), groupByToMap1.toString())
         assertTrue(groupByToMap0 === groupByToMapResult0)
         assertTrue(groupByToMap1 === groupByToMapResult1)
@@ -985,9 +1052,9 @@ class CollectionxTest {
         val groupByToMap2 = HashMap<Char, MutableList<Char>>()
         val groupByToMap3 = HashMap<Char, List<Char>>()
         val groupByToMapNull3 = HashMap<Char, List<Char>>()
-        val groupByToMapResult2 = list0.groupByTo(groupByToMap2, { it.first() }, { it.last() })
-        val groupByToMapResult3 = Collectionx.groupByTo(list1, groupByToMap3, { it.first() }, { it.last() })
-        val groupByToMapResultNull3 = Collectionx.groupByTo(nullList1, groupByToMapNull3, { it.first() }, { it.last() })
+        val groupByToMapResult2 = normalList.groupByTo(groupByToMap2, { it.first() }, { it.last() })
+        val groupByToMapResult3 = Collectionx.groupByTo(normalList, groupByToMap3, { it.first() }, { it.last() })
+        val groupByToMapResultNull3 = Collectionx.groupByTo(nullList, groupByToMapNull3, { it.first() }, { it.last() })
         assertTwoEquals("{a=[j, o], b=[j, o]}", groupByToMap2.toString(), groupByToMap3.toString())
         assertTrue(groupByToMap2 === groupByToMapResult2)
         assertTrue(groupByToMap3 === groupByToMapResult3)
@@ -997,40 +1064,39 @@ class CollectionxTest {
 
     @Test
     fun testMap() {
-        val list0 = listOf("aj", "bj", "ao", "cc", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "ao", "cc", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "ao", "cc", "bo")
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 "a, b, a, c, b",
-                list0.map { it.first() }.joinToString(),
-                Collectionx.joinToString(Collectionx.map(list1) { it.first() }),
+                normalList.map { it.first() }.joinToString(),
+                Collectionx.joinToString(Collectionx.map(normalList) { it.first() }),
         )
 
         assertTwoEquals(
                 "a, b, a, b",
-                list0.mapNotNull { if (it != "cc") it.first() else null }.joinToString(),
-                Collectionx.joinToString(Collectionx.mapNotNull(list1) { if (it != "cc") it.first() else null }),
+                normalList.mapNotNull { if (it != "cc") it.first() else null }.joinToString(),
+                Collectionx.joinToString(Collectionx.mapNotNull(normalList) { if (it != "cc") it.first() else null }),
         )
 
         assertTwoEquals(
                 "0:a, 1:b, 2:a, 3:c, 4:b",
-                list0.mapIndexed { index, s -> "$index:${s.first()}" }.joinToString(),
-                Collectionx.joinToString(Collectionx.mapIndexed(list1) { index, s -> "$index:${s.first()}" }),
+                normalList.mapIndexed { index, s -> "$index:${s.first()}" }.joinToString(),
+                Collectionx.joinToString(Collectionx.mapIndexed(normalList) { index, s -> "$index:${s.first()}" }),
         )
 
         assertTwoEquals(
                 "0:a, 1:b, 2:a, 4:b",
-                list0.mapIndexedNotNull { index, s -> if (s != "cc") "$index:${s.first()}" else null }.joinToString(),
-                Collectionx.joinToString(Collectionx.mapIndexedNotNull(list1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }),
+                normalList.mapIndexedNotNull { index, s -> if (s != "cc") "$index:${s.first()}" else null }.joinToString(),
+                Collectionx.joinToString(Collectionx.mapIndexedNotNull(normalList) { index, s -> if (s != "cc") "$index:${s.first()}" else null }),
         )
 
         val mapToList0 = ArrayList<Char>()
         val mapToList1 = ArrayList<Char>()
         val mapToListNull1 = ArrayList<Char>()
-        val mapToListResult0 = list0.mapTo(mapToList0) { it.first() }
-        val mapToListResult1 = Collectionx.mapTo(list1, mapToList1) { it.first() }
-        val mapToListResultNull1 = Collectionx.mapTo(nullList1, mapToListNull1) { it.first() }
+        val mapToListResult0 = normalList.mapTo(mapToList0) { it.first() }
+        val mapToListResult1 = Collectionx.mapTo(normalList, mapToList1) { it.first() }
+        val mapToListResultNull1 = Collectionx.mapTo(nullList, mapToListNull1) { it.first() }
         assertTwoEquals(
                 "[a, b, a, c, b]",
                 mapToList0.toString(),
@@ -1044,9 +1110,9 @@ class CollectionxTest {
         val mapNotNullToList0 = ArrayList<Char>()
         val mapNotNullToList1 = ArrayList<Char>()
         val mapNotNullToListNull1 = ArrayList<Char>()
-        val mapNotNullToListResult0 = list0.mapNotNullTo(mapNotNullToList0) { if (it != "cc") it.first() else null }
-        val mapNotNullToListResult1 = Collectionx.mapNotNullTo(list1, mapNotNullToList1) { if (it != "cc") it.first() else null }
-        val mapNotNullToListResultNull1 = Collectionx.mapNotNullTo(nullList1, mapNotNullToListNull1) { if (it != "cc") it.first() else null }
+        val mapNotNullToListResult0 = normalList.mapNotNullTo(mapNotNullToList0) { if (it != "cc") it.first() else null }
+        val mapNotNullToListResult1 = Collectionx.mapNotNullTo(normalList, mapNotNullToList1) { if (it != "cc") it.first() else null }
+        val mapNotNullToListResultNull1 = Collectionx.mapNotNullTo(nullList, mapNotNullToListNull1) { if (it != "cc") it.first() else null }
         assertTwoEquals(
                 "[a, b, a, b]",
                 mapNotNullToList0.toString(),
@@ -1063,9 +1129,9 @@ class CollectionxTest {
         val mapIndexedToList0 = ArrayList<String>()
         val mapIndexedToList1 = ArrayList<String>()
         val mapIndexedToListNull1 = ArrayList<String>()
-        val mapIndexedToListResult0 = list0.mapIndexedTo(mapIndexedToList0) { index, s -> "$index:${s.first()}" }
-        val mapIndexedToListResult1 = Collectionx.mapIndexedTo(list1, mapIndexedToList1) { index, s -> "$index:${s.first()}" }
-        val mapIndexedToListResultNull1 = Collectionx.mapIndexedTo(nullList1, mapIndexedToListNull1) { index, s -> "$index:${s.first()}" }
+        val mapIndexedToListResult0 = normalList.mapIndexedTo(mapIndexedToList0) { index, s -> "$index:${s.first()}" }
+        val mapIndexedToListResult1 = Collectionx.mapIndexedTo(normalList, mapIndexedToList1) { index, s -> "$index:${s.first()}" }
+        val mapIndexedToListResultNull1 = Collectionx.mapIndexedTo(nullList, mapIndexedToListNull1) { index, s -> "$index:${s.first()}" }
         assertTwoEquals(
                 "[0:a, 1:b, 2:a, 3:c, 4:b]",
                 mapIndexedToList0.toString(),
@@ -1079,9 +1145,9 @@ class CollectionxTest {
         val mapIndexedNotNullToList0 = ArrayList<String>()
         val mapIndexedNotNullToList1 = ArrayList<String>()
         val mapIndexedNotNullToListNull1 = ArrayList<String>()
-        val mapIndexedNotNullToListResult0 = list0.mapIndexedNotNullTo(mapIndexedNotNullToList0) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
-        val mapIndexedNotNullToListResult1 = Collectionx.mapIndexedNotNullTo(list1, mapIndexedNotNullToList1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
-        val mapIndexedNotNullToListResultNull1 = Collectionx.mapIndexedNotNullTo(nullList1, mapIndexedNotNullToListNull1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        val mapIndexedNotNullToListResult0 = normalList.mapIndexedNotNullTo(mapIndexedNotNullToList0) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        val mapIndexedNotNullToListResult1 = Collectionx.mapIndexedNotNullTo(normalList, mapIndexedNotNullToList1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
+        val mapIndexedNotNullToListResultNull1 = Collectionx.mapIndexedNotNullTo(nullList, mapIndexedNotNullToListNull1) { index, s -> if (s != "cc") "$index:${s.first()}" else null }
         assertTwoEquals(
                 "[0:a, 1:b, 2:a, 4:b]",
                 mapIndexedNotNullToList0.toString(),
@@ -1095,181 +1161,166 @@ class CollectionxTest {
 
     @Test
     fun testWithIndex() {
-        val list0 = listOf("aj", "bj", "ao", "cc", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "ao", "cc", "bo")
+        val normalList = listOf("aj", "bj", "ao", "cc", "bo")
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 "0:aj, 1:bj, 2:ao, 3:cc, 4:bo",
-                list0.withIndex().joinToString { "${it.index}:${it.value}" },
-                Collectionx.joinToString(Collectionx.withIndex(list1)) { "${it.index}:${it.value}" },
+                normalList.withIndex().joinToString { "${it.index}:${it.value}" },
+                Collectionx.joinToString(Collectionx.withIndex(normalList)) { "${it.index}:${it.value}" },
         )
 
-        val iterator0 = list0.withIndex().iterator()
+        assertEquals("", Collectionx.joinToString(Collectionx.withIndex(nullList)) { "${it.index}:${it.value}" })
+
+        val iterator0 = normalList.withIndex().iterator()
         if (iterator0 is MutableIterator) {
             assertThrow(UnsupportedOperationException::class) { iterator0.remove() }
         }
-        assertThrow(IllegalStateException::class) { Collectionx.withIndex(list1).iterator().remove() }
+        assertThrow(IllegalStateException::class) { Collectionx.withIndex(normalList).iterator().remove() }
     }
 
     @Test
     fun testDistinct() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
 
         assertTwoEquals(
                 "aj, bj, bo",
-                list0.distinct().joinToString(),
-                Collectionx.joinToString(Collectionx.distinct(list1)),
+                normalList.distinct().joinToString(),
+                Collectionx.joinToString(Collectionx.distinct(normalList)),
         )
 
         assertTwoEquals(
                 "aj, bo",
-                list0.distinctBy { it.last() }.joinToString(),
-                Collectionx.joinToString(Collectionx.distinctBy(list1) { it.last() }),
+                normalList.distinctBy { it.last() }.joinToString(),
+                Collectionx.joinToString(Collectionx.distinctBy(normalList) { it.last() }),
         )
     }
 
     @Test
     fun testAll() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 true,
-                list0.all { it -> it.all { it.isLetter() } },
-                Collectionx.all(list1) { it -> it.all { it.isLetter() } },
+                normalList.all { it -> it.all { it.isLetter() } },
+                Collectionx.all(normalList) { it -> it.all { it.isLetter() } },
         )
 
         assertTwoEquals(
                 true,
-                emptyList0.all { it -> it.all { it.isLetter() } },
-                Collectionx.all(emptyList1) { it -> it.all { it.isLetter() } },
+                emptyList.all { it -> it.all { it.isLetter() } },
+                Collectionx.all(emptyList) { it -> it.all { it.isLetter() } },
         )
 
-        assertTrue(Collectionx.all(nullList1) { it.last() == 'j' })
+        assertTrue(Collectionx.all(nullList) { it.last() == 'j' })
 
         assertTwoEquals(
                 false,
-                list0.all { it.last() == 'j' },
-                Collectionx.all(list1) { it.last() == 'j' },
+                normalList.all { it.last() == 'j' },
+                Collectionx.all(normalList) { it.last() == 'j' },
         )
     }
 
     @Test
     fun testAny() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
 
-        assertTwoEquals(true, list0.any(), Collectionx.any(list1))
-        assertTwoEquals(false, emptyList0.any(), Collectionx.any(emptyList1))
-        assertFalse(Collectionx.any(nullList1))
+        assertTwoEquals(true, normalList.any(), Collectionx.any(normalList))
+        assertTwoEquals(false, emptyList.any(), Collectionx.any(emptyList))
+        assertFalse(Collectionx.any(nullList))
         assertTwoEquals(
                 false,
                 listOf<String>().any(),
                 Collectionx.any(Collectionx.listOf<String>()),
         )
 
-        assertTwoEquals(true, list0.any { it.last() == 'j' }, Collectionx.any(list1) { it.last() == 'j' })
-        assertTwoEquals(false, emptyList0.any { it.last() == 'j' }, Collectionx.any(emptyList1) { it.last() == 'j' })
-        assertFalse(Collectionx.any(nullList1) { it -> it.all { it.isDigit() } })
+        assertTwoEquals(true, normalList.any { it.last() == 'j' }, Collectionx.any(normalList) { it.last() == 'j' })
+        assertTwoEquals(false, emptyList.any { it.last() == 'j' }, Collectionx.any(emptyList) { it.last() == 'j' })
+        assertFalse(Collectionx.any(nullList) { it -> it.all { it.isDigit() } })
         assertTwoEquals(
                 false,
-                list0.any { it -> it.all { it.isDigit() } },
-                Collectionx.any(list1) { it -> it.all { it.isDigit() } }
+                normalList.any { it -> it.all { it.isDigit() } },
+                Collectionx.any(normalList) { it -> it.all { it.isDigit() } }
         )
     }
 
     @Test
     fun testCount() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val iterable0 = object : Iterable<String> {
+            override fun iterator(): Iterator<String> {
+                return normalList.iterator()
+            }
+        }
+        val emptyList = listOf<String>()
+        val emptyIterable0 = object : Iterable<String> {
+            override fun iterator(): Iterator<String> {
+                return emptyList.iterator()
+            }
+        }
+        val nullList = null as List<String>?
 
-        assertTwoEquals(
-                5,
-                list0.count(),
-                Collectionx.count(list1),
-        )
+        assertTwoEquals(5, (normalList as Iterable<String>).count(), Collectionx.count(normalList as Iterable<String>))
+        assertTwoEquals(5, iterable0.count(), Collectionx.count(iterable0))
+        assertTwoEquals(0, (emptyList as Iterable<String>).count(), Collectionx.count(emptyList as Iterable<String>))
+        assertEquals(0, Collectionx.count(nullList as Iterable<String>?))
 
-        assertTwoEquals(
-                0,
-                listOf<String>().count(),
-                Collectionx.count(Collectionx.listOf<String>()),
-        )
+        assertTwoEquals(4, normalList.count { it.last() == 'j' }, Collectionx.count(normalList) { it.last() == 'j' })
+        assertTwoEquals(4, iterable0.count { it.last() == 'j' }, Collectionx.count(iterable0) { it.last() == 'j' })
+        assertTwoEquals(0, emptyList.count { it.last() == 'j' }, Collectionx.count(emptyList) { it.last() == 'j' })
+        assertTwoEquals(0, emptyIterable0.count { it.last() == 'j' }, Collectionx.count(emptyIterable0) { it.last() == 'j' })
+        assertEquals(0, Collectionx.count(nullList) { it.last() == 'j' })
 
-        assertTwoEquals(
-                0,
-                (null as Iterable<String>?)?.count() ?: 0,
-                Collectionx.count(null as List<String>?),
-        )
-
-        assertTwoEquals(
-                4,
-                list0.count { it.last() == 'j' },
-                Collectionx.count(list1) { it.last() == 'j' },
-        )
-
-        assertTwoEquals(
-                0,
-                listOf<String>().count { it.last() == 'j' },
-                Collectionx.count(Collectionx.listOf<String>()) { it.last() == 'j' },
-        )
-
-        assertTwoEquals(
-                0,
-                (null as Iterable<String>?)?.count { it.last() == 'j' } ?: 0,
-                Collectionx.count(null as List<String>?) { it.last() == 'j' },
-        )
+        assertTwoEquals(5, normalList.count(), Collectionx.count(normalList))
+        assertTwoEquals(0, emptyList.count(), Collectionx.count(emptyList))
+        assertEquals(0, Collectionx.count(nullList))
     }
 
     @Test
     fun testFold() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
-        val nullList1 = null as List<String>?
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val nullList = null as List<String>?
 
         assertTwoEquals(
                 "^ajbjajbjbo",
-                list0.fold("^") { r, t -> r + t },
-                Collectionx.fold(list1, "^") { r, t -> r + t },
+                normalList.fold("^") { r, t -> r + t },
+                Collectionx.fold(normalList, "^") { r, t -> r + t },
         )
         assertEquals(
                 "^",
-                Collectionx.fold(nullList1, "^") { r, t -> r + t },
+                Collectionx.fold(nullList, "^") { r, t -> r + t },
         )
 
         assertTwoEquals(
                 "^0aj1bj2aj3bj4bo",
-                list0.foldIndexed("^") { i, r, t -> r + i.toString() + t },
-                Collectionx.foldIndexed(list1, "^") { i, r, t -> r + i.toString() + t },
+                normalList.foldIndexed("^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldIndexed(normalList, "^") { i, r, t -> r + i.toString() + t },
         )
         assertEquals(
                 "^",
-                Collectionx.foldIndexed(nullList1, "^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldIndexed(nullList, "^") { i, r, t -> r + i.toString() + t },
         )
     }
 
     @Test
     fun testEach() {
-        val list0 = listOf("aj", "bj", "aj", "bj", "bo")
-        val list1 = Collectionx.listOf("aj", "bj", "aj", "bj", "bo")
+        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
 
         assertTwoEquals("aj, bj, aj, bj, bo",
-                ArrayList<String>().apply { list0.forEach { add(it) } }.joinToString(),
-                ArrayList<String>().apply { Collectionx.forEach(list1) { add(it) } }.joinToString())
+                ArrayList<String>().apply { normalList.forEach { add(it) } }.joinToString(),
+                ArrayList<String>().apply { Collectionx.forEach(normalList) { add(it) } }.joinToString())
 
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().forEach { add(it) } }.joinToString(),
                 ArrayList<String>().apply { Collectionx.forEach(null as List<String>?) { add(it) } }.joinToString())
 
         assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
-                ArrayList<String>().apply { list0.forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
-                ArrayList<String>().apply { Collectionx.forEachIndexed(list1) { i, it -> add(i.toString() + it) } }.joinToString())
+                ArrayList<String>().apply { normalList.forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
+                ArrayList<String>().apply { Collectionx.forEachIndexed(normalList) { i, it -> add(i.toString() + it) } }.joinToString())
 
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
@@ -1277,16 +1328,16 @@ class CollectionxTest {
 
 
         assertTwoEquals("aj, bj, aj, bj, bo",
-                ArrayList<String>().apply { list0.onEach { add(it) }.toList() }.joinToString(),
-                ArrayList<String>().apply { Collectionx.onEach(list1) { add(it) } }.joinToString())
+                ArrayList<String>().apply { normalList.onEach { add(it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Collectionx.onEach(normalList) { add(it) } }.joinToString())
 
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().onEach { add(it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Collectionx.onEach(null as List<String>?) { add(it) } }.joinToString())
 
         assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
-                ArrayList<String>().apply { list0.onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
-                ArrayList<String>().apply { Collectionx.onEachIndexed(list1) { i, it -> add(i.toString() + it) } }.joinToString())
+                ArrayList<String>().apply { normalList.onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
+                ArrayList<String>().apply { Collectionx.onEachIndexed(normalList) { i, it -> add(i.toString() + it) } }.joinToString())
 
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
@@ -1326,78 +1377,76 @@ class CollectionxTest {
         assertTwoEquals(null, emptyFloatList0.maxOrNull(), Collectionx.maxFloatOrNull(emptyFloatList1))
         assertTwoEquals(null, null, Collectionx.maxFloatOrNull(nullFloatList1))
 
-        val list0 = listOf("6", "3", "7", "2", "1")
-        val list1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
-        assertTwoEquals("7", list0.maxOrNull(), Collectionx.maxOrNull(list1))
-        assertTwoEquals(null, emptyList0.maxOrNull(), Collectionx.maxOrNull(emptyList1))
-        assertTwoEquals(null, null, Collectionx.maxOrNull(nullList0))
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
+        assertTwoEquals("7", normalList.maxOrNull(), Collectionx.maxOrNull(normalList))
+        assertTwoEquals(null, emptyList.maxOrNull(), Collectionx.maxOrNull(emptyList))
+        assertTwoEquals(null, null, Collectionx.maxOrNull(nullList))
 
-        assertTwoEquals("7", list0.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(list1) { it.toInt() })
-        assertTwoEquals(null, emptyList0.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(emptyList1) { it.toInt() })
-        assertTwoEquals(null, null, Collectionx.maxByOrNull(nullList0) { it.toInt() })
+        assertTwoEquals("7", normalList.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(normalList) { it.toInt() })
+        assertTwoEquals(null, emptyList.maxByOrNull { it.toInt() }, Collectionx.maxByOrNull(emptyList) { it.toInt() })
+        assertTwoEquals(null, null, Collectionx.maxByOrNull(nullList) { it.toInt() })
 
         assertTwoEquals("1",
-                list0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
-                Collectionx.maxWithOrNull(list1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                normalList.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.maxWithOrNull(normalList) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
-                emptyList0.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
-                Collectionx.maxWithOrNull(emptyList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                emptyList.maxWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.maxWithOrNull(emptyList) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
                 null,
-                Collectionx.maxWithOrNull(nullList0) { it0, it1 -> it0.compareTo(it1) * -1 })
+                Collectionx.maxWithOrNull(nullList) { it0, it1 -> it0.compareTo(it1) * -1 })
 
         assertTwoEquals(7.0,
-                list0.maxOf { it.toDouble() },
-                Collectionx.maxOfDouble(list1) { it.toDouble() })
+                normalList.maxOf { it.toDouble() },
+                Collectionx.maxOfDouble(normalList) { it.toDouble() })
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.maxOf { it.toDouble() } },
-                { Collectionx.maxOfDouble(emptyList1) { it.toDouble() } })
-        assertThrow(NoSuchElementException::class) { Collectionx.maxOfDouble(nullList0) { it.toDouble() } }
+                { emptyList.maxOf { it.toDouble() } },
+                { Collectionx.maxOfDouble(emptyList) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfDouble(nullList) { it.toDouble() } }
 
         assertTwoEquals(7.0f,
-                list0.maxOf { it.toFloat() },
-                Collectionx.maxOfFloat(list1) { it.toFloat() })
+                normalList.maxOf { it.toFloat() },
+                Collectionx.maxOfFloat(normalList) { it.toFloat() })
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.maxOf { it.toFloat() } },
-                { Collectionx.maxOfFloat(emptyList1) { it.toFloat() } })
-        assertThrow(NoSuchElementException::class) { Collectionx.maxOfFloat(nullList0) { it.toFloat() } }
+                { emptyList.maxOf { it.toFloat() } },
+                { Collectionx.maxOfFloat(emptyList) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfFloat(nullList) { it.toFloat() } }
 
-        assertTwoEquals(7.0, list0.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(list1) { it.toDouble() })
-        assertTwoEquals(null, emptyList0.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(emptyList1) { it.toDouble() })
-        assertTwoEquals(null, null, Collectionx.maxOfDoubleOrNull(nullList0) { it.toDouble() })
+        assertTwoEquals(7.0, normalList.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(normalList) { it.toDouble() })
+        assertTwoEquals(null, emptyList.maxOfOrNull { it.toDouble() }, Collectionx.maxOfDoubleOrNull(emptyList) { it.toDouble() })
+        assertTwoEquals(null, null, Collectionx.maxOfDoubleOrNull(nullList) { it.toDouble() })
 
-        assertTwoEquals(7.0f, list0.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(list1) { it.toFloat() })
-        assertTwoEquals(null, emptyList0.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(emptyList1) { it.toFloat() })
-        assertTwoEquals(null, null, Collectionx.maxOfFloatOrNull(nullList0) { it.toFloat() })
+        assertTwoEquals(7.0f, normalList.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(normalList) { it.toFloat() })
+        assertTwoEquals(null, emptyList.maxOfOrNull { it.toFloat() }, Collectionx.maxOfFloatOrNull(emptyList) { it.toFloat() })
+        assertTwoEquals(null, null, Collectionx.maxOfFloatOrNull(nullList) { it.toFloat() })
 
-        assertTwoEquals("7", list0.maxOf { it }, Collectionx.maxOf(list1) { it })
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.maxOf { it } }, { Collectionx.maxOf(emptyList1) { it } })
-        assertThrow(NoSuchElementException::class) { Collectionx.maxOf(nullList0) { it } }
+        assertTwoEquals("7", normalList.maxOf { it }, Collectionx.maxOf(normalList) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptyList.maxOf { it } }, { Collectionx.maxOf(emptyList) { it } })
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOf(nullList) { it } }
 
-        assertTwoEquals("7", list0.maxOfOrNull { it }, Collectionx.maxOfOrNull(list1) { it })
-        assertTwoEquals(null, emptyList0.maxOfOrNull { it }, Collectionx.maxOfOrNull(emptyList1) { it })
-        assertTwoEquals(null, null, Collectionx.maxOfOrNull(nullList0) { it })
+        assertTwoEquals("7", normalList.maxOfOrNull { it }, Collectionx.maxOfOrNull(normalList) { it })
+        assertTwoEquals(null, emptyList.maxOfOrNull { it }, Collectionx.maxOfOrNull(emptyList) { it })
+        assertTwoEquals(null, null, Collectionx.maxOfOrNull(nullList) { it })
 
         assertTwoEquals("1",
-                list0.maxOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.maxOfWith(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+                normalList.maxOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWith(normalList, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.maxOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
-                { Collectionx.maxOfWith(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+                { emptyList.maxOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Collectionx.maxOfWith(emptyList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
         )
-        assertThrow(NoSuchElementException::class) { Collectionx.maxOfWith(nullList0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        assertThrow(NoSuchElementException::class) { Collectionx.maxOfWith(nullList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
 
         assertTwoEquals("1",
-                list0.maxOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.maxOfWithOrNull(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+                normalList.maxOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWithOrNull(normalList, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
         assertTwoEquals(null,
-                emptyList0.maxOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.maxOfWithOrNull(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+                emptyList.maxOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.maxOfWithOrNull(emptyList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
         )
-        assertTwoEquals(null, null, Collectionx.maxOfWithOrNull(nullList0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null, null, Collectionx.maxOfWithOrNull(nullList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 
     @Test
@@ -1433,138 +1482,130 @@ class CollectionxTest {
         assertTwoEquals(null, emptyFloatList0.minOrNull(), Collectionx.minFloatOrNull(emptyFloatList1))
         assertTwoEquals(null, null, Collectionx.minFloatOrNull(nullFloatList1))
 
-        val list0 = listOf("6", "3", "7", "2", "1")
-        val list1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
-        assertTwoEquals("1", list0.minOrNull(), Collectionx.minOrNull(list1))
-        assertTwoEquals(null, emptyList0.minOrNull(), Collectionx.minOrNull(emptyList1))
-        assertTwoEquals(null, null, Collectionx.minOrNull(nullList0))
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
+        assertTwoEquals("1", normalList.minOrNull(), Collectionx.minOrNull(normalList))
+        assertTwoEquals(null, emptyList.minOrNull(), Collectionx.minOrNull(emptyList))
+        assertTwoEquals(null, null, Collectionx.minOrNull(nullList))
 
-        assertTwoEquals("1", list0.minByOrNull { it.toInt() }, Collectionx.minByOrNull(list1) { it.toInt() })
-        assertTwoEquals(null, emptyList0.minByOrNull { it.toInt() }, Collectionx.minByOrNull(emptyList1) { it.toInt() })
-        assertTwoEquals(null, null, Collectionx.minByOrNull(nullList0) { it.toInt() })
+        assertTwoEquals("1", normalList.minByOrNull { it.toInt() }, Collectionx.minByOrNull(normalList) { it.toInt() })
+        assertTwoEquals(null, emptyList.minByOrNull { it.toInt() }, Collectionx.minByOrNull(emptyList) { it.toInt() })
+        assertTwoEquals(null, null, Collectionx.minByOrNull(nullList) { it.toInt() })
 
         assertTwoEquals("7",
-                list0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
-                Collectionx.minWithOrNull(list1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                normalList.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.minWithOrNull(normalList) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
-                emptyList0.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
-                Collectionx.minWithOrNull(emptyList1) { it0, it1 -> it0.compareTo(it1) * -1 })
+                emptyList.minWithOrNull { it0, it1 -> it0.compareTo(it1) * -1 },
+                Collectionx.minWithOrNull(emptyList) { it0, it1 -> it0.compareTo(it1) * -1 })
         assertTwoEquals(null,
                 null,
-                Collectionx.minWithOrNull(nullList0) { it0, it1 -> it0.compareTo(it1) * -1 })
+                Collectionx.minWithOrNull(nullList) { it0, it1 -> it0.compareTo(it1) * -1 })
 
         assertTwoEquals(1.0,
-                list0.minOf { it.toDouble() },
-                Collectionx.minOfDouble(list1) { it.toDouble() })
+                normalList.minOf { it.toDouble() },
+                Collectionx.minOfDouble(normalList) { it.toDouble() })
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.minOf { it.toDouble() } },
-                { Collectionx.minOfDouble(emptyList1) { it.toDouble() } })
-        assertThrow(NoSuchElementException::class) { Collectionx.minOfDouble(nullList0) { it.toDouble() } }
+                { emptyList.minOf { it.toDouble() } },
+                { Collectionx.minOfDouble(emptyList) { it.toDouble() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfDouble(nullList) { it.toDouble() } }
 
         assertTwoEquals(1.0f,
-                list0.minOf { it.toFloat() },
-                Collectionx.minOfFloat(list1) { it.toFloat() })
+                normalList.minOf { it.toFloat() },
+                Collectionx.minOfFloat(normalList) { it.toFloat() })
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.minOf { it.toFloat() } },
-                { Collectionx.minOfFloat(emptyList1) { it.toFloat() } })
-        assertThrow(NoSuchElementException::class) { Collectionx.minOfFloat(nullList0) { it.toFloat() } }
+                { emptyList.minOf { it.toFloat() } },
+                { Collectionx.minOfFloat(emptyList) { it.toFloat() } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfFloat(nullList) { it.toFloat() } }
 
-        assertTwoEquals(1.0, list0.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(list1) { it.toDouble() })
-        assertTwoEquals(null, emptyList0.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(emptyList1) { it.toDouble() })
-        assertTwoEquals(null, null, Collectionx.minOfDoubleOrNull(nullList0) { it.toDouble() })
+        assertTwoEquals(1.0, normalList.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(normalList) { it.toDouble() })
+        assertTwoEquals(null, emptyList.minOfOrNull { it.toDouble() }, Collectionx.minOfDoubleOrNull(emptyList) { it.toDouble() })
+        assertTwoEquals(null, null, Collectionx.minOfDoubleOrNull(nullList) { it.toDouble() })
 
-        assertTwoEquals(1.0f, list0.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(list1) { it.toFloat() })
-        assertTwoEquals(null, emptyList0.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(emptyList1) { it.toFloat() })
-        assertTwoEquals(null, null, Collectionx.minOfFloatOrNull(nullList0) { it.toFloat() })
+        assertTwoEquals(1.0f, normalList.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(normalList) { it.toFloat() })
+        assertTwoEquals(null, emptyList.minOfOrNull { it.toFloat() }, Collectionx.minOfFloatOrNull(emptyList) { it.toFloat() })
+        assertTwoEquals(null, null, Collectionx.minOfFloatOrNull(nullList) { it.toFloat() })
 
-        assertTwoEquals("1", list0.minOf { it }, Collectionx.minOf(list1) { it })
-        assertTwoThrow(NoSuchElementException::class, { emptyList0.minOf { it } }, { Collectionx.minOf(emptyList1) { it } })
-        assertThrow(NoSuchElementException::class) { Collectionx.minOf(nullList0) { it } }
+        assertTwoEquals("1", normalList.minOf { it }, Collectionx.minOf(normalList) { it })
+        assertTwoThrow(NoSuchElementException::class, { emptyList.minOf { it } }, { Collectionx.minOf(emptyList) { it } })
+        assertThrow(NoSuchElementException::class) { Collectionx.minOf(nullList) { it } }
 
-        assertTwoEquals("1", list0.minOfOrNull { it }, Collectionx.minOfOrNull(list1) { it })
-        assertTwoEquals(null, emptyList0.minOfOrNull { it }, Collectionx.minOfOrNull(emptyList1) { it })
-        assertTwoEquals(null, null, Collectionx.minOfOrNull(nullList0) { it })
+        assertTwoEquals("1", normalList.minOfOrNull { it }, Collectionx.minOfOrNull(normalList) { it })
+        assertTwoEquals(null, emptyList.minOfOrNull { it }, Collectionx.minOfOrNull(emptyList) { it })
+        assertTwoEquals(null, null, Collectionx.minOfOrNull(nullList) { it })
 
         assertTwoEquals("7",
-                list0.minOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.minOfWith(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+                normalList.minOfWith({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWith(normalList, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
         assertTwoThrow(NoSuchElementException::class,
-                { emptyList0.minOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
-                { Collectionx.minOfWith(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+                { emptyList.minOfWith(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) },
+                { Collectionx.minOfWith(emptyList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
         )
-        assertThrow(NoSuchElementException::class) { Collectionx.minOfWith(nullList0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
+        assertThrow(NoSuchElementException::class) { Collectionx.minOfWith(nullList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }) }
 
         assertTwoEquals("7",
-                list0.minOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.minOfWithOrNull(list1, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+                normalList.minOfWithOrNull({ it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWithOrNull(normalList, { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
         assertTwoEquals(null,
-                emptyList0.minOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
-                Collectionx.minOfWithOrNull(emptyList1, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
+                emptyList.minOfWithOrNull(Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }),
+                Collectionx.minOfWithOrNull(emptyList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it })
         )
-        assertTwoEquals(null, null, Collectionx.minOfWithOrNull(nullList0, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
+        assertTwoEquals(null, null, Collectionx.minOfWithOrNull(nullList, Comparator<String> { it0, it1 -> it0.compareTo(it1) * -1 }, { it }))
     }
 
     @Test
     fun testNone() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
-        assertTwoEquals(false, normalList0.none(), Collectionx.none(normalList1))
-        assertTwoEquals(true, emptyList0.none(), Collectionx.none(emptyList1))
-        assertTrue(Collectionx.none(nullList0))
+        assertTwoEquals(false, normalList.none(), Collectionx.none(normalList))
+        assertTwoEquals(true, emptyList.none(), Collectionx.none(emptyList))
+        assertTrue(Collectionx.none(nullList))
 
-        assertTwoEquals(true, normalList0.none { it.length > 1 }, Collectionx.none(normalList1) { it.length > 1 })
-        assertTwoEquals(false, normalList0.none { it.isNotEmpty() }, Collectionx.none(normalList1) { it.isNotEmpty() })
-        assertTwoEquals(true, emptyList0.none { it.length > 1 }, Collectionx.none(emptyList1) { it.length > 1 })
-        assertTrue(Collectionx.none(nullList0) { it.length > 1 })
+        assertTwoEquals(true, normalList.none { it.length > 1 }, Collectionx.none(normalList) { it.length > 1 })
+        assertTwoEquals(false, normalList.none { it.isNotEmpty() }, Collectionx.none(normalList) { it.isNotEmpty() })
+        assertTwoEquals(true, emptyList.none { it.length > 1 }, Collectionx.none(emptyList) { it.length > 1 })
+        assertTrue(Collectionx.none(nullList) { it.length > 1 })
     }
 
     @Test
     fun testReduce() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("63721",
-                normalList0.reduce { it0, it1 -> it0 + it1 },
-                Collectionx.reduce(normalList1) { it0, it1 -> it0 + it1 })
+                normalList.reduce { it0, it1 -> it0 + it1 },
+                Collectionx.reduce(normalList) { it0, it1 -> it0 + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
-                { emptyList0.reduce { it0, it1 -> it0 + it1 } },
-                { Collectionx.reduce(emptyList1) { it0, it1 -> it0 + it1 } })
+                { emptyList.reduce { it0, it1 -> it0 + it1 } },
+                { Collectionx.reduce(emptyList) { it0, it1 -> it0 + it1 } })
         assertThrow(UnsupportedOperationException::class)
-        { Collectionx.reduce(nullList0) { it0, it1 -> it0 + it1 } }
+        { Collectionx.reduce(nullList) { it0, it1 -> it0 + it1 } }
 
         assertTwoEquals("613273241",
-                normalList0.reduceIndexed { i, it0, it1 -> it0 + i + it1 },
-                Collectionx.reduceIndexed(normalList1) { i, it0, it1 -> it0 + i + it1 })
+                normalList.reduceIndexed { i, it0, it1 -> it0 + i + it1 },
+                Collectionx.reduceIndexed(normalList) { i, it0, it1 -> it0 + i + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
-                { emptyList0.reduceIndexed { i, it0, it1 -> it0 + i + it1 } },
-                { Collectionx.reduceIndexed(emptyList1) { i, it0, it1 -> it0 + i + it1 } })
+                { emptyList.reduceIndexed { i, it0, it1 -> it0 + i + it1 } },
+                { Collectionx.reduceIndexed(emptyList) { i, it0, it1 -> it0 + i + it1 } })
         assertThrow(UnsupportedOperationException::class)
-        { Collectionx.reduceIndexed(nullList0) { i, it0, it1 -> it0 + i + it1 } }
+        { Collectionx.reduceIndexed(nullList) { i, it0, it1 -> it0 + i + it1 } }
     }
 
     @Test
     fun testSum() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
-        assertTwoEquals(19, normalList0.sumBy { it.toInt() }, Collectionx.sumBy(normalList1) { it.toInt() })
-        assertTwoEquals(0, emptyList0.sumBy { it.toInt() }, Collectionx.sumBy(emptyList1) { it.toInt() })
-        assertEquals(0, Collectionx.sumBy(nullList0) { it.toInt() })
-        assertTwoEquals(19.0, normalList0.sumByDouble { it.toDouble() }, Collectionx.sumByDouble(normalList1) { it.toDouble() })
-        assertTwoEquals(0.0, emptyList0.sumByDouble { it.toDouble() }, Collectionx.sumByDouble(emptyList1) { it.toDouble() })
-        assertTwoEquals(0.0, 0.0, Collectionx.sumByDouble(nullList0) { it.toDouble() })
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
+        assertTwoEquals(19, normalList.sumBy { it.toInt() }, Collectionx.sumBy(normalList) { it.toInt() })
+        assertTwoEquals(0, emptyList.sumBy { it.toInt() }, Collectionx.sumBy(emptyList) { it.toInt() })
+        assertEquals(0, Collectionx.sumBy(nullList) { it.toInt() })
+        assertTwoEquals(19.0, normalList.sumByDouble { it.toDouble() }, Collectionx.sumByDouble(normalList) { it.toDouble() })
+        assertTwoEquals(0.0, emptyList.sumByDouble { it.toDouble() }, Collectionx.sumByDouble(emptyList) { it.toDouble() })
+        assertTwoEquals(0.0, 0.0, Collectionx.sumByDouble(nullList) { it.toDouble() })
 
         val normalByteList0 = listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
         val normalByteList1 = Collectionx.listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
@@ -1623,197 +1664,200 @@ class CollectionxTest {
 
     @Test
     fun testRequireNoNulls() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val nullableList0 = listOf("6", null, "7", "2", null)
-        val nullableList1 = Collectionx.listOf("6", null, "7", "2", null)
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val normalIterable = normalList as Iterable<String?>
+        val nullableList = listOf("6", null, "7", "2", null)
+        val nullableIterable = nullableList as Iterable<String?>
+        val emptyList = listOf<String>()
+        val emptyIterable = emptyList as Iterable<String?>
+        val nullList: List<String?>? = null
+        val nullIterable: Iterable<String?>? = null
 
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.requireNoNulls().joinToString(),
-                Collectionx.joinToString(Collectionx.requireNoNulls(normalList1)))
+                normalIterable.requireNoNulls().joinToString(),
+                Collectionx.joinToString(Collectionx.requireNoNulls(normalIterable)))
         assertTwoThrow(IllegalArgumentException::class,
-                { nullableList0.requireNoNulls().joinToString() },
-                { Collectionx.joinToString(Collectionx.requireNoNulls(nullableList1)) })
+                { nullableIterable.requireNoNulls().joinToString() },
+                { Collectionx.joinToString(Collectionx.requireNoNulls(nullableIterable)) })
         assertTwoEquals("",
-                emptyList0.requireNoNulls().joinToString(),
-                Collectionx.joinToString(Collectionx.requireNoNulls(emptyList1)))
-        assertEquals("", Collectionx.joinToString(Collectionx.requireNoNulls(nullList0)))
+                emptyIterable.requireNoNulls().joinToString(),
+                Collectionx.joinToString(Collectionx.requireNoNulls(emptyIterable)))
+        assertEquals("", Collectionx.joinToString(Collectionx.requireNoNulls(nullIterable)))
+
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalList.requireNoNulls().joinToString(),
+                Collectionx.joinToString(Collectionx.requireNoNulls(normalList)))
+        assertTwoThrow(IllegalArgumentException::class,
+                { nullableList.requireNoNulls().joinToString() },
+                { Collectionx.joinToString(Collectionx.requireNoNulls(nullableList)) })
+        assertTwoEquals("",
+                emptyList.requireNoNulls().joinToString(),
+                Collectionx.joinToString(Collectionx.requireNoNulls(emptyList)))
+        assertEquals("", Collectionx.joinToString(Collectionx.requireNoNulls(nullList)))
     }
 
     @Test
     fun testMinus() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("6, 7, 2, 1",
-                normalList0.minus("3").joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, "3")))
+                normalList.minus("3").joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, "3")))
         assertTwoEquals("",
-                emptyList0.minus("3").joinToString(),
-                Collectionx.joinToString(Collectionx.minus(emptyList1, "3")))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, "3")))
+                emptyList.minus("3").joinToString(),
+                Collectionx.joinToString(Collectionx.minus(emptyList, "3")))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, "3")))
 
         assertTwoEquals("6, 7, 2",
-                normalList0.minus(arrayOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, arrayOf("3", "1"))))
+                normalList.minus(arrayOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, arrayOf("3", "1"))))
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.minus(arrayOf()).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, arrayOf<String>())))
+                normalList.minus(arrayOf()).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, arrayOf<String>())))
         assertTwoEquals("",
-                emptyList0.minus(arrayOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(emptyList1, arrayOf("3", "1"))))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, arrayOf("3", "1"))))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, arrayOf<String>())))
+                emptyList.minus(arrayOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(emptyList, arrayOf("3", "1"))))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, arrayOf("3", "1"))))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, arrayOf<String>())))
 
         assertTwoEquals("6, 7, 2",
-                normalList0.minus(listOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, listOf("3", "1"))))
+                normalList.minus(listOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, listOf("3", "1"))))
         assertTwoEquals("6, 7, 2",
-                normalList0.minus(setOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, setOf("3", "1"))))
+                normalList.minus(setOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, setOf("3", "1"))))
         assertTwoEquals("6, 7, 2",
-                normalList0.minus(arrayListOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, arrayListOf("3", "1"))))
+                normalList.minus(arrayListOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, arrayListOf("3", "1"))))
         assertTwoEquals("6, 7",
-                normalList0.minus(arrayListOf("3", "1", "2")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, arrayListOf("3", "1", "2"))))
+                normalList.minus(arrayListOf("3", "1", "2")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, arrayListOf("3", "1", "2"))))
         assertTwoEquals("6, 7",
-                normalList0.minus(listOf("3", "1", "2")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, listOf("3", "1", "2"))))
+                normalList.minus(listOf("3", "1", "2")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, listOf("3", "1", "2"))))
         assertTwoEquals("6, 7",
-                normalList0.minus(com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it }).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it })))
+                normalList.minus(com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it }).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, com.github.panpf.tools4j.iterable.TransformingIterable(listOf("3", "1", "2")) { it })))
         assertTwoEquals("",
-                emptyList0.minus(listOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(emptyList1, listOf("3", "1"))))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, listOf("3", "1"))))
+                emptyList.minus(listOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(emptyList, listOf("3", "1"))))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, listOf("3", "1"))))
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.minus(listOf()).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, listOf<String>())))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, listOf<String>())))
+                normalList.minus(listOf()).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, listOf<String>())))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, listOf<String>())))
 
         assertTwoEquals("6, 7, 2",
-                normalList0.minus(listOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, Collectionx.listOf("3", "1"))))
+                normalList.minus(listOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, Collectionx.listOf("3", "1"))))
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.minus(listOf()).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(normalList1, Collectionx.listOf())))
+                normalList.minus(listOf()).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(normalList, Collectionx.listOf())))
         assertTwoEquals("",
-                emptyList0.minus(listOf("3", "1")).joinToString(),
-                Collectionx.joinToString(Collectionx.minus(emptyList1, Collectionx.listOf("3", "1"))))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, Collectionx.listOf("3", "1"))))
-        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList0, Collectionx.listOf())))
+                emptyList.minus(listOf("3", "1")).joinToString(),
+                Collectionx.joinToString(Collectionx.minus(emptyList, Collectionx.listOf("3", "1"))))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, Collectionx.listOf("3", "1"))))
+        assertEquals("", Collectionx.joinToString(Collectionx.minus(nullList, Collectionx.listOf())))
 
         assertTwoEquals("6, 7, 2, 1",
-                normalList0.minusElement("3").joinToString(),
-                Collectionx.joinToString(Collectionx.minusElement(normalList1, "3")))
+                normalList.minusElement("3").joinToString(),
+                Collectionx.joinToString(Collectionx.minusElement(normalList, "3")))
         assertTwoEquals("",
-                emptyList0.minusElement("3").joinToString(),
-                Collectionx.joinToString(Collectionx.minusElement(emptyList1, "3")))
-        assertEquals("", Collectionx.joinToString(Collectionx.minusElement(nullList0, "3")))
+                emptyList.minusElement("3").joinToString(),
+                Collectionx.joinToString(Collectionx.minusElement(emptyList, "3")))
+        assertEquals("", Collectionx.joinToString(Collectionx.minusElement(nullList, "3")))
     }
 
     @Test
     fun testPartition() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("([6, 2], [3, 7, 1])",
-                normalList0.partition { it.toInt() % 2 == 0 }.toString(),
-                Collectionx.partition(normalList1) { it.toInt() % 2 == 0 }.toString())
+                normalList.partition { it.toInt() % 2 == 0 }.toString(),
+                Collectionx.partition(normalList) { it.toInt() % 2 == 0 }.toString())
         assertTwoEquals("([], [])",
-                emptyList0.partition { it.toInt() % 2 == 0 }.toString(),
-                Collectionx.partition(emptyList1) { it.toInt() % 2 == 0 }.toString())
-        assertEquals("([], [])", Collectionx.partition(nullList0) { it.toInt() % 2 == 0 }.toString())
+                emptyList.partition { it.toInt() % 2 == 0 }.toString(),
+                Collectionx.partition(emptyList) { it.toInt() % 2 == 0 }.toString())
+        assertEquals("([], [])", Collectionx.partition(nullList) { it.toInt() % 2 == 0 }.toString())
     }
 
     @Test
     fun testPlus() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("6, 3, 7, 2, 1, 9",
-                normalList0.plus("9").joinToString(),
-                Collectionx.joinToString(Collectionx.plus(normalList1, "9")))
+                normalList.plus("9").joinToString(),
+                Collectionx.joinToString(Collectionx.plus(normalList, "9")))
         assertTwoEquals("9",
-                emptyList0.plus("9").joinToString(),
-                Collectionx.joinToString(Collectionx.plus(emptyList1, "9")))
-        assertEquals("9", Collectionx.joinToString(Collectionx.plus(nullList0, "9")))
+                emptyList.plus("9").joinToString(),
+                Collectionx.joinToString(Collectionx.plus(emptyList, "9")))
+        assertEquals("9", Collectionx.joinToString(Collectionx.plus(nullList, "9")))
 
         assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
-                normalList0.plus(arrayOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(normalList1, arrayOf("9", "4"))))
+                normalList.plus(arrayOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(normalList, arrayOf("9", "4"))))
         assertTwoEquals("9, 4",
-                emptyList0.plus(arrayOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(emptyList1, arrayOf("9", "4"))))
-        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList0, arrayOf("9", "4"))))
+                emptyList.plus(arrayOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(emptyList, arrayOf("9", "4"))))
+        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList, arrayOf("9", "4"))))
 
         assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
-                normalList0.plus(listOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(normalList1, listOf("9", "4"))))
+                normalList.plus(listOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(normalList, listOf("9", "4"))))
         assertTwoEquals("9, 4",
-                emptyList0.plus(listOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(emptyList1, listOf("9", "4"))))
-        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList0, listOf("9", "4"))))
+                emptyList.plus(listOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(emptyList, listOf("9", "4"))))
+        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList, listOf("9", "4"))))
 
         assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
-                normalList0.plus(listOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(normalList1, Collectionx.listOf("9", "4"))))
+                normalList.plus(listOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(normalList, Collectionx.listOf("9", "4"))))
         assertTwoEquals("9, 4",
-                emptyList0.plus(listOf("9", "4")).joinToString(),
-                Collectionx.joinToString(Collectionx.plus(emptyList1, Collectionx.listOf("9", "4"))))
-        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList0, Collectionx.listOf("9", "4"))))
+                emptyList.plus(listOf("9", "4")).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(emptyList, Collectionx.listOf("9", "4"))))
+        assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList, Collectionx.listOf("9", "4"))))
 
         assertTwoEquals("6, 3, 7, 2, 1, 9",
-                normalList0.plusElement("9").joinToString(),
-                Collectionx.joinToString(Collectionx.plusElement(normalList1, "9")))
+                normalList.plusElement("9").joinToString(),
+                Collectionx.joinToString(Collectionx.plusElement(normalList, "9")))
         assertTwoEquals("9",
-                emptyList0.plusElement("9").joinToString(),
-                Collectionx.joinToString(Collectionx.plusElement(emptyList1, "9")))
-        assertEquals("9", Collectionx.joinToString(Collectionx.plusElement(nullList0, "9")))
+                emptyList.plusElement("9").joinToString(),
+                Collectionx.joinToString(Collectionx.plusElement(emptyList, "9")))
+        assertEquals("9", Collectionx.joinToString(Collectionx.plusElement(nullList, "9")))
     }
 
     @Test
     fun testZip() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList00 = listOf("4", "9", "5")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val normalList11 = Collectionx.listOf("4", "9", "5")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val normalList1 = listOf("4", "9", "5")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("(6, 4), (3, 9), (7, 5)",
-                normalList0.zip(normalList00).joinToString(),
-                Collectionx.joinToString(Collectionx.zip(normalList1, normalList11)))
+                normalList.zip(normalList1).joinToString(),
+                Collectionx.joinToString(Collectionx.zip(normalList, normalList1)))
         assertTwoEquals("",
-                emptyList0.zip(normalList00).joinToString(),
-                Collectionx.joinToString(Collectionx.zip(emptyList1, normalList11)))
-        assertEquals("", Collectionx.joinToString(Collectionx.zip(nullList0, normalList11)))
+                emptyList.zip(normalList1).joinToString(),
+                Collectionx.joinToString(Collectionx.zip(emptyList, normalList1)))
+        assertEquals("", Collectionx.joinToString(Collectionx.zip(nullList, normalList1)))
 
         assertTwoEquals("64, 39, 75",
-                normalList0.zip(normalList00) { it0, it1 -> it0 + it1 }.joinToString(),
-                Collectionx.joinToString(Collectionx.zip(normalList1, normalList11) { it0, it1 -> it0 + it1 }))
+                normalList.zip(normalList1) { it0, it1 -> it0 + it1 }.joinToString(),
+                Collectionx.joinToString(Collectionx.zip(normalList, normalList1) { it0, it1 -> it0 + it1 }))
         assertTwoEquals("",
-                emptyList0.zip(normalList00) { it0, it1 -> it0 + it1 }.joinToString(),
-                Collectionx.joinToString(Collectionx.zip(emptyList1, normalList11) { it0, it1 -> it0 + it1 }))
-        assertEquals("", Collectionx.joinToString(Collectionx.zip(nullList0, normalList11) { it0, it1 -> it0 + it1 }))
+                emptyList.zip(normalList1) { it0, it1 -> it0 + it1 }.joinToString(),
+                Collectionx.joinToString(Collectionx.zip(emptyList, normalList1) { it0, it1 -> it0 + it1 }))
+        assertEquals("", Collectionx.joinToString(Collectionx.zip(nullList, normalList1) { it0, it1 -> it0 + it1 }))
 
         assertTwoEquals("([6, 3, 7], [4, 9, 5])",
-                normalList0.zip(normalList00).unzip().toString(),
-                Collectionx.unzip(Collectionx.zip(normalList1, normalList11)).toString())
+                normalList.zip(normalList1).unzip().toString(),
+                Collectionx.unzip(Collectionx.zip(normalList, normalList1)).toString())
         assertTwoEquals("([], [])",
                 listOf<Pair<String, String>>().unzip().toString(),
                 Collectionx.unzip(Collectionx.listOf<com.github.panpf.tools4j.common.Pair<String, String>>()).toString())
@@ -1822,154 +1866,152 @@ class CollectionxTest {
 
     @Test
     fun testJoinTo() {
-        val normalList0 = listOf("6", "3", "7", "2", "1")
-        val normalList1 = Collectionx.listOf("6", "3", "7", "2", "1")
-        val emptyList0 = listOf<String>()
-        val emptyList1 = Collectionx.listOf<String>()
-        val nullList0: List<String>? = null
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
         assertTwoEquals("^60:30:70:20:***$",
-                normalList0.joinTo(buffer = StringBuilder(), separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), ":", "^", "$", 4, "***", { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), ":", "^", "$", 4, "***", { it + "0" }).toString())
         assertTwoEquals("^60, 30, 70, 20, ***$",
-                normalList0.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, "^", "$", 4, "***", { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, "^", "$", 4, "***", { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, ***$",
-                normalList0.joinTo(buffer = StringBuilder(), postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, "$", 4, "***", { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, "$", 4, "***", { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, ***",
-                normalList0.joinTo(buffer = StringBuilder(), limit = 4, truncated = "***", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, null, 4, "***", { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), limit = 4, truncated = "***", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, null, 4, "***", { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, ...",
-                normalList0.joinTo(buffer = StringBuilder(), limit = 4, transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, null, 4, null, { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), limit = 4, transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, null, 4, null, { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, 10",
-                normalList0.joinTo(buffer = StringBuilder(), limit = 5, transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, null, 5, null, { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), limit = 5, transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, null, 5, null, { it + "0" }).toString())
         assertTwoEquals("60, 30, 70, 20, 10",
-                normalList0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, null, -1, null, { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, null, -1, null, { it + "0" }).toString())
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.joinTo(buffer = StringBuilder()).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), null, null, null, -1, null, null).toString())
+                normalList.joinTo(buffer = StringBuilder()).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), null, null, null, -1, null, null).toString())
         assertTwoEquals("^$",
-                emptyList0.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$").toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder(), null, "^", "$", -1, null, null).toString())
+                emptyList.joinTo(buffer = StringBuilder(), prefix = "^", postfix = "$").toString(),
+                Collectionx.joinTo(emptyList, StringBuilder(), null, "^", "$", -1, null, null).toString())
         assertTwoEquals("",
-                emptyList0.joinTo(buffer = StringBuilder()).toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder(), null, null, null, -1, null, null).toString())
+                emptyList.joinTo(buffer = StringBuilder()).toString(),
+                Collectionx.joinTo(emptyList, StringBuilder(), null, null, null, -1, null, null).toString())
         assertEquals("^$",
-                Collectionx.joinTo(nullList0, StringBuilder(), null, "^", "$", -1, null, null).toString())
+                Collectionx.joinTo(nullList, StringBuilder(), null, "^", "$", -1, null, null).toString())
         assertEquals("",
-                Collectionx.joinTo(nullList0, StringBuilder(), null, null, null, -1, null, null).toString())
+                Collectionx.joinTo(nullList, StringBuilder(), null, null, null, -1, null, null).toString())
 
         assertTwoEquals("60,30,70,20,10",
-                normalList0.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), ",", { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), ",", { it + "0" }).toString())
         assertTwoEquals("",
-                emptyList0.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder(), ",", { it + "0" }).toString())
+                emptyList.joinTo(buffer = StringBuilder(), separator = ",", transform = { it + "0" }).toString(),
+                Collectionx.joinTo(emptyList, StringBuilder(), ",", { it + "0" }).toString())
         assertEquals("",
-                Collectionx.joinTo(nullList0, StringBuilder(), ",", { it + "0" }).toString())
+                Collectionx.joinTo(nullList, StringBuilder(), ",", { it + "0" }).toString())
 
         assertTwoEquals("60, 30, 70, 20, 10",
-                normalList0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), { it + "0" }).toString())
+                normalList.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), { it + "0" }).toString())
         assertTwoEquals("",
-                emptyList0.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder(), { it + "0" }).toString())
+                emptyList.joinTo(buffer = StringBuilder(), transform = { it + "0" }).toString(),
+                Collectionx.joinTo(emptyList, StringBuilder(), { it + "0" }).toString())
         assertEquals("",
-                Collectionx.joinTo(nullList0, StringBuilder(), { it + "0" }).toString())
+                Collectionx.joinTo(nullList, StringBuilder(), { it + "0" }).toString())
 
         assertTwoEquals("6,3,7,2,1",
-                normalList0.joinTo(buffer = StringBuilder(), separator = ",").toString(),
-                Collectionx.joinTo(normalList1, StringBuilder(), ",").toString())
+                normalList.joinTo(buffer = StringBuilder(), separator = ",").toString(),
+                Collectionx.joinTo(normalList, StringBuilder(), ",").toString())
         assertTwoEquals("",
-                emptyList0.joinTo(buffer = StringBuilder(), separator = ",").toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder(), ",").toString())
+                emptyList.joinTo(buffer = StringBuilder(), separator = ",").toString(),
+                Collectionx.joinTo(emptyList, StringBuilder(), ",").toString())
         assertEquals("",
-                Collectionx.joinTo(nullList0, StringBuilder(), ",").toString())
+                Collectionx.joinTo(nullList, StringBuilder(), ",").toString())
 
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.joinTo(buffer = StringBuilder()).toString(),
-                Collectionx.joinTo(normalList1, StringBuilder()).toString())
+                normalList.joinTo(buffer = StringBuilder()).toString(),
+                Collectionx.joinTo(normalList, StringBuilder()).toString())
         assertTwoEquals("",
-                emptyList0.joinTo(buffer = StringBuilder()).toString(),
-                Collectionx.joinTo(emptyList1, StringBuilder()).toString())
+                emptyList.joinTo(buffer = StringBuilder()).toString(),
+                Collectionx.joinTo(emptyList, StringBuilder()).toString())
         assertEquals("",
-                Collectionx.joinTo(nullList0, StringBuilder()).toString())
+                Collectionx.joinTo(nullList, StringBuilder()).toString())
 
-        assertThrow(IOException::class) { emptyList0.joinTo(buffer = ExceptionAppendable()).toString() }
-        assertThrow(RuntimeException::class) { Collectionx.joinTo(emptyList1, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
+        assertThrow(IOException::class) { emptyList.joinTo(buffer = ExceptionAppendable()).toString() }
+        assertThrow(RuntimeException::class) { Collectionx.joinTo(emptyList, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
 
 
         assertTwoEquals("^60:30:70:20:***$",
-                normalList0.joinToString(separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, ":", "^", "$", 4, "***") { it + "0" })
+                normalList.joinToString(separator = ":", prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Collectionx.joinToString(normalList, ":", "^", "$", 4, "***") { it + "0" })
         assertTwoEquals("^60, 30, 70, 20, ***$",
-                normalList0.joinToString(prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, null, "^", "$", 4, "***") { it + "0" })
+                normalList.joinToString(prefix = "^", postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Collectionx.joinToString(normalList, null, "^", "$", 4, "***") { it + "0" })
         assertTwoEquals("60, 30, 70, 20, ***$",
-                normalList0.joinToString(postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, null, null, "$", 4, "***") { it + "0" })
+                normalList.joinToString(postfix = "$", limit = 4, truncated = "***", transform = { it + "0" }),
+                Collectionx.joinToString(normalList, null, null, "$", 4, "***") { it + "0" })
         assertTwoEquals("60, 30, 70, 20, ***",
-                normalList0.joinToString(limit = 4, truncated = "***", transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, null, null, null, 4, "***") { it + "0" })
+                normalList.joinToString(limit = 4, truncated = "***", transform = { it + "0" }),
+                Collectionx.joinToString(normalList, null, null, null, 4, "***") { it + "0" })
         assertTwoEquals("60, 30, 70, 20, ...",
-                normalList0.joinToString(limit = 4, transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, null, null, null, 4, null) { it + "0" })
+                normalList.joinToString(limit = 4, transform = { it + "0" }),
+                Collectionx.joinToString(normalList, null, null, null, 4, null) { it + "0" })
         assertTwoEquals("60, 30, 70, 20, 10",
-                normalList0.joinToString(transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, null, null, null, -1, null) { it + "0" })
+                normalList.joinToString(transform = { it + "0" }),
+                Collectionx.joinToString(normalList, null, null, null, -1, null) { it + "0" })
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.joinToString(),
-                Collectionx.joinToString(normalList1, null, null, null, -1, null, null))
+                normalList.joinToString(),
+                Collectionx.joinToString(normalList, null, null, null, -1, null, null))
         assertTwoEquals("^$",
-                emptyList0.joinToString(prefix = "^", postfix = "$"),
-                Collectionx.joinToString(emptyList1, null, "^", "$", -1, null, null))
+                emptyList.joinToString(prefix = "^", postfix = "$"),
+                Collectionx.joinToString(emptyList, null, "^", "$", -1, null, null))
         assertTwoEquals("",
-                emptyList0.joinToString(),
-                Collectionx.joinToString(emptyList1, null, null, null, -1, null, null))
+                emptyList.joinToString(),
+                Collectionx.joinToString(emptyList, null, null, null, -1, null, null))
         assertEquals("^$",
-                Collectionx.joinToString(nullList0, null, "^", "$", -1, null, null))
+                Collectionx.joinToString(nullList, null, "^", "$", -1, null, null))
         assertEquals("",
-                Collectionx.joinToString(nullList0, null, null, null, -1, null, null))
+                Collectionx.joinToString(nullList, null, null, null, -1, null, null))
 
         assertTwoEquals("60,30,70,20,10",
-                normalList0.joinToString(separator = ",", transform = { it + "0" }),
-                Collectionx.joinToString(normalList1, ",") { it + "0" })
+                normalList.joinToString(separator = ",", transform = { it + "0" }),
+                Collectionx.joinToString(normalList, ",") { it + "0" })
         assertTwoEquals("",
-                emptyList0.joinToString(separator = ",", transform = { it + "0" }),
-                Collectionx.joinToString(emptyList1, ",") { it + "0" })
+                emptyList.joinToString(separator = ",", transform = { it + "0" }),
+                Collectionx.joinToString(emptyList, ",") { it + "0" })
         assertEquals("",
-                Collectionx.joinToString(nullList0, ",") { it + "0" })
+                Collectionx.joinToString(nullList, ",") { it + "0" })
 
         assertTwoEquals("60, 30, 70, 20, 10",
-                normalList0.joinToString(transform = { it + "0" }),
-                Collectionx.joinToString(normalList1) { it + "0" })
+                normalList.joinToString(transform = { it + "0" }),
+                Collectionx.joinToString(normalList) { it + "0" })
         assertTwoEquals("",
-                emptyList0.joinToString(transform = { it + "0" }),
-                Collectionx.joinToString(emptyList1) { it + "0" })
+                emptyList.joinToString(transform = { it + "0" }),
+                Collectionx.joinToString(emptyList) { it + "0" })
         assertEquals("",
-                Collectionx.joinToString(nullList0) { it + "0" })
+                Collectionx.joinToString(nullList) { it + "0" })
 
         assertTwoEquals("6,3,7,2,1",
-                normalList0.joinToString(separator = ","),
-                Collectionx.joinToString(normalList1, ","))
+                normalList.joinToString(separator = ","),
+                Collectionx.joinToString(normalList, ","))
         assertTwoEquals("",
-                emptyList0.joinToString(separator = ","),
-                Collectionx.joinToString(emptyList1, ","))
+                emptyList.joinToString(separator = ","),
+                Collectionx.joinToString(emptyList, ","))
         assertEquals("",
-                Collectionx.joinToString(nullList0, ","))
+                Collectionx.joinToString(nullList, ","))
 
         assertTwoEquals("6, 3, 7, 2, 1",
-                normalList0.joinToString(),
-                Collectionx.joinToString(normalList1))
+                normalList.joinToString(),
+                Collectionx.joinToString(normalList))
         assertTwoEquals("",
-                emptyList0.joinToString(),
-                Collectionx.joinToString(emptyList1))
+                emptyList.joinToString(),
+                Collectionx.joinToString(emptyList))
         assertEquals("",
-                Collectionx.joinToString(nullList0))
+                Collectionx.joinToString(nullList))
     }
 
     @Test
