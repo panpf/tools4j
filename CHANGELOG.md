@@ -10,6 +10,7 @@
 * new: Collectionx added emptySet method, Mapx added emptyMap method
 * new: Assertx added assertTwoNoThrow method
 * improve: Arrayx's joinTo() method no longer throws IOException
+* change: Collectionx's joinTo() method now throws IllegalStateException
 
 
 ## v1.0.0-rc01

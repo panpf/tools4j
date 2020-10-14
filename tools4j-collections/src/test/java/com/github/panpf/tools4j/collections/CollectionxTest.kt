@@ -1942,7 +1942,7 @@ class CollectionxTest {
                 Collectionx.joinTo(nullList, StringBuilder()).toString())
 
         assertThrow(IOException::class) { emptyList.joinTo(buffer = ExceptionAppendable()).toString() }
-        assertThrow(RuntimeException::class) { Collectionx.joinTo(emptyList, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
+        assertThrow(IllegalStateException::class) { Collectionx.joinTo(emptyList, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
 
 
         assertTwoEquals("^60:30:70:20:***$",
