@@ -322,12 +322,20 @@ class SequencexTest {
 
     @Test
     fun testContains() {
-        val sequence = Sequencex.sequenceOf("a", "b", "c")
+        val normalSequence0 = sequenceOf("a", "b", "c")
+        val normalSequence1 = Sequencex.sequenceOf("a", "b", "c")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence1 = null as Sequence<String>?
 
-        assertTrue(Sequencex.contains(sequence, "a"))
-        assertTrue(Sequencex.contains(sequence, "b"))
-        assertTrue(Sequencex.contains(sequence, "c"))
-        assertFalse(Sequencex.contains(sequence, "d"))
+        assertTwoEquals(true, normalSequence0.contains("a"), Sequencex.contains(normalSequence1, "a"))
+        assertTwoEquals(true, normalSequence0.contains("b"), Sequencex.contains(normalSequence1, "b"))
+        assertTwoEquals(true, normalSequence0.contains("c"), Sequencex.contains(normalSequence1, "c"))
+        assertTwoEquals(false, normalSequence0.contains("d"), Sequencex.contains(normalSequence1, "d"))
+        assertTwoEquals(false, emptySequence0.contains("a"), Sequencex.contains(emptySequence1, "a"))
+        assertTwoEquals(false, emptySequence0.contains("d"), Sequencex.contains(emptySequence1, "d"))
+        assertFalse(Sequencex.contains(emptySequence1, "a"))
+        assertFalse(Sequencex.contains(nullSequence1, "d"))
     }
 
     @Test
