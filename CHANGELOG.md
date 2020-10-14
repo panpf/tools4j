@@ -9,6 +9,7 @@
 * deprecated: Deprecated Sequencex sum method
 * new: Collectionx added emptySet method, Mapx added emptyMap method
 * new: Assertx added assertTwoNoThrow method
+* improve: Arrayx's joinTo() method no longer throws IOException
 
 
 ## v1.0.0-rc01

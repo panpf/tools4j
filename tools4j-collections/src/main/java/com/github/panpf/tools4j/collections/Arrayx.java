@@ -8341,25 +8341,39 @@ public class Arrayx {
     @NotNull
     public static <T, A extends Appendable> A joinTo(@Nullable T[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                      @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                     @Nullable CharSequence truncated, @Nullable Transformer<T, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (T element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    Collectionx.appendElement(buffer, element, transform);
-                } else {
-                    break;
+                                                     @Nullable CharSequence truncated, @Nullable Transformer<T, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (T element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (element == null) {
+                            buffer.append("null");
+                        } else if (transform != null) {
+                            buffer.append(transform.transform(element));
+                        } else if (element instanceof CharSequence) {
+                            buffer.append((CharSequence) element);
+                        } else if (element instanceof Character) {
+                            buffer.append((Character) element);
+                        } else {
+                            buffer.append(element.toString());
+                        }
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8372,28 +8386,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable byte[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Byte, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (byte element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Byte, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (byte element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8406,28 +8424,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable short[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Short, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (short element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Short, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (short element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8440,28 +8462,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable int[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Integer, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (int element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Integer, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (int element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8474,28 +8500,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable long[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Long, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (long element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Long, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (long element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8508,28 +8538,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable float[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Float, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (float element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Float, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (float element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8542,28 +8576,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable double[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Double, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (double element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Double, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (double element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8576,28 +8614,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable boolean[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Boolean, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (boolean element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(String.valueOf(element));
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Boolean, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (boolean element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(String.valueOf(element));
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8610,28 +8652,32 @@ public class Arrayx {
     @NotNull
     public static <A extends Appendable> A joinTo(@Nullable char[] elements, @NotNull A buffer, @Nullable CharSequence separator,
                                                   @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
-                                                  @Nullable CharSequence truncated, @Nullable Transformer<Character, CharSequence> transform) throws IOException {
-        if (separator == null) separator = ", ";
-        if (prefix == null) prefix = "";
-        if (postfix == null) postfix = "";
-        if (truncated == null) truncated = "";
-        buffer.append(prefix);
-        int count = 0;
-        if (elements != null) {
-            for (char element : elements) {
-                if (++count > 1) buffer.append(separator);
-                if (limit < 0 || count <= limit) {
-                    if (transform != null)
-                        buffer.append(transform.transform(element));
-                    else
-                        buffer.append(element);
-                } else {
-                    break;
+                                                  @Nullable CharSequence truncated, @Nullable Transformer<Character, CharSequence> transform) {
+        try {
+            if (separator == null) separator = ", ";
+            if (prefix == null) prefix = "";
+            if (postfix == null) postfix = "";
+            if (truncated == null) truncated = "";
+            buffer.append(prefix);
+            int count = 0;
+            if (elements != null) {
+                for (char element : elements) {
+                    if (++count > 1) buffer.append(separator);
+                    if (limit < 0 || count <= limit) {
+                        if (transform != null)
+                            buffer.append(transform.transform(element));
+                        else
+                            buffer.append(element);
+                    } else {
+                        break;
+                    }
                 }
             }
+            if (limit >= 0 && count > limit) buffer.append(truncated);
+            buffer.append(postfix);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
-        if (limit >= 0 && count > limit) buffer.append(truncated);
-        buffer.append(postfix);
         return buffer;
     }
 
@@ -8645,11 +8691,7 @@ public class Arrayx {
     public static <T> String joinToString(@Nullable T[] elements, @Nullable CharSequence separator,
                                           @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                           @Nullable CharSequence truncated, @Nullable Transformer<T, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -8706,11 +8748,7 @@ public class Arrayx {
     public static String joinToString(byte[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Byte, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -8767,11 +8805,7 @@ public class Arrayx {
     public static String joinToString(short[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Short, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -8828,11 +8862,7 @@ public class Arrayx {
     public static String joinToString(int[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Integer, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -8889,11 +8919,7 @@ public class Arrayx {
     public static String joinToString(long[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Long, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -8950,11 +8976,7 @@ public class Arrayx {
     public static String joinToString(float[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Float, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -9011,11 +9033,7 @@ public class Arrayx {
     public static String joinToString(double[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Double, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -9072,11 +9090,7 @@ public class Arrayx {
     public static String joinToString(boolean[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Boolean, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
@@ -9133,11 +9147,7 @@ public class Arrayx {
     public static String joinToString(char[] elements, @Nullable CharSequence separator,
                                       @Nullable CharSequence prefix, @Nullable CharSequence postfix, int limit,
                                       @Nullable CharSequence truncated, @Nullable Transformer<Character, CharSequence> transform) {
-        try {
-            return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return joinTo(elements, new StringBuilder(), separator, prefix, postfix, limit, truncated, transform).toString();
     }
 
     /**
