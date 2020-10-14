@@ -27,6 +27,7 @@ import java.util.*;
 
 /**
  * Collection tool method
+ * from kotlin files: Iterables.kt, MutableCollectionsKt.kt, _CollectionsKt.kt
  */
 public class Collectionx {
 
@@ -1874,7 +1875,6 @@ public class Collectionx {
     /**
      * Adds all elements of the given [elements] collection to this [Collection].
      */
-    @SuppressWarnings("UnusedReturnValue")
     public static <T> boolean addAll(@Nullable Collection<T> collection, @Nullable Iterable<T> elements) {
         if (collection == null || elements == null) return false;
         if (elements instanceof Collection) {
@@ -1892,7 +1892,6 @@ public class Collectionx {
     /**
      * Adds all elements of the given [elements] collection to this [Collection].
      */
-    @SuppressWarnings("UnusedReturnValue")
     public static <T> boolean addAll(@Nullable Collection<T> collection, @Nullable T[] elements) {
         if (collection == null || elements == null) return false;
         boolean result = false;
@@ -1914,13 +1913,6 @@ public class Collectionx {
     }
 
     /**
-     * Removes all elements from this [List] that match the given [predicate].
-     */
-    public static <T> boolean removeAll(@Nullable List<T> list, @NotNull Predicate<T> predicate) {
-        return filterInPlace(list, predicate, true);
-    }
-
-    /**
      * Removes all elements from this [MutableCollection] that are also contained in the given [elements] collection.
      */
     public static <T> boolean removeAll(@Nullable Collection<T> collection, @Nullable Iterable<T> elements) {
@@ -1931,7 +1923,7 @@ public class Collectionx {
      * Removes all elements from this [MutableCollection] that are also contained in the given [elements] array.
      */
     public static <T> boolean removeAll(@Nullable Collection<T> collection, @Nullable T[] elements) {
-        return Arrayx.isNotNullOrEmpty(elements) && collection != null && collection.removeAll(Arrayx.toHashSet(elements));
+        return collection != null && elements != null && elements.length > 0 && collection.removeAll(Arrayx.toHashSet(elements));
     }
 
     /**
@@ -1941,7 +1933,7 @@ public class Collectionx {
      * @return `true` if any of the specified elements was removed from the collection, `false` if the collection was not modified.
      */
     public static <T> boolean removeAll(@Nullable Collection<T> collection, @Nullable Collection<T> elements) {
-        return collection != null && elements != null && collection.removeAll(elements);
+        return collection != null && elements != null && !elements.isEmpty() && collection.removeAll(elements);
     }
 
 
@@ -2040,41 +2032,17 @@ public class Collectionx {
     }
 
     /**
-     * Returns true when it's safe to convert this collection to a set without changing contains method behavior.
-     */
-    public static <T> boolean safeToConvertToSet(@Nullable Collection<T> collection) {
-        return collection != null && collection.size() > 2 && collection instanceof ArrayList;
-    }
-
-    /**
      * Converts this collection to a set, when it's worth so and it doesn't change contains method behavior.
      */
     @NotNull
-    public static <T> Collection<T> convertToSetForSetOperationWith(@Nullable Iterable<T> iterable, @NotNull Iterable<T> source) {
+    private static <T> Collection<T> convertToSetForSetOperationWith(@Nullable Iterable<T> iterable, @NotNull Iterable<T> source) {
         if (iterable instanceof Set) {
             return (Set<T>) iterable;
         } else if (iterable instanceof Collection) {
+            Collection<?> collection = (Collection<?>) iterable;
             if (source instanceof Collection && ((Collection<T>) source).size() < 2) {
                 return (Collection<T>) iterable;
-            } else if (safeToConvertToSet((Collection<T>) iterable)) {
-                return toHashSet(iterable);
-            } else {
-                return (Collection<T>) iterable;
-            }
-        } else {
-            return toHashSet(iterable);
-        }
-    }
-
-    /**
-     * Converts this collection to a set, when it's worth so and it doesn't change contains method behavior.
-     */
-    @NotNull
-    public static <T> Collection<T> convertToSetForSetOperation(@Nullable Iterable<T> iterable) {
-        if (iterable instanceof Set) {
-            return (Set<T>) iterable;
-        } else if (iterable instanceof Collection) {
-            if (safeToConvertToSet((Collection<T>) iterable)) {
+            } else if (collection.size() > 2 && collection instanceof ArrayList) {
                 return toHashSet(iterable);
             } else {
                 return (Collection<T>) iterable;
@@ -2109,7 +2077,7 @@ public class Collectionx {
      * Returns `true` if all elements match the given [predicate].
      */
     public static <T> boolean all(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) {
+        if (iterable == null || (iterable instanceof Collection && ((Collection<T>) iterable).isEmpty())) {
             return true;
         }
         for (T element : iterable) {
@@ -2135,7 +2103,7 @@ public class Collectionx {
      * Returns `true` if at least one element matches the given [predicate].
      */
     public static <T> boolean any(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) return false;
+        if (iterable == null || (iterable instanceof Collection && ((Collection<T>) iterable).isEmpty())) return false;
         for (T element : iterable) if (predicate.accept(element)) return true;
         return false;
     }
@@ -2148,14 +2116,15 @@ public class Collectionx {
      */
     public static <T> boolean none(@Nullable Iterable<T> iterable) {
         if (iterable == null) return true;
-        return iterable instanceof Collection ? ((Collection<T>) iterable).isEmpty() : !iterable.iterator().hasNext();
+        if (iterable instanceof Collection) return ((Collection<T>) iterable).isEmpty();
+        return !iterable.iterator().hasNext();
     }
 
     /**
      * Returns `true` if no elements match the given [predicate].
      */
     public static <T> boolean none(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
-        if (iterable == null || iterable instanceof Collection && ((Collection<T>) iterable).isEmpty()) return true;
+        if (iterable == null || (iterable instanceof Collection && ((Collection<T>) iterable).isEmpty())) return true;
         for (T element : iterable) if (predicate.accept(element)) return false;
         return true;
     }
@@ -3054,6 +3023,7 @@ public class Collectionx {
                 return toList(iterable);
             }
             if (n == 1) {
+                //noinspection unchecked
                 return mutableListOf(first(iterable));
             }
         }
@@ -3074,12 +3044,14 @@ public class Collectionx {
      */
     public static <T> List<T> takeLast(@Nullable List<T> list, final int n) {
         if (isNullOrEmpty(list)) {
+            //noinspection unchecked
             return Collectionx.arrayListOf();
         }
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
         if (n == 0) {
+            //noinspection unchecked
             return Collectionx.arrayListOf();
         }
         int size = count(list);
@@ -3087,6 +3059,7 @@ public class Collectionx {
             return toList(list);
         }
         if (n == 1) {
+            //noinspection unchecked
             return mutableListOf(last(list));
         }
         ArrayList<T> resultList = new ArrayList<T>(n);
@@ -3110,6 +3083,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> takeLastWhile(@Nullable List<T> list, @NotNull Predicate<T> predicate) {
         if (isNullOrEmpty(list)) {
+            //noinspection unchecked
             return Collectionx.arrayListOf();
         }
         ListIterator<T> iterator = list.listIterator(list.size());
@@ -3117,7 +3091,8 @@ public class Collectionx {
             if (!predicate.accept(iterator.previous())) {
                 iterator.next();
                 int expectedSize = list.size() - iterator.nextIndex();
-                if (expectedSize == 0) return Collectionx.arrayListOf();
+                if (expectedSize == 0) //noinspection unchecked
+                    return Collectionx.arrayListOf();
                 ArrayList<T> resultList = new ArrayList<T>(expectedSize);
                 while (iterator.hasNext()) {
                     resultList.add(iterator.next());
@@ -3213,7 +3188,7 @@ public class Collectionx {
      * Retains only elements of this [Collection] that are contained in the given [elements] array.
      */
     public static <T> boolean retainAll(@Nullable Collection<T> collection, @NotNull T[] elements) {
-        if (Arrayx.isNotNullOrEmpty(elements)) {
+        if (elements.length > 0) {
             return collection != null && collection.retainAll(Arrayx.toHashSet(elements));
         } else {
             return retainNothing(collection);
@@ -3360,9 +3335,11 @@ public class Collectionx {
             Collection<T> collection = (Collection<T>) iterable;
             int resultSize = collection.size() - n;
             if (resultSize <= 0) {
+                //noinspection unchecked
                 return Collectionx.arrayListOf();
             }
             if (resultSize == 1) {
+                //noinspection unchecked
                 return mutableListOf(last(collection));
             }
 
@@ -3421,6 +3398,7 @@ public class Collectionx {
                 }
             }
         }
+        //noinspection unchecked
         return Collectionx.arrayListOf();
     }
 
@@ -3891,7 +3869,9 @@ public class Collectionx {
     @NotNull
     public static <T, R> List<R> zipWithNext(@Nullable Iterable<T> iterable, @NotNull Transformer2<T, T, R> transform) {
         Iterator<T> iterator = iterable != null ? iterable.iterator() : null;
-        if (iterator == null || !iterator.hasNext()) return Collectionx.mutableListOf();
+        if (iterator == null || !iterator.hasNext()) //noinspection unchecked
+            return Collectionx.mutableListOf();
+        //noinspection unchecked
         List<R> result = Collectionx.mutableListOf();
         T current = iterator.next();
         while (iterator.hasNext()) {
@@ -4068,21 +4048,5 @@ public class Collectionx {
             }
         }
         return result;
-    }
-
-    static <T> void appendElement(@NotNull Appendable appendable, @NotNull T element, @Nullable Transformer<T, CharSequence> transform) {
-        try {
-            if (transform != null) {
-                appendable.append(transform.transform(element));
-            } else if (element instanceof CharSequence) {
-                appendable.append((CharSequence) element);
-            } else if (element instanceof Character) {
-                appendable.append((Character) element);
-            } else {
-                appendable.append(element.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
