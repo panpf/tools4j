@@ -2072,7 +2072,7 @@ class SequencexTest {
                 Sequencex.joinTo(nullSequence1, StringBuilder()).toString())
 
         assertThrow(IOException::class) { emptySequence0.joinTo(buffer = ExceptionAppendable()).toString() }
-        assertThrow(RuntimeException::class) { Sequencex.joinTo(emptySequence1, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
+        assertThrow(IllegalStateException::class) { Sequencex.joinTo(emptySequence1, ExceptionAppendable(), null, null, null, -1, null, null).toString() }
 
 
         assertTwoEquals("^60:30:70:20:***$",
