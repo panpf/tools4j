@@ -2246,29 +2246,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T> List<List<T>> chunked(@Nullable Iterable<T> iterable, int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
-        }
-
-        int listSize = count(iterable);
-        int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
-        List<List<T>> resultList = new ArrayList<List<T>>(resultSize);
-        List<T> chunkedList = null;
-        int index = 0;
-        if (iterable != null) {
-            for (T element : iterable) {
-                if (chunkedList == null) {
-                    chunkedList = new ArrayList<T>(Math.min(size, listSize - index));
-                }
-                chunkedList.add(element);
-                if (chunkedList.size() >= size) {
-                    resultList.add(chunkedList);
-                    chunkedList = null;
-                }
-                index++;
-            }
-        }
-        return resultList;
+        return windowed(iterable, size, size, true);
     }
 
     /**
@@ -2284,29 +2262,7 @@ public class Collectionx {
      */
     @NotNull
     public static <T, R> List<R> chunked(@Nullable Iterable<T> iterable, int size, @NotNull Transformer<List<T>, R> transform) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Param 'size' is less than or equal to zero.");
-        }
-
-        int listSize = count(iterable);
-        int resultSize = (listSize / size) + (listSize % size == 0 ? 0 : 1);
-        List<R> resultList = new ArrayList<R>(resultSize);
-        List<T> chunkedList = null;
-        int index = 0;
-        if (iterable != null) {
-            for (T element : iterable) {
-                if (chunkedList == null) {
-                    chunkedList = new ArrayList<T>(Math.min(size, listSize - index));
-                }
-                chunkedList.add(element);
-                if (chunkedList.size() >= size) {
-                    resultList.add(transform.transform(chunkedList));
-                    chunkedList = null;
-                }
-                index++;
-            }
-        }
-        return resultList;
+        return windowed(iterable, size, size, true, transform);
     }
 
 

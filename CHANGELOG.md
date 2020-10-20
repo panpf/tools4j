@@ -13,6 +13,7 @@
 * change: Collectionx's joinTo() method now throws IllegalStateException
 * change: Sequencex's joinTo() method now throws IllegalStateException
 * new: Collectionx added list, windowed method
+* fix: Fix Collectionx's chunked method bug
 
 
 ## v1.0.0-rc01

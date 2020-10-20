@@ -1359,6 +1359,76 @@ class CollectionxTest {
     }
 
     @Test
+    fun testChunked() {
+        val normalList = listOf("a", "b", "c", "d", "e")
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.chunked(-1) },
+                { Collectionx.chunked(normalList, -1) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.chunked(0) },
+                { Collectionx.chunked(normalList, 0) })
+        assertTwoEquals("[[a], [b], [c], [d], [e]]",
+                normalList.chunked(1).toString(),
+                Collectionx.chunked(normalList, 1).toString())
+        assertTwoEquals("[[a, b], [c, d], [e]]",
+                normalList.chunked(2).toString(),
+                Collectionx.chunked(normalList, 2).toString())
+        assertTwoEquals("[[a, b, c], [d, e]]",
+                normalList.chunked(3).toString(),
+                Collectionx.chunked(normalList, 3).toString())
+        assertTwoEquals("[[a, b, c, d], [e]]",
+                normalList.chunked(4).toString(),
+                Collectionx.chunked(normalList, 4).toString())
+        assertTwoEquals("[[a, b, c, d, e]]",
+                normalList.chunked(5).toString(),
+                Collectionx.chunked(normalList, 5).toString())
+        assertTwoEquals("[[a, b, c, d, e]]",
+                normalList.chunked(6).toString(),
+                Collectionx.chunked(normalList, 6).toString())
+
+        assertTwoEquals("[]",
+                emptyList.chunked(1).toString(),
+                Collectionx.chunked(emptyList, 1).toString())
+        assertEquals("[]",
+                Collectionx.chunked(nullList, 1).toString())
+
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.chunked(-1) },
+                { Collectionx.chunked(normalList, -1) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.chunked(0) },
+                { Collectionx.chunked(normalList, 0) })
+        assertTwoEquals("[[a], [b], [c], [d], [e]]",
+                normalList.chunked(1) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 1) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[a+b], [c+d], [e]]",
+                normalList.chunked(2) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 2) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[a+b+c], [d+e]]",
+                normalList.chunked(3) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 3) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[a+b+c+d], [e]]",
+                normalList.chunked(4) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 4) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[a+b+c+d+e]]",
+                normalList.chunked(5) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 5) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[a+b+c+d+e]]",
+                normalList.chunked(6) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(normalList, 6) { it.joinToString("+", "[", "]") }.toString())
+
+        assertTwoEquals("[]",
+                emptyList.chunked(1) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.chunked(emptyList, 1) { it.joinToString("+", "[", "]") }.toString())
+        assertEquals("[]",
+                Collectionx.chunked(nullList, 1) { it.joinToString("+", "[", "]") }.toString())
+    }
+
+    @Test
     fun testWindowed() {
         val normalList = listOf(1, 2, 3, 4, 5)
         val emptyList = listOf<Int>()
