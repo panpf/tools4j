@@ -2335,20 +2335,13 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then the given [element].
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull T element) {
-        ArrayList<T> result = new ArrayList<T>(count(collection) + 1);
-        if (collection != null) result.addAll(collection);
-        result.add(element);
-        return result;
-    }
-
-    /**
-     * Returns a list containing all elements of the original collection and then the given [element].
-     */
-    @NotNull
     public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull T element) {
         if (iterable instanceof Collection) {
-            return plus(((Collection<T>) iterable), element);
+            Collection<T> collection = (Collection<T>) iterable;
+            ArrayList<T> result = new ArrayList<T>(count(collection) + 1);
+            result.addAll(collection);
+            result.add(element);
+            return result;
         } else {
             ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
@@ -2361,43 +2354,17 @@ public class Collectionx {
      * Returns a list containing all elements of the original collection and then all elements of the given [elements] array.
      */
     @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull T[] elements) {
-        if (elements.length <= 0) return toList(collection);
-        ArrayList<T> result = new ArrayList<T>(count(collection) + elements.length);
-        addAll(result, collection);
-        addAll(result, elements);
-        return result;
-    }
-
-    /**
-     * Returns a list containing all elements of the original collection and then all elements of the given [elements] array.
-     */
-    @NotNull
     public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull T[] elements) {
         if (elements.length <= 0) return toList(iterable);
         if (iterable instanceof Collection) {
-            return plus(((Collection<T>) iterable), elements);
+            Collection<T> collection = (Collection<T>) iterable;
+            ArrayList<T> result = new ArrayList<T>(count(collection) + elements.length);
+            addAll(result, collection);
+            addAll(result, elements);
+            return result;
         } else {
             ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
-            addAll(result, elements);
-            return result;
-        }
-    }
-
-    /**
-     * Returns a list containing all elements of the original collection and then all elements of the given [elements] collection.
-     */
-    @NotNull
-    public static <T> List<T> plus(@Nullable Collection<T> collection, @NotNull Iterable<T> elements) {
-        if (elements instanceof Collection) {
-            ArrayList<T> result = new ArrayList<T>(count(collection) + ((Collection<T>) elements).size());
-            addAll(result, collection);
-            addAll(result, elements);
-            return result;
-        } else {
-            ArrayList<T> result = new ArrayList<T>();
-            addAll(result, collection);
             addAll(result, elements);
             return result;
         }
@@ -2409,21 +2376,17 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> plus(@Nullable Iterable<T> iterable, @NotNull Iterable<T> elements) {
         if (iterable instanceof Collection) {
-            return plus((Collection<T>) iterable, elements);
+            Collection<T> collection = (Collection<T>) iterable;
+            ArrayList<T> result = new ArrayList<T>(count(collection) + ((Collection<T>) elements).size());
+            addAll(result, collection);
+            addAll(result, elements);
+            return result;
         } else {
             ArrayList<T> result = new ArrayList<T>();
             addAll(result, iterable);
             addAll(result, elements);
             return result;
         }
-    }
-
-    /**
-     * Returns a list containing all elements of the original collection and then the given [element].
-     */
-    @NotNull
-    public static <T> List<T> plusElement(@Nullable Collection<T> collection, @NotNull T element) {
-        return plus(collection, element);
     }
 
     /**
