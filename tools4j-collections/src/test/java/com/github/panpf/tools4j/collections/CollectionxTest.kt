@@ -2295,6 +2295,9 @@ class CollectionxTest {
         assertTwoEquals("9, 4",
                 emptyList.plus(arrayOf("9", "4")).joinToString(),
                 Collectionx.joinToString(Collectionx.plus(emptyList, arrayOf("9", "4"))))
+        assertTwoEquals("",
+                emptyList.plus(arrayOf<String>()).joinToString(),
+                Collectionx.joinToString(Collectionx.plus(emptyList, arrayOf<String>())))
         assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList, arrayOf("9", "4"))))
 
         assertTwoEquals("6, 3, 7, 2, 1, 9, 4",
@@ -2320,6 +2323,25 @@ class CollectionxTest {
                 emptyList.plusElement("9").joinToString(),
                 Collectionx.joinToString(Collectionx.plusElement(emptyList, "9")))
         assertEquals("9", Collectionx.joinToString(Collectionx.plusElement(nullList, "9")))
+    }
+
+    @Test
+    fun testIndices() {
+        assertTwoEquals("",
+                listOf<String>().indices.joinToString(),
+                Collectionx.joinToString(Collectionx.indices(Collectionx.listOf<String>())))
+        assertTwoEquals("0",
+                listOf("a").indices.joinToString(),
+                Collectionx.joinToString(Collectionx.indices(Collectionx.listOf("a"))))
+        assertTwoEquals("0, 1",
+                listOf("a", "b").indices.joinToString(),
+                Collectionx.joinToString(Collectionx.indices(Collectionx.listOf("a", "b"))))
+        assertTwoEquals("0, 1, 2",
+                listOf("a", "b", "c").indices.joinToString(),
+                Collectionx.joinToString(Collectionx.indices(Collectionx.listOf("a", "b", "c"))))
+        assertTwoEquals("0, 1, 2, 3",
+                listOf("a", "b", "c", "e").indices.joinToString(),
+                Collectionx.joinToString(Collectionx.indices(Collectionx.listOf("a", "b", "c", "e"))))
     }
 
     @Test
