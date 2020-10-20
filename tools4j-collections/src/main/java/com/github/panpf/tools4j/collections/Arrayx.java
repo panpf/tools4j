@@ -27,6 +27,7 @@ import java.util.*;
 
 /**
  * Array tool method
+ * <br>from kotlin files: Arrays.kt, ArraysJVM.kt, _ArraysKt, _ArraysJvm.kt
  */
 public class Arrayx {
 
@@ -17999,6 +18000,8 @@ public class Arrayx {
     public static char[] copyOfRange(@Nullable char[] elements, int fromIndex, int toIndex) {
         return elements != null ? Arrays.copyOfRange(elements, fromIndex, toIndex) : new char[0];
     }
+
+    // todo add fill method from Arrays
 
 
     /* ******************************************* slice ******************************************* */

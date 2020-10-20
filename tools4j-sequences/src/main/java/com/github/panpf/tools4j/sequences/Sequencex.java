@@ -26,6 +26,7 @@ import java.util.*;
 
 /**
  * Sequence tool method
+ * <br> from kotlin files: _Sequences.kt, _SequencesJvm.kt, Sequences.kt
  */
 public class Sequencex {
 
