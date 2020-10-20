@@ -16,10 +16,7 @@
 
 package com.github.panpf.tools4j.collections;
 
-import com.github.panpf.tools4j.common.FoldOperation;
-import com.github.panpf.tools4j.common.ReduceOperation;
-import com.github.panpf.tools4j.common.Transformer;
-import com.github.panpf.tools4j.common.Transformer2;
+import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.ArrayIterator;
 import com.github.panpf.tools4j.iterable.CharSequenceIterator;
 import com.github.panpf.tools4j.iterable.EmptyIterator;
