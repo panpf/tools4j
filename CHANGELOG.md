@@ -12,6 +12,7 @@
 * improve: Arrayx's joinTo() method no longer throws IOException
 * change: Collectionx's joinTo() method now throws IllegalStateException
 * change: Sequencex's joinTo() method now throws IllegalStateException
+* new: Collectionx added list, windowed method
 
 
 ## v1.0.0-rc01

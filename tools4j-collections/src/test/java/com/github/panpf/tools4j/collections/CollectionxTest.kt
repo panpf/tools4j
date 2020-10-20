@@ -178,6 +178,8 @@ class CollectionxTest {
 
         assertTwoEquals(0, Collectionx.emptyList<String>().size, emptyList<String>().size)
         assertTwoEquals("EmptyList", Collectionx.emptyList<String>()::class.simpleName, emptyList<String>()::class.simpleName)
+
+        // todo test mutableList, list method
     }
 
     @Test
@@ -1211,15 +1213,21 @@ class CollectionxTest {
         val emptyList = listOf<String>()
         val nullList = null as List<String>?
 
-        assertTwoEquals(true,
+        assertTwoEquals(
+                true,
                 normalList.all { it -> it.all { it.isLetter() } },
-                Collectionx.all(normalList) { it -> it.all { it.isLetter() } }, )
-        assertTwoEquals(false,
+                Collectionx.all(normalList) { it -> it.all { it.isLetter() } },
+        )
+        assertTwoEquals(
+                false,
                 normalList.all { it.last() == 'j' },
-                Collectionx.all(normalList) { it.last() == 'j' }, )
-        assertTwoEquals(true,
+                Collectionx.all(normalList) { it.last() == 'j' },
+        )
+        assertTwoEquals(
+                true,
                 emptyList.all { it -> it.all { it.isLetter() } },
-                Collectionx.all(emptyList) { it -> it.all { it.isLetter() } }, )
+                Collectionx.all(emptyList) { it -> it.all { it.isLetter() } },
+        )
         assertTrue(Collectionx.all(nullList) { it.last() == 'j' })
         assertTwoEquals(false,
                 progression.all { it % 2 == 0 },
@@ -1236,9 +1244,11 @@ class CollectionxTest {
         assertTwoEquals(true, normalList.any(), Collectionx.any(normalList))
         assertTwoEquals(false, emptyList.any(), Collectionx.any(emptyList))
         assertFalse(Collectionx.any(nullList))
-        assertTwoEquals(false,
+        assertTwoEquals(
+                false,
                 listOf<String>().any(),
-                Collectionx.any(Collectionx.listOf<String>()), )
+                Collectionx.any(Collectionx.listOf<String>()),
+        )
         assertTwoEquals(true, progression.any(), Collectionx.any(progression))
 
         assertTwoEquals(true, normalList.any { it.last() == 'j' }, Collectionx.any(normalList) { it.last() == 'j' })
@@ -1315,24 +1325,27 @@ class CollectionxTest {
         assertTwoEquals("aj, bj, aj, bj, bo",
                 ArrayList<String>().apply { normalList.forEach { add(it) } }.joinToString(),
                 ArrayList<String>().apply { Collectionx.forEach(normalList) { add(it) } }.joinToString())
-
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().forEach { add(it) } }.joinToString(),
                 ArrayList<String>().apply { Collectionx.forEach(null as List<String>?) { add(it) } }.joinToString())
 
+        assertTwoEquals("aj, bj, aj, bj, bo",
+                ArrayList<String>().apply { normalList.iterator().forEach { add(it) } }.joinToString(),
+                ArrayList<String>().apply { Collectionx.forEach(normalList.iterator()) { add(it) } }.joinToString())
+        assertTwoEquals("",
+                ArrayList<String>().apply { listOf<String>().iterator().forEach { add(it) } }.joinToString(),
+                ArrayList<String>().apply { Collectionx.forEach(null as Iterator<String>?) { add(it) } }.joinToString())
+
         assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
                 ArrayList<String>().apply { normalList.forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
                 ArrayList<String>().apply { Collectionx.forEachIndexed(normalList) { i, it -> add(i.toString() + it) } }.joinToString())
-
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().forEachIndexed { i, it -> add(i.toString() + it) } }.joinToString(),
                 ArrayList<String>().apply { Collectionx.forEachIndexed(null as List<String>?) { i, it -> add(i.toString() + it) } }.joinToString())
 
-
         assertTwoEquals("aj, bj, aj, bj, bo",
                 ArrayList<String>().apply { normalList.onEach { add(it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Collectionx.onEach(normalList) { add(it) } }.joinToString())
-
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().onEach { add(it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Collectionx.onEach(null as List<String>?) { add(it) } }.joinToString())
@@ -1340,10 +1353,166 @@ class CollectionxTest {
         assertTwoEquals("0aj, 1bj, 2aj, 3bj, 4bo",
                 ArrayList<String>().apply { normalList.onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Collectionx.onEachIndexed(normalList) { i, it -> add(i.toString() + it) } }.joinToString())
-
         assertTwoEquals("",
                 ArrayList<String>().apply { listOf<String>().onEachIndexed { i, it -> add(i.toString() + it) }.toList() }.joinToString(),
                 ArrayList<String>().apply { Collectionx.onEachIndexed(null as List<String>?) { i, it -> add(i.toString() + it) } }.joinToString())
+    }
+
+    @Test
+    fun testWindowed() {
+        val normalList = listOf(1, 2, 3, 4, 5)
+        val emptyList = listOf<Int>()
+        val nullList = null as List<Int>?
+
+        // Test illegal size and step parameter
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(0, 0, true) },
+                { Collectionx.windowed(normalList, 0, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(1, 0, true) },
+                { Collectionx.windowed(normalList, 1, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(0, 1, true) },
+                { Collectionx.windowed(normalList, 0, 1, true) })
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(0, 0, true) },
+                { Collectionx.windowed(normalList, 0, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(1, 0, true) },
+                { Collectionx.windowed(normalList, 1, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.windowed(0, 1, true) },
+                { Collectionx.windowed(normalList, 0, 1, true) })
+
+        // Test the size parameter
+        assertTwoEquals("[[1], [2], [3], [4], [5]]",
+                normalList.windowed(1, 1, true).toString(),
+                Collectionx.windowed(normalList, 1, 1, true).toString())
+        assertTwoEquals("[[1, 2], [2, 3], [3, 4], [4, 5], [5]]",
+                normalList.windowed(2, 1, true).toString(),
+                Collectionx.windowed(normalList, 2, 1, true).toString())
+        assertTwoEquals("[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5], [5]]",
+                normalList.windowed(3, 1, true).toString(),
+                Collectionx.windowed(normalList, 3, 1, true).toString())
+        assertTwoEquals("[[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]]",
+                normalList.windowed(4, 1, true).toString(),
+                Collectionx.windowed(normalList, 4, 1, true).toString())
+        assertTwoEquals("[[1, 2, 3, 4, 5], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]]",
+                normalList.windowed(5, 1, true).toString(),
+                Collectionx.windowed(normalList, 5, 1, true).toString())
+        assertTwoEquals("[[1, 2, 3, 4, 5], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]]",
+                normalList.windowed(6, 1, true).toString(),
+                Collectionx.windowed(normalList, 6, 1, true).toString())
+
+        assertTwoEquals("[[1], [2], [3], [4], [5]]",
+                normalList.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 1, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2], [2+3], [3+4], [4+5], [5]]",
+                normalList.windowed(2, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3], [2+3+4], [3+4+5], [4+5], [5]]",
+                normalList.windowed(3, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 3, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3+4], [2+3+4+5], [3+4+5], [4+5], [5]]",
+                normalList.windowed(4, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 4, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3+4+5], [2+3+4+5], [3+4+5], [4+5], [5]]",
+                normalList.windowed(5, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 5, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3+4+5], [2+3+4+5], [3+4+5], [4+5], [5]]",
+                normalList.windowed(6, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 6, 1, true) { it.joinToString("+", "[", "]") }.toString())
+
+        // Test the step parameter
+        assertTwoEquals("[[1, 2], [3, 4], [5]]",
+                normalList.windowed(2, 2, true).toString(),
+                Collectionx.windowed(normalList, 2, 2, true).toString())
+        assertTwoEquals("[[1, 2], [4, 5]]",
+                normalList.windowed(2, 3, true).toString(),
+                Collectionx.windowed(normalList, 2, 3, true).toString())
+        assertTwoEquals("[[1, 2], [5]]",
+                normalList.windowed(2, 4, true).toString(),
+                Collectionx.windowed(normalList, 2, 4, true).toString())
+        assertTwoEquals("[[1, 2]]",
+                normalList.windowed(2, 5, true).toString(),
+                Collectionx.windowed(normalList, 2, 5, true).toString())
+        assertTwoEquals("[[1, 2]]",
+                normalList.windowed(2, 6, true).toString(),
+                Collectionx.windowed(normalList, 2, 6, true).toString())
+
+        assertTwoEquals("[[1+2], [3+4], [5]]",
+                normalList.windowed(2, 2, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 2, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2], [4+5]]",
+                normalList.windowed(2, 3, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 3, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2], [5]]",
+                normalList.windowed(2, 4, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 4, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2]]",
+                normalList.windowed(2, 5, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 5, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2]]",
+                normalList.windowed(2, 6, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 6, true) { it.joinToString("+", "[", "]") }.toString())
+
+        // Test the partialWindows parameter
+        assertTwoEquals("[[1], [2], [3], [4], [5]]",
+                normalList.windowed(1, 1, false).toString(),
+                Collectionx.windowed(normalList, 1, 1, false).toString())
+        assertTwoEquals("[[1, 2], [2, 3], [3, 4], [4, 5]]",
+                normalList.windowed(2, 1, false).toString(),
+                Collectionx.windowed(normalList, 2, 1, false).toString())
+        assertTwoEquals("[[1, 2], [3, 4]]",
+                normalList.windowed(2, 2, false).toString(),
+                Collectionx.windowed(normalList, 2, 2, false).toString())
+        assertTwoEquals("[[1, 2, 3], [2, 3, 4], [3, 4, 5]]",
+                normalList.windowed(3, 1, false).toString(),
+                Collectionx.windowed(normalList, 3, 1, false).toString())
+        assertTwoEquals("[[1, 2, 3, 4], [2, 3, 4, 5]]",
+                normalList.windowed(4, 1, false).toString(),
+                Collectionx.windowed(normalList, 4, 1, false).toString())
+        assertTwoEquals("[[1, 2, 3, 4, 5]]",
+                normalList.windowed(5, 1, false).toString(),
+                Collectionx.windowed(normalList, 5, 1, false).toString())
+        assertTwoEquals("[]",
+                normalList.windowed(6, 1, false).toString(),
+                Collectionx.windowed(normalList, 6, 1, false).toString())
+
+        assertTwoEquals("[[1], [2], [3], [4], [5]]",
+                normalList.windowed(1, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 1, 1, false) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2], [2+3], [3+4], [4+5]]",
+                normalList.windowed(2, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 2, 1, false) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3], [2+3+4], [3+4+5]]",
+                normalList.windowed(3, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 3, 1, false) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3+4], [2+3+4+5]]",
+                normalList.windowed(4, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 4, 1, false) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[[1+2+3+4+5]]",
+                normalList.windowed(5, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 5, 1, false) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[]",
+                normalList.windowed(6, 1, false) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(normalList, 6, 1, false) { it.joinToString("+", "[", "]") }.toString())
+
+        // Test empty or null
+        assertTwoEquals("[]",
+                emptyList.windowed(1, 1, true).toString(),
+                Collectionx.windowed(emptyList, 1, 1, true).toString())
+        assertTwoEquals("[]",
+                emptyList.windowed(1, 1, true).toString(),
+                Collectionx.windowed(nullList, 1, 1, true).toString())
+
+        assertTwoEquals("[]",
+                emptyList.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(emptyList, 1, 1, true) { it.joinToString("+", "[", "]") }.toString())
+        assertTwoEquals("[]",
+                emptyList.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.toString(),
+                Collectionx.windowed(nullList, 1, 1, true) { it.joinToString("+", "[", "]") }.toString())
     }
 
     @Test
@@ -1648,28 +1817,28 @@ class CollectionxTest {
                 (mutableListOf("6", "4", "3") as MutableIterable<String>).removeAll { it.toInt() % 2 == 0 },
                 Collectionx.removeAll(mutableListOf("6", "4", "3") as MutableIterable<String>) { it.toInt() % 2 == 0 })
         assertTwoEquals("3",
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply{removeAll { it.toInt() % 2 == 0 }}.joinToString(),
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply{Collectionx.removeAll(this) { it.toInt() % 2 == 0 }}.joinToString())
+                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { removeAll { it.toInt() % 2 == 0 } }.joinToString(),
+                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { Collectionx.removeAll(this) { it.toInt() % 2 == 0 } }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3") as MutableIterable<String>).removeAll { it.toInt() > 100 },
                 Collectionx.removeAll(mutableListOf("6", "4", "3") as MutableIterable<String>) { it.toInt() > 100 })
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply{removeAll { it.toInt() > 100 }}.joinToString(),
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply{Collectionx.removeAll(this) { it.toInt() > 100 }}.joinToString())
+                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { removeAll { it.toInt() > 100 } }.joinToString(),
+                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { Collectionx.removeAll(this) { it.toInt() > 100 } }.joinToString())
         assertFalse(Collectionx.removeAll(null as MutableIterable<String>?) { it.toInt() % 2 == 0 })
 
         assertTwoEquals(true,
                 (mutableListOf("6", "4", "3")).removeAll(listOf("6", "3") as Iterable<String>),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("6", "3") as Iterable<String>))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply{removeAll(listOf("6", "3") as Iterable<String>)}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, listOf("6", "3") as Iterable<String>)}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("6", "3") as Iterable<String>) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("6", "3") as Iterable<String>) }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3")).removeAll(listOf("100", "99") as Iterable<String>),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("100", "99") as Iterable<String>))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply{removeAll(listOf("100", "99") as Iterable<String>)}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, listOf("100", "99") as Iterable<String>)}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("100", "99") as Iterable<String>) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("100", "99") as Iterable<String>) }.joinToString())
         assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Iterable<String>?))
         assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Iterable<String>?))
 
@@ -1677,20 +1846,20 @@ class CollectionxTest {
                 (mutableListOf("6", "4", "3")).removeAll(arrayOf("6", "3")),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf("6", "3")))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply{removeAll(arrayOf("6", "3"))}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, arrayOf("6", "3"))}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf("6", "3")) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf("6", "3")) }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3")).removeAll(arrayOf("100", "99")),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf("100", "99")))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply{removeAll(arrayOf("100", "99"))}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, arrayOf("100", "99"))}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf("100", "99")) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf("100", "99")) }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3")).removeAll(arrayOf()),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf<String>()))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply{removeAll(arrayOf())}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, arrayOf<String>())}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf()) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf<String>()) }.joinToString())
         assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Array<String>?))
         assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Array<String>?))
 
@@ -1698,20 +1867,20 @@ class CollectionxTest {
                 (mutableListOf("6", "4", "3")).removeAll(listOf("6", "3")),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("6", "3")))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply{removeAll(listOf("6", "3"))}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, listOf("6", "3"))}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("6", "3")) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("6", "3")) }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3")).removeAll(listOf("100", "99")),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("100", "99")))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply{removeAll(listOf("100", "99"))}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, listOf("100", "99"))}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("100", "99")) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("100", "99")) }.joinToString())
         assertTwoEquals(false,
                 (mutableListOf("6", "4", "3")).removeAll(listOf()),
                 Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf<String>()))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply{removeAll(listOf())}.joinToString(),
-                (mutableListOf("6", "4", "3")).apply{Collectionx.removeAll(this, listOf<String>())}.joinToString())
+                (mutableListOf("6", "4", "3")).apply { removeAll(listOf()) }.joinToString(),
+                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf<String>()) }.joinToString())
         assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Collection<String>?))
         assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Collection<String>?))
     }
@@ -1764,12 +1933,12 @@ class CollectionxTest {
 
         assertTwoEquals("3, 2, 1",
                 setOf(1, 2, 3).toSortedSet { it1, it2 -> it2 - it1 }.joinToString(),
-                Collectionx.toSortedSet(setOf(1, 2, 3)){ it1, it2 -> it2 - it1 }.joinToString())
+                Collectionx.toSortedSet(setOf(1, 2, 3)) { it1, it2 -> it2 - it1 }.joinToString())
         assertTwoEquals(TreeSet::class,
-                setOf(1, 2, 3).toSortedSet{ it1, it2 -> it2 - it1 }::class,
-                Collectionx.toSortedSet(setOf(1, 2, 3)){ it1, it2 -> it2 - it1 }::class)
-        assertEquals("", Collectionx.toSortedSet(null as Iterable<Int>?){ it1, it2 -> it2 - it1 }.joinToString())
-        assertEquals(TreeSet::class, Collectionx.toSortedSet(null as Iterable<Int>?){ it1, it2 -> it2 - it1 }::class)
+                setOf(1, 2, 3).toSortedSet { it1, it2 -> it2 - it1 }::class,
+                Collectionx.toSortedSet(setOf(1, 2, 3)) { it1, it2 -> it2 - it1 }::class)
+        assertEquals("", Collectionx.toSortedSet(null as Iterable<Int>?) { it1, it2 -> it2 - it1 }.joinToString())
+        assertEquals(TreeSet::class, Collectionx.toSortedSet(null as Iterable<Int>?) { it1, it2 -> it2 - it1 }::class)
 
         assertTwoEquals("1, 2, 3",
                 setOf(1, 2, 3).toHashSet().joinToString(),

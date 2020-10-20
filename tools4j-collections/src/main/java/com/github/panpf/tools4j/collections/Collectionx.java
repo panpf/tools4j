@@ -18,6 +18,7 @@ package com.github.panpf.tools4j.collections;
 
 import com.github.panpf.tools4j.common.*;
 import com.github.panpf.tools4j.iterable.IndexingIterable;
+import com.github.panpf.tools4j.iterable.WindowedIterator;
 import com.github.panpf.tools4j.ranges.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -207,6 +208,34 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> emptyList() {
         return Collections.emptyList();
+    }
+
+    /**
+     * Creates a new read-only list with the specified [size], where each element is calculated by calling the specified
+     * [init] function.
+     * <p>
+     * The function [init] is called for each list element sequentially starting from the first one.
+     * It should return the value for a list element given its index.
+     */
+    @NotNull
+    public static  <T> List<T> list(int size, @NotNull Transformer<Integer, T> init) {
+        return mutableList(size, init);
+    }
+
+    /**
+     * Creates a new mutable list with the specified [size], where each element is calculated by calling the specified
+     * [init] function.
+     * <p>
+     * The function [init] is called for each list element sequentially starting from the first one.
+     * It should return the value for a list element given its index.
+     */
+    @NotNull
+    public static <T> List<T> mutableList(int size, @NotNull Transformer<Integer, T> init) {
+        List<T> list = new ArrayList<T>(size);
+        for (int index = 0; index < size; index++) {
+            list.add(init.transform(index));
+        }
+        return list;
     }
 
 
@@ -2157,6 +2186,16 @@ public class Collectionx {
     }
 
     /**
+     * Performs the given [action] on each element.
+     */
+    public static <T> void forEach(@Nullable Iterator<T> iterator, @NotNull Action<T> action) {
+        if (iterator == null) return;
+        while (iterator.hasNext()) {
+            action.action(iterator.next());
+        }
+    }
+
+    /**
      * Performs the given [action] on each element, providing sequential index with the element.
      *
      * @param action function that takes the index of an element and the element itself
@@ -3695,82 +3734,107 @@ public class Collectionx {
     /* ******************************************* window ******************************************* */
 
 
-///**
-// * Returns a list of snapshots of the window of the given [size]
-// * sliding along this collection with the given [step], where each
-// * snapshot is a list.
-// *
-// * Several last lists may have less elements than the given [size].
-// *
-// * Both [size] and [step] must be positive and can be greater than the number of elements in this collection.
-// * @param size the number of elements to take in each window
-// * @param step the number of elements to move the window forward by on an each step, by default 1
-// * @param partialWindows controls whether or not to keep partial windows in the end if any,
-// * by default `false` which means partial windows won't be preserved
-// *
-// * @sample samples.collections.Sequences.Transformations.takeWindows
-// */
-//    @SinceKotlin("1.2")
-//    public fun <T> Iterable<T>.windowed(size: Int, step: Int = 1, partialWindows: Boolean = false): List<List<T>> {
-//        checkWindowSizeStep(size, step)
-//        if (this is RandomAccess && this is List) {
-//            val thisSize = this.size
-//            val result = ArrayList<List<T>>((thisSize + step - 1) / step)
-//            var index = 0
-//            while (index < thisSize) {
-//                val windowSize = size.coerceAtMost(thisSize - index)
-//                if (windowSize < size && !partialWindows) break
-//                result.add(List(windowSize) { this[it + index] })
-//                index += step
-//            }
-//            return result
-//        }
-//        val result = ArrayList<List<T>>()
-//        windowedIterator(iterator(), size, step, partialWindows, reuseBuffer = false).forEach {
-//            result.add(it)
-//        }
-//        return result
-//    }
-//
-///**
-// * Returns a list of results of applying the given [transform] function to
-// * an each list representing a view over the window of the given [size]
-// * sliding along this collection with the given [step].
-// *
-// * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
-// * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
-// * Several last lists may have less elements than the given [size].
-// *
-// * Both [size] and [step] must be positive and can be greater than the number of elements in this collection.
-// * @param size the number of elements to take in each window
-// * @param step the number of elements to move the window forward by on an each step, by default 1
-// * @param partialWindows controls whether or not to keep partial windows in the end if any,
-// * by default `false` which means partial windows won't be preserved
-// *
-// * @sample samples.collections.Sequences.Transformations.averageWindows
-// */
-//    @SinceKotlin("1.2")
-//    public fun <T, R> Iterable<T>.windowed(size: Int, step: Int = 1, partialWindows: Boolean = false, transform: (List<T>) -> R): List<R> {
-//        checkWindowSizeStep(size, step)
-//        if (this is RandomAccess && this is List) {
-//            val thisSize = this.size
-//            val result = ArrayList<R>((thisSize + step - 1) / step)
-//            val window = MovingSubList(this)
-//            var index = 0
-//            while (index < thisSize) {
-//                window.move(index, (index + size).coerceAtMost(thisSize))
-//                if (!partialWindows && window.size < size) break
-//                result.add(transform(window))
-//                index += step
-//            }
-//            return result
-//        }
-//        val result = ArrayList<R>()
-//        windowedIterator(iterator(), size, step, partialWindows, reuseBuffer = true).forEach {
-//            result.add(transform(it))
-//        }
-//        return result
-//    }
+    /**
+     * Returns a list of snapshots of the window of the given [size]
+     * sliding along this collection with the given [step], where each
+     * snapshot is a list.
+     * <p>
+     * Several last lists may have less elements than the given [size].
+     * <p>
+     * Both [size] and [step] must be positive and can be greater than the number of elements in this collection.
+     *
+     * @param size           the number of elements to take in each window
+     * @param step           the number of elements to move the window forward by on an each step, by default 1
+     * @param partialWindows controls whether or not to keep partial windows in the end if any,
+     *                       by default `false` which means partial windows won't be preserved
+     */
+    @NotNull
+    public static <T> List<List<T>> windowed(@Nullable final Iterable<T> iterable, int size, int step, boolean partialWindows) {
+        if (size <= 0 || step <= 0) {
+            if (size != step){
+                throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
+            } else {
+                throw new IllegalArgumentException("size " + size + " must be greater than zero.");
+            }
+        }
+        if (iterable instanceof RandomAccess && iterable instanceof List) {
+            int thisSize = ((List<T>) iterable).size();
+            ArrayList<List<T>> result = new ArrayList<List<T>>((thisSize + step - 1) / step);
+            int index = 0;
+            while (index < thisSize) {
+                int windowSize = Math.min(size, thisSize - index);
+                if (windowSize < size && !partialWindows) break;
+                final int currentIndex = index;
+                result.add(list(windowSize, new Transformer<Integer, T>() {
+                    @NotNull
+                    @Override
+                    public T transform(@NotNull Integer integer) {
+                        return ((List<T>) iterable).get(integer + currentIndex);
+                    }
+                }));
+                index += step;
+            }
+            return result;
+        } else {
+            final ArrayList<List<T>> result = new ArrayList<List<T>>();
+            forEach(new WindowedIterator<T>(iterable != null ? iterable.iterator() : null, size, step, partialWindows), new Action<List<T>>() {
+                @Override
+                public void action(@NotNull List<T> o) {
+                    result.add(o);
+                }
+            });
+            return result;
+        }
+    }
+
+    /**
+     * Returns a list of results of applying the given [transform] function to
+     * an each list representing a view over the window of the given [size]
+     * sliding along this collection with the given [step].
+     * <p>
+     * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
+     * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
+     * Several last lists may have less elements than the given [size].
+     * <p>
+     * Both [size] and [step] must be positive and can be greater than the number of elements in this collection.
+     *
+     * @param size           the number of elements to take in each window
+     * @param step           the number of elements to move the window forward by on an each step, by default 1
+     * @param partialWindows controls whether or not to keep partial windows in the end if any,
+     *                       by default `false` which means partial windows won't be preserved
+     */
+    @NotNull
+    public static <T, R> List<R> windowed(@Nullable Iterable<T> iterable, int size, int step, boolean partialWindows, @NotNull final Transformer<List<T>, R> transform) {
+        if (size <= 0 || step <= 0) {
+            if (size != step){
+                throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
+            } else {
+                throw new IllegalArgumentException("size " + size + " must be greater than zero.");
+            }
+        }
+        if (iterable instanceof RandomAccess && iterable instanceof List) {
+            int thisSize = ((List<T>) iterable).size();
+            ArrayList<R> result = new ArrayList<R>((thisSize + step - 1) / step);
+            MovingSubList<T> window = new MovingSubList<T>((List<T>) iterable);
+            int index = 0;
+            while (index < thisSize) {
+                window.move(index, Math.min((index + size), thisSize));
+                if (!partialWindows && window.size() < size) break;
+                result.add(transform.transform(window));
+                index += step;
+            }
+            return result;
+        } else {
+            final ArrayList<R> result = new ArrayList<R>();
+            forEach(new WindowedIterator<T>(iterable != null ? iterable.iterator() : null, size, step, partialWindows), new Action<List<T>>() {
+                @Override
+                public void action(@NotNull List<T> ts) {
+                    result.add(transform.transform(ts));
+                }
+            });
+            return result;
+        }
+    }
 
 
     /* ******************************************* zip ******************************************* */

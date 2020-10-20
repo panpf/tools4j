@@ -116,7 +116,7 @@ Dependencies：
     * copyOfRange, slice, sliceArray, associate, associateBy, associateByTo, associateTo
 * Collectionx: [Collectionx.java] ([Test][CollectionxTest.kt]) | [Collectionx.kt] ([Test][CollectionxKtxTest.kt])
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
-    * isNotEmpty, orEmpty, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
+    * isNotEmpty, orEmpty, list, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
     * emptySet, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
     * filterIndexedTo, filterIsInstanceTo, filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
     * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo, 
@@ -132,8 +132,8 @@ Dependencies：
     * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight, reduceRightIndexed, slice, take, 
     * takeLast, takeLastWhile, takeWhile, distinct, distinctBy, intersect, retainAll, associateTo, 
     * associate, associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile, single, 
-    * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, zip, unzip 
-    * zipWithNext, iterator, to\*Array, flatten, requireNoNulls
+    * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, windowed, 
+    * zip, unzip, zipWithNext, iterator, to\*Array, flatten, requireNoNulls
 * Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
     * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo, eachCount, eachCountTo
 * Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
