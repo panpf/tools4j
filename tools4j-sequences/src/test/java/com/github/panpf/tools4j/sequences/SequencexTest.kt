@@ -1966,6 +1966,237 @@ class SequencexTest {
     }
 
     @Test
+    fun testChunked() {
+        val normalSequence0 = sequenceOf("a", "b", "c", "d", "e")
+        val normalSequence1 = Sequencex.sequenceOf("a", "b", "c", "d", "e")
+        val emptySequence0 = sequenceOf<String>()
+        val emptySequence1 = Sequencex.sequenceOf<String>()
+        val nullSequence = null as Sequence<String>?
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.chunked(-1) },
+                { Sequencex.chunked(normalSequence1, -1) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.chunked(0) },
+                { Sequencex.chunked(normalSequence1, 0) })
+        assertTwoEquals("[a], [b], [c], [d], [e]",
+                normalSequence0.chunked(1).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 1)))
+        assertTwoEquals("[a, b], [c, d], [e]",
+                normalSequence0.chunked(2).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 2)))
+        assertTwoEquals("[a, b, c], [d, e]",
+                normalSequence0.chunked(3).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 3)))
+        assertTwoEquals("[a, b, c, d], [e]",
+                normalSequence0.chunked(4).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 4)))
+        assertTwoEquals("[a, b, c, d, e]",
+                normalSequence0.chunked(5).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 5)))
+        assertTwoEquals("[a, b, c, d, e]",
+                normalSequence0.chunked(6).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 6)))
+
+        assertTwoEquals("",
+                emptySequence0.chunked(1).joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(emptySequence1, 1)))
+        assertEquals("",
+                Sequencex.joinToString(Sequencex.chunked(nullSequence, 1)))
+
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.chunked(-1) },
+                { Sequencex.chunked(normalSequence1, -1) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.chunked(0) },
+                { Sequencex.chunked(normalSequence1, 0) })
+        assertTwoEquals("[a], [b], [c], [d], [e]",
+                normalSequence0.chunked(1) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 1) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[a+b], [c+d], [e]",
+                normalSequence0.chunked(2) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 2) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[a+b+c], [d+e]",
+                normalSequence0.chunked(3) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 3) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[a+b+c+d], [e]",
+                normalSequence0.chunked(4) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 4) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[a+b+c+d+e]",
+                normalSequence0.chunked(5) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 5) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[a+b+c+d+e]",
+                normalSequence0.chunked(6) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(normalSequence1, 6) { it.joinToString("+", "[", "]") }))
+
+        assertTwoEquals("",
+                emptySequence0.chunked(1) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.chunked(emptySequence1, 1) { it.joinToString("+", "[", "]") }))
+        assertEquals("",
+                Sequencex.joinToString(Sequencex.chunked(nullSequence, 1) { it.joinToString("+", "[", "]") }))
+    }
+
+    @Test
+    fun testWindowed() {
+        val normalSequence0 = sequenceOf(1, 2, 3, 4, 5)
+        val normalSequence1 = Sequencex.sequenceOf(1, 2, 3, 4, 5)
+        val emptySequence0 = sequenceOf<Int>()
+        val emptySequence1 = Sequencex.sequenceOf<Int>()
+        val nullSequence = null as Sequence<Int>?
+
+        // Test illegal size and step parameter
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(0, 0, true) },
+                { Sequencex.windowed(normalSequence1, 0, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(1, 0, true) },
+                { Sequencex.windowed(normalSequence1, 1, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(0, 1, true) },
+                { Sequencex.windowed(normalSequence1, 0, 1, true) })
+
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(0, 0, true) },
+                { Sequencex.windowed(normalSequence1, 0, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(1, 0, true) },
+                { Sequencex.windowed(normalSequence1, 1, 0, true) })
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalSequence0.windowed(0, 1, true) },
+                { Sequencex.windowed(normalSequence1, 0, 1, true) })
+
+        // Test the size parameter
+        assertTwoEquals("[1], [2], [3], [4], [5]",
+                normalSequence0.windowed(1, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 1, 1, true)))
+        assertTwoEquals("[1, 2], [2, 3], [3, 4], [4, 5], [5]",
+                normalSequence0.windowed(2, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 1, true)))
+        assertTwoEquals("[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5], [5]",
+                normalSequence0.windowed(3, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 3, 1, true)))
+        assertTwoEquals("[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]",
+                normalSequence0.windowed(4, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 4, 1, true)))
+        assertTwoEquals("[1, 2, 3, 4, 5], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]",
+                normalSequence0.windowed(5, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 5, 1, true)))
+        assertTwoEquals("[1, 2, 3, 4, 5], [2, 3, 4, 5], [3, 4, 5], [4, 5], [5]",
+                normalSequence0.windowed(6, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 6, 1, true)))
+
+        assertTwoEquals("[1], [2], [3], [4], [5]",
+                normalSequence0.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 1, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2], [2+3], [3+4], [4+5], [5]",
+                normalSequence0.windowed(2, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3], [2+3+4], [3+4+5], [4+5], [5]",
+                normalSequence0.windowed(3, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 3, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3+4], [2+3+4+5], [3+4+5], [4+5], [5]",
+                normalSequence0.windowed(4, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 4, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3+4+5], [2+3+4+5], [3+4+5], [4+5], [5]",
+                normalSequence0.windowed(5, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 5, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3+4+5], [2+3+4+5], [3+4+5], [4+5], [5]",
+                normalSequence0.windowed(6, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 6, 1, true) { it.joinToString("+", "[", "]") }))
+
+        // Test the step parameter
+        assertTwoEquals("[1, 2], [3, 4], [5]",
+                normalSequence0.windowed(2, 2, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 2, true)))
+        assertTwoEquals("[1, 2], [4, 5]",
+                normalSequence0.windowed(2, 3, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 3, true)))
+        assertTwoEquals("[1, 2], [5]",
+                normalSequence0.windowed(2, 4, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 4, true)))
+        assertTwoEquals("[1, 2]",
+                normalSequence0.windowed(2, 5, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 5, true)))
+        assertTwoEquals("[1, 2]",
+                normalSequence0.windowed(2, 6, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 6, true)))
+
+        assertTwoEquals("[1+2], [3+4], [5]",
+                normalSequence0.windowed(2, 2, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 2, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2], [4+5]",
+                normalSequence0.windowed(2, 3, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 3, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2], [5]",
+                normalSequence0.windowed(2, 4, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 4, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2]",
+                normalSequence0.windowed(2, 5, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 5, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2]",
+                normalSequence0.windowed(2, 6, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 6, true) { it.joinToString("+", "[", "]") }))
+
+        // Test the partialWindows parameter
+        assertTwoEquals("[1], [2], [3], [4], [5]",
+                normalSequence0.windowed(1, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 1, 1, false)))
+        assertTwoEquals("[1, 2], [2, 3], [3, 4], [4, 5]",
+                normalSequence0.windowed(2, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 1, false)))
+        assertTwoEquals("[1, 2], [3, 4]",
+                normalSequence0.windowed(2, 2, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 2, false)))
+        assertTwoEquals("[1, 2, 3], [2, 3, 4], [3, 4, 5]",
+                normalSequence0.windowed(3, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 3, 1, false)))
+        assertTwoEquals("[1, 2, 3, 4], [2, 3, 4, 5]",
+                normalSequence0.windowed(4, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 4, 1, false)))
+        assertTwoEquals("[1, 2, 3, 4, 5]",
+                normalSequence0.windowed(5, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 5, 1, false)))
+        assertTwoEquals("",
+                normalSequence0.windowed(6, 1, false).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 6, 1, false)))
+
+        assertTwoEquals("[1], [2], [3], [4], [5]",
+                normalSequence0.windowed(1, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 1, 1, false) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2], [2+3], [3+4], [4+5]",
+                normalSequence0.windowed(2, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 2, 1, false) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3], [2+3+4], [3+4+5]",
+                normalSequence0.windowed(3, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 3, 1, false) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3+4], [2+3+4+5]",
+                normalSequence0.windowed(4, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 4, 1, false) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("[1+2+3+4+5]",
+                normalSequence0.windowed(5, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 5, 1, false) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("",
+                normalSequence0.windowed(6, 1, false) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(normalSequence1, 6, 1, false) { it.joinToString("+", "[", "]") }))
+
+        // Test empty or null
+        assertTwoEquals("",
+                emptySequence0.windowed(1, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(emptySequence1, 1, 1, true)))
+        assertTwoEquals("",
+                emptySequence0.windowed(1, 1, true).joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(nullSequence, 1, 1, true)))
+
+        assertTwoEquals("",
+                emptySequence0.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(emptySequence1, 1, 1, true) { it.joinToString("+", "[", "]") }))
+        assertTwoEquals("",
+                emptySequence0.windowed(1, 1, true) { it.joinToString("+", "[", "]") }.joinToString(),
+                Sequencex.joinToString(Sequencex.windowed(nullSequence, 1, 1, true) { it.joinToString("+", "[", "]") }))
+    }
+
+    @Test
     fun testZip() {
         val normalSequence0 = sequenceOf("6", "3", "7", "2", "1")
         val normalSequence00 = sequenceOf("4", "9", "5")

@@ -305,8 +305,8 @@ Dependencies：
     * withIndex, distinct, distinctBy, all, any, count, fold, foldIndexed, forEach, 
     * forEachIndexed, onEach, onEachIndexed, maxOrNull, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, 
     * maxOfWith, maxOfWithOrNull, minOrNull, minByOrNull, minWithOrNull, minOf, minOfOrNull, minOfWith, 
-    * minOfWithOrNull, none, reduce, reduceIndexed, sumBy, sumByDouble, sumOf, requireNoNulls, minus,
-    * minusElement, partition, plus, plusElement, zip, unzip, joinTo, joinToString, averageOf
+    * minOfWithOrNull, none, reduce, reduceIndexed, sumBy, sumByDouble, sumOf, requireNoNulls, chunked, 
+    * minus, minusElement, partition, plus, plusElement, windowed, zip, unzip, joinTo, joinToString, averageOf
 
 ### tools4j-test
 ![TestCoverage](https://img.shields.io/badge/TestCoverage-87%25-green.svg)

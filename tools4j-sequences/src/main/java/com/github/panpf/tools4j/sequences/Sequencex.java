@@ -2894,43 +2894,44 @@ public class Sequencex {
     }
 
 
+    /* ******************************************* chunked ******************************************* */
+
+
+    /**
+     * Splits this sequence into a sequence of lists each not exceeding the given [size].
+     * <p>
+     * The last list in the resulting sequence may have less elements than the given [size].
+     *
+     * @param size the number of elements to take in each list, must be positive and can be greater than the number of elements in this sequence.
+     *             <p>
+     *             The operation is _intermediate_ and _stateful_.
+     */
+    @NotNull
+    public static <T> Sequence<List<T>> chunked(@Nullable Sequence<T> sequence, int size) {
+        return windowed(sequence, size, size, true);
+    }
+
+    /**
+     * Splits this sequence into several lists each not exceeding the given [size]
+     * and applies the given [transform] function to an each.
+     *
+     * @param size the number of elements to take in each list, must be positive and can be greater than the number of elements in this sequence.
+     *             <p>
+     *             The operation is _intermediate_ and _stateful_.
+     * @return sequence of results of the [transform] applied to an each list.
+     * <p>
+     * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
+     * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
+     * The last list may have less elements than the given [size].
+     */
+    @NotNull
+    public static <T, R> Sequence<R> chunked(@Nullable Sequence<T> sequence, int size, @NotNull Transformer<List<T>, R> transform) {
+        return windowed(sequence, size, size, true, transform);
+    }
+
+
     /* ******************************************* minus ******************************************* */
 
-
-///**
-// * Splits this sequence into a sequence of lists each not exceeding the given [size].
-// *
-// * The last list in the resulting sequence may have less elements than the given [size].
-// *
-// * @param size the number of elements to take in each list, must be positive and can be greater than the number of elements in this sequence.
-// *
-// * The operation is _intermediate_ and _stateful_.
-// *
-// * @sample samples.collections.Collections.Transformations.chunked
-// */@NotNull
-//    public static <T> Sequence<List<T>> chunked(@Nullable Sequence<T> sequence, int size) {
-//        return windowed(sequence, size, size, partialWindows = true)
-//    }
-//
-///**
-// * Splits this sequence into several lists each not exceeding the given [size]
-// * and applies the given [transform] function to an each.
-// *
-// * @return sequence of results of the [transform] applied to an each list.
-// *
-// * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
-// * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
-// * The last list may have less elements than the given [size].
-// *
-// * @param size the number of elements to take in each list, must be positive and can be greater than the number of elements in this sequence.
-// *
-// * The operation is _intermediate_ and _stateful_.
-// *
-// * @sample samples.text.Strings.chunkedTransform
-// */@NotNull
-//    public static <T, R> Sequence<R> chunked(@Nullable Sequence<T> sequence, int size, @NotNull Transformer<List<T>, R> transform) {
-//        return windowed(size, size, partialWindows = true, transform = transform)
-//    }
 
     /**
      * Returns a sequence containing all elements of the original sequence without the first occurrence of the given [element].
@@ -3169,50 +3170,78 @@ public class Sequencex {
     }
 
 
+    /* ******************************************* windowed ******************************************* */
+
+    /**
+     * Returns a sequence of snapshots of the window of the given [size]
+     * sliding along this sequence with the given [step], where each
+     * snapshot is a list.
+     * <p>
+     * Several last lists may have less elements than the given [size].
+     * <p>
+     * Both [size] and [step] must be positive and can be greater than the number of elements in this sequence.
+     *
+     * @param size           the number of elements to take in each window
+     * @param step           the number of elements to move the window forward by on an each step, by default 1
+     * @param partialWindows controls whether or not to keep partial windows in the end if any,
+     *                       by default `false` which means partial windows won't be preserved
+     */
+    @NotNull
+    public static <T> Sequence<List<T>> windowed(@Nullable final Sequence<T> sequence, final int size, final int step, final boolean partialWindows) {
+        if (size <= 0 || step <= 0) {
+            if (size != step) {
+                throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
+            } else {
+                throw new IllegalArgumentException("size " + size + " must be greater than zero.");
+            }
+        }
+        return new Sequence<List<T>>() {
+            @NotNull
+            @Override
+            public Iterator<List<T>> iterator() {
+                return new WindowedIterator<T>(sequence != null ? sequence.iterator() : null, size, step, partialWindows);
+            }
+        };
+    }
+
+    /**
+     * Returns a sequence of results of applying the given [transform] function to
+     * an each list representing a view over the window of the given [size]
+     * sliding along this sequence with the given [step].
+     * <p>
+     * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
+     * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
+     * Several last lists may have less elements than the given [size].
+     * <p>
+     * Both [size] and [step] must be positive and can be greater than the number of elements in this sequence.
+     *
+     * @param size           the number of elements to take in each window
+     * @param step           the number of elements to move the window forward by on an each step, by default 1
+     * @param partialWindows controls whether or not to keep partial windows in the end if any,
+     *                       by default `false` which means partial windows won't be preserved
+     */
+    @NotNull
+    public static <T, R> Sequence<R> windowed(@Nullable final Sequence<T> sequence, final int size, final int step,
+                                              final boolean partialWindows, @NotNull Transformer<List<T>, R> transform) {
+        if (size <= 0 || step <= 0) {
+            if (size != step) {
+                throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
+            } else {
+                throw new IllegalArgumentException("size " + size + " must be greater than zero.");
+            }
+        }
+        return map(new Sequence<List<T>>() {
+            @NotNull
+            @Override
+            public Iterator<List<T>> iterator() {
+                return new WindowedIterator<T>(sequence != null ? sequence.iterator() : null, size, step, partialWindows);
+            }
+        }, transform);
+    }
+
+
     /* ******************************************* zip ******************************************* */
 
-///**
-// * Returns a sequence of snapshots of the window of the given [size]
-// * sliding along this sequence with the given [step], where each
-// * snapshot is a list.
-// *
-// * Several last lists may have less elements than the given [size].
-// *
-// * Both [size] and [step] must be positive and can be greater than the number of elements in this sequence.
-// * @param size the number of elements to take in each window
-// * @param step the number of elements to move the window forward by on an each step, by default 1
-// * @param partialWindows controls whether or not to keep partial windows in the end if any,
-// * by default `false` which means partial windows won't be preserved
-// *
-// * @sample samples.collections.Sequences.Transformations.takeWindows
-// */
-//    @SinceKotlin("1.2")
-//    public static <T> windowed(@Nullable Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false): Sequence<List<T>> {
-//        return windowedSequence(size, step, partialWindows, reuseBuffer = false)
-//    }
-//
-///**
-// * Returns a sequence of results of applying the given [transform] function to
-// * an each list representing a view over the window of the given [size]
-// * sliding along this sequence with the given [step].
-// *
-// * Note that the list passed to the [transform] function is ephemeral and is valid only inside that function.
-// * You should not store it or allow it to escape in some way, unless you made a snapshot of it.
-// * Several last lists may have less elements than the given [size].
-// *
-// * Both [size] and [step] must be positive and can be greater than the number of elements in this sequence.
-// * @param size the number of elements to take in each window
-// * @param step the number of elements to move the window forward by on an each step, by default 1
-// * @param partialWindows controls whether or not to keep partial windows in the end if any,
-// * by default `false` which means partial windows won't be preserved
-// *
-// * @sample samples.collections.Sequences.Transformations.averageWindows
-// */
-//    @SinceKotlin("1.2")
-//    public static <T, R> windowed(@Nullable Sequence<T> sequence, size: Int, step: Int = 1, partialWindows: Boolean = false, transform: (List<T>) -> R): Sequence<R> {
-//        return windowedSequence(size, step, partialWindows, reuseBuffer = true).map(transform)
-//    }
-//
 
     /**
      * Returns a sequence of values built from the elements of `this` sequence and the [other] sequence with the same index.
