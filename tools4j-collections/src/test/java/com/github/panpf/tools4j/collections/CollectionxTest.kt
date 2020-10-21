@@ -864,16 +864,95 @@ class CollectionxTest {
     fun testSort() {
         val normalList = listOf("aaa", "h", "uuuu", "gg")
         val nullableList = Collectionx.listOf<String>("aaa", null, null, "gg", null)
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
+
+        assertTwoEquals("aaa, gg, h, uuuu",
+                normalList.toMutableList().apply { sort() }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.sort(this) }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sort() }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.sort(this) }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sort() }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.sort(this) }))
+
+        assertTwoEquals("uuuu, h, gg, aaa",
+                normalList.toMutableList().apply { sortDescending() }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.sortDescending(this) }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortDescending() }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.sortDescending(this) }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortDescending() }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.sortDescending(this) }))
+
+        assertTwoEquals("uuuu, h, gg, aaa",
+                normalList.toMutableList().apply { sortWith { it0, it1 -> it0.compareTo(it1) * -1 } }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.sortWith(this) { it0, it1 -> it0.compareTo(it1) * -1 } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortWith { it0, it1 -> it0.compareTo(it1) * -1 } }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.sortWith(this) { it0, it1 -> it0.compareTo(it1) * -1 } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortWith { it0, it1 -> it0.compareTo(it1) * -1 } }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.sortWith(this) { it0, it1 -> it0.compareTo(it1) * -1 } }))
+
+        assertTwoEquals("h, gg, aaa, uuuu",
+                normalList.toMutableList().apply { sortBy { it.length } }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.sortBy(this) { it.length } }))
+        assertTwoEquals("null, null, null, gg, aaa",
+                nullableList.toMutableList().apply { sortBy { it?.length ?: 0 } }.joinToString(),
+                Collectionx.joinToString(nullableList.toMutableList().apply { Collectionx.sortBy(this) { it.length } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortBy { it.length } }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.sortBy(this) { it.length } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortBy { it.length } }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.sortBy(this) { it.length } }))
+
+        assertTwoEquals("uuuu, aaa, gg, h",
+                normalList.toMutableList().apply { sortByDescending { it.length } }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.sortByDescending(this) { it.length } }))
+        assertTwoEquals("aaa, gg, null, null, null",
+                nullableList.toMutableList().apply { sortByDescending { it?.length ?: 0 } }.joinToString(),
+                Collectionx.joinToString(nullableList.toMutableList().apply { Collectionx.sortByDescending(this) { it.length } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortByDescending { it.length } }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.sortByDescending(this) { it.length } }))
+        assertTwoEquals("",
+                emptyList.toMutableList().apply { sortByDescending { it.length } }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.sortByDescending(this) { it.length } }))
+
 
         assertTwoEquals("aaa, gg, h, uuuu",
                 normalList.sorted().joinToString(),
                 Collectionx.joinToString(Collectionx.sorted(normalList)))
-        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sorted(nullableList)) }
+        assertTwoEquals("",
+                emptyList.sorted().joinToString(),
+                Collectionx.joinToString(Collectionx.sorted(emptyList)))
+        assertTwoEquals("",
+                emptyList.sorted().joinToString(),
+                Collectionx.joinToString(Collectionx.sorted(nullList)))
 
         assertTwoEquals("uuuu, h, gg, aaa",
                 normalList.sortedDescending().joinToString(),
                 Collectionx.joinToString(Collectionx.sortedDescending(normalList)))
-        assertThrow(NullPointerException::class) { Collectionx.joinToString(Collectionx.sortedDescending(nullableList)) }
+        assertTwoEquals("",
+                emptyList.sortedDescending().joinToString(),
+                Collectionx.joinToString(Collectionx.sortedDescending(emptyList)))
+        assertTwoEquals("",
+                emptyList.sortedDescending().joinToString(),
+                Collectionx.joinToString(Collectionx.sortedDescending(nullList)))
+
+        assertTwoEquals("uuuu, h, gg, aaa",
+                normalList.sortedWith { it0, it1 -> it0.compareTo(it1) * -1 }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(normalList) { it0, it1 -> it0.compareTo(it1) * -1 }))
+        assertTwoEquals("",
+                emptyList.sortedWith { it0, it1 -> it0.compareTo(it1) * -1 }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(emptyList) { it0, it1 -> it0.compareTo(it1) * -1 }))
+        assertTwoEquals("",
+                emptyList.sortedWith { it0, it1 -> it0.compareTo(it1) * -1 }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedWith(nullList) { it0, it1 -> it0.compareTo(it1) * -1 }))
 
         assertTwoEquals("h, gg, aaa, uuuu",
                 normalList.sortedBy { it.length }.joinToString(),
@@ -881,6 +960,12 @@ class CollectionxTest {
         assertTwoEquals("null, null, null, gg, aaa",
                 nullableList.sortedBy { it?.length ?: 0 }.joinToString(),
                 Collectionx.joinToString(Collectionx.sortedBy(nullableList) { it.length }))
+        assertTwoEquals("",
+                emptyList.sortedBy { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedBy(emptyList) { it.length }))
+        assertTwoEquals("",
+                emptyList.sortedBy { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedBy(nullList) { it.length }))
 
         assertTwoEquals("uuuu, aaa, gg, h",
                 normalList.sortedByDescending { it.length }.joinToString(),
@@ -888,13 +973,12 @@ class CollectionxTest {
         assertTwoEquals("aaa, gg, null, null, null",
                 nullableList.sortedByDescending { it?.length ?: 0 }.joinToString(),
                 Collectionx.joinToString(Collectionx.sortedByDescending(nullableList) { it.length }))
-
-        assertTwoEquals("aaa, gg, h, uuuu",
-                normalList.sortedWith { it1, it2 -> it1.compareTo(it2) }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedWith(normalList) { it1, it2 -> it1.compareTo(it2) }))
-        assertTwoEquals("null, null, null, aaa, gg",
-                nullableList.sortedWith { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }.joinToString(),
-                Collectionx.joinToString(Collectionx.sortedWith(nullableList) { it1, it2 -> it1.orEmpty().compareTo(it2.orEmpty()) }))
+        assertTwoEquals("",
+                emptyList.sortedByDescending { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedByDescending(emptyList) { it.length }))
+        assertTwoEquals("",
+                emptyList.sortedByDescending { it.length }.joinToString(),
+                Collectionx.joinToString(Collectionx.sortedByDescending(nullList) { it.length }))
     }
 
     @Test

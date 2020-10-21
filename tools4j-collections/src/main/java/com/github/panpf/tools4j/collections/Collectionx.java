@@ -2501,6 +2501,18 @@ public class Collectionx {
     }
 
     /**
+     * Sorts elements in the list in-place descending according to their natural sort order.
+     */
+    public static <T extends Comparable<T>> void sortDescending(@Nullable List<T> list) {
+        sortWith(list, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return o2.compareTo(o1);
+            }
+        });
+    }
+
+    /**
      * Sorts elements in the list in-place according to the order specified with [comparator].
      */
     public static <T> void sortWith(@Nullable List<T> list, @NotNull Comparator<T> comparator) {
@@ -2542,10 +2554,32 @@ public class Collectionx {
     }
 
     /**
-     * Sorts elements in the list in-place descending according to their natural sort order.
+     * Returns a list of all elements sorted according to their natural sort order.
      */
-    public static <T extends Comparable<T>> void sortDescending(@Nullable List<T> list) {
-        sortWith(list, new Comparator<T>() {
+    @NotNull
+    public static <T extends Comparable<T>> List<T> sorted(@Nullable Iterable<T> iterable) {
+        if (iterable instanceof Collection) {
+            Collection<T> collection = (Collection<T>) iterable;
+            if (collection.size() <= 1) {
+                return toList(iterable);
+            } else {
+                List<T> newList = toList(collection);
+                sort(newList);
+                return newList;
+            }
+        } else {
+            List<T> result = toList(iterable);
+            sort(result);
+            return result;
+        }
+    }
+
+    /**
+     * Returns a list of all elements sorted descending according to their natural sort order.
+     */
+    @NotNull
+    public static <T extends Comparable<T>> List<T> sortedDescending(@Nullable Iterable<T> iterable) {
+        return sortedWith(iterable, new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
                 return o2.compareTo(o1);
@@ -2590,27 +2624,6 @@ public class Collectionx {
     }
 
     /**
-     * Returns a list of all elements sorted according to their natural sort order.
-     */
-    @NotNull
-    public static <T extends Comparable<T>> List<T> sorted(@Nullable Iterable<T> iterable) {
-        if (iterable instanceof Collection) {
-            Collection<T> collection = (Collection<T>) iterable;
-            if (collection.size() <= 1) {
-                return toList(iterable);
-            } else {
-                List<T> newList = toList(collection);
-                sort(newList);
-                return newList;
-            }
-        } else {
-            List<T> result = toList(iterable);
-            sort(result);
-            return result;
-        }
-    }
-
-    /**
      * Returns a list of all elements sorted descending according to natural sort order of the value returned by specified [selector] function.
      */
     @NotNull
@@ -2621,19 +2634,6 @@ public class Collectionx {
                 R r1 = o2 != null ? transformer.transform(o2) : null;
                 R r2 = o1 != null ? transformer.transform(o1) : null;
                 return r1 == r2 ? 0 : (r1 == null ? -1 : (r2 == null ? 1 : (r1.compareTo(r2))));
-            }
-        });
-    }
-
-    /**
-     * Returns a list of all elements sorted descending according to their natural sort order.
-     */
-    @NotNull
-    public static <T extends Comparable<T>> List<T> sortedDescending(@Nullable Iterable<T> iterable) {
-        return sortedWith(iterable, new Comparator<T>() {
-            @Override
-            public int compare(T o1, T o2) {
-                return o2.compareTo(o1);
             }
         });
     }
