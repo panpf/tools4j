@@ -1057,7 +1057,7 @@ public class Mapx {
      * Returns a [List] containing all key-value pairs.
      */
     public static <K, V> List<Pair<K, V>> toList(@Nullable Map<K, V> map) {
-        if (map == null || map.size() == 0) return Collectionx.arrayListOf();
+        if (map == null || map.size() == 0) return Collectionx.emptyList();
 
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
 //        if (!iterator.hasNext()) return Collectionx.arrayListOf();

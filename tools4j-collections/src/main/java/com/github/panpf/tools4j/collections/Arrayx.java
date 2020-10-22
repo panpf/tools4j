@@ -1906,7 +1906,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> reversed(@Nullable T[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<T> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1917,7 +1917,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> reversed(@Nullable byte[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Byte> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1928,7 +1928,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> reversed(@Nullable short[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Short> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1939,7 +1939,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> reversed(@Nullable int[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Integer> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1950,7 +1950,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> reversed(@Nullable long[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Long> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1961,7 +1961,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> reversed(@Nullable float[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Float> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1972,7 +1972,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> reversed(@Nullable double[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Double> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1983,7 +1983,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> reversed(@Nullable boolean[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Boolean> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -1994,7 +1994,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> reversed(@Nullable char[] elements) {
-        if (elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Character> list = Arrayx.toList(elements);
         Collectionx.reverse(list);
         return list;
@@ -3931,7 +3931,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> Iterable<T> asIterable(@Nullable final T[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<T>() {
             @NotNull
             @Override
@@ -3946,7 +3946,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Byte> asIterable(@Nullable final byte[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Byte>() {
             @NotNull
             @Override
@@ -3961,7 +3961,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Short> asIterable(@Nullable final short[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Short>() {
             @NotNull
             @Override
@@ -3976,7 +3976,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Integer> asIterable(@Nullable final int[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Integer>() {
             @NotNull
             @Override
@@ -3991,7 +3991,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Long> asIterable(@Nullable final long[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Long>() {
             @NotNull
             @Override
@@ -4006,7 +4006,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Float> asIterable(@Nullable final float[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Float>() {
             @NotNull
             @Override
@@ -4021,7 +4021,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Double> asIterable(@Nullable final double[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Double>() {
             @NotNull
             @Override
@@ -4036,7 +4036,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Boolean> asIterable(@Nullable final boolean[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Boolean>() {
             @NotNull
             @Override
@@ -4051,7 +4051,7 @@ public class Arrayx {
      */
     @NotNull
     public static Iterable<Character> asIterable(@Nullable final char[] elements) {
-        if (isNullOrEmpty(elements)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements)) return Collectionx.emptyList();
         return new Iterable<Character>() {
             @NotNull
             @Override
@@ -11524,7 +11524,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T, R, V> List<V> zip(@Nullable T[] elements, @Nullable R[] other, @NotNull Transformer2<T, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11538,7 +11538,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable byte[] elements, @Nullable R[] other, @NotNull Transformer2<Byte, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11552,7 +11552,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable short[] elements, @Nullable R[] other, @NotNull Transformer2<Short, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11566,7 +11566,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable int[] elements, @Nullable R[] other, @NotNull Transformer2<Integer, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11580,7 +11580,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable long[] elements, @Nullable R[] other, @NotNull Transformer2<Long, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11594,7 +11594,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable float[] elements, @Nullable R[] other, @NotNull Transformer2<Float, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11608,7 +11608,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable double[] elements, @Nullable R[] other, @NotNull Transformer2<Double, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11622,7 +11622,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable boolean[] elements, @Nullable R[] other, @NotNull Transformer2<Boolean, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11636,7 +11636,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable char[] elements, @Nullable R[] other, @NotNull Transformer2<Character, R, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -11776,7 +11776,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T, R, V> List<V> zip(@Nullable T[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<T, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11792,7 +11792,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable byte[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Byte, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11808,7 +11808,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable short[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Short, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11824,7 +11824,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable int[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Integer, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11840,7 +11840,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable long[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Long, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11856,7 +11856,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable float[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Float, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11872,7 +11872,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable double[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Double, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11888,7 +11888,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable boolean[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Boolean, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -11904,7 +11904,7 @@ public class Arrayx {
      */
     @NotNull
     public static <R, V> List<V> zip(@Nullable char[] elements, @Nullable Iterable<R> other, @NotNull Transformer2<Character, R, V> transform) {
-        if (isNullOrEmpty(elements) || other == null) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || other == null) return Collectionx.emptyList();
         int arraySize = elements.length;
         List<V> list = new ArrayList<V>(Math.min(Collectionx.collectionSizeOrDefault(other, 10), arraySize));
         int i = 0;
@@ -12032,7 +12032,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable byte[] elements, @Nullable byte[] other, @NotNull Transformer2<Byte, Byte, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12046,7 +12046,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable short[] elements, @Nullable short[] other, @NotNull Transformer2<Short, Short, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12060,7 +12060,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable int[] elements, @Nullable int[] other, @NotNull Transformer2<Integer, Integer, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12074,7 +12074,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable long[] elements, @Nullable long[] other, @NotNull Transformer2<Long, Long, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12088,7 +12088,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable float[] elements, @Nullable float[] other, @NotNull Transformer2<Float, Float, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12102,7 +12102,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable double[] elements, @Nullable double[] other, @NotNull Transformer2<Double, Double, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12116,7 +12116,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable boolean[] elements, @Nullable boolean[] other, @NotNull Transformer2<Boolean, Boolean, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -12130,7 +12130,7 @@ public class Arrayx {
      */
     @NotNull
     public static <V> List<V> zip(@Nullable char[] elements, @Nullable char[] other, @NotNull Transformer2<Character, Character, V> transform) {
-        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.arrayListOf();
+        if (isNullOrEmpty(elements) || isNullOrEmpty(other)) return Collectionx.emptyList();
         int size = Math.min(count(elements), count(other));
         List<V> list = new ArrayList<V>(size);
         for (int i = 0; i < size; i++) {
@@ -15921,7 +15921,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -15936,7 +15936,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -15951,7 +15951,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -15966,7 +15966,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -15981,7 +15981,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -15996,7 +15996,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -16011,7 +16011,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -16026,7 +16026,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -16041,7 +16041,7 @@ public class Arrayx {
                 }
             }
         }
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -16236,7 +16236,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16257,7 +16257,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16278,7 +16278,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16299,7 +16299,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16320,7 +16320,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16341,7 +16341,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16362,7 +16362,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16383,7 +16383,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16404,7 +16404,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         if (n >= elements.length) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[0]);
         int count = 0;
@@ -16425,7 +16425,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16443,7 +16443,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16461,7 +16461,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16479,7 +16479,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16497,7 +16497,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16515,7 +16515,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16533,7 +16533,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16551,7 +16551,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -16569,7 +16569,7 @@ public class Arrayx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (elements == null || n == 0) return Collectionx.arrayListOf();
+        if (elements == null || n == 0) return Collectionx.emptyList();
         int size = elements.length;
         if (n >= size) return Arrayx.toList(elements);
         if (n == 1) return Collectionx.mutableListOf(elements[size - 1]);
@@ -18012,7 +18012,7 @@ public class Arrayx {
      */
     @NotNull
     public static <T> List<T> slice(@Nullable T[] elements, @NotNull IntRange indices) {
-        if (elements == null || indices.isEmpty()) return Collectionx.arrayListOf();
+        if (elements == null || indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18021,7 +18021,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Byte> slice(@Nullable byte[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18030,7 +18030,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Short> slice(@Nullable short[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18039,7 +18039,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Integer> slice(@Nullable int[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18048,7 +18048,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Long> slice(@Nullable long[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18057,7 +18057,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Float> slice(@Nullable float[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18066,7 +18066,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Double> slice(@Nullable double[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18075,7 +18075,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Boolean> slice(@Nullable boolean[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18084,7 +18084,7 @@ public class Arrayx {
      */
     @NotNull
     public static List<Character> slice(@Nullable char[] elements, @NotNull IntRange indices) {
-        if (indices.isEmpty()) return Collectionx.arrayListOf();
+        if (indices.isEmpty()) return Collectionx.emptyList();
         return Arrayx.asList(copyOfRange(elements, indices.getStart(), indices.getEndInclusive() + 1));
     }
 
@@ -18094,7 +18094,7 @@ public class Arrayx {
     @NotNull
     public static <T> List<T> slice(@Nullable T[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0) return Collectionx.arrayListOf();
+        if (size == 0) return Collectionx.emptyList();
         List<T> list = new ArrayList<T>(size);
         for (int index : indices) {
             if (elements != null) {
@@ -18110,7 +18110,7 @@ public class Arrayx {
     @NotNull
     public static List<Byte> slice(@Nullable byte[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Byte> list = new ArrayList<Byte>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18124,7 +18124,7 @@ public class Arrayx {
     @NotNull
     public static List<Short> slice(@Nullable short[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Short> list = new ArrayList<Short>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18138,7 +18138,7 @@ public class Arrayx {
     @NotNull
     public static List<Integer> slice(@Nullable int[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Integer> list = new ArrayList<Integer>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18152,7 +18152,7 @@ public class Arrayx {
     @NotNull
     public static List<Long> slice(@Nullable long[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Long> list = new ArrayList<Long>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18166,7 +18166,7 @@ public class Arrayx {
     @NotNull
     public static List<Float> slice(@Nullable float[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Float> list = new ArrayList<Float>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18180,7 +18180,7 @@ public class Arrayx {
     @NotNull
     public static List<Double> slice(@Nullable double[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Double> list = new ArrayList<Double>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18194,7 +18194,7 @@ public class Arrayx {
     @NotNull
     public static List<Boolean> slice(@Nullable boolean[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Boolean> list = new ArrayList<Boolean>(size);
         for (int index : indices) {
             list.add(elements[index]);
@@ -18208,7 +18208,7 @@ public class Arrayx {
     @NotNull
     public static List<Character> slice(@Nullable char[] elements, @NotNull Iterable<Integer> indices) {
         int size = Collectionx.collectionSizeOrDefault(indices, 10);
-        if (size == 0 || elements == null || elements.length == 0) return Collectionx.arrayListOf();
+        if (size == 0 || elements == null || elements.length == 0) return Collectionx.emptyList();
         List<Character> list = new ArrayList<Character>(size);
         for (int index : indices) {
             list.add(elements[index]);

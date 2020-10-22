@@ -130,7 +130,7 @@ public class Collectionx {
     @NotNull
     public static <T> Collection<T> orEmpty(@Nullable Collection<T> collection) {
         //noinspection unchecked
-        return collection != null ? collection : (Collection<T>) Collectionx.arrayListOf();
+        return collection != null ? collection : (Collection<T>) Collectionx.emptyList();
     }
 
     /**
@@ -139,7 +139,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<T> orEmpty(@Nullable List<T> list) {
         //noinspection unchecked
-        return list != null ? list : (List<T>) Collectionx.arrayListOf();
+        return list != null ? list : (List<T>) Collectionx.emptyList();
     }
 
 
@@ -218,7 +218,7 @@ public class Collectionx {
      * It should return the value for a list element given its index.
      */
     @NotNull
-    public static  <T> List<T> list(int size, @NotNull Transformer<Integer, T> init) {
+    public static <T> List<T> list(int size, @NotNull Transformer<Integer, T> init) {
         return mutableList(size, init);
     }
 
@@ -2673,10 +2673,10 @@ public class Collectionx {
      * Returns first index of [element], or -1 if the collection does not contain element.
      */
     public static <T> int indexOf(@Nullable Iterable<T> iterable, @Nullable T element) {
-        if (iterable instanceof List) {
-            return ((List<T>) iterable).indexOf(element);
-        } else {
-            if (iterable != null) {
+        if (iterable != null) {
+            if (iterable instanceof List) {
+                return ((List<T>) iterable).indexOf(element);
+            } else {
                 int index = 0;
                 for (T item : iterable) {
                     if (element != null ? element.equals(item) : null == item) {
@@ -2685,15 +2685,8 @@ public class Collectionx {
                     index++;
                 }
             }
-            return -1;
         }
-    }
-
-    /**
-     * Returns first index of [element], or -1 if the list does not contain element.
-     */
-    public static <T> int indexOf(@Nullable List<T> list, @Nullable T element) {
-        return list != null ? list.indexOf(element) : -1;
+        return -1;
     }
 
     /**
@@ -2713,51 +2706,30 @@ public class Collectionx {
     }
 
     /**
-     * Returns index of the first element matching the given [predicate], or -1 if the list does not contain such element.
-     */
-    public static <T> int indexOfFirst(@Nullable List<T> list, @NotNull Transformer<T, Boolean> predicate) {
-        if (list != null) {
-            int index = 0;
-            for (T item : list) {
-                if (predicate.transform(item)) {
-                    return index;
-                }
-                index++;
-            }
-        }
-        return -1;
-    }
-
-    /**
      * Returns index of the last element matching the given [predicate], or -1 if the collection does not contain such element.
      */
     public static <T> int indexOfLast(@Nullable Iterable<T> iterable, @NotNull Transformer<T, Boolean> predicate) {
         int lastIndex = -1;
         if (iterable != null) {
-            int index = 0;
-            for (T item : iterable) {
-                if (predicate.transform(item)) {
-                    lastIndex = index;
+            if (iterable instanceof List) {
+                List<T> list = (List<T>) iterable;
+                ListIterator<T> iterator = list.listIterator(count(list));
+                while (iterator.hasPrevious()) {
+                    if (predicate.transform(iterator.previous())) {
+                        return iterator.nextIndex();
+                    }
                 }
-                index++;
+            } else {
+                int index = 0;
+                for (T item : iterable) {
+                    if (predicate.transform(item)) {
+                        lastIndex = index;
+                    }
+                    index++;
+                }
             }
         }
         return lastIndex;
-    }
-
-    /**
-     * Returns index of the last element matching the given [predicate], or -1 if the list does not contain such element.
-     */
-    public static <T> int indexOfLast(@Nullable List<T> list, @NotNull Transformer<T, Boolean> predicate) {
-        ListIterator<T> iterator = list != null ? list.listIterator(count(list)) : null;
-        if (iterator != null) {
-            while (iterator.hasPrevious()) {
-                if (predicate.transform(iterator.previous())) {
-                    return iterator.nextIndex();
-                }
-            }
-        }
-        return -1;
     }
 
     /**
@@ -2779,13 +2751,6 @@ public class Collectionx {
             }
             return lastIndex;
         }
-    }
-
-    /**
-     * Returns last index of [element], or -1 if the list does not contain element.
-     */
-    public static <T> int lastIndexOf(@Nullable List<T> list, @Nullable T element) {
-        return list != null ? list.lastIndexOf(element) : -1;
     }
 
 
@@ -2950,7 +2915,7 @@ public class Collectionx {
         int size = collectionSizeOrDefault(indices, 10);
         if (size == 0) {
             //noinspection unchecked
-            return Collectionx.arrayListOf();
+            return Collectionx.emptyList();
         } else {
             ArrayList<T> resultList = new ArrayList<T>(size);
             for (int index : indices) {
@@ -2973,7 +2938,7 @@ public class Collectionx {
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
-        if (n == 0) {
+        if (n == 0 || iterable == null) {
             return Collectionx.emptyList();
         }
         if (iterable instanceof Collection) {
@@ -2987,12 +2952,10 @@ public class Collectionx {
         }
         int count = 0;
         ArrayList<T> list = new ArrayList<T>(n);
-        if (iterable != null) {
-            for (T item : iterable) {
-                if (count++ == n)
-                    break;
-                list.add(item);
-            }
+        for (T item : iterable) {
+            if (count++ == n)
+                break;
+            list.add(item);
         }
         return list;
     }
@@ -3003,14 +2966,14 @@ public class Collectionx {
     public static <T> List<T> takeLast(@Nullable List<T> list, final int n) {
         if (isNullOrEmpty(list)) {
             //noinspection unchecked
-            return Collectionx.arrayListOf();
+            return Collectionx.emptyList();
         }
         if (n < 0) {
             throw new IllegalArgumentException("Param 'n' is less than zero.");
         }
         if (n == 0) {
             //noinspection unchecked
-            return Collectionx.arrayListOf();
+            return Collectionx.emptyList();
         }
         int size = count(list);
         if (n >= size) {
@@ -3036,32 +2999,6 @@ public class Collectionx {
     }
 
     /**
-     * Returns a list containing last elements satisfying the given [predicate].
-     */
-    @NotNull
-    public static <T> List<T> takeLastWhile(@Nullable List<T> list, @NotNull Predicate<T> predicate) {
-        if (isNullOrEmpty(list)) {
-            //noinspection unchecked
-            return Collectionx.arrayListOf();
-        }
-        ListIterator<T> iterator = list.listIterator(list.size());
-        while (iterator.hasPrevious()) {
-            if (!predicate.accept(iterator.previous())) {
-                iterator.next();
-                int expectedSize = list.size() - iterator.nextIndex();
-                if (expectedSize == 0) //noinspection unchecked
-                    return Collectionx.arrayListOf();
-                ArrayList<T> resultList = new ArrayList<T>(expectedSize);
-                while (iterator.hasNext()) {
-                    resultList.add(iterator.next());
-                }
-                return resultList;
-            }
-        }
-        return toList(list);
-    }
-
-    /**
      * Returns a list containing first elements satisfying the given [predicate].
      */
     @NotNull
@@ -3075,6 +3012,32 @@ public class Collectionx {
             }
         }
         return list;
+    }
+
+    /**
+     * Returns a list containing last elements satisfying the given [predicate].
+     */
+    @NotNull
+    public static <T> List<T> takeLastWhile(@Nullable List<T> list, @NotNull Predicate<T> predicate) {
+        if (isNullOrEmpty(list)) {
+            //noinspection unchecked
+            return Collectionx.emptyList();
+        }
+        ListIterator<T> iterator = list.listIterator(list.size());
+        while (iterator.hasPrevious()) {
+            if (!predicate.accept(iterator.previous())) {
+                iterator.next();
+                int expectedSize = list.size() - iterator.nextIndex();
+                if (expectedSize == 0) //noinspection unchecked
+                    return Collectionx.emptyList();
+                ArrayList<T> resultList = new ArrayList<T>(expectedSize);
+                while (iterator.hasNext()) {
+                    resultList.add(iterator.next());
+                }
+                return resultList;
+            }
+        }
+        return toList(list);
     }
 
 
@@ -3294,7 +3257,7 @@ public class Collectionx {
             int resultSize = collection.size() - n;
             if (resultSize <= 0) {
                 //noinspection unchecked
-                return Collectionx.arrayListOf();
+                return Collectionx.emptyList();
             }
             if (resultSize == 1) {
                 //noinspection unchecked
@@ -3357,7 +3320,7 @@ public class Collectionx {
             }
         }
         //noinspection unchecked
-        return Collectionx.arrayListOf();
+        return Collectionx.emptyList();
     }
 
     /**
@@ -3670,7 +3633,7 @@ public class Collectionx {
     @NotNull
     public static <T> List<List<T>> windowed(@Nullable final Iterable<T> iterable, int size, int step, boolean partialWindows) {
         if (size <= 0 || step <= 0) {
-            if (size != step){
+            if (size != step) {
                 throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
             } else {
                 throw new IllegalArgumentException("size " + size + " must be greater than zero.");
@@ -3725,7 +3688,7 @@ public class Collectionx {
     @NotNull
     public static <T, R> List<R> windowed(@Nullable Iterable<T> iterable, int size, int step, boolean partialWindows, @NotNull final Transformer<List<T>, R> transform) {
         if (size <= 0 || step <= 0) {
-            if (size != step){
+            if (size != step) {
                 throw new IllegalArgumentException("Both size " + size + " and step " + step + " must be greater than zero.");
             } else {
                 throw new IllegalArgumentException("size " + size + " must be greater than zero.");

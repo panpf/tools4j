@@ -15,6 +15,7 @@
 * new: Collectionx added list, windowed method
 * fix: Fix Collectionx's chunked method bug
 * new: Sequencex added chunked, windowed method
+* change: Arrayx, Collectionx, Mapx now need to return empty Lists are Collections.EmptyList
 
 
 ## v1.0.0-rc01
