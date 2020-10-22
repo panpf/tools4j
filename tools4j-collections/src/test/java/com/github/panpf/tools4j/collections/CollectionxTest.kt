@@ -103,12 +103,12 @@ class CollectionxTest {
 
     @Test
     fun testOrEmpty() {
-        assertTrue(Collectionx.orEmpty(null as Collection<String>?) is ArrayList)
+        assertTrue(Collectionx.orEmpty(null as Collection<String>?)::class.simpleName == "EmptyList")
         assertTrue(Collectionx.orEmpty(null as Collection<String>?).isEmpty())
         assertTrue(Collectionx.orEmpty(Collectionx.linkedListOf("1") as Collection<String>) is LinkedList)
         assertTrue(Collectionx.orEmpty(Collectionx.linkedListOf("1") as Collection<String>).isNotEmpty())
 
-        assertTrue(Collectionx.orEmpty(null as List<String>?) is ArrayList)
+        assertTrue(Collectionx.orEmpty(null as List<String>?)::class.simpleName == "EmptyList")
         assertTrue(Collectionx.orEmpty(null as List<String>?).isEmpty())
         assertTrue(Collectionx.orEmpty(Collectionx.linkedListOf("1")) is LinkedList)
         assertTrue(Collectionx.orEmpty(Collectionx.linkedListOf("1")).isNotEmpty())
@@ -462,7 +462,11 @@ class CollectionxTest {
     @Test
     fun testIndexOf() {
         val normalList = listOf("aj", "bj", "cj", "bo")
+        val normalIterable = Iterable { normalList.iterator() }
+        val nullableList = listOf("aj", null, "cj", null)
+        val nullableIterable = Iterable { nullableList.iterator() }
         val emptyList = listOf<String>()
+        val emptyIterable = Iterable { emptyList.iterator() }
         val nullList = null as List<String>?
 
         assertTwoEquals(0, normalList.indexOf("aj"), Collectionx.indexOf(normalList, "aj"))
@@ -471,7 +475,29 @@ class CollectionxTest {
         assertTwoEquals(3, normalList.indexOf("bo"), Collectionx.indexOf(normalList, "bo"))
         assertTwoEquals(-1, normalList.indexOf("bb"), Collectionx.indexOf(normalList, "bb"))
         assertTwoEquals(-1, emptyList.indexOf("bb"), Collectionx.indexOf(emptyList, "bb"))
+        assertEquals(-1, Collectionx.indexOf(normalList, null))
+        assertEquals(1, Collectionx.indexOf(nullableList, null))
+        assertTwoEquals(0, normalIterable.indexOf("aj"), Collectionx.indexOf(normalIterable, "aj"))
+        assertTwoEquals(1, normalIterable.indexOf("bj"), Collectionx.indexOf(normalIterable, "bj"))
+        assertTwoEquals(2, normalIterable.indexOf("cj"), Collectionx.indexOf(normalIterable, "cj"))
+        assertTwoEquals(3, normalIterable.indexOf("bo"), Collectionx.indexOf(normalIterable, "bo"))
+        assertTwoEquals(-1, normalIterable.indexOf("bb"), Collectionx.indexOf(normalIterable, "bb"))
+        assertTwoEquals(-1, emptyIterable.indexOf("bb"), Collectionx.indexOf(emptyIterable, "bb"))
+        assertEquals(-1, Collectionx.indexOf(normalIterable, null))
+        assertEquals(1, Collectionx.indexOf(nullableIterable, null))
         assertEquals(-1, Collectionx.indexOf(nullList, "bb"))
+        assertEquals(-1, Collectionx.indexOf(nullList, null))
+
+        assertTwoEquals(0, normalList.asIterable().indexOf("aj"), Collectionx.indexOf(normalList, "aj"))
+        assertTwoEquals(1, normalList.asIterable().indexOf("bj"), Collectionx.indexOf(normalList, "bj"))
+        assertTwoEquals(2, normalList.asIterable().indexOf("cj"), Collectionx.indexOf(normalList, "cj"))
+        assertTwoEquals(3, normalList.asIterable().indexOf("bo"), Collectionx.indexOf(normalList, "bo"))
+        assertTwoEquals(-1, normalList.asIterable().indexOf("bb"), Collectionx.indexOf(normalList, "bb"))
+        assertTwoEquals(-1, emptyList.indexOf("bb"), Collectionx.indexOf(emptyList, "bb"))
+        assertEquals(-1, Collectionx.indexOf(normalList, null))
+        assertEquals(1, Collectionx.indexOf(nullableList, null))
+        assertEquals(-1, Collectionx.indexOf(nullList, "bb"))
+        assertEquals(-1, Collectionx.indexOf(nullList, null))
 
         assertTwoEquals(0, normalList.indexOfFirst { it.startsWith("a") }, Collectionx.indexOfFirst(normalList) { it.startsWith("a") })
         assertTwoEquals(1, normalList.indexOfFirst { it.startsWith("b") }, Collectionx.indexOfFirst(normalList) { it.startsWith("b") })
@@ -485,6 +511,11 @@ class CollectionxTest {
         assertTwoEquals(2, normalList.indexOfLast { it.startsWith("c") }, Collectionx.indexOfLast(normalList) { it.startsWith("c") })
         assertTwoEquals(-1, normalList.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(normalList) { it.startsWith("k") })
         assertTwoEquals(-1, emptyList.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(emptyList) { it.startsWith("k") })
+        assertTwoEquals(0, normalIterable.indexOfLast { it.startsWith("a") }, Collectionx.indexOfLast(normalIterable) { it.startsWith("a") })
+        assertTwoEquals(3, normalIterable.indexOfLast { it.startsWith("b") }, Collectionx.indexOfLast(normalIterable) { it.startsWith("b") })
+        assertTwoEquals(2, normalIterable.indexOfLast { it.startsWith("c") }, Collectionx.indexOfLast(normalIterable) { it.startsWith("c") })
+        assertTwoEquals(-1, normalIterable.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(normalIterable) { it.startsWith("k") })
+        assertTwoEquals(-1, emptyIterable.indexOfLast { it.startsWith("k") }, Collectionx.indexOfLast(emptyIterable) { it.startsWith("k") })
         assertEquals(-1, Collectionx.indexOfLast(nullList) { it.startsWith("k") })
 
         assertTwoEquals(0, normalList.lastIndexOf("aj"), Collectionx.lastIndexOf(normalList, "aj"))
@@ -493,7 +524,18 @@ class CollectionxTest {
         assertTwoEquals(3, normalList.lastIndexOf("bo"), Collectionx.lastIndexOf(normalList, "bo"))
         assertTwoEquals(-1, normalList.lastIndexOf("bb"), Collectionx.lastIndexOf(normalList, "bb"))
         assertTwoEquals(-1, emptyList.lastIndexOf("bb"), Collectionx.lastIndexOf(emptyList, "bb"))
+        assertEquals(-1, Collectionx.lastIndexOf(normalList, null))
+        assertEquals(3, Collectionx.lastIndexOf(nullableList, null))
+        assertTwoEquals(0, normalIterable.lastIndexOf("aj"), Collectionx.lastIndexOf(normalIterable, "aj"))
+        assertTwoEquals(1, normalIterable.lastIndexOf("bj"), Collectionx.lastIndexOf(normalIterable, "bj"))
+        assertTwoEquals(2, normalIterable.lastIndexOf("cj"), Collectionx.lastIndexOf(normalIterable, "cj"))
+        assertTwoEquals(3, normalIterable.lastIndexOf("bo"), Collectionx.lastIndexOf(normalIterable, "bo"))
+        assertTwoEquals(-1, normalIterable.lastIndexOf("bb"), Collectionx.lastIndexOf(normalIterable, "bb"))
+        assertTwoEquals(-1, emptyIterable.lastIndexOf("bb"), Collectionx.lastIndexOf(emptyIterable, "bb"))
+        assertEquals(-1, Collectionx.lastIndexOf(normalIterable, null))
+        assertEquals(3, Collectionx.lastIndexOf(nullableIterable, null))
         assertEquals(-1, Collectionx.lastIndexOf(nullList, "bb"))
+        assertEquals(-1, Collectionx.lastIndexOf(nullList, null))
     }
 
     @Test
@@ -696,71 +738,136 @@ class CollectionxTest {
     @Test
     fun testTake() {
         val normalList = listOf("aj", "bj", "cj", "dj")
+        val normalLinkedList = Collectionx.linkedListOf("aj", "bj", "cj", "dj")
+        val normalIterable = Iterable { normalList.iterator() }
+        val emptyList = listOf<String>()
+        val emptyIterable = Iterable { emptyList.iterator() }
+        val nullList: List<String>? = null
 
         /*
-         * take 系列的方法表示从列表头部开始取部分元素
+         * take 方法的意思是从列表头部开始取多少个元素
          */
-
-        // take 方法的意思是从列表头部开始取多少个元素
-
         assertTwoThrow(IllegalArgumentException::class,
                 { normalList.take(-1) },
-                { Collectionx.take(normalList, -1) }
-        )
-
-        assertTrue(emptyList<String>() === normalList.take(0))
-        assertTrue(Collectionx.emptyList<String>() === Collectionx.take(normalList, 0))
-
+                { Collectionx.take(normalList, -1) })
+        assertTwoEquals(true,
+                emptyList<String>() === normalList.take(0),
+                Collectionx.emptyList<String>() === Collectionx.take(normalList, 0))
+        assertTwoEquals(true,
+                emptyList<String>() === normalList.take(0),
+                Collectionx.emptyList<String>() === Collectionx.take(nullList, 1))
         assertTwoEquals("aj",
                 normalList.take(1).joinToString(),
                 Collectionx.joinToString(Collectionx.take(normalList, 1)))
-
         assertTwoEquals("aj, bj",
                 normalList.take(2).joinToString(),
                 Collectionx.joinToString(Collectionx.take(normalList, 2)))
-
         assertTwoEquals("aj, bj, cj",
                 normalList.take(3).joinToString(),
                 Collectionx.joinToString(Collectionx.take(normalList, 3)))
-
         assertTwoEquals("aj, bj, cj, dj",
                 normalList.take(4).joinToString(),
                 Collectionx.joinToString(Collectionx.take(normalList, 4)))
-
         assertTwoEquals("aj, bj, cj, dj",
                 normalList.take(5).joinToString(),
                 Collectionx.joinToString(Collectionx.take(normalList, 5)))
-
         assertTwoEquals("aj, bj, cj, dj",
                 normalList.take(5).joinToString(),
                 Collectionx.joinToString(Collectionx.take(Collectionx.take(normalList, 5), 5)))
+        assertTwoEquals("",
+                emptyList.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(emptyList, 2)))
+        assertTwoEquals("aj, bj",
+                normalIterable.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(normalIterable, 2)))
+        assertTwoEquals("",
+                emptyIterable.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(emptyIterable, 2)))
+
+        /*
+         * takeLast 方法的意思是从列表尾部开始取多少个元素
+         */
+        assertTwoThrow(IllegalArgumentException::class,
+                { normalList.takeLast(-1) },
+                { Collectionx.takeLast(normalList, -1) })
+        assertTwoEquals(true,
+                emptyList<String>() === normalList.takeLast(0),
+                Collectionx.emptyList<String>() === Collectionx.takeLast(normalList, 0))
+        assertTwoEquals(true,
+                emptyList<String>() === normalList.takeLast(0),
+                Collectionx.emptyList<String>() === Collectionx.takeLast(nullList, 1))
+        assertTwoEquals("dj",
+                normalList.takeLast(1).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalList, 1)))
+        assertTwoEquals("cj, dj",
+                normalList.takeLast(2).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalList, 2)))
+        assertTwoEquals("bj, cj, dj",
+                normalList.takeLast(3).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalList, 3)))
+        assertTwoEquals("aj, bj, cj, dj",
+                normalList.takeLast(4).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalList, 4)))
+        assertTwoEquals("aj, bj, cj, dj",
+                normalList.takeLast(5).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalList, 5)))
+        assertTwoEquals("aj, bj, cj, dj",
+                normalList.takeLast(5).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(Collectionx.takeLast(normalList, 5), 5)))
+        assertTwoEquals("",
+                emptyList.takeLast(2).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(emptyList, 2)))
+        assertTwoEquals("cj, dj",
+                normalLinkedList.takeLast(2).joinToString(),
+                Collectionx.joinToString(Collectionx.takeLast(normalLinkedList, 2)))
 
         // takeWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
 
         assertTwoEquals("",
                 normalList.takeWhile { !it.startsWith("a") }.joinToString(),
                 Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("a") }))
-
         assertTwoEquals("aj",
                 normalList.takeWhile { !it.startsWith("b") }.joinToString(),
                 Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("b") }))
-
         assertTwoEquals("aj, bj",
                 normalList.takeWhile { !it.startsWith("c") }.joinToString(),
                 Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("c") }))
-
         assertTwoEquals("aj, bj, cj",
                 normalList.takeWhile { !it.startsWith("d") }.joinToString(),
                 Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("d") }))
-
         assertTwoEquals("aj, bj, cj, dj",
                 normalList.takeWhile { !it.startsWith("e") }.joinToString(),
                 Collectionx.joinToString(Collectionx.takeWhile(normalList) { !it.startsWith("e") }))
-
-
         assertTwoEquals("aj, bj",
                 normalList.takeWhile { !it.startsWith("d") }.take(2).joinToString(),
                 Collectionx.joinToString(Collectionx.take(Collectionx.takeWhile(normalList) { !it.startsWith("d") }, 2)))
+        assertTwoEquals("",
+                emptyList.takeWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeWhile(nullList) { !it.startsWith("d") }))
+
+        // takeLastWhile 方法的意思是从列表头部开始到不符合条件的元素（不含包）终止
+
+        assertTwoEquals("bj, cj, dj",
+                normalList.takeLastWhile { !it.startsWith("a") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(normalList) { !it.startsWith("a") }))
+        assertTwoEquals("cj, dj",
+                normalList.takeLastWhile { !it.startsWith("b") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(normalList) { !it.startsWith("b") }))
+        assertTwoEquals("dj",
+                normalList.takeLastWhile { !it.startsWith("c") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(normalList) { !it.startsWith("c") }))
+        assertTwoEquals("",
+                normalList.takeLastWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(normalList) { !it.startsWith("d") }))
+        assertTwoEquals("aj, bj, cj, dj",
+                normalList.takeLastWhile { !it.startsWith("e") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(normalList) { !it.startsWith("e") }))
+        assertTwoEquals("",
+                normalList.takeLastWhile { !it.startsWith("d") }.take(2).joinToString(),
+                Collectionx.joinToString(Collectionx.take(Collectionx.takeLastWhile(normalList) { !it.startsWith("d") }, 2)))
+        assertTwoEquals("",
+                emptyList.takeLastWhile { !it.startsWith("d") }.joinToString(),
+                Collectionx.joinToString(Collectionx.takeLastWhile(nullList) { !it.startsWith("d") }))
     }
 
     @Test
@@ -979,6 +1086,52 @@ class CollectionxTest {
         assertTwoEquals("",
                 emptyList.sortedByDescending { it.length }.joinToString(),
                 Collectionx.joinToString(Collectionx.sortedByDescending(nullList) { it.length }))
+    }
+
+    @Test
+    @Suppress("ReplaceAssociateFunction")
+    fun testReverse() {
+        val normalList = listOf("aj", "bj", "ao", "bo")
+        val normalRange = 1.rangeTo(5)
+        val emptyList = listOf<String>()
+        val nullList = null as List<String>?
+
+        assertTwoEquals(
+                "bo, ao, bj, aj",
+                normalList.toMutableList().apply { reverse() }.joinToString(),
+                Collectionx.joinToString(normalList.toMutableList().apply { Collectionx.reverse(this) }),
+        )
+        assertTwoEquals(
+                "",
+                emptyList.toMutableList().apply { reverse() }.joinToString(),
+                Collectionx.joinToString(emptyList.toMutableList().apply { Collectionx.reverse(this) }),
+        )
+        assertTwoEquals(
+                "",
+                emptyList.toMutableList().apply { reverse() }.joinToString(),
+                Collectionx.joinToString(nullList.apply { Collectionx.reverse(this) }),
+        )
+
+        assertTwoEquals(
+                "bo, ao, bj, aj",
+                normalList.reversed().joinToString(),
+                Collectionx.joinToString(Collectionx.reversed(normalList)),
+        )
+        assertTwoEquals(
+                "5, 4, 3, 2, 1",
+                normalRange.reversed().joinToString(),
+                Collectionx.joinToString(Collectionx.reversed(normalRange)),
+        )
+        assertTwoEquals(
+                "",
+                emptyList.reversed().joinToString(),
+                Collectionx.joinToString(Collectionx.reversed(emptyList)),
+        )
+        assertTwoEquals(
+                "",
+                emptyList.reversed().joinToString(),
+                Collectionx.joinToString(Collectionx.reversed(nullList)),
+        )
     }
 
     @Test
@@ -1276,18 +1429,28 @@ class CollectionxTest {
     @Test
     fun testDistinct() {
         val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
 
-        assertTwoEquals(
-                "aj, bj, bo",
+        assertTwoEquals("aj, bj, bo",
                 normalList.distinct().joinToString(),
-                Collectionx.joinToString(Collectionx.distinct(normalList)),
-        )
+                Collectionx.joinToString(Collectionx.distinct(normalList)))
+        assertTwoEquals("",
+                emptyList.distinct().joinToString(),
+                Collectionx.joinToString(Collectionx.distinct(emptyList)))
+        assertTwoEquals("",
+                emptyList.distinct().joinToString(),
+                Collectionx.joinToString(Collectionx.distinct(nullList)))
 
-        assertTwoEquals(
-                "aj, bo",
+        assertTwoEquals("aj, bo",
                 normalList.distinctBy { it.last() }.joinToString(),
-                Collectionx.joinToString(Collectionx.distinctBy(normalList) { it.last() }),
-        )
+                Collectionx.joinToString(Collectionx.distinctBy(normalList) { it.last() }))
+        assertTwoEquals("",
+                emptyList.distinctBy { it.last() }.joinToString(),
+                Collectionx.joinToString(Collectionx.distinctBy(emptyList) { it.last() }))
+        assertTwoEquals("",
+                emptyList.distinctBy { it.last() }.joinToString(),
+                Collectionx.joinToString(Collectionx.distinctBy(nullList) { it.last() }))
     }
 
     @Test
@@ -1378,27 +1541,72 @@ class CollectionxTest {
 
     @Test
     fun testFold() {
-        val normalList = listOf("aj", "bj", "aj", "bj", "bo")
+        val normalList = listOf("a", "b", "c", "d", "e")
+        val emptyList = listOf<String>()
         val nullList = null as List<String>?
 
         assertTwoEquals(
-                "^ajbjajbjbo",
+                "^abcde",
                 normalList.fold("^") { r, t -> r + t },
                 Collectionx.fold(normalList, "^") { r, t -> r + t },
         )
-        assertEquals(
+        assertTwoEquals(
                 "^",
+                emptyList.fold("^") { r, t -> r + t },
+                Collectionx.fold(emptyList, "^") { r, t -> r + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.fold("^") { r, t -> r + t },
                 Collectionx.fold(nullList, "^") { r, t -> r + t },
         )
 
         assertTwoEquals(
-                "^0aj1bj2aj3bj4bo",
+                "^0a1b2c3d4e",
                 normalList.foldIndexed("^") { i, r, t -> r + i.toString() + t },
                 Collectionx.foldIndexed(normalList, "^") { i, r, t -> r + i.toString() + t },
         )
-        assertEquals(
+        assertTwoEquals(
                 "^",
+                emptyList.foldIndexed("^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldIndexed(emptyList, "^") { i, r, t -> r + i.toString() + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.foldIndexed("^") { i, r, t -> r + i.toString() + t },
                 Collectionx.foldIndexed(nullList, "^") { i, r, t -> r + i.toString() + t },
+        )
+
+        assertTwoEquals(
+                "abcde^",
+                normalList.foldRight("^") { r, t -> r + t },
+                Collectionx.foldRight(normalList, "^") { r, t -> r + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.foldRight("^") { r, t -> r + t },
+                Collectionx.foldRight(emptyList, "^") { r, t -> r + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.foldRight("^") { r, t -> r + t },
+                Collectionx.foldRight(nullList, "^") { r, t -> r + t },
+        )
+
+        assertTwoEquals(
+                "a0b1c2d3e4^",
+                normalList.foldRightIndexed("^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldRightIndexed(normalList, "^") { i, r, t -> r + i.toString() + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.foldRightIndexed("^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldRightIndexed(emptyList, "^") { i, r, t -> r + i.toString() + t },
+        )
+        assertTwoEquals(
+                "^",
+                emptyList.foldRightIndexed("^") { i, r, t -> r + i.toString() + t },
+                Collectionx.foldRightIndexed(nullList, "^") { i, r, t -> r + i.toString() + t },
         )
     }
 
@@ -2146,27 +2354,64 @@ class CollectionxTest {
 
     @Test
     fun testReduce() {
-        val normalList = listOf("6", "3", "7", "2", "1")
+        val normalList = listOf("a", "b", "c", "d", "e")
         val emptyList = listOf<String>()
         val nullList: List<String>? = null
 
-        assertTwoEquals("63721",
+        assertTwoEquals("abcde",
                 normalList.reduce { it0, it1 -> it0 + it1 },
                 Collectionx.reduce(normalList) { it0, it1 -> it0 + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
                 { emptyList.reduce { it0, it1 -> it0 + it1 } },
                 { Collectionx.reduce(emptyList) { it0, it1 -> it0 + it1 } })
-        assertThrow(UnsupportedOperationException::class)
-        { Collectionx.reduce(nullList) { it0, it1 -> it0 + it1 } }
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduce { it0, it1 -> it0 + it1 } },
+                { Collectionx.reduce(nullList) { it0, it1 -> it0 + it1 } })
 
-        assertTwoEquals("613273241",
+        assertTwoEquals("a1b2c3d4e",
                 normalList.reduceIndexed { i, it0, it1 -> it0 + i + it1 },
                 Collectionx.reduceIndexed(normalList) { i, it0, it1 -> it0 + i + it1 })
         assertTwoThrow(UnsupportedOperationException::class,
                 { emptyList.reduceIndexed { i, it0, it1 -> it0 + i + it1 } },
                 { Collectionx.reduceIndexed(emptyList) { i, it0, it1 -> it0 + i + it1 } })
-        assertThrow(UnsupportedOperationException::class)
-        { Collectionx.reduceIndexed(nullList) { i, it0, it1 -> it0 + i + it1 } }
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduceIndexed { i, it0, it1 -> it0 + i + it1 } },
+                { Collectionx.reduceIndexed(nullList) { i, it0, it1 -> it0 + i + it1 } })
+
+        assertTwoEquals("abcde",
+                normalList.reduceRight { it0, it1 -> it0 + it1 },
+                Collectionx.reduceRight(normalList) { it0, it1 -> it0 + it1 })
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduceRight { it0, it1 -> it0 + it1 } },
+                { Collectionx.reduceRight(emptyList) { it0, it1 -> it0 + it1 } })
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduceRight { it0, it1 -> it0 + it1 } },
+                { Collectionx.reduceRight(nullList) { it0, it1 -> it0 + it1 } })
+
+        assertTwoEquals("a0b1c2d3e",
+                normalList.reduceRightIndexed { i, it0, it1 -> it0 + i + it1 },
+                Collectionx.reduceRightIndexed(normalList) { i, it0, it1 -> it0 + i + it1 })
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduceRightIndexed { i, it0, it1 -> it0 + i + it1 } },
+                { Collectionx.reduceRightIndexed(emptyList) { i, it0, it1 -> it0 + i + it1 } })
+        assertTwoThrow(UnsupportedOperationException::class,
+                { emptyList.reduceRightIndexed { i, it0, it1 -> it0 + i + it1 } },
+                { Collectionx.reduceRightIndexed(nullList) { i, it0, it1 -> it0 + i + it1 } })
+    }
+
+    @Test
+    fun testSlice() {
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val nullList: List<String>? = null
+
+        assertTwoEquals("[7, 2, 6]",
+                normalList.slice(listOf(2, 3, 0)).toString(),
+                Collectionx.slice(normalList, listOf(2, 3, 0)).toString())
+        assertTwoEquals("[]",
+                normalList.slice(listOf()).toString(),
+                Collectionx.slice(normalList, listOf<Int>()).toString())
+        assertEquals("[]",
+                Collectionx.slice(nullList, listOf(2, 3, 0)).toString())
     }
 
     @Test
@@ -2174,6 +2419,7 @@ class CollectionxTest {
         val normalList = listOf("6", "3", "7", "2", "1")
         val emptyList = listOf<String>()
         val nullList: List<String>? = null
+
         assertTwoEquals(19, normalList.sumBy { it.toInt() }, Collectionx.sumBy(normalList) { it.toInt() })
         assertTwoEquals(0, emptyList.sumBy { it.toInt() }, Collectionx.sumBy(emptyList) { it.toInt() })
         assertEquals(0, Collectionx.sumBy(nullList) { it.toInt() })
