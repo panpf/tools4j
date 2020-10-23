@@ -3087,23 +3087,13 @@ public class Collectionx {
     @NotNull
     public static <T> Set<T> intersect(@Nullable Iterable<T> iterable, @Nullable Iterable<T> other) {
         Set<T> set = toSet(iterable);
-        if (other != null) {
-            retainAll(set, other);
-        }
+        retainAll(set, other != null ? other : Collectionx.<T>emptySet());
         return set;
     }
 
 
-    /* ******************************************* retain ******************************************* */
+    /* ******************************************* retainAll ******************************************* */
 
-
-    private static boolean retainNothing(@Nullable Collection<?> collection) {
-        boolean result = isNotNullOrEmpty(collection);
-        if (collection != null) {
-            collection.clear();
-        }
-        return result;
-    }
 
     /**
      * Retains only elements of this [Collection] that are contained in the given [elements] array.
@@ -3112,7 +3102,11 @@ public class Collectionx {
         if (elements.length > 0) {
             return collection != null && collection.retainAll(Arrayx.toHashSet(elements));
         } else {
-            return retainNothing(collection);
+            boolean result = isNotNullOrEmpty(collection);
+            if (collection != null) {
+                collection.clear();
+            }
+            return result;
         }
     }
 
@@ -3139,13 +3133,6 @@ public class Collectionx {
      */
     public static <T> boolean retainAll(@Nullable Iterable<T> iterable, @NotNull Predicate<T> predicate) {
         return filterInPlace(iterable, predicate, false);
-    }
-
-    /**
-     * Retains only elements of this [MutableList] that match the given [predicate].
-     */
-    public static <T> boolean retainAll(@Nullable List<T> list, @NotNull Predicate<T> predicate) {
-        return filterInPlace(list, predicate, false);
     }
 
 

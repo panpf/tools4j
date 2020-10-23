@@ -2175,76 +2175,87 @@ class CollectionxTest {
 
     @Test
     fun testRemoveAll() {
+        val normalList = listOf("6", "4", "3")
+        val otherList = listOf("6", "3")
+        val otherList1 = listOf("100", "99")
+        val otherArray = arrayOf("6", "3")
+        val otherArray1 = arrayOf("100", "99")
+        val otherIterable = Iterable {otherList.iterator()}
+        val otherIterable1 = Iterable {otherList1.iterator()}
+        val nullList: List<String>? = null
+        val nullArray: Array<String>? = null
+        val nullIterable: Iterable<String>? = null
+
         assertTwoEquals(true,
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).removeAll { it.toInt() % 2 == 0 },
-                Collectionx.removeAll(mutableListOf("6", "4", "3") as MutableIterable<String>) { it.toInt() % 2 == 0 })
+                normalList.toMutableList().removeAll { it.toInt() % 2 == 0 },
+                Collectionx.removeAll(normalList.toMutableList()) { it.toInt() % 2 == 0 })
         assertTwoEquals("3",
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { removeAll { it.toInt() % 2 == 0 } }.joinToString(),
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { Collectionx.removeAll(this) { it.toInt() % 2 == 0 } }.joinToString())
+                normalList.toMutableList().apply { removeAll { it.toInt() % 2 == 0 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this) { it.toInt() % 2 == 0 } }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).removeAll { it.toInt() > 100 },
-                Collectionx.removeAll(mutableListOf("6", "4", "3") as MutableIterable<String>) { it.toInt() > 100 })
+                normalList.toMutableList().removeAll { it.toInt() > 100 },
+                Collectionx.removeAll(normalList.toMutableList()) { it.toInt() > 100 })
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { removeAll { it.toInt() > 100 } }.joinToString(),
-                (mutableListOf("6", "4", "3") as MutableIterable<String>).apply { Collectionx.removeAll(this) { it.toInt() > 100 } }.joinToString())
-        assertFalse(Collectionx.removeAll(null as MutableIterable<String>?) { it.toInt() % 2 == 0 })
+                normalList.toMutableList().apply { removeAll { it.toInt() > 100 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this) { it.toInt() > 100 } }.joinToString())
+        assertFalse(Collectionx.removeAll(nullList) { it.toInt() % 2 == 0 })
 
         assertTwoEquals(true,
-                (mutableListOf("6", "4", "3")).removeAll(listOf("6", "3") as Iterable<String>),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("6", "3") as Iterable<String>))
+                normalList.toMutableList().removeAll(otherIterable),
+                Collectionx.removeAll(normalList.toMutableList(), otherIterable))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("6", "3") as Iterable<String>) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("6", "3") as Iterable<String>) }.joinToString())
+                normalList.toMutableList().apply { removeAll(otherIterable) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherIterable) }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3")).removeAll(listOf("100", "99") as Iterable<String>),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("100", "99") as Iterable<String>))
+                normalList.toMutableList().removeAll(otherIterable1),
+                Collectionx.removeAll(normalList.toMutableList(), otherIterable1))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("100", "99") as Iterable<String>) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("100", "99") as Iterable<String>) }.joinToString())
-        assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Iterable<String>?))
-        assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Iterable<String>?))
+                normalList.toMutableList().apply { removeAll(otherIterable1) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherIterable1) }.joinToString())
+        assertFalse(Collectionx.removeAll(normalList.toMutableList(), nullIterable))
+        assertFalse(Collectionx.removeAll(nullList, nullIterable))
 
         assertTwoEquals(true,
-                (mutableListOf("6", "4", "3")).removeAll(arrayOf("6", "3")),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf("6", "3")))
+                normalList.toMutableList().removeAll(otherArray),
+                Collectionx.removeAll(normalList.toMutableList(), otherArray))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf("6", "3")) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf("6", "3")) }.joinToString())
+                normalList.toMutableList().apply { removeAll(otherArray) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherArray) }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3")).removeAll(arrayOf("100", "99")),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf("100", "99")))
+                normalList.toMutableList().removeAll(otherArray1),
+                Collectionx.removeAll(normalList.toMutableList(), otherArray1))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf("100", "99")) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf("100", "99")) }.joinToString())
+                normalList.toMutableList().apply { removeAll(otherArray1) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherArray1) }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3")).removeAll(arrayOf()),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), arrayOf<String>()))
+                normalList.toMutableList().removeAll(arrayOf()),
+                Collectionx.removeAll(normalList.toMutableList(), arrayOf<String>()))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply { removeAll(arrayOf()) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, arrayOf<String>()) }.joinToString())
-        assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Array<String>?))
-        assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Array<String>?))
+                normalList.toMutableList().apply { removeAll(arrayOf()) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, arrayOf<String>()) }.joinToString())
+        assertFalse(Collectionx.removeAll(normalList.toMutableList(), nullArray))
+        assertFalse(Collectionx.removeAll(nullList, nullArray))
 
         assertTwoEquals(true,
-                (mutableListOf("6", "4", "3")).removeAll(listOf("6", "3")),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("6", "3")))
+                normalList.toMutableList().removeAll(otherList),
+                Collectionx.removeAll(normalList.toMutableList(), otherList))
         assertTwoEquals("4",
-                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("6", "3")) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("6", "3")) }.joinToString())
+                normalList.toMutableList().apply { removeAll(otherList) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherList) }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3")).removeAll(listOf("100", "99")),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf("100", "99")))
+                normalList.toMutableList().removeAll(otherList1),
+                Collectionx.removeAll(normalList.toMutableList(), otherList1))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply { removeAll(listOf("100", "99")) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf("100", "99")) }.joinToString())
+                normalList.toMutableList().apply { removeAll(otherList1) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, otherList1) }.joinToString())
         assertTwoEquals(false,
-                (mutableListOf("6", "4", "3")).removeAll(listOf()),
-                Collectionx.removeAll(mutableListOf("6", "4", "3"), listOf<String>()))
+                normalList.toMutableList().removeAll(listOf()),
+                Collectionx.removeAll(normalList.toMutableList(), listOf<String>()))
         assertTwoEquals("6, 4, 3",
-                (mutableListOf("6", "4", "3")).apply { removeAll(listOf()) }.joinToString(),
-                (mutableListOf("6", "4", "3")).apply { Collectionx.removeAll(this, listOf<String>()) }.joinToString())
-        assertFalse(Collectionx.removeAll(mutableListOf("6", "4", "3"), null as Collection<String>?))
-        assertFalse(Collectionx.removeAll(null as Collection<String>?, null as Collection<String>?))
+                normalList.toMutableList().apply { removeAll(listOf()) }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.removeAll(this, listOf<String>()) }.joinToString())
+        assertFalse(Collectionx.removeAll(normalList.toMutableList(), nullList))
+        assertFalse(Collectionx.removeAll(nullList, nullList))
     }
 
     @Test
@@ -2626,7 +2637,7 @@ class CollectionxTest {
                 emptyList.plus(arrayOf("9", "4")).joinToString(),
                 Collectionx.joinToString(Collectionx.plus(emptyList, arrayOf("9", "4"))))
         assertTwoEquals("",
-                emptyList.plus(arrayOf<String>()).joinToString(),
+                emptyList.plus(arrayOf()).joinToString(),
                 Collectionx.joinToString(Collectionx.plus(emptyList, arrayOf<String>())))
         assertEquals("9, 4", Collectionx.joinToString(Collectionx.plus(nullList, arrayOf("9", "4"))))
 
@@ -2858,59 +2869,266 @@ class CollectionxTest {
 
     @Test
     fun testAverage() {
-        val normalByteList0 = listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
-        val normalByteList1 = Collectionx.listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
-        val emptyByteList0 = listOf<Byte>()
-        val emptyByteList1 = Collectionx.listOf<Byte>()
-        val nullByteList1: List<Byte>? = null
-        assertTwoEquals(3.8, normalByteList0.average(), Collectionx.averageOfByte(normalByteList1))
-        assertTwoEquals(Double.NaN, emptyByteList0.average(), Collectionx.averageOfByte(emptyByteList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfByte(nullByteList1))
+        val normalByteList = listOf(6.toByte(), 3.toByte(), 7.toByte(), 2.toByte(), 1.toByte())
+        val emptyByteList = listOf<Byte>()
+        val nullByteList: List<Byte>? = null
+        assertTwoEquals(3.8, normalByteList.average(), Collectionx.averageOfByte(normalByteList))
+        assertTwoEquals(Double.NaN, emptyByteList.average(), Collectionx.averageOfByte(emptyByteList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfByte(nullByteList))
 
-        val normalShortList0 = listOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
-        val normalShortList1 = Collectionx.listOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
-        val emptyShortList0 = listOf<Short>()
-        val emptyShortList1 = Collectionx.listOf<Short>()
-        val nullShortList1: List<Short>? = null
-        assertTwoEquals(3.8, normalShortList0.average(), Collectionx.averageOfShort(normalShortList1))
-        assertTwoEquals(Double.NaN, emptyShortList0.average(), Collectionx.averageOfShort(emptyShortList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfShort(nullShortList1))
+        val normalShortList = listOf(6.toShort(), 3.toShort(), 7.toShort(), 2.toShort(), 1.toShort())
+        val emptyShortList = listOf<Short>()
+        val nullShortList: List<Short>? = null
+        assertTwoEquals(3.8, normalShortList.average(), Collectionx.averageOfShort(normalShortList))
+        assertTwoEquals(Double.NaN, emptyShortList.average(), Collectionx.averageOfShort(emptyShortList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfShort(nullShortList))
 
-        val normalIntList0 = listOf(6, 3, 7, 2, 1)
-        val normalIntList1 = Collectionx.listOf(6, 3, 7, 2, 1)
-        val emptyIntList0 = listOf<Int>()
-        val emptyIntList1 = Collectionx.listOf<Int>()
-        val nullIntList1: List<Int>? = null
-        assertTwoEquals(3.8, normalIntList0.average(), Collectionx.averageOfInt(normalIntList1))
-        assertTwoEquals(Double.NaN, emptyIntList0.average(), Collectionx.averageOfInt(emptyIntList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfInt(nullIntList1))
+        val normalIntList = listOf(6, 3, 7, 2, 1)
+        val emptyIntList = listOf<Int>()
+        val nullIntList: List<Int>? = null
+        assertTwoEquals(3.8, normalIntList.average(), Collectionx.averageOfInt(normalIntList))
+        assertTwoEquals(Double.NaN, emptyIntList.average(), Collectionx.averageOfInt(emptyIntList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfInt(nullIntList))
 
-        val normalLongList0 = listOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
-        val normalLongList1 = Collectionx.listOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
-        val emptyLongList0 = listOf<Long>()
-        val emptyLongList1 = Collectionx.listOf<Long>()
-        val nullLongList1: List<Long>? = null
-        assertTwoEquals(3.8, normalLongList0.average(), Collectionx.averageOfLong(normalLongList1))
-        assertTwoEquals(Double.NaN, emptyLongList0.average(), Collectionx.averageOfLong(emptyLongList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfLong(nullLongList1))
+        val normalLongList = listOf(6.toLong(), 3.toLong(), 7.toLong(), 2.toLong(), 1.toLong())
+        val emptyLongList = listOf<Long>()
+        val nullLongList: List<Long>? = null
+        assertTwoEquals(3.8, normalLongList.average(), Collectionx.averageOfLong(normalLongList))
+        assertTwoEquals(Double.NaN, emptyLongList.average(), Collectionx.averageOfLong(emptyLongList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfLong(nullLongList))
 
-        val normalFloatList0 = listOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
-        val normalFloatList1 = Collectionx.listOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
-        val emptyFloatList0 = listOf<Float>()
-        val emptyFloatList1 = Collectionx.listOf<Float>()
-        val nullFloatList1: List<Float>? = null
-        assertTwoEquals(3.8, normalFloatList0.average(), Collectionx.averageOfFloat(normalFloatList1))
-        assertTwoEquals(Double.NaN, emptyFloatList0.average(), Collectionx.averageOfFloat(emptyFloatList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfFloat(nullFloatList1))
+        val normalFloatList = listOf(6.toFloat(), 3.toFloat(), 7.toFloat(), 2.toFloat(), 1.toFloat())
+        val emptyFloatList = listOf<Float>()
+        val nullFloatList: List<Float>? = null
+        assertTwoEquals(3.8, normalFloatList.average(), Collectionx.averageOfFloat(normalFloatList))
+        assertTwoEquals(Double.NaN, emptyFloatList.average(), Collectionx.averageOfFloat(emptyFloatList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfFloat(nullFloatList))
 
-        val normalDoubleList0 = listOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
-        val normalDoubleList1 = Collectionx.listOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
-        val emptyDoubleList0 = listOf<Double>()
-        val emptyDoubleList1 = Collectionx.listOf<Double>()
-        val nullDoubleList1: List<Double>? = null
-        assertTwoEquals(3.8, normalDoubleList0.average(), Collectionx.averageOfDouble(normalDoubleList1))
-        assertTwoEquals(Double.NaN, emptyDoubleList0.average(), Collectionx.averageOfDouble(emptyDoubleList1))
-        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfDouble(nullDoubleList1))
+        val normalDoubleList = listOf(6.toDouble(), 3.toDouble(), 7.toDouble(), 2.toDouble(), 1.toDouble())
+        val emptyDoubleList = listOf<Double>()
+        val nullDoubleList: List<Double>? = null
+        assertTwoEquals(3.8, normalDoubleList.average(), Collectionx.averageOfDouble(normalDoubleList))
+        assertTwoEquals(Double.NaN, emptyDoubleList.average(), Collectionx.averageOfDouble(emptyDoubleList))
+        assertTwoEquals(Double.NaN, Double.NaN, Collectionx.averageOfDouble(nullDoubleList))
+    }
+
+    @Test
+    fun testIntersect() {
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val normalList1 = listOf("3", "9", "7", "1", "5")
+        val emptyList = listOf<String>()
+        val nullList: List<String>? = null
+
+        assertTwoEquals("[3, 7, 1]",
+                normalList.toMutableList().intersect(normalList1).toString(),
+                Collectionx.intersect(normalList.toMutableList(), normalList1).toString())
+        assertTwoEquals("[]",
+                normalList.toMutableList().intersect(emptyList).toString(),
+                Collectionx.intersect(normalList.toMutableList(), emptyList).toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().intersect(normalList).toString(),
+                Collectionx.intersect(emptyList.toMutableList(), normalList).toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().intersect(emptyList).toString(),
+                Collectionx.intersect(emptyList.toMutableList(), emptyList).toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().intersect(emptyList).toString(),
+                Collectionx.intersect(emptyList.toMutableList(), nullList).toString())
+        assertTwoEquals("[]",
+                normalList.toMutableList().intersect(emptyList).toString(),
+                Collectionx.intersect(normalList.toMutableList(), nullList).toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().intersect(normalList).toString(),
+                Collectionx.intersect(nullList?.toMutableList(), normalList).toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().intersect(emptyList).toString(),
+                Collectionx.intersect(nullList?.toMutableList(), nullList).toString())
+    }
+
+    @Test
+    fun testRetainAll() {
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val otherList = listOf("3", "9", "7", "1", "5")
+        val otherArray = arrayOf("3", "9", "7", "1", "5")
+        val otherIterable = Iterable { otherList.iterator() }
+        val emptyList = listOf<String>()
+        val emptyArray = arrayOf<String>()
+        val emptyIterable = Iterable { emptyList.iterator() }
+        val nullList: List<String>? = null
+
+        assertTwoEquals("[3, 7, 1]",
+                normalList.toMutableList().apply { retainAll(otherArray) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, otherArray) }.toString())
+        assertTwoEquals("[]",
+                normalList.toMutableList().apply { retainAll(emptyArray) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, emptyArray) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(otherArray) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, otherArray) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(emptyArray) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, emptyArray) }.toString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(otherArray),
+                Collectionx.retainAll(normalList.toMutableList(), otherArray))
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(emptyArray),
+                Collectionx.retainAll(normalList.toMutableList(), emptyArray))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(otherArray),
+                Collectionx.retainAll(emptyList.toMutableList(), otherArray))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyArray),
+                Collectionx.retainAll(emptyList.toMutableList(), emptyArray))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyArray),
+                Collectionx.retainAll(nullList, otherArray))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyArray),
+                Collectionx.retainAll(nullList, emptyArray))
+
+        assertTwoEquals("[3, 7, 1]",
+                normalList.toMutableList().apply { retainAll(otherIterable) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, otherIterable) }.toString())
+        assertTwoEquals("[]",
+                normalList.toMutableList().apply { retainAll(emptyIterable) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, emptyIterable) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(otherIterable) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, otherIterable) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(emptyIterable) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, emptyIterable) }.toString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(otherIterable),
+                Collectionx.retainAll(normalList.toMutableList(), otherIterable))
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(emptyIterable),
+                Collectionx.retainAll(normalList.toMutableList(), emptyIterable))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(otherIterable),
+                Collectionx.retainAll(emptyList.toMutableList(), otherIterable))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyIterable),
+                Collectionx.retainAll(emptyList.toMutableList(), emptyIterable))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyIterable),
+                Collectionx.retainAll(nullList, otherIterable))
+
+        assertTwoEquals("[3, 7, 1]",
+                normalList.toMutableList().apply { retainAll(otherList) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, otherList) }.toString())
+        assertTwoEquals("[]",
+                normalList.toMutableList().apply { retainAll(emptyList) }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this, emptyList) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(otherList) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, otherList) }.toString())
+        assertTwoEquals("[]",
+                emptyList.toMutableList().apply { retainAll(emptyList) }.toString(),
+                emptyList.toMutableList().apply { Collectionx.retainAll(this, emptyList) }.toString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(otherList),
+                Collectionx.retainAll(normalList.toMutableList(), otherList))
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll(emptyList),
+                Collectionx.retainAll(normalList.toMutableList(), emptyList))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(otherList),
+                Collectionx.retainAll(emptyList.toMutableList(), otherList))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyList),
+                Collectionx.retainAll(emptyList.toMutableList(), emptyList))
+        assertTwoEquals(false,
+                emptyList.toMutableList().retainAll(emptyList),
+                Collectionx.retainAll(nullList, otherList))
+
+        assertTwoEquals("[6, 2]",
+                normalList.toMutableList().apply { retainAll { it.toInt() % 2 == 0 } }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() % 2 == 0 } }.toString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll { it.toInt() % 2 == 0 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() % 2 == 0 })
+        assertTwoEquals("[]",
+                normalList.toMutableList().apply { retainAll { it.toInt() > 10 } }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() > 10 } }.toString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll { it.toInt() > 10 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() > 10 })
+        assertTwoEquals("[6, 3, 7, 2, 1]",
+                normalList.toMutableList().apply { retainAll { it.toInt() < 10 } }.toString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() < 10 } }.toString())
+        assertTwoEquals(false,
+                normalList.toMutableList().retainAll { it.toInt() < 10 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() < 10 })
+    }
+
+    @Test
+    fun testFilterInPlace() {
+        val normalList = listOf("6", "3", "7", "2", "1")
+        val emptyLinkedList =  Collectionx.linkedListOf<String>()
+        val nullList: List<String>? = null
+
+        assertTwoEquals("6, 2",
+                normalList.toMutableList().apply { retainAll { it.toInt() % 2 == 0 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() % 2 == 0 } }.joinToString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll { it.toInt() % 2 == 0 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() % 2 == 0 })
+        assertTwoEquals("",
+                normalList.toMutableList().apply { retainAll { it.toInt() > 10 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() > 10 } }.joinToString())
+        assertTwoEquals(true,
+                normalList.toMutableList().retainAll { it.toInt() > 10 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() > 10 })
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalList.toMutableList().apply { retainAll { it.toInt() < 10 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(this) { it.toInt() < 10 } }.joinToString())
+        assertTwoEquals(false,
+                normalList.toMutableList().retainAll { it.toInt() < 10 },
+                Collectionx.retainAll(normalList.toMutableList()) { it.toInt() < 10 })
+
+        assertTwoEquals("6, 2",
+                LinkedList(normalList).apply { retainAll { it.toInt() % 2 == 0 } }.joinToString(),
+                LinkedList(normalList).apply { Collectionx.retainAll(this) { it.toInt() % 2 == 0 } }.joinToString())
+        assertTwoEquals(true,
+                LinkedList(normalList).retainAll { it.toInt() % 2 == 0 },
+                Collectionx.retainAll(LinkedList(normalList)) { it.toInt() % 2 == 0 })
+        assertTwoEquals("",
+                LinkedList(normalList).apply { retainAll { it.toInt() > 10 } }.joinToString(),
+                LinkedList(normalList).apply { Collectionx.retainAll(this) { it.toInt() > 10 } }.joinToString())
+        assertTwoEquals(true,
+                LinkedList(normalList).retainAll { it.toInt() > 10 },
+                Collectionx.retainAll(LinkedList(normalList)) { it.toInt() > 10 })
+        assertTwoEquals("6, 3, 7, 2, 1",
+                LinkedList(normalList).apply { retainAll { it.toInt() < 10 } }.joinToString(),
+                LinkedList(normalList).apply { Collectionx.retainAll(this) { it.toInt() < 10 } }.joinToString())
+        assertTwoEquals(false,
+                LinkedList(normalList).retainAll { it.toInt() < 10 },
+                Collectionx.retainAll(LinkedList(normalList)) { it.toInt() < 10 })
+
+        assertTwoEquals("6, 2",
+                normalList.toMutableList().apply { toMutableIterable().retainAll { it.toInt() % 2 == 0 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(toMutableIterable()) { it.toInt() % 2 == 0 } }.joinToString())
+        assertTwoEquals(true,
+                normalList.toMutableList().toMutableIterable().retainAll { it.toInt() % 2 == 0 },
+                Collectionx.retainAll(normalList.toMutableList().toMutableIterable()) { it.toInt() % 2 == 0 })
+        assertTwoEquals("",
+                normalList.toMutableList().apply { toMutableIterable().retainAll { it.toInt() > 10 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(toMutableIterable()) { it.toInt() > 10 } }.joinToString())
+        assertTwoEquals(true,
+                normalList.toMutableList().toMutableIterable().retainAll { it.toInt() > 10 },
+                Collectionx.retainAll(normalList.toMutableList().toMutableIterable()) { it.toInt() > 10 })
+        assertTwoEquals("6, 3, 7, 2, 1",
+                normalList.toMutableList().apply { toMutableIterable().retainAll { it.toInt() < 10 } }.joinToString(),
+                normalList.toMutableList().apply { Collectionx.retainAll(toMutableIterable()) { it.toInt() < 10 } }.joinToString())
+        assertTwoEquals(false,
+                normalList.toMutableList().toMutableIterable().retainAll { it.toInt() < 10 },
+                Collectionx.retainAll(normalList.toMutableList().toMutableIterable()) { it.toInt() < 10 })
+
+        assertTwoEquals(false,
+                emptyLinkedList.toMutableList().retainAll { it.toInt() < 10 },
+                Collectionx.retainAll(nullList) { it.toInt() < 10 })
     }
 
     class ExceptionAppendable : Appendable {
@@ -2924,6 +3142,14 @@ class CollectionxTest {
 
         override fun append(c: Char): java.lang.Appendable {
             throw IOException()
+        }
+    }
+
+    private fun <T> MutableList<T>.toMutableIterable(): MutableIterable<T>{
+        return object : MutableIterable<T> {
+            override fun iterator(): MutableIterator<T> {
+                return this@toMutableIterable.iterator()
+            }
         }
     }
 }
