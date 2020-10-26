@@ -118,23 +118,23 @@ public class Assertx {
 
 
     public static void assertTwoThrow(@Nullable String message, @Nullable Class<? extends Throwable> expectedTrowType, @NotNull Runnable block0, @NotNull Runnable block1) {
-        assertThrow(message, expectedTrowType, block0);
-        assertThrow(message, expectedTrowType, block1);
+        assertThrow(message + "_block0", expectedTrowType, block0);
+        assertThrow(message + "_block1", expectedTrowType, block1);
     }
 
     public static void assertTwoThrow(@Nullable Class<? extends Throwable> expectedTrowType, @NotNull Runnable block0, @NotNull Runnable block1) {
-        assertThrow(null, expectedTrowType, block0);
-        assertThrow(null, expectedTrowType, block1);
+        assertThrow("block0", expectedTrowType, block0);
+        assertThrow("block1", expectedTrowType, block1);
     }
 
     public static void assertTwoThrow(@Nullable String message, @NotNull Runnable block0, @NotNull Runnable block1) {
-        assertThrow(message, null, block0);
-        assertThrow(message, null, block1);
+        assertThrow(message + "_block0", null, block0);
+        assertThrow(message + "_block1", null, block1);
     }
 
     public static void assertTwoThrow(@NotNull Runnable block0, @NotNull Runnable block1) {
-        assertThrow(null, null, block0);
-        assertThrow(null, null, block1);
+        assertThrow("block0", null, block0);
+        assertThrow("block1", null, block1);
     }
 
 
