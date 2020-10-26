@@ -175,16 +175,8 @@ public class Groupingx {
             @NotNull
             @Override
             public R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first) {
-                @NotNull
-                R nextAccumulator;
-                if (first) {
-                    nextAccumulator = initialValueSelector.transform(key, element);
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    nextAccumulator = accumulator;
-                }
+                R nextAccumulator = first ? initialValueSelector.transform(key, element) : accumulator;
+                //noinspection ConstantConditions
                 return operation.operation(key, nextAccumulator, element);
             }
         });
@@ -217,16 +209,8 @@ public class Groupingx {
             @NotNull
             @Override
             public R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first) {
-                @NotNull
-                R nextAccumulator;
-                if (first) {
-                    nextAccumulator = initialValueSelector.transform(key, element);
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    nextAccumulator = accumulator;
-                }
+                R nextAccumulator = first ? initialValueSelector.transform(key, element) : accumulator;
+                //noinspection ConstantConditions
                 return operation.operation(key, nextAccumulator, element);
             }
         });
@@ -249,16 +233,8 @@ public class Groupingx {
             @NotNull
             @Override
             public R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first) {
-                @NotNull
-                R r;
-                if (first) {
-                    r = initialValue;
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    r = accumulator;
-                }
+                R r = first ? initialValue : accumulator;
+                //noinspection ConstantConditions
                 return operation.transform(r, element);
             }
         });
@@ -284,16 +260,8 @@ public class Groupingx {
             @NotNull
             @Override
             public R operation(@NotNull K key, @Nullable R accumulator, @NotNull T element, boolean first) {
-                @NotNull
-                R r;
-                if (first) {
-                    r = initialValue;
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    r = accumulator;
-                }
+                R r = first ? initialValue : accumulator;
+                //noinspection ConstantConditions
                 return operation.transform(r, element);
             }
         });
@@ -319,14 +287,8 @@ public class Groupingx {
             @NotNull
             @Override
             public S operation(@NotNull K key, @Nullable S accumulator, @NotNull T element, boolean first) {
-                if (first) {
-                    return element;
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    return operation.operation(key, accumulator, element);
-                }
+                //noinspection ConstantConditions
+                return first ? element : operation.operation(key, accumulator, element);
             }
         });
     }
@@ -353,14 +315,8 @@ public class Groupingx {
             @NotNull
             @Override
             public S operation(@NotNull K key, @Nullable S accumulator, @NotNull T element, boolean first) {
-                if (first) {
-                    return element;
-                } else {
-                    if (accumulator == null) {
-                        throw new NullPointerException("Param 'accumulator' is null");
-                    }
-                    return operation.operation(key, accumulator, element);
-                }
+                //noinspection ConstantConditions
+                return first ? element : operation.operation(key, accumulator, element);
             }
         });
     }

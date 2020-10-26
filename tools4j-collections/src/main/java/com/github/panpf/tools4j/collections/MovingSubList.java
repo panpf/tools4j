@@ -27,12 +27,12 @@ public class MovingSubList<E> extends AbstractList<E> implements RandomAccess {
     @NotNull
     private final List<E> list;
 
+    private int fromIndex = 0;
+    private int _size = 0;
+
     public MovingSubList(@NotNull List<E> list) {
         this.list = list;
     }
-
-    private int fromIndex = 0;
-    private int _size = 0;
 
     public void move(int fromIndex, int toIndex) {
         int size = list.size();
