@@ -95,8 +95,8 @@ Dependencies：
     * encode, encodeToString, decode, decodeToString
 
 ### tools4j-collections
-![TestCoverage](https://img.shields.io/badge/TestCoverage-16%25-red.svg)
-* Arrayx: [Arrayx.java] ([Test][ArrayxTest.kt]) | [Arrayx.kt] ([Test][ArrayxKtxTest.kt])
+![TestCoverage](https://img.shields.io/badge/TestCoverage-20%25-red.svg)
+* Arrayx: Test coverage 3%. [Arrayx.java] ([Test][ArrayxTest.kt]) | [Arrayx.kt] ([Test][ArrayxKtxTest.kt])
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, arrayOf, isEmpty, isNotEmpty, orEmpty, 
     * toTypedArray, toCollection, toList, toSet, toHashSet, asList, map, mapTo, mapIndexed, mapIndexedTo, 
     * mapNotNull, mapNotNullTo, mapIndexedNotNull, reverse, reversed, sort, sortDescending, sortWith, 
@@ -114,7 +114,7 @@ Dependencies：
     * takeLastWhile, takeWhile, distinct, distinctBy, withIndex, contentHashCode, contentDeepEquals, 
     * contentDeepHashCode, contentDeepToString, contentToString, contentEquals, binarySearch, copyOf, 
     * copyOfRange, slice, sliceArray, associate, associateBy, associateByTo, associateTo
-* Collectionx: [Collectionx.java] ([Test][CollectionxTest.kt]) | [Collectionx.kt] ([Test][CollectionxKtxTest.kt])
+* Collectionx: Test coverage 100%. [Collectionx.java] ([Test][CollectionxTest.kt]) | [Collectionx.kt] ([Test][CollectionxKtxTest.kt])
     * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
     * isNotEmpty, orEmpty, list, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
     * emptySet, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
@@ -134,9 +134,9 @@ Dependencies：
     * associate, associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile, single, 
     * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, windowed, 
     * zip, unzip, zipWithNext, iterator, to\*Array, flatten, requireNoNulls
-* Groupingx: [Groupingx.java] ([Test][GroupingxTest.kt])
+* Groupingx: Test coverage 100%. [Groupingx.java] ([Test][GroupingxTest.kt])
     * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo, eachCount, eachCountTo
-* Mapx: [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
+* Mapx: Test coverage 100%. [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
     * builder, isNullOrEmpty, isNotNullOrEmpty, emptyMap, immutableMapOf, mutableMapOf, hashMapOf, linkedMapOf, 
     * sortedMapOf, isEmpty, isNotEmpty, orEmpty, putAll, plus, plusAssign, remove, minus, minusAssign, set,
     * get, getOrElse, getValue, getOrPut, contains, containsKey, containsValue, all, any, count, forEach, 
