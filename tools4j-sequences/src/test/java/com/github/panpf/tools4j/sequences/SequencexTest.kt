@@ -2057,14 +2057,14 @@ class SequencexTest {
                 { Sequencex.windowed(normalSequence1, 0, 1, true) })
 
         assertTwoThrow(IllegalArgumentException::class,
-                { normalSequence0.windowed(0, 0, true) },
-                { Sequencex.windowed(normalSequence1, 0, 0, true) })
+                { normalSequence0.windowed(0, 0, true) { it.joinToString("+", "[", "]") } },
+                { Sequencex.windowed(normalSequence1, 0, 0, true) { it.joinToString("+", "[", "]") } })
         assertTwoThrow(IllegalArgumentException::class,
-                { normalSequence0.windowed(1, 0, true) },
-                { Sequencex.windowed(normalSequence1, 1, 0, true) })
+                { normalSequence0.windowed(1, 0, true) { it.joinToString("+", "[", "]") } },
+                { Sequencex.windowed(normalSequence1, 1, 0, true) { it.joinToString("+", "[", "]") } })
         assertTwoThrow(IllegalArgumentException::class,
-                { normalSequence0.windowed(0, 1, true) },
-                { Sequencex.windowed(normalSequence1, 0, 1, true) })
+                { normalSequence0.windowed(0, 1, true) { it.joinToString("+", "[", "]") } },
+                { Sequencex.windowed(normalSequence1, 0, 1, true) { it.joinToString("+", "[", "]") } })
 
         // Test the size parameter
         assertTwoEquals("[1], [2], [3], [4], [5]",
