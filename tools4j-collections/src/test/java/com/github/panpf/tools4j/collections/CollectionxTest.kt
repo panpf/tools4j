@@ -34,8 +34,6 @@ import kotlin.collections.LinkedHashSet
 
 class CollectionxTest {
 
-    // todo Complete test
-
     @Test
     fun testNullOrEmpty() {
         assertTrue(Collectionx.isNullOrEmpty(null as Collection<String>?))
@@ -179,8 +177,6 @@ class CollectionxTest {
 
         assertTwoEquals(0, Collectionx.emptyList<String>().size, emptyList<String>().size)
         assertTwoEquals("EmptyList", Collectionx.emptyList<String>()::class.simpleName, emptyList<String>()::class.simpleName)
-
-        // todo test mutableList, list method
     }
 
     @Test
