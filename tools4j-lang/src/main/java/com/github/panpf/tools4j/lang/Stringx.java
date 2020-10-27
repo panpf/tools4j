@@ -33,6 +33,8 @@ import static java.lang.Character.isUpperCase;
 
 /**
  * String tool method
+ * <br>
+ * <br>from kotlin files: Strings.kt, StringsJvm.kt, _Strings.kt, _StringsJvm.kt
  */
 public class Stringx {
 

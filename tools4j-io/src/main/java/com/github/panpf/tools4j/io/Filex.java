@@ -29,7 +29,9 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 /**
- * 文件工具类，提供一些有关文件的便捷方法
+ * File tools, provide some convenient methods for files
+ * <br>
+ * <br>from kotlin files: Utils.kt
  */
 public class Filex {
 

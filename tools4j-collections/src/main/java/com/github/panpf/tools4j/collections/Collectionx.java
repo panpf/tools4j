@@ -28,7 +28,14 @@ import java.util.*;
 
 /**
  * Collection tool method
- * <br>from kotlin files: Iterables.kt, MutableCollectionsKt.kt, _CollectionsKt.kt, IteratorsJVM.kt
+ * <br>
+ * <br>from kotlin files:
+ * <ul>
+ * <li>Iterables.kt</li>
+ * <li>Iterators.kt, IteratorsJVM.kt</li>
+ * <li>MutableCollections.kt, MutableCollectionsJVM.kt</li>
+ * <li>Collections.kt, CollectionsJvm.kt, _Collections.kt</li>
+ * </ul>
  */
 public class Collectionx {
 
