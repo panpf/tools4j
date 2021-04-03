@@ -304,6 +304,7 @@ public class Datex {
      *                </blockquote>
      */
     @NotNull
+    // todo 改名 formatDuration
     public static String formatTimeLength(long timeLength, @NotNull String pattern) {
         timeLength = Math.max(timeLength, 0);
         final long oneSecondMilliseconds = 1000;
@@ -313,28 +314,28 @@ public class Datex {
 
         String[] items = pattern.split("%");
         String daySuffix = null, hourSuffix = null, minuteSuffix = null, secondSuffix = null, millisecondSuffix = null;
-        boolean dayAllowOmit = false, hourAllowOmit = false, minuteAllowOmit = false, secondAllowOmit = false, millisecondAllowOmit = false;
+        boolean dayAllowIgnore = false, hourAllowIgnore = false, minuteAllowIgnore = false, secondAllowIgnore = false, millisecondAllowIgnore = false;
         boolean dayPad = false, hourPad = false, minutePad = false, secondPad = false, millisecondPad = false;
         for (String item : items) {
             if (item.toLowerCase().startsWith("ms")) {
-                millisecondAllowOmit = item.length() > 2 && item.charAt(2) == '?';
-                millisecondSuffix = item.substring(millisecondAllowOmit ? 3 : 2);
+                millisecondAllowIgnore = item.length() > 2 && item.charAt(2) == '?';
+                millisecondSuffix = item.substring(millisecondAllowIgnore ? 3 : 2);
                 millisecondPad = item.startsWith("MS");
             } else if (item.toLowerCase().startsWith("s")) {
-                secondAllowOmit = item.length() > 1 && item.charAt(1) == '?';
-                secondSuffix = item.substring(secondAllowOmit ? 2 : 1);
+                secondAllowIgnore = item.length() > 1 && item.charAt(1) == '?';
+                secondSuffix = item.substring(secondAllowIgnore ? 2 : 1);
                 secondPad = item.startsWith("S");
             } else if (item.toLowerCase().startsWith("m")) {
-                minuteAllowOmit = item.length() > 1 && item.charAt(1) == '?';
-                minuteSuffix = item.substring(minuteAllowOmit ? 2 : 1);
+                minuteAllowIgnore = item.length() > 1 && item.charAt(1) == '?';
+                minuteSuffix = item.substring(minuteAllowIgnore ? 2 : 1);
                 minutePad = item.startsWith("M");
             } else if (item.toLowerCase().startsWith("h")) {
-                hourAllowOmit = item.length() > 1 && item.charAt(1) == '?';
-                hourSuffix = item.substring(hourAllowOmit ? 2 : 1);
+                hourAllowIgnore = item.length() > 1 && item.charAt(1) == '?';
+                hourSuffix = item.substring(hourAllowIgnore ? 2 : 1);
                 hourPad = item.startsWith("H");
             } else if (item.toLowerCase().startsWith("d")) {
-                dayAllowOmit = item.length() > 1 && item.charAt(1) == '?';
-                daySuffix = item.substring(dayAllowOmit ? 2 : 1);
+                dayAllowIgnore = item.length() > 1 && item.charAt(1) == '?';
+                daySuffix = item.substring(dayAllowIgnore ? 2 : 1);
                 dayPad = item.startsWith("D");
             }
         }
@@ -345,10 +346,8 @@ public class Datex {
         StringBuilder builder = new StringBuilder();
         if (daySuffix != null) {
             long day = timeLength / oneDayMilliseconds;
-            if (day > 0) {
+            if (day > 0 || !dayAllowIgnore) {
                 builder.append(dayPad ? String.format("%02d", day) : day).append(daySuffix);
-            } else if (!dayAllowOmit) {
-                builder.append(dayPad ? String.format("%02d", 0) : 0).append(daySuffix);
             }
         }
 
@@ -359,10 +358,8 @@ public class Datex {
             } else {
                 hour = timeLength / oneHourMilliseconds;
             }
-            if (hour > 0) {
+            if (hour > 0 || !hourAllowIgnore) {
                 builder.append(hourPad ? String.format("%02d", hour) : hour).append(hourSuffix);
-            } else if (!hourAllowOmit) {
-                builder.append(hourPad ? String.format("%02d", 0) : 0).append(hourSuffix);
             }
         }
 
@@ -373,10 +370,8 @@ public class Datex {
             } else {
                 minute = timeLength / oneMinuteMilliseconds;
             }
-            if (minute > 0) {
+            if (minute > 0 || !minuteAllowIgnore) {
                 builder.append(minutePad ? String.format("%02d", minute) : minute).append(minuteSuffix);
-            } else if (!minuteAllowOmit) {
-                builder.append(minutePad ? String.format("%02d", 0) : 0).append(minuteSuffix);
             }
         }
 
@@ -387,10 +382,8 @@ public class Datex {
             } else {
                 second = timeLength / oneSecondMilliseconds;
             }
-            if (second > 0) {
+            if (second > 0 || !secondAllowIgnore) {
                 builder.append(secondPad ? String.format("%02d", second) : second).append(secondSuffix);
-            } else if (!secondAllowOmit) {
-                builder.append(secondPad ? String.format("%02d", 0) : 0).append(secondSuffix);
             }
         }
 
@@ -401,15 +394,15 @@ public class Datex {
             } else {
                 millisecond = timeLength;
             }
-            if (millisecond > 0) {
+            if (millisecond > 0 || !millisecondAllowIgnore) {
                 builder.append(millisecondPad ? String.format("%03d", millisecond) : millisecond).append(millisecondSuffix);
-            } else if (!millisecondAllowOmit) {
-                builder.append(millisecondPad ? String.format("%03d", 0) : 0).append(millisecondSuffix);
             }
         }
 
         if (builder.length() == 0) {
-            if (secondSuffix != null) {
+            if (millisecondSuffix != null) {
+                builder.append(millisecondPad ? String.format("%03d", 0) : 0).append(millisecondSuffix);
+            } else if (secondSuffix != null) {
                 builder.append(secondPad ? String.format("%02d", 0) : 0).append(secondSuffix);
             } else if (minuteSuffix != null) {
                 builder.append(minutePad ? String.format("%02d", 0) : 0).append(minuteSuffix);

@@ -93,8 +93,12 @@ class DatexTest {
         val oneHourMilliseconds = oneMinuteMilliseconds * 60
         val oneDayMilliseconds = oneHourMilliseconds * 24
 
-        Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms?毫秒"))
+        Assert.assertEquals("0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms?毫秒"))
         Assert.assertEquals("0毫秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒%ms毫秒"))
+        Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s秒%ms?毫秒"))
+        Assert.assertEquals("0分钟", Datex.formatTimeLength(0L, "%d?天%h?小时%m分钟%s?秒%ms?毫秒"))
+        Assert.assertEquals("0小时", Datex.formatTimeLength(0L, "%d?天%h小时%m?分钟%s?秒%ms?毫秒"))
+        Assert.assertEquals("0天", Datex.formatTimeLength(0L, "%d天%h?小时%m?分钟%s?秒%ms?毫秒"))
         Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s?秒"))
         Assert.assertEquals("0秒", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟%s秒"))
         Assert.assertEquals("0分钟", Datex.formatTimeLength(0L, "%d?天%h?小时%m?分钟"))
@@ -175,7 +179,7 @@ class DatexTest {
         Assert.assertEquals("1d 1h 23m", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h %m?m"))
         Assert.assertEquals("1d 1h", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d %h?h"))
         Assert.assertEquals("1d", Datex.formatTimeLength(oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467, "%d?d"))
-        Assert.assertEquals("0s", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s %ms?ms"))
+        Assert.assertEquals("0ms", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s %ms?ms"))
         Assert.assertEquals("0s", Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s"))
         Assert.assertEquals("0m", Datex.formatTimeLength(0L, "%d?d %h?h %m?m"))
         Assert.assertEquals("0h", Datex.formatTimeLength(0L, "%d?d %h?h"))

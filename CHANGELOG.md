@@ -18,6 +18,7 @@
 * change: Arrayx, Collectionx, Mapx now need to return empty Lists are Collections.EmptyList
 * fix: Fix the bug that Datex.formatTimeLength(1590L, "%ms?ms") should return '1590ms' instead of '1ms'
 * fix: Fix the bug that Datex.formatTimeLength(90L, "%MS?ms") should return '090ms' instead of '90ms'
+* fix: Fix the bug that Datex.formatTimeLength(0L, "%d?d %h?h %m?m %s?s %ms?ms") should return '0ms' instead of '0s'
 
 
 ## v1.0.0-rc01

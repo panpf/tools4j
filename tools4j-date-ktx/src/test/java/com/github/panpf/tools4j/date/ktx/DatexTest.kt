@@ -61,8 +61,12 @@ class DatexTest {
         val oneHourMilliseconds = oneMinuteMilliseconds * 60
         val oneDayMilliseconds = oneHourMilliseconds * 24
 
-        assertEquals("0秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s?秒%ms?毫秒"))
+        assertEquals("0毫秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s?秒%ms?毫秒"))
         assertEquals("0毫秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s?秒%ms毫秒"))
+        assertEquals("0秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s秒%ms?毫秒"))
+        assertEquals("0分钟", 0L.formatTimeLength("%d?天%h?小时%m分钟%s?秒%ms?毫秒"))
+        assertEquals("0小时", 0L.formatTimeLength("%d?天%h小时%m?分钟%s?秒%ms?毫秒"))
+        assertEquals("0天", 0L.formatTimeLength("%d天%h?小时%m?分钟%s?秒%ms?毫秒"))
         assertEquals("0秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s?秒"))
         assertEquals("0秒", 0L.formatTimeLength("%d?天%h?小时%m?分钟%s秒"))
         assertEquals("0分钟", 0L.formatTimeLength("%d?天%h?小时%m?分钟"))
@@ -143,7 +147,7 @@ class DatexTest {
         assertEquals("1d 1h 23m", (oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467).formatTimeLength("%d?d %h?h %m?m"))
         assertEquals("1d 1h", (oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467).formatTimeLength("%d?d %h?h"))
         assertEquals("1d", (oneDayMilliseconds + oneHourMilliseconds + oneMinuteMilliseconds * 23 + oneSecondMilliseconds * 23 + 467).formatTimeLength("%d?d"))
-        assertEquals("0s", (0L).formatTimeLength("%d?d %h?h %m?m %s?s %ms?ms"))
+        assertEquals("0ms", (0L).formatTimeLength("%d?d %h?h %m?m %s?s %ms?ms"))
         assertEquals("0s", (0L).formatTimeLength("%d?d %h?h %m?m %s?s"))
         assertEquals("0m", (0L).formatTimeLength("%d?d %h?h %m?m"))
         assertEquals("0h", (0L).formatTimeLength("%d?d %h?h"))
