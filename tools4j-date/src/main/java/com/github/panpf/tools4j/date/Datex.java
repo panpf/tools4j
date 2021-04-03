@@ -402,9 +402,9 @@ public class Datex {
                 millisecond = timeLength;
             }
             if (millisecond > 0) {
-                builder.append(millisecondPad ? String.format("%02d", millisecond) : millisecond).append(millisecondSuffix);
+                builder.append(millisecondPad ? String.format("%03d", millisecond) : millisecond).append(millisecondSuffix);
             } else if (!millisecondAllowOmit) {
-                builder.append(millisecondPad ? String.format("%02d", 0) : 0).append(millisecondSuffix);
+                builder.append(millisecondPad ? String.format("%03d", 0) : 0).append(millisecondSuffix);
             }
         }
 

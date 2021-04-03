@@ -136,6 +136,8 @@ class DatexTest {
         Assert.assertEquals("590ms", Datex.formatTimeLength(590L, "%d?d %h?h %m?m %s?s %ms?ms"))
         Assert.assertEquals("0s", Datex.formatTimeLength(590L, "%d?d %h?h %m?m %s?s"))
         Assert.assertEquals("1590ms", Datex.formatTimeLength(1590L, "%ms?ms"))
+        Assert.assertEquals("1s 90ms", Datex.formatTimeLength(1090L, "%ss %ms?ms"))
+        Assert.assertEquals("1s 090ms", Datex.formatTimeLength(1090L, "%ss %MS?ms"))
 
         // second
         Assert.assertEquals("3s", Datex.formatTimeLength(oneSecondMilliseconds * 3, "%d?d %h?h %m?m %s?s %ms?ms"))
