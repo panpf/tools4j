@@ -242,11 +242,11 @@ public class Datex {
 
 
     /**
-     * Format the length of time according to the specified 'pattern'
+     * Format the duration according to the specified 'pattern'
      *
      * @param pattern Formatting pattern，The following types are supported:
      *                <blockquote>
-     *                <table summary="Time length formatting pattern desc">
+     *                <table summary="Duration formatting pattern desc">
      *                  <tr>
      *                      <td>%d、%d?、%D、%D?</td>
      *                      <td>Day，</td>
@@ -270,43 +270,42 @@ public class Datex {
      *                </table>
      *                </blockquote>
      *                As shown in the table above, each type has several variants.
-     *                The variant containing'?' means that if the result of this item is 0, then it can be ignored in the output；
+     *                The variant containing '?' means that if the result of this item is 0, then it can be ignored in the output；
      *                Uppercase means, if necessary, add 0 in front of the output result to ensure that the output result always maintains a fixed length
      *
      *                for example:
      *                <blockquote>
-     *                <table summary="Time length formatting pattern example">
+     *                <table summary="Duration formatting pattern example">
      *                  <tr>
      *                      <th> Example </th>
      *                      <th> Result </th>
      *                  </tr>
      *                  <tr>
-     *                      <td> formatTimeLength(3623000, "%hh%mm%ss") </td>
+     *                      <td> formatDuration(3623000, "%hh%mm%ss") </td>
      *                      <td> "1h0m23s" </td>
      *                  </tr>
      *                  <tr>
-     *                      <td> formatTimeLength(3623000, "%h?h%m?m%s?s") </td>
+     *                      <td> formatDuration(3623000, "%h?h%m?m%s?s") </td>
      *                      <td> "1h23s" </td>
      *                  </tr>
      *                  <tr>
-     *                      <td> formatTimeLength(4684000, "%h:%m:%s") </td>
+     *                      <td> formatDuration(4684000, "%h:%m:%s") </td>
      *                      <td> "1:18:4" </td>
      *                  </tr>
      *                  <tr>
-     *                      <td> formatTimeLength(4684000, "%H:%M:%S") </td>
+     *                      <td> formatDuration(4684000, "%H:%M:%S") </td>
      *                      <td> "01:18:04" </td>
      *                  </tr>
      *                  <tr>
-     *                      <td> formatTimeLength(91403467, "%dDay %hHour %mMinute %sSecond %msMillisecond") </td>
+     *                      <td> formatDuration(91403467, "%dDay %hHour %mMinute %sSecond %msMillisecond") </td>
      *                      <td> "1Day 1Hour 23Minute 23Second 467Millisecond" </td>
      *                  </tr>
      *                </table>
      *                </blockquote>
      */
     @NotNull
-    // todo 改名 formatDuration
-    public static String formatTimeLength(long timeLength, @NotNull String pattern) {
-        timeLength = Math.max(timeLength, 0);
+    public static String formatDuration(long duration, @NotNull String pattern) {
+        duration = Math.max(duration, 0);
         final long oneSecondMilliseconds = 1000;
         final long oneMinuteMilliseconds = oneSecondMilliseconds * 60;
         final long oneHourMilliseconds = oneMinuteMilliseconds * 60;
@@ -340,12 +339,12 @@ public class Datex {
             }
         }
         if (daySuffix == null && hourSuffix == null && minuteSuffix == null && secondSuffix == null && millisecondSuffix == null) {
-            throw new IllegalArgumentException("Invalid pattern '" + pattern + "', for example：'\\h:\\m:\\s'");
+            throw new IllegalArgumentException("Invalid pattern '" + pattern + "', for example：'%h:%m:%s'");
         }
 
         StringBuilder builder = new StringBuilder();
         if (daySuffix != null) {
-            long day = timeLength / oneDayMilliseconds;
+            long day = duration / oneDayMilliseconds;
             if (day > 0 || !dayAllowIgnore) {
                 builder.append(dayPad ? String.format("%02d", day) : day).append(daySuffix);
             }
@@ -354,9 +353,9 @@ public class Datex {
         if (hourSuffix != null) {
             long hour;
             if (daySuffix != null) {
-                hour = timeLength % oneDayMilliseconds / oneHourMilliseconds;
+                hour = duration % oneDayMilliseconds / oneHourMilliseconds;
             } else {
-                hour = timeLength / oneHourMilliseconds;
+                hour = duration / oneHourMilliseconds;
             }
             if (hour > 0 || !hourAllowIgnore) {
                 builder.append(hourPad ? String.format("%02d", hour) : hour).append(hourSuffix);
@@ -366,9 +365,9 @@ public class Datex {
         if (minuteSuffix != null) {
             long minute;
             if (daySuffix != null || hourSuffix != null) {
-                minute = timeLength % oneHourMilliseconds / oneMinuteMilliseconds;
+                minute = duration % oneHourMilliseconds / oneMinuteMilliseconds;
             } else {
-                minute = timeLength / oneMinuteMilliseconds;
+                minute = duration / oneMinuteMilliseconds;
             }
             if (minute > 0 || !minuteAllowIgnore) {
                 builder.append(minutePad ? String.format("%02d", minute) : minute).append(minuteSuffix);
@@ -378,9 +377,9 @@ public class Datex {
         if (secondSuffix != null) {
             long second;
             if (daySuffix != null || hourSuffix != null || minuteSuffix != null) {
-                second = timeLength % oneMinuteMilliseconds / oneSecondMilliseconds;
+                second = duration % oneMinuteMilliseconds / oneSecondMilliseconds;
             } else {
-                second = timeLength / oneSecondMilliseconds;
+                second = duration / oneSecondMilliseconds;
             }
             if (second > 0 || !secondAllowIgnore) {
                 builder.append(secondPad ? String.format("%02d", second) : second).append(secondSuffix);
@@ -390,9 +389,9 @@ public class Datex {
         if (millisecondSuffix != null) {
             long millisecond;
             if (daySuffix != null || hourSuffix != null || minuteSuffix != null || secondSuffix != null) {
-                millisecond = timeLength % oneSecondMilliseconds;
+                millisecond = duration % oneSecondMilliseconds;
             } else {
-                millisecond = timeLength;
+                millisecond = duration;
             }
             if (millisecond > 0 || !millisecondAllowIgnore) {
                 builder.append(millisecondPad ? String.format("%03d", millisecond) : millisecond).append(millisecondSuffix);
@@ -414,6 +413,16 @@ public class Datex {
         }
 
         return builder.toString().trim();
+    }
+
+
+    /**
+     * @deprecated Please use formatDuration instead
+     */
+    @Deprecated
+    @NotNull
+    public static String formatTimeLength(long timeLength, @NotNull String pattern) {
+        return formatDuration(timeLength, pattern);
     }
 
 

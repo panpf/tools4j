@@ -168,7 +168,7 @@ Dependencies：
 ### tools4j-date
 ![TestCoverage](https://img.shields.io/badge/TestCoverage-94%25-green.svg)
 * Datex: [Datex.java] ([Test][DatexTest.kt]) | [Datex.kt] ([Test][DatexKtxTest.kt])
-    * createCalendar, toDate, format, formatTimeLength, getCalendarField,
+    * createCalendar, toDate, format, formatDuration, getCalendarField,
     * addToDate, addCalendarField, isSame\[Year, Month...\], differField,
 
 ### tools4j-environment

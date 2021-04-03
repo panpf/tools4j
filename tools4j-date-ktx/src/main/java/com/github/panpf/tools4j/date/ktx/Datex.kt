@@ -19,7 +19,6 @@
 package com.github.panpf.tools4j.date.ktx
 
 import com.github.panpf.tools4j.date.Datex
-import org.jetbrains.annotations.NotNull
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -139,12 +138,12 @@ inline fun Long.formatDate(pattern: String, locale: Locale): String = Datex.form
 inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern)
 
 /**
- * Format the length of time according to the specified 'pattern'
+ * Format the duration according to the specified 'pattern'
  *
  * @param pattern Formatting pattern，The following types are supported:
  *
  *                <blockquote>
- *                <table summary="Time length formatting pattern desc">
+ *                <table summary="Duration formatting pattern desc">
  *                  <tr>
  *                      <td>%d、%d?、%D、%D?</td>
  *                      <td>Day，</td>
@@ -168,12 +167,12 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  *                </table>
  *                </blockquote>
  *                As shown in the table above, each type has several variants.
- *                The variant containing'?' means that if the result of this item is 0, then it can be ignored in the output；
+ *                The variant containing '?' means that if the result of this item is 0, then it can be ignored in the output；
  *                Uppercase means, if necessary, add 0 in front of the output result to ensure that the output result always maintains a fixed length
  *
  *                for example:
  *                <blockquote>
- *                <table summary="Time length formatting pattern example">
+ *                <table summary="Duration formatting pattern example">
  *                  <tr>
  *                      <th> Example </th>
  *                      <th> Result </th>
@@ -201,6 +200,9 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  *                </table>
  *                </blockquote>
  */
+inline fun Long.formatDuration(pattern: String) = Datex.formatDuration(this, pattern)
+
+@Deprecated("Please use formatDuration instead", replaceWith = ReplaceWith("formatDuration"))
 inline fun Long.formatTimeLength(pattern: String) = Datex.formatTimeLength(this, pattern)
 
 
