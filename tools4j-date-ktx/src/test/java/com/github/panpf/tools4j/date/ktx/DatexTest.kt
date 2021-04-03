@@ -17,6 +17,7 @@
 package com.github.panpf.tools4j.date.ktx
 
 import com.github.panpf.tools4j.date.Datex
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 import java.text.SimpleDateFormat
@@ -102,6 +103,7 @@ class DatexTest {
         assertEquals("0s", (-10L).formatTimeLength("%d?d %h?h %m?m %s?s"))
         assertEquals("590ms", 590L.formatTimeLength("%d?d %h?h %m?m %s?s %ms?ms"))
         assertEquals("0s", 590L.formatTimeLength("%d?d %h?h %m?m %s?s"))
+        assertEquals("1590ms", 1590L.formatTimeLength("%ms?ms"))
 
         // second
         assertEquals("3s", (oneSecondMilliseconds * 3).formatTimeLength("%d?d %h?h %m?m %s?s %ms?ms"))

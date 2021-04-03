@@ -269,7 +269,9 @@ public class Datex {
      *                  </tr>
      *                </table>
      *                </blockquote>
-     *                As shown in the table above, each type has several variants. The variant containing'?' means that if the result of this item is 0, then it can be ignored in the output；Uppercase means, if the result of this item is less than 10, then add '0' in front of the output
+     *                As shown in the table above, each type has several variants.
+     *                The variant containing'?' means that if the result of this item is 0, then it can be ignored in the output；
+     *                Uppercase means, if necessary, add 0 in front of the output result to ensure that the output result always maintains a fixed length
      *
      *                for example:
      *                <blockquote>
@@ -397,7 +399,7 @@ public class Datex {
             if (daySuffix != null || hourSuffix != null || minuteSuffix != null || secondSuffix != null) {
                 millisecond = timeLength % oneSecondMilliseconds;
             } else {
-                millisecond = timeLength / oneSecondMilliseconds;
+                millisecond = timeLength;
             }
             if (millisecond > 0) {
                 builder.append(millisecondPad ? String.format("%02d", millisecond) : millisecond).append(millisecondSuffix);

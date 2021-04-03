@@ -16,6 +16,7 @@
 * fix: Fix Collectionx's chunked method bug
 * new: Sequencex added chunked, windowed method
 * change: Arrayx, Collectionx, Mapx now need to return empty Lists are Collections.EmptyList
+* fix: Fix the bug that Datex.formatTimeLength() method should return '1590ms' instead of '1ms' when inputting'(1590L, "%ms?ms")' 
 
 
 ## v1.0.0-rc01
