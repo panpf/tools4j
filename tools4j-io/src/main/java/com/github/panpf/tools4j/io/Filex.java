@@ -27,6 +27,7 @@ import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * File tools, provide some convenient methods for files
@@ -2337,5 +2338,26 @@ public class Filex {
     @NotNull
     public static FileTreeWalk walkBottomUp(@NotNull File file) {
         return walk(file, FileWalkDirection.BOTTOM_UP);
+    }
+
+
+    /* ******************************************* other ****************************************** */
+
+    /**
+     * Filter out illegal characters that are not supported in the file name. Illegal characters include: '*' '.' '"' '/' '\' '[' ']' ':' ';' '|' ','
+     */
+    @NotNull
+    public static String filterFileNameIllegalCharacters(@NotNull String fileName) {
+        return Pattern.compile("[\\\\/:*?\"<>|]").matcher(fileName).replaceAll("");
+    }
+
+    /**
+     * Filter out illegal characters that are not supported in the file name. If only blank characters are left after filtering, return null. Illegal characters include: '*' '.' '"' '/' '\' '[' ']' ':' ';' '|' ','
+     */
+    @Nullable
+    public static String filterFileNameIllegalCharactersOrNull(@Nullable String fileName) {
+        if (fileName == null) return null;
+        String result = filterFileNameIllegalCharacters(fileName).trim();
+        return !"".equals(result) ? result : null;
     }
 }

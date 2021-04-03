@@ -189,7 +189,8 @@ Dependencies：
     * relativeToOrSelf, relativeToOrNull, isRooted, toComponents, getInvariantSeparatorsPath, subPath, 
     * inputStream, bufferedInputStream, reader, bufferedReader, readBytes, readText, readLines, useLines,
     * forEachBlock, forEachLine, outputStream, bufferedOutputStream, writer, bufferedWriter, printWriter, 
-    * writeBytes, appendBytes, writeText, appendText, walk, walkTopDown, walkBottomUp
+    * writeBytes, appendBytes, writeText, appendText, walk, walkTopDown, walkBottomUp,
+    * testFilterFileNameIllegalCharacters, testFilterFileNameIllegalCharactersOrNull
 * IOx: [IOx.java] ([Test][IOxTest.kt]) | [IOx.kt] ([Test][IOxKtxTest.kt])
     * closeQuietly, readBytesAndClose, readTextAndClose, writeByteAndClose, writeBytesAndClose, 
     * writeTextAndClose, writeCharAndClose, writeCharsAndClose, copyTo, inputStream, byteInputStream, 

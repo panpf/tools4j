@@ -406,3 +406,18 @@ inline fun File.bufferedOutputStream(bufferSize: Int): BufferedOutputStream = Fi
  */
 @Throws(FileNotFoundException::class)
 inline fun File.bufferedOutputStream(): BufferedOutputStream = Filex.bufferedOutputStream(this)
+
+
+
+/* ******************************************* other ****************************************** */
+
+
+/*
+ * Filter out illegal characters that are not supported in the file name. Illegal characters include: '*' '.' '"' '/' '\' '[' ']' ':' ';' '|' ','
+ */
+inline fun String.filterFileNameIllegalCharacters(): String = Filex.filterFileNameIllegalCharacters(this)
+
+/**
+ * Filter out illegal characters that are not supported in the file name. If only blank characters are left after filtering, return null. Illegal characters include: '*' '.' '"' '/' '\' '[' ']' ':' ';' '|' ','
+ */
+inline fun String?.filterFileNameIllegalCharactersOrNull(): String? = Filex.filterFileNameIllegalCharactersOrNull(this)

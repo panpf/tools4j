@@ -85,7 +85,10 @@ class FilexTest {
         try {
             Filex.deleteRecursively(file.parentFile)
             Filex.createNewFileOrThrow(file)
-            assertEquals("/tmp/testEnsureFileNotExist/source.txt-1.tmp", Filex.ensureFileNotExist(file, false, 100).path)
+            assertEquals(
+                "/tmp/testEnsureFileNotExist/source.txt-1.tmp",
+                Filex.ensureFileNotExist(file, false, 100).path
+            )
         } finally {
             Filex.deleteRecursively(file.parentFile)
         }
@@ -372,8 +375,10 @@ class FilexTest {
             assertTrue(childPaths.contains("dir3/dir3/file1.txt"))
 
             assertEquals((Filex.listRecursively(dir) { pathname -> pathname.isFile }?.size ?: 0).toLong(), 39)
-            assertEquals((Filex.listRecursively(dir) { dir2, name -> File(dir2, name).isDirectory }?.size
-                    ?: 0).toLong(), 12)
+            assertEquals(
+                (Filex.listRecursively(dir) { dir2, name -> File(dir2, name).isDirectory }?.size
+                    ?: 0).toLong(), 12
+            )
 
             val childFiles = requireNotNull(Filex.listFilesRecursively(dir))
             assertEquals(childFiles.count(), 51)
@@ -392,10 +397,14 @@ class FilexTest {
             assertTrue(childFiles.contains(File(dir, "dir3/dir2/file1.txt")))
             assertTrue(childFiles.contains(File(dir, "dir3/dir3/file1.txt")))
 
-            assertEquals((Filex.listFilesRecursively(dir) { pathname -> pathname.isFile }?.size
-                    ?: 0).toLong(), 39)
-            assertEquals((Filex.listFilesRecursively(dir) { dir2, name -> File(dir2, name).isDirectory }?.size
-                    ?: 0).toLong(), 12)
+            assertEquals(
+                (Filex.listFilesRecursively(dir) { pathname -> pathname.isFile }?.size
+                    ?: 0).toLong(), 39
+            )
+            assertEquals(
+                (Filex.listFilesRecursively(dir) { dir2, name -> File(dir2, name).isDirectory }?.size
+                    ?: 0).toLong(), 12
+            )
         } finally {
             Filex.deleteRecursively(dir)
         }
@@ -450,7 +459,8 @@ class FilexTest {
 
     @Test
     fun testListCountRecursively() {
-        val dir = Filex.createFileTree(File("/tmp/testListCountRecursively"), 3, 3, "file.txt", "testListCountRecursively")
+        val dir =
+            Filex.createFileTree(File("/tmp/testListCountRecursively"), 3, 3, "file.txt", "testListCountRecursively")
 
         try {
             assertEquals(Filex.listCountRecursively(dir), 51)
@@ -561,12 +571,21 @@ class FilexTest {
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 999), "999 TB")
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 999 + 1), "0.98 PB")
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1 PB")
-        assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1.49 PB")
-        assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500.49 PB")
+        assertEquals(
+            Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1.49 PB"
+        )
+        assertEquals(
+            Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500.49 PB"
+        )
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 999), "999 PB")
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 999 + 1), "0.98 EB")
         assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1 EB")
-        assertEquals(Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1.49 EB")
+        assertEquals(
+            Filex.formatFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1.49 EB"
+        )
         assertEquals(Filex.formatCompactFileSize(-10L), "0B")
         assertEquals(Filex.formatCompactFileSize(0L), "0B")
         assertEquals(Filex.formatCompactFileSize(999), "999B")
@@ -588,16 +607,28 @@ class FilexTest {
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 999 + 1), "0.98TB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024), "1TB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024), "1.49TB")
-        assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500), "500.49TB")
+        assertEquals(
+            Filex.formatCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500),
+            "500.49TB"
+        )
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 999), "999TB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 999 + 1), "0.98PB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1PB")
-        assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1.49PB")
-        assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500.49PB")
+        assertEquals(
+            Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1.49PB"
+        )
+        assertEquals(
+            Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500.49PB"
+        )
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 999), "999PB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 999 + 1), "0.98EB")
         assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1EB")
-        assertEquals(Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1.49EB")
+        assertEquals(
+            Filex.formatCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1.49EB"
+        )
     }
 
     @Test
@@ -615,12 +646,24 @@ class FilexTest {
         assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 500 + 1024L * 1024 * 1024 * 500), "500.5 GB")
         assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024), "1 TB")
         assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024), "1.5 TB")
-        assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500), "500.5 TB")
+        assertEquals(
+            Filex.formatMediumFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500),
+            "500.5 TB"
+        )
         assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1 PB")
-        assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1.5 PB")
-        assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500.5 PB")
+        assertEquals(
+            Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1.5 PB"
+        )
+        assertEquals(
+            Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500.5 PB"
+        )
         assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1 EB")
-        assertEquals(Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1.5 EB")
+        assertEquals(
+            Filex.formatMediumFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1.5 EB"
+        )
         assertEquals(Filex.formatMediumCompactFileSize(0), "0B")
         assertEquals(Filex.formatMediumCompactFileSize(800), "800B")
         assertEquals(Filex.formatMediumCompactFileSize(1024), "1KB")
@@ -634,12 +677,24 @@ class FilexTest {
         assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 500 + 1024L * 1024 * 1024 * 500), "500.5GB")
         assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024), "1TB")
         assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024), "1.5TB")
-        assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500), "500.5TB")
+        assertEquals(
+            Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500),
+            "500.5TB"
+        )
         assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1PB")
-        assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1.5PB")
-        assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500.5PB")
+        assertEquals(
+            Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1.5PB"
+        )
+        assertEquals(
+            Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500.5PB"
+        )
         assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1EB")
-        assertEquals(Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1.5EB")
+        assertEquals(
+            Filex.formatMediumCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1.5EB"
+        )
     }
 
     @Test
@@ -659,10 +714,19 @@ class FilexTest {
         assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024), "1 TB")
         assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500), "500 TB")
         assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1 PB")
-        assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1 PB")
-        assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500 PB")
+        assertEquals(
+            Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1 PB"
+        )
+        assertEquals(
+            Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500 PB"
+        )
         assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1 EB")
-        assertEquals(Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1 EB")
+        assertEquals(
+            Filex.formatShortFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1 EB"
+        )
         assertEquals(Filex.formatShortCompactFileSize(0), "0B")
         assertEquals(Filex.formatShortCompactFileSize(800), "800B")
         assertEquals(Filex.formatShortCompactFileSize(1024), "1KB")
@@ -676,34 +740,48 @@ class FilexTest {
         assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 500 + 1024L * 1024 * 1024 * 500), "500GB")
         assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024), "1TB")
         assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024), "1TB")
-        assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500), "500TB")
+        assertEquals(
+            Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 500),
+            "500TB"
+        )
         assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024), "1PB")
-        assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024), "1PB")
-        assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500), "500PB")
+        assertEquals(
+            Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024),
+            "1PB"
+        )
+        assertEquals(
+            Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 500),
+            "500PB"
+        )
         assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1EB")
-        assertEquals(Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024), "1EB")
+        assertEquals(
+            Filex.formatShortCompactFileSize(1024L * 1024 * 1024 * 1024 * 1024 * 500 + 1024L * 1024 * 1024 * 1024 * 1024 * 1024),
+            "1EB"
+        )
     }
 
     @Test
     fun testRequireExist() {
         val testFile = File("/tmp/testRequireExist")
         testFile.delete()
-        var result: Boolean
-        result = try {
-            Filex.requireExist(testFile)
-            true
-        } catch (e: FileNotFoundException) {
-            false
-        }
-        assertFalse(result)
+        assertFalse(
+            try {
+                Filex.requireExist(testFile)
+                true
+            } catch (e: FileNotFoundException) {
+                false
+            }
+        )
+
         Filex.createNewFileOrCheck(testFile)
-        result = try {
-            Filex.requireExist(testFile)
-            true
-        } catch (e: FileNotFoundException) {
-            false
-        }
-        assertTrue(result)
+        assertTrue(
+            try {
+                Filex.requireExist(testFile)
+                true
+            } catch (e: FileNotFoundException) {
+                false
+            }
+        )
         testFile.delete()
     }
 
@@ -713,35 +791,37 @@ class FilexTest {
 
         // 不存在时
         Filex.deleteRecursively(testDir)
-        var result: Boolean
-        result = try {
-            Filex.requireIsDir(testDir)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertFalse(result)
+        assertFalse(
+            try {
+                Filex.requireIsDir(testDir)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
 
         // 文件
         Filex.createNewFileOrCheck(testDir)
-        result = try {
-            Filex.requireIsDir(testDir)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertFalse(result)
+        assertFalse(
+            try {
+                Filex.requireIsDir(testDir)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
 
         // 目录
         Filex.deleteRecursively(testDir)
         Filex.mkdirsOrCheck(testDir)
-        result = try {
-            Filex.requireIsDir(testDir)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertTrue(result)
+        assertTrue(
+            try {
+                Filex.requireIsDir(testDir)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
         Filex.deleteRecursively(testDir)
     }
 
@@ -751,35 +831,37 @@ class FilexTest {
 
         // 不存在时
         Filex.deleteRecursively(testFile)
-        var result: Boolean
-        result = try {
-            Filex.requireIsFile(testFile)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertFalse(result)
+        assertFalse(
+            try {
+                Filex.requireIsFile(testFile)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
 
         // 目录
         Filex.mkdirsOrCheck(testFile)
-        result = try {
-            Filex.requireIsFile(testFile)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertFalse(result)
+        assertFalse(
+            try {
+                Filex.requireIsFile(testFile)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
 
         // 文件
         Filex.deleteRecursively(testFile)
         Filex.createNewFileOrCheck(testFile)
-        result = try {
-            Filex.requireIsFile(testFile)
-            true
-        } catch (e: java.lang.IllegalArgumentException) {
-            false
-        }
-        assertTrue(result)
+        assertTrue(
+            try {
+                Filex.requireIsFile(testFile)
+                true
+            } catch (e: java.lang.IllegalArgumentException) {
+                false
+            }
+        )
         Filex.deleteRecursively(testFile)
     }
 
@@ -865,7 +947,8 @@ class FilexTest {
     @Test
     @Throws(IOException::class)
     fun testCopyRecursively() {
-        val copySourceDir = Filex.createFileTree(File("/tmp/testCopyRecursively"), 3, 3, "file.txt", "testCopyRecursively")
+        val copySourceDir =
+            Filex.createFileTree(File("/tmp/testCopyRecursively"), 3, 3, "file.txt", "testCopyRecursively")
         val copyTargetDir = File(copySourceDir.path + "_copyTarget")
         val copyTargetDirKotlin = File(copySourceDir.path + "_copyTarget_kotlin")
         try {
@@ -885,13 +968,19 @@ class FilexTest {
             }
             Filex.copyRecursively(copySourceDir, copyTargetDir, true)
             assertTrue(copyTargetDir.exists())
-            assertEquals(Filex.listCountRecursively(copyTargetDir).toLong(), Filex.listCountRecursively(copySourceDir).toLong())
+            assertEquals(
+                Filex.listCountRecursively(copyTargetDir).toLong(),
+                Filex.listCountRecursively(copySourceDir).toLong()
+            )
             assertEquals(Filex.lengthRecursively(copyTargetDir), Filex.lengthRecursively(copySourceDir))
 
             Filex.deleteRecursively(copyTargetDirKotlin)
             copySourceDir.copyRecursively(copyTargetDirKotlin)
             assertTrue(copyTargetDirKotlin.exists())
-            assertEquals(Filex.listCountRecursively(copyTargetDirKotlin).toLong(), Filex.listCountRecursively(copySourceDir).toLong())
+            assertEquals(
+                Filex.listCountRecursively(copyTargetDirKotlin).toLong(),
+                Filex.listCountRecursively(copySourceDir).toLong()
+            )
             assertEquals(Filex.lengthRecursively(copyTargetDirKotlin), Filex.lengthRecursively(copySourceDir))
         } finally {
             Filex.deleteRecursively(copyTargetDir)
@@ -903,13 +992,19 @@ class FilexTest {
             Filex.copyRecursively(copySourceDir, copyTargetDir) { _, e -> throw IllegalArgumentException(e) }
 
             assertTrue(copyTargetDir.exists())
-            assertEquals(Filex.listCountRecursively(copyTargetDir).toLong(), Filex.listCountRecursively(copySourceDir).toLong())
+            assertEquals(
+                Filex.listCountRecursively(copyTargetDir).toLong(),
+                Filex.listCountRecursively(copySourceDir).toLong()
+            )
             assertEquals(Filex.lengthRecursively(copyTargetDir), Filex.lengthRecursively(copySourceDir))
 
             Filex.deleteRecursively(copyTargetDirKotlin)
             copySourceDir.copyRecursively(copyTargetDirKotlin)
             assertTrue(copyTargetDirKotlin.exists())
-            assertEquals(Filex.listCountRecursively(copyTargetDirKotlin).toLong(), Filex.listCountRecursively(copySourceDir).toLong())
+            assertEquals(
+                Filex.listCountRecursively(copyTargetDirKotlin).toLong(),
+                Filex.listCountRecursively(copySourceDir).toLong()
+            )
             assertEquals(Filex.lengthRecursively(copyTargetDirKotlin), Filex.lengthRecursively(copySourceDir))
         } finally {
             Filex.deleteRecursively(copySourceDir)
@@ -1048,12 +1143,18 @@ class FilexTest {
         sourceFile = File("/tmp/testResolveSibling/image")
         var relativeFilePath = "/tmp/testResolveSibling"
         assertEquals(Filex.resolveSibling(sourceFile, relativeFilePath).path, "/tmp/testResolveSibling")
-        assertEquals(Filex.resolveSibling(sourceFile, relativeFilePath).path, sourceFile.resolveSibling(relativeFilePath).path)
+        assertEquals(
+            Filex.resolveSibling(sourceFile, relativeFilePath).path,
+            sourceFile.resolveSibling(relativeFilePath).path
+        )
 
         sourceFile = File("/tmp/testResolveSibling/")
         relativeFilePath = "/tmp/testResolveSibling/file"
         assertEquals(Filex.resolveSibling(sourceFile, relativeFilePath).path, "/tmp/testResolveSibling/file")
-        assertEquals(Filex.resolveSibling(sourceFile, relativeFilePath).path, sourceFile.resolveSibling(relativeFilePath).path)
+        assertEquals(
+            Filex.resolveSibling(sourceFile, relativeFilePath).path,
+            sourceFile.resolveSibling(relativeFilePath).path
+        )
     }
 
     @Test
@@ -1238,7 +1339,10 @@ class FilexTest {
 
     @Test
     fun testGetInvariantSeparatorsPath() {
-        assertEquals(Filex.getInvariantSeparatorsPath(File("/tmp/testGetInvariantSeparatorsPath")), "/tmp/testGetInvariantSeparatorsPath")
+        assertEquals(
+            Filex.getInvariantSeparatorsPath(File("/tmp/testGetInvariantSeparatorsPath")),
+            "/tmp/testGetInvariantSeparatorsPath"
+        )
     }
 
     @Test
@@ -1292,8 +1396,14 @@ class FilexTest {
             assertEquals(String(Filex.readBytes(file)), content)
             assertEquals(Filex.readText(file, Charset.forName("UTF-8")), content)
             assertEquals(Filex.readText(file), content)
-            assertEquals(Filex.readLines(file, Charset.forName("UTF-8")).joinToString(prefix = "[", postfix = "]"), "[" + content.replace("\n", ", ") + "]")
-            assertEquals(Filex.readLines(file).joinToString(prefix = "[", postfix = "]"), "[" + content.replace("\n", ", ") + "]")
+            assertEquals(
+                Filex.readLines(file, Charset.forName("UTF-8")).joinToString(prefix = "[", postfix = "]"),
+                "[" + content.replace("\n", ", ") + "]"
+            )
+            assertEquals(
+                Filex.readLines(file).joinToString(prefix = "[", postfix = "]"),
+                "[" + content.replace("\n", ", ") + "]"
+            )
         } finally {
             Filex.deleteRecursively(file)
         }
@@ -1316,7 +1426,7 @@ class FilexTest {
 
             assertEquals(StringBuilder().apply {
                 Filex.useLines(file) { iterable ->
-                    iterable.forEach{ lineString ->
+                    iterable.forEach { lineString ->
                         if (length > 0) append("\n")
                         append(lineString)
                     }
@@ -1469,5 +1579,37 @@ class FilexTest {
         } finally {
             Filex.deleteRecursively(sourceDir)
         }
+    }
+
+    @Test
+    fun testFilterFileNameIllegalCharacters() {
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("sample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("s/ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("sam\\ple.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("samp\"le.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters(":sample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("sampl|e.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("sampl*e.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("s?ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("s<ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("samp>le.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharacters("sa<mp>le.txt"))
+        assertEquals("", Filex.filterFileNameIllegalCharacters("\"<>"))
+        assertEquals(" ", Filex.filterFileNameIllegalCharacters("\"<> "))
+
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("sample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("s/ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("sam\\ple.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("samp\"le.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull(":sample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("sampl|e.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("sampl*e.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("s?ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("s<ample.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("samp>le.txt"))
+        assertEquals("sample.txt", Filex.filterFileNameIllegalCharactersOrNull("sa<mp>le.txt"))
+        assertNull(Filex.filterFileNameIllegalCharactersOrNull("\"<>"))
+        assertNull(Filex.filterFileNameIllegalCharactersOrNull("\"<> "))
+        assertNull(Filex.filterFileNameIllegalCharactersOrNull(null))
     }
 }
