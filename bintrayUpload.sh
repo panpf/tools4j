@@ -53,12 +53,12 @@ modules=(
   )
 number=0
 for module in ${modules[@]};do
-  let number++
   if [ "$number" -ge "$startNumber" ] ; then
-    gradlew $module:bU -PdryRun=false -Poverride=true
+    ./gradlew $module:bU -PdryRun=false -Poverride=true
     if [ $? -ne 0 ];then
         echo "module $module failed. number: $number"
         exit 1
     fi
   fi
+  let number++
 done

@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * Array tool method
  * <br>
- * <br>from kotlin files: Arrays.kt, ArraysJVM.kt, _ArraysKt, _ArraysJvm.kt</li>
+ * from kotlin files: Arrays.kt, ArraysJVM.kt, _ArraysKt, _ArraysJvm.kt
  */
 public class Arrayx {
 

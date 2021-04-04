@@ -1705,11 +1705,11 @@ class CollectionxTest {
 
         assertEquals("", Collectionx.joinToString(Collectionx.withIndex(nullList)) { "${it.index}:${it.value}" })
 
-        val iterator = normalList.withIndex().iterator()
-        if (iterator is MutableIterator) {
-            assertThrow(UnsupportedOperationException::class) { iterator.remove() }
-        }
-        assertThrow(IllegalStateException::class) { Collectionx.withIndex(normalList).iterator().remove() }
+//        val iterator = normalList.withIndex().iterator()
+//        if (iterator is MutableIterator) {
+//            assertThrow(UnsupportedOperationException::class) { iterator.remove() }
+//        }
+//        assertThrow(IllegalStateException::class) { Collectionx.withIndex(normalList).iterator().remove() }
     }
 
     @Test

@@ -143,58 +143,83 @@ inline fun Long.formatDate(pattern: String): String = Datex.format(this, pattern
  * @param pattern Formatting pattern，The following types are supported:
  *
  *                <blockquote>
- *                <table summary="Duration formatting pattern desc">
+ *                <table>
+ *                  <caption>Duration formatting pattern desc</caption>
  *                  <tr>
- *                      <td>%d、%d?、%D、%D?</td>
- *                      <td>Day，</td>
+ *                      <th> Type </th>
+ *                      <th> Dynamic Length, Can'tIgnore </th>
+ *                      <th> Dynamic Length, CanIgnore </th>
+ *                      <th> Fixed Length, Can'tIgnore </th>
+ *                      <th> Fixed Length, CanIgnore </th>
  *                  </tr>
- *                  <tr>
- *                      <td>%h、%h?、%H、%H?</td>
- *                      <td>Hour</td>
- *                  </tr>
- *                  <tr>
- *                      <td>%m、%m?、%M、%M?</td>
- *                      <td>Minute</td>
- *                  </tr>
- *                  <tr>
- *                      <td>%s、%s?、%S、%S?</td>
- *                      <td>Second</td>
- *                  </tr>
- *                  <tr>
- *                      <td>%ms、%ms?、%MS、%MS?</td>
- *                      <td>Millisecond</td>
- *                  </tr>
- *                </table>
+ *                   <tr>
+ *                     <td>Day</td>
+ *                     <td>%d</td>
+ *                     <td>%d?</td>
+ *                     <td>%D</td>
+ *                     <td>%D?</td>
+ *                   </tr>
+ *                   <tr>
+ *                     <td>Hour</td>
+ *                     <td>%h</td>
+ *                     <td>%h?</td>
+ *                     <td>%H</td>
+ *                     <td>%H?</td>
+ *                   </tr>
+ *                   <tr>
+ *                     <td>Minute</td>
+ *                     <td>%m</td>
+ *                     <td>%m?</td>
+ *                     <td>%M</td>
+ *                     <td>%M?</td>
+ *                   </tr>
+ *                   <tr>
+ *                     <td>Second</td>
+ *                     <td>%s</td>
+ *                     <td>%s?</td>
+ *                     <td>%S</td>
+ *                     <td>%S?</td>
+ *                   </tr>
+ *                   <tr>
+ *                     <td>Millisecond</td>
+ *                     <td>%ms</td>
+ *                     <td>%ms?</td>
+ *                     <td>%MS</td>
+ *                     <td>%MS?</td>
+ *                   </tr>
+ *                 </table>
  *                </blockquote>
+ *
  *                As shown in the table above, each type has several variants.
  *                The variant containing '?' means that if the result of this item is 0, then it can be ignored in the output；
  *                Uppercase means, if necessary, add 0 in front of the output result to ensure that the output result always maintains a fixed length
  *
  *                for example:
  *                <blockquote>
- *                <table summary="Duration formatting pattern example">
+ *                <table>
+ *                  <caption>Duration formatting pattern example</caption>
  *                  <tr>
  *                      <th> Example </th>
  *                      <th> Result </th>
  *                  </tr>
  *                  <tr>
- *                      <td> formatTimeLength(3623000, "%hh%mm%ss") </td>
+ *                      <td> formatDuration(3623000, "%hh%mm%ss") </td>
  *                      <td> "1h0m23s" </td>
  *                  </tr>
  *                  <tr>
- *                      <td> formatTimeLength(3623000, "%h?h%m?m%s?s") </td>
+ *                      <td> formatDuration(3623000, "%h?h%m?m%s?s") </td>
  *                      <td> "1h23s" </td>
  *                  </tr>
  *                  <tr>
- *                      <td> formatTimeLength(4684000, "%h:%m:%s") </td>
+ *                      <td> formatDuration(4684000, "%h:%m:%s") </td>
  *                      <td> "1:18:4" </td>
  *                  </tr>
  *                  <tr>
- *                      <td> formatTimeLength(4684000, "%H:%M:%S") </td>
+ *                      <td> formatDuration(4684000, "%H:%M:%S") </td>
  *                      <td> "01:18:04" </td>
  *                  </tr>
  *                  <tr>
- *                      <td> formatTimeLength(91403467, "%dDay %hHour %mMinute %sSecond %msMillisecond") </td>
+ *                      <td> formatDuration(91403467, "%dDay %hHour %mMinute %sSecond %msMillisecond") </td>
  *                      <td> "1Day 1Hour 23Minute 23Second 467Millisecond" </td>
  *                  </tr>
  *                </table>
