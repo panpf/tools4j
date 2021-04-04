@@ -17,13 +17,18 @@
 package com.github.panpf.tools4j.lang;
 
 import com.github.panpf.tools4j.common.*;
-import com.github.panpf.tools4j.iterable.*;
+import com.github.panpf.tools4j.common.Pair;
+import com.github.panpf.tools4j.iterable.CharSequenceIterable;
+import com.github.panpf.tools4j.iterable.CharSequenceIterator;
+import com.github.panpf.tools4j.iterable.IndexingIterable;
+import com.github.panpf.tools4j.iterable.TransformingIterable;
 import com.github.panpf.tools4j.ranges.IntProgression;
 import com.github.panpf.tools4j.ranges.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.Deprecated;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -40,8 +45,6 @@ public class Stringx {
 
     private Stringx() {
     }
-
-    // todo add ifEmpty ifBlank method from kotlin
 
 
     /* ******************************************* safe ****************************************** */
@@ -842,6 +845,7 @@ public class Stringx {
         return hiddenEndChars(input, hiddenLength, '*');
     }
 
+
     /*
      * *****************************************************************************************************************
      * From kotlin standard library
@@ -849,7 +853,7 @@ public class Stringx {
      */
 
 
-    /* ******************************************* isBlank ****************************************** */
+    /* ******************************************* blank ****************************************** */
 
 
     /**
@@ -879,8 +883,26 @@ public class Stringx {
         return sequence == null || isBlank(sequence);
     }
 
+    /**
+     * Returns this char sequence if it is not empty and doesn't consist solely of whitespace characters,
+     * or the result of calling [defaultValue] function otherwise.
+     */
+    @NotNull
+    public static CharSequence ifBlank(@NotNull CharSequence charSequence, @NotNull DefaultValue<CharSequence> defaultValue) {
+        return isBlank(charSequence) ? defaultValue.get() : charSequence;
+    }
 
-    /* ******************************************* isEmpty ****************************************** */
+    /**
+     * Returns this char sequence if it is not empty and doesn't consist solely of whitespace characters,
+     * or the result of calling [defaultValue] function otherwise.
+     */
+    @NotNull
+    public static String ifBlank(@NotNull String string, @NotNull DefaultValue<String> defaultValue) {
+        return isBlank(string) ? defaultValue.get() : string;
+    }
+
+
+    /* ******************************************* empty ****************************************** */
 
 
     /**
@@ -902,6 +924,24 @@ public class Stringx {
      */
     public static boolean isNullOrEmpty(@Nullable CharSequence sequence) {
         return sequence == null || sequence.length() == 0;
+    }
+
+    /**
+     * Returns this char sequence if it's not empty
+     * or the result of calling [defaultValue] function if the char sequence is empty.
+     */
+    @NotNull
+    public static CharSequence ifEmpty(@NotNull CharSequence charSequence, @NotNull DefaultValue<CharSequence> defaultValue) {
+        return isEmpty(charSequence) ? defaultValue.get() : charSequence;
+    }
+
+    /**
+     * Returns this char sequence if it's not empty
+     * or the result of calling [defaultValue] function if the char sequence is empty.
+     */
+    @NotNull
+    public static String ifEmpty(@NotNull String string, @NotNull DefaultValue<String> defaultValue) {
+        return isEmpty(string) ? defaultValue.get() : string;
     }
 
 
@@ -4461,6 +4501,7 @@ public class Stringx {
 
     /**
      * Returns the largest character or `null` if there are no characters.
+     *
      * @deprecated Please use maxOrNull instead
      */
     @Nullable
@@ -4471,6 +4512,7 @@ public class Stringx {
 
     /**
      * Returns the first character yielding the largest value of the given function or `null` if there are no characters.
+     *
      * @deprecated Please use maxByOrNull instead
      */
     @Nullable
@@ -4481,6 +4523,7 @@ public class Stringx {
 
     /**
      * Returns the first character having the largest value according to the provided [comparator] or `null` if there are no characters.
+     *
      * @deprecated Please use maxWithOrNull instead
      */
     @Nullable
@@ -4543,6 +4586,7 @@ public class Stringx {
 
     /**
      * Returns the smallest character or `null` if there are no characters.
+     *
      * @deprecated Please use minOrNull instead
      */
     @Nullable
@@ -4553,6 +4597,7 @@ public class Stringx {
 
     /**
      * Returns the first character yielding the smallest value of the given function or `null` if there are no characters.
+     *
      * @deprecated Please use minByOrNull instead
      */
     @Nullable
@@ -4563,6 +4608,7 @@ public class Stringx {
 
     /**
      * Returns the first character having the smallest value according to the provided [comparator] or `null` if there are no characters.
+     *
      * @deprecated Please use minWithOrNull instead
      */
     @Nullable

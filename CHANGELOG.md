@@ -1,3 +1,11 @@
+## new
+
+### tools4j-lang
+
+Stringx:
+* new: Stringx added ifBlank(), ifEmpty() method
+
+
 ## v1.0.0-rc02
 
 ### tools4j-collections

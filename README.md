@@ -233,7 +233,7 @@ Dependencies：
     * foldIndexed, foldRight, foldRightIndexed, forEach, forEachIndexed, maxOrNull, maxWithOrNull, 
     * maxByOrNull, minOrNull, minWithOrNull, minByOrNull, none, onEach, reduce, reduceIndexed, 
     * reduceRight, reduceRightIndexed, sumBy, sumByDouble, chunked, chunkedIterable, partition, 
-    * windowed, windowedIterable, zip, zipWithNext, asIterable
+    * windowed, windowedIterable, zip, zipWithNext, asIterable, ifBlank, ifEmpty
 * Throwablex: [Throwablex.java] ([Test][ThrowablexTest.kt]) | [Throwablex.kt] ([Test][ThrowablexKtxTest.kt])
     * stackTraceToString
 

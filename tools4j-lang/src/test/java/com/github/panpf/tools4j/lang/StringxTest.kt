@@ -35,13 +35,15 @@ class StringxTest {
          * Email address
          */
         @Suppress("HasPlatformType")
-        val EMAIL = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
+        val EMAIL =
+            Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
 
         /**
          * IP v4
          */
         @Suppress("HasPlatformType")
-        val IPV4 = Pattern.compile("((?:(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d))\\.){3}(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d)))")
+        val IPV4 =
+            Pattern.compile("((?:(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d))\\.){3}(?:25[0-5]|2[0-4]\\d|(?:1\\d{2}|[1-9]?\\d)))")
 
         private const val BLANK = "     "
         private val BLANK_CHAR_SEQUENCE: CharSequence = "     "
@@ -144,6 +146,26 @@ class StringxTest {
     }
 
     @Test
+    fun testIfBlank() {
+        assertTwoEquals("abc", Stringx.ifBlank("abc") { "value" }, "abc".ifBlank { "value" })
+        assertTwoEquals("value", Stringx.ifBlank("") { "value" }, "".ifBlank { "value" })
+        assertTwoEquals("value", Stringx.ifBlank(" ") { "value" }, " ".ifBlank { "value" })
+
+        assertTwoEquals("abc",
+            Stringx.ifBlank(StringBuilder("abc")) { StringBuilder("value") }.toString(),
+            StringBuilder("abc").ifBlank { StringBuilder("value") }.toString()
+        )
+        assertTwoEquals("value",
+            Stringx.ifBlank(StringBuilder("")) { StringBuilder("value") }.toString(),
+            StringBuilder("").ifBlank { StringBuilder("value") }.toString()
+        )
+        assertTwoEquals("value",
+            Stringx.ifBlank(StringBuilder(" ")) { StringBuilder("value") }.toString(),
+            StringBuilder(" ").ifBlank { StringBuilder("value") }.toString()
+        )
+    }
+
+    @Test
     fun testIsEmpty() {
         assertTrue(Stringx.isEmpty(EMPTY))
         assertFalse(Stringx.isEmpty(BLANK))
@@ -174,6 +196,26 @@ class StringxTest {
         assertEquals(Stringx.notNullOrEmptyOr(null, "default"), "default")
         assertEquals(Stringx.notNullOrEmptyOr(YES, "default"), YES)
         assertEquals(Stringx.notNullOrEmptyOr(YES_CHAR_SEQUENCE, "default"), YES_CHAR_SEQUENCE)
+    }
+
+    @Test
+    fun testIfEmpty() {
+        assertTwoEquals("abc", Stringx.ifEmpty("abc") { "value" }, "abc".ifEmpty { "value" })
+        assertTwoEquals("value", Stringx.ifEmpty("") { "value" }, "".ifEmpty { "value" })
+        assertTwoEquals(" ", Stringx.ifEmpty(" ") { "value" }, " ".ifEmpty { "value" })
+
+        assertTwoEquals("abc",
+            Stringx.ifEmpty(StringBuilder("abc")) { StringBuilder("value") }.toString(),
+            StringBuilder("abc").ifEmpty { StringBuilder("value") }.toString()
+        )
+        assertTwoEquals("value",
+            Stringx.ifEmpty(StringBuilder("")) { StringBuilder("value") }.toString(),
+            StringBuilder("").ifEmpty { StringBuilder("value") }.toString()
+        )
+        assertTwoEquals(" ",
+            Stringx.ifEmpty(StringBuilder(" ")) { StringBuilder("value") }.toString(),
+            StringBuilder(" ").ifEmpty { StringBuilder("value") }.toString()
+        )
     }
 
     @Test
@@ -379,15 +421,48 @@ class StringxTest {
 
     @Test
     fun testReplaceNoRepeat() {
-        assertEquals("\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\"", "\"", "\\\""), "\"", "\\\""))
-        assertEquals("\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\"", "\"", "\\\""), "\"", "\\\""))
-        assertEquals("\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"", "\"", "\\\""), "\"", "\\\""))
-        assertEquals("loRSr5UDBBtHtGiQfHiCzoK1nl_1", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("loRSr5UDBBtHtGiQfHiCzoK1nl_1", "\"", "\\\""), "\"", "\\\""))
+        assertEquals(
+            "\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"",
+            Stringx.replaceNoRepeat(
+                Stringx.replaceNoRepeat("\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\"", "\"", "\\\""),
+                "\"",
+                "\\\""
+            )
+        )
+        assertEquals(
+            "\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"",
+            Stringx.replaceNoRepeat(
+                Stringx.replaceNoRepeat("\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\"", "\"", "\\\""),
+                "\"",
+                "\\\""
+            )
+        )
+        assertEquals(
+            "\\\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"",
+            Stringx.replaceNoRepeat(
+                Stringx.replaceNoRepeat("\"loRSr5UDBBtHtGiQfHiCzoK1nl_1\\\"", "\"", "\\\""),
+                "\"",
+                "\\\""
+            )
+        )
+        assertEquals(
+            "loRSr5UDBBtHtGiQfHiCzoK1nl_1",
+            Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("loRSr5UDBBtHtGiQfHiCzoK1nl_1", "\"", "\\\""), "\"", "\\\"")
+        )
 
         assertEquals("爱芬。，，出现在。，，女方家唉都", Stringx.replaceNoRepeat("爱芬，，出现在，，女方家唉都", "，，", "。，，"))
-        assertEquals("爱芬。，，出现在。，，女方家唉都", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("爱芬，，出现在，，女方家唉都", "，，", "。，，"), "，，", "。，，"))
-        assertEquals("。，，爱芬出现在。，，女方家唉都", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("，，爱芬出现在，，女方家唉都", "，，", "。，，"), "，，", "。，，"))
-        assertEquals("爱芬。，，出现在女方家唉都。，，", Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("爱芬，，出现在女方家唉都，，", "，，", "。，，"), "，，", "。，，"))
+        assertEquals(
+            "爱芬。，，出现在。，，女方家唉都",
+            Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("爱芬，，出现在，，女方家唉都", "，，", "。，，"), "，，", "。，，")
+        )
+        assertEquals(
+            "。，，爱芬出现在。，，女方家唉都",
+            Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("，，爱芬出现在，，女方家唉都", "，，", "。，，"), "，，", "。，，")
+        )
+        assertEquals(
+            "爱芬。，，出现在女方家唉都。，，",
+            Stringx.replaceNoRepeat(Stringx.replaceNoRepeat("爱芬，，出现在女方家唉都，，", "，，", "。，，"), "，，", "。，，")
+        )
     }
 
     @Test
@@ -497,17 +572,53 @@ class StringxTest {
         assertTwoEquals(false, Stringx.startsWith("", 'J', true), "".startsWith('J', true))
         assertTwoEquals(false, Stringx.startsWith(null, 'J', true), "".startsWith('J', true))
 
-        assertTwoEquals(true, Stringx.startsWith(StringBuilder("JavaBean"), "Java"), StringBuilder("JavaBean").startsWith("Java"))
-        assertTwoEquals(false, Stringx.startsWith(StringBuilder("JavaBean"), "java"), StringBuilder("JavaBean").startsWith("java"))
-        assertTwoEquals(true, Stringx.startsWith(StringBuilder("JavaBean"), "java", true), StringBuilder("JavaBean").startsWith("java", true))
+        assertTwoEquals(
+            true,
+            Stringx.startsWith(StringBuilder("JavaBean"), "Java"),
+            StringBuilder("JavaBean").startsWith("Java")
+        )
+        assertTwoEquals(
+            false,
+            Stringx.startsWith(StringBuilder("JavaBean"), "java"),
+            StringBuilder("JavaBean").startsWith("java")
+        )
+        assertTwoEquals(
+            true,
+            Stringx.startsWith(StringBuilder("JavaBean"), "java", true),
+            StringBuilder("JavaBean").startsWith("java", true)
+        )
         assertTwoEquals(false, Stringx.startsWith(null as StringBuilder?, "java"), "".startsWith("java"))
-        assertTwoEquals(true, Stringx.startsWith("JavaBean" as CharSequence, StringBuilder("Java")), ("JavaBean" as CharSequence).startsWith(StringBuilder("Java")))
+        assertTwoEquals(
+            true,
+            Stringx.startsWith("JavaBean" as CharSequence, StringBuilder("Java")),
+            ("JavaBean" as CharSequence).startsWith(StringBuilder("Java"))
+        )
 
-        assertTwoEquals(true, Stringx.startsWith(StringBuilder("HeaderJavaBean"), "Java", 6), StringBuilder("HeaderJavaBean").startsWith("Java", 6))
-        assertTwoEquals(false, Stringx.startsWith(StringBuilder("HeaderJavaBean"), "java", 6), StringBuilder("HeaderJavaBean").startsWith("java", 6))
-        assertTwoEquals(true, Stringx.startsWith(StringBuilder("HeaderJavaBean"), "java", 6, true), StringBuilder("HeaderJavaBean").startsWith("java", 6, true))
-        assertTwoEquals(true, Stringx.startsWith("HeaderJavaBean" as CharSequence, "Java" as CharSequence, 6), ("HeaderJavaBean" as CharSequence).startsWith("Java" as CharSequence, 6))
-        assertTwoEquals(true, Stringx.startsWith("HeaderJavaBean" as CharSequence, StringBuilder("Java"), 6), ("HeaderJavaBean" as CharSequence).startsWith(StringBuilder("Java"), 6))
+        assertTwoEquals(
+            true,
+            Stringx.startsWith(StringBuilder("HeaderJavaBean"), "Java", 6),
+            StringBuilder("HeaderJavaBean").startsWith("Java", 6)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.startsWith(StringBuilder("HeaderJavaBean"), "java", 6),
+            StringBuilder("HeaderJavaBean").startsWith("java", 6)
+        )
+        assertTwoEquals(
+            true,
+            Stringx.startsWith(StringBuilder("HeaderJavaBean"), "java", 6, true),
+            StringBuilder("HeaderJavaBean").startsWith("java", 6, true)
+        )
+        assertTwoEquals(
+            true,
+            Stringx.startsWith("HeaderJavaBean" as CharSequence, "Java" as CharSequence, 6),
+            ("HeaderJavaBean" as CharSequence).startsWith("Java" as CharSequence, 6)
+        )
+        assertTwoEquals(
+            true,
+            Stringx.startsWith("HeaderJavaBean" as CharSequence, StringBuilder("Java"), 6),
+            ("HeaderJavaBean" as CharSequence).startsWith(StringBuilder("Java"), 6)
+        )
 
         assertTwoEquals(false, Stringx.startsWith("JavaBean", "Jave"), "JavaBean".startsWith("Jave"))
         assertTwoEquals(true, Stringx.startsWith("JavaBean", "Java"), "JavaBean".startsWith("Java"))
@@ -519,23 +630,55 @@ class StringxTest {
         assertTwoEquals(true, Stringx.startsWith("HeaderJavaBean", "Java", 6), "HeaderJavaBean".startsWith("Java", 6))
         assertTwoEquals(false, Stringx.startsWith("HeaderJavaBean", "Jave", 6), "HeaderJavaBean".startsWith("Jave", 6))
         assertTwoEquals(false, Stringx.startsWith("HeaderJavaBean", "java", 6), "HeaderJavaBean".startsWith("java", 6))
-        assertTwoEquals(true, Stringx.startsWith("HeaderJavaBean", "java", 6, true), "HeaderJavaBean".startsWith("java", 6, true))
+        assertTwoEquals(
+            true,
+            Stringx.startsWith("HeaderJavaBean", "java", 6, true),
+            "HeaderJavaBean".startsWith("java", 6, true)
+        )
         assertTwoEquals(false, Stringx.startsWith(null, "java", 6), "".startsWith("java", 6))
     }
 
     @Test
     fun testEndsWith() {
         assertTwoEquals(true, Stringx.endsWith(StringBuilder("JavaBean"), 'n'), StringBuilder("JavaBean").endsWith('n'))
-        assertTwoEquals(false, Stringx.endsWith(StringBuilder("JavaBean"), 'N'), StringBuilder("JavaBean").endsWith('N'))
-        assertTwoEquals(true, Stringx.endsWith(StringBuilder("JavaBean"), 'N', true), StringBuilder("JavaBean").endsWith('N', true))
+        assertTwoEquals(
+            false,
+            Stringx.endsWith(StringBuilder("JavaBean"), 'N'),
+            StringBuilder("JavaBean").endsWith('N')
+        )
+        assertTwoEquals(
+            true,
+            Stringx.endsWith(StringBuilder("JavaBean"), 'N', true),
+            StringBuilder("JavaBean").endsWith('N', true)
+        )
         assertTwoEquals(false, Stringx.endsWith(StringBuilder(""), 'n'), StringBuilder("").endsWith('n'))
         assertTwoEquals(false, Stringx.endsWith(null, 'n'), StringBuilder("").endsWith('n'))
 
-        assertTwoEquals(true, Stringx.endsWith(StringBuilder("JavaBean"), "Bean"), StringBuilder("JavaBean").endsWith("Bean"))
-        assertTwoEquals(false, Stringx.endsWith(StringBuilder("JavaBean"), "bean"), StringBuilder("JavaBean").endsWith("bean"))
-        assertTwoEquals(true, Stringx.endsWith(StringBuilder("JavaBean"), "bean", true), StringBuilder("JavaBean").endsWith("bean", true))
-        assertTwoEquals(true, Stringx.endsWith("JavaBean" as CharSequence, "Bean" as CharSequence), ("JavaBean" as CharSequence).endsWith("Bean" as CharSequence))
-        assertTwoEquals(true, Stringx.endsWith("JavaBean" as CharSequence, StringBuilder("Bean")), ("JavaBean" as CharSequence).endsWith(StringBuilder("Bean")))
+        assertTwoEquals(
+            true,
+            Stringx.endsWith(StringBuilder("JavaBean"), "Bean"),
+            StringBuilder("JavaBean").endsWith("Bean")
+        )
+        assertTwoEquals(
+            false,
+            Stringx.endsWith(StringBuilder("JavaBean"), "bean"),
+            StringBuilder("JavaBean").endsWith("bean")
+        )
+        assertTwoEquals(
+            true,
+            Stringx.endsWith(StringBuilder("JavaBean"), "bean", true),
+            StringBuilder("JavaBean").endsWith("bean", true)
+        )
+        assertTwoEquals(
+            true,
+            Stringx.endsWith("JavaBean" as CharSequence, "Bean" as CharSequence),
+            ("JavaBean" as CharSequence).endsWith("Bean" as CharSequence)
+        )
+        assertTwoEquals(
+            true,
+            Stringx.endsWith("JavaBean" as CharSequence, StringBuilder("Bean")),
+            ("JavaBean" as CharSequence).endsWith(StringBuilder("Bean"))
+        )
         assertTwoEquals(false, Stringx.endsWith(null as CharSequence?, "bean"), "".endsWith("bean"))
 
         assertTwoEquals(true, Stringx.endsWith("JavaBean", "Bean"), "JavaBean".endsWith("Bean"))
@@ -570,35 +713,99 @@ class StringxTest {
         } catch (e: Exception) {
         }
 
-        assertTwoEquals("3456789", Stringx.removePrefix(StringBuilder("0123456789"), "012"), StringBuilder("0123456789").removePrefix("012"))
-        assertTwoEquals("0123456789", Stringx.removePrefix(StringBuilder("0123456789"), "210"), StringBuilder("0123456789").removePrefix("210"))
+        assertTwoEquals(
+            "3456789",
+            Stringx.removePrefix(StringBuilder("0123456789"), "012"),
+            StringBuilder("0123456789").removePrefix("012")
+        )
+        assertTwoEquals(
+            "0123456789",
+            Stringx.removePrefix(StringBuilder("0123456789"), "210"),
+            StringBuilder("0123456789").removePrefix("210")
+        )
 
         assertTwoEquals("3456789", Stringx.removePrefix("0123456789", "012"), "0123456789".removePrefix("012"))
         assertTwoEquals("0123456789", Stringx.removePrefix("0123456789", "210"), "0123456789".removePrefix("210"))
 
-        assertTwoEquals("0123456", Stringx.removeSuffix(StringBuilder("0123456789"), "789"), StringBuilder("0123456789").removeSuffix("789"))
-        assertTwoEquals("0123456789", Stringx.removeSuffix(StringBuilder("0123456789"), "987"), StringBuilder("0123456789").removeSuffix("987"))
+        assertTwoEquals(
+            "0123456",
+            Stringx.removeSuffix(StringBuilder("0123456789"), "789"),
+            StringBuilder("0123456789").removeSuffix("789")
+        )
+        assertTwoEquals(
+            "0123456789",
+            Stringx.removeSuffix(StringBuilder("0123456789"), "987"),
+            StringBuilder("0123456789").removeSuffix("987")
+        )
 
         assertTwoEquals("0123456", Stringx.removeSuffix("0123456789", "789"), "0123456789".removeSuffix("789"))
         assertTwoEquals("0123456789", Stringx.removeSuffix("0123456789", "987"), "0123456789".removeSuffix("987"))
 
-        assertTwoEquals("3456", Stringx.removeSurrounding(StringBuilder("0123456789"), "012", "789"), StringBuilder("0123456789").removeSurrounding("012", "789"))
-        assertTwoEquals("145", Stringx.removeSurrounding(StringBuilder("145"), "012", "789"), StringBuilder("145").removeSurrounding("012", "789"))
-        assertTwoEquals("013456789", Stringx.removeSurrounding(StringBuilder("013456789"), "012", "789"), StringBuilder("013456789").removeSurrounding("012", "789"))
-        assertTwoEquals("012345678", Stringx.removeSurrounding(StringBuilder("012345678"), "012", "789"), StringBuilder("012345678").removeSurrounding("012", "789"))
-        assertTwoEquals("0123456789", Stringx.removeSurrounding(StringBuilder("0123456789"), "210", "987"), StringBuilder("0123456789").removeSurrounding("210", "987"))
+        assertTwoEquals(
+            "3456",
+            Stringx.removeSurrounding(StringBuilder("0123456789"), "012", "789"),
+            StringBuilder("0123456789").removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "145",
+            Stringx.removeSurrounding(StringBuilder("145"), "012", "789"),
+            StringBuilder("145").removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "013456789",
+            Stringx.removeSurrounding(StringBuilder("013456789"), "012", "789"),
+            StringBuilder("013456789").removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "012345678",
+            Stringx.removeSurrounding(StringBuilder("012345678"), "012", "789"),
+            StringBuilder("012345678").removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "0123456789",
+            Stringx.removeSurrounding(StringBuilder("0123456789"), "210", "987"),
+            StringBuilder("0123456789").removeSurrounding("210", "987")
+        )
 
-        assertTwoEquals("3456", Stringx.removeSurrounding("0123456789", "012", "789"), "0123456789".removeSurrounding("012", "789"))
+        assertTwoEquals(
+            "3456",
+            Stringx.removeSurrounding("0123456789", "012", "789"),
+            "0123456789".removeSurrounding("012", "789")
+        )
         assertTwoEquals("145", Stringx.removeSurrounding("145", "012", "789"), "145".removeSurrounding("012", "789"))
-        assertTwoEquals("013456789", Stringx.removeSurrounding("013456789", "012", "789"), "013456789".removeSurrounding("012", "789"))
-        assertTwoEquals("012345678", Stringx.removeSurrounding("012345678", "012", "789"), "012345678".removeSurrounding("012", "789"))
-        assertTwoEquals("0123456789", Stringx.removeSurrounding("0123456789", "210", "987"), "0123456789".removeSurrounding("210", "987"))
+        assertTwoEquals(
+            "013456789",
+            Stringx.removeSurrounding("013456789", "012", "789"),
+            "013456789".removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "012345678",
+            Stringx.removeSurrounding("012345678", "012", "789"),
+            "012345678".removeSurrounding("012", "789")
+        )
+        assertTwoEquals(
+            "0123456789",
+            Stringx.removeSurrounding("0123456789", "210", "987"),
+            "0123456789".removeSurrounding("210", "987")
+        )
 
-        assertTwoEquals("456", Stringx.removeSurrounding(StringBuilder(".456."), "."), StringBuilder(".456.").removeSurrounding("."))
-        assertTwoEquals("123.456.789", Stringx.removeSurrounding(StringBuilder("123.456.789"), "."), StringBuilder("123.456.789").removeSurrounding("."))
+        assertTwoEquals(
+            "456",
+            Stringx.removeSurrounding(StringBuilder(".456."), "."),
+            StringBuilder(".456.").removeSurrounding(".")
+        )
+        assertTwoEquals(
+            "123.456.789",
+            Stringx.removeSurrounding(StringBuilder("123.456.789"), "."),
+            StringBuilder("123.456.789").removeSurrounding(".")
+        )
 
         assertTwoEquals("456", Stringx.removeSurrounding(".456.", "."), ".456.".removeSurrounding("."))
-        assertTwoEquals("123.456.789", Stringx.removeSurrounding("123.456.789", "."), "123.456.789".removeSurrounding("."))
+        assertTwoEquals(
+            "123.456.789",
+            Stringx.removeSurrounding("123.456.789", "."),
+            "123.456.789".removeSurrounding(".")
+        )
     }
 
     @Test
@@ -620,8 +827,16 @@ class StringxTest {
         assertTwoEquals("今天天气晴", Stringx.padStart("今天天气晴", 5), "今天天气晴".padStart(5))
         assertTwoEquals("     今天天气晴", Stringx.padStart("今天天气晴", 10), "     今天天气晴".padStart(10))
         assertTwoEquals(".....今天天气晴", Stringx.padStart("今天天气晴", 10, '.'), ".....今天天气晴".padStart(10, '.'))
-        assertTwoEquals("     今天天气晴", Stringx.padStart(StringBuilder("今天天气晴"), 10).toString(), StringBuilder("今天天气晴").padStart(10).toString())
-        assertTwoEquals(".....今天天气晴", Stringx.padStart(StringBuilder("今天天气晴"), 10, '.').toString(), StringBuilder(".....今天天气晴").padStart(10, '.').toString())
+        assertTwoEquals(
+            "     今天天气晴",
+            Stringx.padStart(StringBuilder("今天天气晴"), 10).toString(),
+            StringBuilder("今天天气晴").padStart(10).toString()
+        )
+        assertTwoEquals(
+            ".....今天天气晴",
+            Stringx.padStart(StringBuilder("今天天气晴"), 10, '.').toString(),
+            StringBuilder(".....今天天气晴").padStart(10, '.').toString()
+        )
         try {
             Stringx.padStart("今天天气晴", -1)
             fail()
@@ -632,8 +847,16 @@ class StringxTest {
         assertTwoEquals("今天天气晴", Stringx.padEnd("今天天气晴", 5), "今天天气晴".padEnd(5))
         assertTwoEquals("今天天气晴     ", Stringx.padEnd("今天天气晴", 10), "今天天气晴     ".padEnd(10))
         assertTwoEquals("今天天气晴.....", Stringx.padEnd("今天天气晴", 10, '.'), "今天天气晴.....".padEnd(10, '.'))
-        assertTwoEquals("今天天气晴     ", Stringx.padEnd(StringBuilder("今天天气晴"), 10).toString(), StringBuilder("今天天气晴").padEnd(10).toString())
-        assertTwoEquals("今天天气晴.....", Stringx.padEnd(StringBuilder("今天天气晴"), 10, '.').toString(), StringBuilder("今天天气晴").padEnd(10, '.').toString())
+        assertTwoEquals(
+            "今天天气晴     ",
+            Stringx.padEnd(StringBuilder("今天天气晴"), 10).toString(),
+            StringBuilder("今天天气晴").padEnd(10).toString()
+        )
+        assertTwoEquals(
+            "今天天气晴.....",
+            Stringx.padEnd(StringBuilder("今天天气晴"), 10, '.').toString(),
+            StringBuilder("今天天气晴").padEnd(10, '.').toString()
+        )
         assertTwoEquals("    ", Stringx.padEnd(null, 4), "".padEnd(4))
         try {
             Stringx.padEnd("今天天气晴", -1)
@@ -644,50 +867,162 @@ class StringxTest {
 
     @Test
     fun testMatches() {
-        assertTwoEquals(true, Stringx.matches("hello@gmai.com", EMAIL), "hello@gmai.com".matches(Regex(EMAIL.pattern())))
+        assertTwoEquals(
+            true,
+            Stringx.matches("hello@gmai.com", EMAIL),
+            "hello@gmai.com".matches(Regex(EMAIL.pattern()))
+        )
         assertTwoEquals(false, Stringx.matches("hello@gmai", EMAIL), "hello@gmai".matches(Regex(EMAIL.pattern())))
         assertTwoEquals(false, Stringx.matches("", EMAIL), "".matches(Regex(EMAIL.pattern())))
         assertTwoEquals(false, Stringx.matches(null, EMAIL), "".matches(Regex(EMAIL.pattern())))
 
-        assertTwoEquals(true, Stringx.regionMatches("onlyOne", 0, "onlyYou", 0, 4), "onlyOne".regionMatches(0, "onlyYou", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatches("onlyOne", 0, "OnlyYou", 0, 4), "onlyOne".regionMatches(0, "OnlyYou", 0, 4))
+        assertTwoEquals(
+            true,
+            Stringx.regionMatches("onlyOne", 0, "onlyYou", 0, 4),
+            "onlyOne".regionMatches(0, "onlyYou", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatches("onlyOne", 0, "OnlyYou", 0, 4),
+            "onlyOne".regionMatches(0, "OnlyYou", 0, 4)
+        )
         assertTwoEquals(false, Stringx.regionMatches(null, 0, "onlyYou", 0, 4), "".regionMatches(0, "onlyYou", 0, 4))
         assertTwoEquals(false, Stringx.regionMatches("onlyOne", 0, null, 0, 4), "onlyOne".regionMatches(0, "", 0, 4))
 
-        assertTwoEquals(true, Stringx.regionMatchesImpl("onlyOne", 0, "onlyYou", 0, 4), "onlyOne".regionMatches(0, "onlyYou", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatchesImpl("onlyOne", 0, "OnlyYou", 0, 4), "onlyOne".regionMatches(0, "OnlyYou", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatchesImpl(null, 0, "onlyYou", 0, 4), "".regionMatches(0, "onlyYou", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatchesImpl("onlyOne", 0, null, 0, 4), "onlyOne".regionMatches(0, "", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatchesImpl("onlyOne", -1, "onlyYou", 0, 4), "onlyOne".regionMatches(-1, "onlyYou", 0, 4))
-        assertTwoEquals(false, Stringx.regionMatchesImpl("onlyOne", 0, "onlyYou", -1, 4), "onlyOne".regionMatches(0, "onlyYou", -1, 4))
+        assertTwoEquals(
+            true,
+            Stringx.regionMatchesImpl("onlyOne", 0, "onlyYou", 0, 4),
+            "onlyOne".regionMatches(0, "onlyYou", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatchesImpl("onlyOne", 0, "OnlyYou", 0, 4),
+            "onlyOne".regionMatches(0, "OnlyYou", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatchesImpl(null, 0, "onlyYou", 0, 4),
+            "".regionMatches(0, "onlyYou", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatchesImpl("onlyOne", 0, null, 0, 4),
+            "onlyOne".regionMatches(0, "", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatchesImpl("onlyOne", -1, "onlyYou", 0, 4),
+            "onlyOne".regionMatches(-1, "onlyYou", 0, 4)
+        )
+        assertTwoEquals(
+            false,
+            Stringx.regionMatchesImpl("onlyOne", 0, "onlyYou", -1, 4),
+            "onlyOne".regionMatches(0, "onlyYou", -1, 4)
+        )
     }
 
     @Test
     fun testFind() {
-        assertTwoEquals('3'.toString(), Stringx.find(StringBuilder("0123456789")) { it == '3' }.toString(), StringBuilder("0123456789").find { it == '3' }.toString())
-        assertTwoEquals("null", Stringx.find(StringBuilder("0123456789")) { it == 'a' }.toString(), StringBuilder("0123456789").find { it == 'a' }.toString())
+        assertTwoEquals(
+            '3'.toString(),
+            Stringx.find(StringBuilder("0123456789")) { it == '3' }.toString(),
+            StringBuilder("0123456789").find { it == '3' }.toString()
+        )
+        assertTwoEquals(
+            "null",
+            Stringx.find(StringBuilder("0123456789")) { it == 'a' }.toString(),
+            StringBuilder("0123456789").find { it == 'a' }.toString()
+        )
 
-        assertTwoEquals('3'.toString(), Stringx.findLast(StringBuilder("0123456789")) { it == '3' }.toString(), StringBuilder("0123456789").findLast { it == '3' }.toString())
-        assertTwoEquals("null", Stringx.findLast(StringBuilder("0123456789")) { it == 'a' }.toString(), StringBuilder("0123456789").findLast { it == 'a' }.toString())
+        assertTwoEquals(
+            '3'.toString(),
+            Stringx.findLast(StringBuilder("0123456789")) { it == '3' }.toString(),
+            StringBuilder("0123456789").findLast { it == '3' }.toString()
+        )
+        assertTwoEquals(
+            "null",
+            Stringx.findLast(StringBuilder("0123456789")) { it == 'a' }.toString(),
+            StringBuilder("0123456789").findLast { it == 'a' }.toString()
+        )
 
-        assertTwoEquals(Pair(3, "3").toString(), Stringx.findAnyOf("0123456789", listOf("3", "8"), 0, false).toString(), "0123456789".findAnyOf(listOf("3", "8"), 0, false).toString())
-        assertTwoEquals(Pair(8, "8").toString(), Stringx.findAnyOf("0123456789", listOf("a", "8"), 0, false).toString(), "0123456789".findAnyOf(listOf("a", "8"), 0, false).toString())
-        assertTwoEquals(Pair(8, "8").toString(), Stringx.findAnyOf("0123456789", listOf("a", "8"), 0).toString(), "0123456789".findAnyOf(listOf("a", "8"), 0).toString())
-        assertTwoEquals("null", Stringx.findAnyOf("abcdefg", listOf("F", "8")).toString(), "abcdefg".findAnyOf(listOf("F", "8")).toString())
-        assertTwoEquals(Pair(5, "F").toString(), Stringx.findAnyOf("abcdefg", listOf("F", "8"), true).toString(), "abcdefg".findAnyOf(listOf("F", "8"), ignoreCase = true).toString())
+        assertTwoEquals(
+            Pair(3, "3").toString(),
+            Stringx.findAnyOf("0123456789", listOf("3", "8"), 0, false).toString(),
+            "0123456789".findAnyOf(listOf("3", "8"), 0, false).toString()
+        )
+        assertTwoEquals(
+            Pair(8, "8").toString(),
+            Stringx.findAnyOf("0123456789", listOf("a", "8"), 0, false).toString(),
+            "0123456789".findAnyOf(listOf("a", "8"), 0, false).toString()
+        )
+        assertTwoEquals(
+            Pair(8, "8").toString(),
+            Stringx.findAnyOf("0123456789", listOf("a", "8"), 0).toString(),
+            "0123456789".findAnyOf(listOf("a", "8"), 0).toString()
+        )
+        assertTwoEquals(
+            "null",
+            Stringx.findAnyOf("abcdefg", listOf("F", "8")).toString(),
+            "abcdefg".findAnyOf(listOf("F", "8")).toString()
+        )
+        assertTwoEquals(
+            Pair(5, "F").toString(),
+            Stringx.findAnyOf("abcdefg", listOf("F", "8"), true).toString(),
+            "abcdefg".findAnyOf(listOf("F", "8"), ignoreCase = true).toString()
+        )
         assertNull(Stringx.findAnyOf(null, listOf("3", "8"), 0, false))
-        assertTwoEquals(Pair(3, "3").toString(), Stringx.findAnyOf(StringBuilder("0123456789"), listOf("3", "8"), 0, false).toString(), StringBuilder("0123456789").findAnyOf(listOf("3", "8"), 0, false).toString())
-        assertTwoEquals(Pair(3, "3").toString(), Stringx.findAnyOf(StringBuilder("0123456789"), listOf("3"), 0, false).toString(), StringBuilder("0123456789").findAnyOf(listOf("3"), 0, false).toString())
-        assertTwoEquals(null, Stringx.findAnyOf(StringBuilder("0123456789"), listOf("a"), 0, false), StringBuilder("0123456789").findAnyOf(listOf("a"), 0, false))
+        assertTwoEquals(
+            Pair(3, "3").toString(),
+            Stringx.findAnyOf(StringBuilder("0123456789"), listOf("3", "8"), 0, false).toString(),
+            StringBuilder("0123456789").findAnyOf(listOf("3", "8"), 0, false).toString()
+        )
+        assertTwoEquals(
+            Pair(3, "3").toString(),
+            Stringx.findAnyOf(StringBuilder("0123456789"), listOf("3"), 0, false).toString(),
+            StringBuilder("0123456789").findAnyOf(listOf("3"), 0, false).toString()
+        )
+        assertTwoEquals(
+            null,
+            Stringx.findAnyOf(StringBuilder("0123456789"), listOf("a"), 0, false),
+            StringBuilder("0123456789").findAnyOf(listOf("a"), 0, false)
+        )
 
-        assertTwoEquals(Pair(6, "d").toString(), Stringx.findLastAnyOf("android", listOf("d", "a"), Stringx.count("android") - 1, false).toString(), "android".findLastAnyOf(listOf("d", "a"), "android".lastIndex, false).toString())
-        assertTwoEquals(Pair(6, "d").toString(), Stringx.findLastAnyOf("android", listOf("a", "d"), Stringx.count("android") - 1, false).toString(), "android".findLastAnyOf(listOf("a", "d"), "android".lastIndex, false).toString())
-        assertTwoEquals(Pair(6, "d").toString(), Stringx.findLastAnyOf("android", listOf("d", "a"), Stringx.count("android") - 1).toString(), "android".findLastAnyOf(listOf("d", "a"), "android".lastIndex).toString())
-        assertTwoEquals(null.toString(), Stringx.findLastAnyOf("android", listOf("D", "A")).toString(), "android".findLastAnyOf(listOf("D", "A")).toString())
-        assertTwoEquals(Pair(6, "D").toString(), Stringx.findLastAnyOf("android", listOf("D", "A"), true).toString(), "android".findLastAnyOf(listOf("D", "A"), ignoreCase = true).toString())
-        assertTwoEquals(Pair(6, "d").toString(), Stringx.findLastAnyOf("android", listOf("d")).toString(), "android".findLastAnyOf(listOf("d")).toString())
+        assertTwoEquals(
+            Pair(6, "d").toString(),
+            Stringx.findLastAnyOf("android", listOf("d", "a"), Stringx.count("android") - 1, false).toString(),
+            "android".findLastAnyOf(listOf("d", "a"), "android".lastIndex, false).toString()
+        )
+        assertTwoEquals(
+            Pair(6, "d").toString(),
+            Stringx.findLastAnyOf("android", listOf("a", "d"), Stringx.count("android") - 1, false).toString(),
+            "android".findLastAnyOf(listOf("a", "d"), "android".lastIndex, false).toString()
+        )
+        assertTwoEquals(
+            Pair(6, "d").toString(),
+            Stringx.findLastAnyOf("android", listOf("d", "a"), Stringx.count("android") - 1).toString(),
+            "android".findLastAnyOf(listOf("d", "a"), "android".lastIndex).toString()
+        )
+        assertTwoEquals(
+            null.toString(),
+            Stringx.findLastAnyOf("android", listOf("D", "A")).toString(),
+            "android".findLastAnyOf(listOf("D", "A")).toString()
+        )
+        assertTwoEquals(
+            Pair(6, "D").toString(),
+            Stringx.findLastAnyOf("android", listOf("D", "A"), true).toString(),
+            "android".findLastAnyOf(listOf("D", "A"), ignoreCase = true).toString()
+        )
+        assertTwoEquals(
+            Pair(6, "d").toString(),
+            Stringx.findLastAnyOf("android", listOf("d")).toString(),
+            "android".findLastAnyOf(listOf("d")).toString()
+        )
         assertTwoEquals(null, Stringx.findLastAnyOf("android", listOf("6")), "android".findLastAnyOf(listOf("6")))
-        assertTwoEquals(null, Stringx.findLastAnyOf(StringBuilder(""), listOf("4", "6")), StringBuilder("").findLastAnyOf(listOf("4", "6")))
+        assertTwoEquals(
+            null,
+            Stringx.findLastAnyOf(StringBuilder(""), listOf("4", "6")),
+            StringBuilder("").findLastAnyOf(listOf("4", "6"))
+        )
     }
 
     @Test
@@ -824,7 +1159,11 @@ class StringxTest {
         assertTwoEquals(28, Stringx.indexOf(sourceText2, "bc", 14, false), sourceText2.indexOf("bc", 14, false))
         assertTwoEquals(-1, Stringx.indexOf(sourceText2, "BC", 0, false), sourceText2.indexOf("BC", 0, false))
         assertTwoEquals(11, Stringx.indexOf(sourceText2, "BC", 0, true), sourceText2.indexOf("BC", 0, true))
-        assertTwoEquals(11, Stringx.indexOf(StringBuilder(sourceText2), "BC", 0, true), StringBuilder(sourceText2).indexOf("BC", 0, true))
+        assertTwoEquals(
+            11,
+            Stringx.indexOf(StringBuilder(sourceText2), "BC", 0, true),
+            StringBuilder(sourceText2).indexOf("BC", 0, true)
+        )
         assertTwoEquals(-1, Stringx.indexOf(sourceText2, "BC", false), sourceText2.indexOf("BC", ignoreCase = false))
         assertTwoEquals(11, Stringx.indexOf(sourceText2, "BC", true), sourceText2.indexOf("BC", ignoreCase = true))
         assertTwoEquals(11, Stringx.indexOf(sourceText2, "bc", 0), sourceText2.indexOf("bc", 0))
@@ -833,29 +1172,109 @@ class StringxTest {
         assertTwoEquals(-1, Stringx.indexOf(sourceText2, "BC"), sourceText2.indexOf("BC"))
         assertTwoEquals(-1, Stringx.indexOf(StringBuilder(sourceText2), "BC"), StringBuilder(sourceText2).indexOf("BC"))
 
-        assertTwoEquals(10, Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 0, false), sourceText.indexOfAny(charArrayOf('t', 'a'), 0, false))
-        assertTwoEquals(22, Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 14, false), sourceText.indexOfAny(charArrayOf('t', 'a'), 14, false))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), 0, false), sourceText.indexOfAny(charArrayOf('t', 'A'), 0, false))
-        assertTwoEquals(10, Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), 0, true), sourceText.indexOfAny(charArrayOf('t', 'A'), 0, true))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), false), sourceText.indexOfAny(charArrayOf('t', 'A'), ignoreCase = false))
-        assertTwoEquals(10, Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), true), sourceText.indexOfAny(charArrayOf('t', 'A'), ignoreCase = true))
-        assertTwoEquals(10, Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 0), sourceText.indexOfAny(charArrayOf('t', 'a'), 0))
-        assertTwoEquals(22, Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 14), sourceText.indexOfAny(charArrayOf('t', 'a'), 14))
-        assertTwoEquals(10, Stringx.indexOfAny(sourceText, charArrayOf('t', 'a')), sourceText.indexOfAny(charArrayOf('t', 'a')))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText, charArrayOf('t', 'A')), sourceText.indexOfAny(charArrayOf('t', 'A')))
+        assertTwoEquals(
+            10,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 0, false),
+            sourceText.indexOfAny(charArrayOf('t', 'a'), 0, false)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 14, false),
+            sourceText.indexOfAny(charArrayOf('t', 'a'), 14, false)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), 0, false),
+            sourceText.indexOfAny(charArrayOf('t', 'A'), 0, false)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), 0, true),
+            sourceText.indexOfAny(charArrayOf('t', 'A'), 0, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), false),
+            sourceText.indexOfAny(charArrayOf('t', 'A'), ignoreCase = false)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'A'), true),
+            sourceText.indexOfAny(charArrayOf('t', 'A'), ignoreCase = true)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 0),
+            sourceText.indexOfAny(charArrayOf('t', 'a'), 0)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'a'), 14),
+            sourceText.indexOfAny(charArrayOf('t', 'a'), 14)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'a')),
+            sourceText.indexOfAny(charArrayOf('t', 'a'))
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText, charArrayOf('t', 'A')),
+            sourceText.indexOfAny(charArrayOf('t', 'A'))
+        )
         assertTwoEquals(-1, Stringx.indexOfAny(sourceText, charArrayOf('t')), sourceText.indexOfAny(charArrayOf('t')))
         assertTwoEquals(-1, Stringx.indexOfAny(null, charArrayOf('t')), "".indexOfAny(charArrayOf('t')))
 
-        assertTwoEquals(11, Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 0, false), sourceText2.indexOfAny(listOf("bg", "bc"), 0, false))
-        assertTwoEquals(28, Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 14, false), sourceText2.indexOfAny(listOf("bg", "bc"), 14, false))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), 0, false), sourceText2.indexOfAny(listOf("bg", "BC"), 0, false))
-        assertTwoEquals(11, Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), 0, true), sourceText2.indexOfAny(listOf("bg", "BC"), 0, true))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), false), sourceText2.indexOfAny(listOf("bg", "BC"), ignoreCase = false))
-        assertTwoEquals(11, Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), true), sourceText2.indexOfAny(listOf("bg", "BC"), ignoreCase = true))
-        assertTwoEquals(11, Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 0), sourceText2.indexOfAny(listOf("bg", "bc"), 0))
-        assertTwoEquals(28, Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 14), sourceText2.indexOfAny(listOf("bg", "bc"), 14))
-        assertTwoEquals(11, Stringx.indexOfAny(sourceText2, listOf("bg", "bc")), sourceText2.indexOfAny(listOf("bg", "bc")))
-        assertTwoEquals(-1, Stringx.indexOfAny(sourceText2, listOf("bg", "BC")), sourceText2.indexOfAny(listOf("bg", "BC")))
+        assertTwoEquals(
+            11,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 0, false),
+            sourceText2.indexOfAny(listOf("bg", "bc"), 0, false)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 14, false),
+            sourceText2.indexOfAny(listOf("bg", "bc"), 14, false)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), 0, false),
+            sourceText2.indexOfAny(listOf("bg", "BC"), 0, false)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), 0, true),
+            sourceText2.indexOfAny(listOf("bg", "BC"), 0, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), false),
+            sourceText2.indexOfAny(listOf("bg", "BC"), ignoreCase = false)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "BC"), true),
+            sourceText2.indexOfAny(listOf("bg", "BC"), ignoreCase = true)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 0),
+            sourceText2.indexOfAny(listOf("bg", "bc"), 0)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "bc"), 14),
+            sourceText2.indexOfAny(listOf("bg", "bc"), 14)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "bc")),
+            sourceText2.indexOfAny(listOf("bg", "bc"))
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.indexOfAny(sourceText2, listOf("bg", "BC")),
+            sourceText2.indexOfAny(listOf("bg", "BC"))
+        )
 
         assertTwoEquals(10, Stringx.indexOfFirst(sourceText) { it == 'a' }, sourceText.indexOfFirst { it == 'a' })
         assertTwoEquals(-1, Stringx.indexOfFirst("") { it == 'a' }, "".indexOfFirst { it == 'a' })
@@ -864,89 +1283,313 @@ class StringxTest {
         assertTwoEquals(-1, Stringx.indexOfLast("") { it == 'a' }, "".indexOfLast { it == 'a' })
         assertTwoEquals(-1, Stringx.indexOfLast(null) { it == 'a' }, "".indexOfLast { it == 'a' })
 
-        assertTwoEquals(22, Stringx.lastIndexOf(sourceText, 'a', sourceTextCount - 1, false), sourceText.lastIndexOf('a', sourceTextCount - 1, false))
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOf(sourceText, 'a', sourceTextCount - 1, false),
+            sourceText.lastIndexOf('a', sourceTextCount - 1, false)
+        )
         assertTwoEquals(10, Stringx.lastIndexOf(sourceText, 'a', 14, false), sourceText.lastIndexOf('a', 14, false))
-        assertTwoEquals(-1, Stringx.lastIndexOf(sourceText, 'A', sourceTextCount - 1, false), sourceText.lastIndexOf('A', sourceTextCount - 1, false))
-        assertTwoEquals(22, Stringx.lastIndexOf(sourceText, 'A', sourceTextCount - 1, true), sourceText.lastIndexOf('A', sourceTextCount - 1, true))
-        assertTwoEquals(-1, Stringx.lastIndexOf(sourceText, 'A', false), sourceText.lastIndexOf('A', ignoreCase = false))
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOf(sourceText, 'A', sourceTextCount - 1, false),
+            sourceText.lastIndexOf('A', sourceTextCount - 1, false)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOf(sourceText, 'A', sourceTextCount - 1, true),
+            sourceText.lastIndexOf('A', sourceTextCount - 1, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOf(sourceText, 'A', false),
+            sourceText.lastIndexOf('A', ignoreCase = false)
+        )
         assertTwoEquals(22, Stringx.lastIndexOf(sourceText, 'A', true), sourceText.lastIndexOf('A', ignoreCase = true))
-        assertTwoEquals(22, Stringx.lastIndexOf(sourceText, 'a', sourceTextCount - 1), sourceText.lastIndexOf('a', sourceTextCount - 1))
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOf(sourceText, 'a', sourceTextCount - 1),
+            sourceText.lastIndexOf('a', sourceTextCount - 1)
+        )
         assertTwoEquals(10, Stringx.lastIndexOf(sourceText, 'a', 14), sourceText.lastIndexOf('a', 14))
         assertTwoEquals(22, Stringx.lastIndexOf(sourceText, 'a'), sourceText.lastIndexOf('a'))
         assertTwoEquals(-1, Stringx.lastIndexOf(sourceText, 'A'), sourceText.lastIndexOf('A'))
-        assertTwoEquals(22, Stringx.lastIndexOf(StringBuilder(sourceText), 'a'), StringBuilder(sourceText).lastIndexOf('a'))
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOf(StringBuilder(sourceText), 'a'),
+            StringBuilder(sourceText).lastIndexOf('a')
+        )
 
-        assertTwoEquals(28, Stringx.lastIndexOf(sourceText2, "bc", sourceText2Count - 1, false), sourceText2.lastIndexOf("bc", sourceText2Count - 1, false))
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOf(sourceText2, "bc", sourceText2Count - 1, false),
+            sourceText2.lastIndexOf("bc", sourceText2Count - 1, false)
+        )
         assertTwoEquals(11, Stringx.lastIndexOf(sourceText2, "bc", 14, false), sourceText2.lastIndexOf("bc", 14, false))
-        assertTwoEquals(-1, Stringx.lastIndexOf(sourceText2, "BC", sourceText2Count - 1, false), sourceText2.lastIndexOf("BC", sourceText2Count - 1, false))
-        assertTwoEquals(28, Stringx.lastIndexOf(sourceText2, "BC", sourceText2Count - 1, true), sourceText2.lastIndexOf("BC", sourceText2Count - 1, true))
-        assertTwoEquals(-1, Stringx.lastIndexOf(sourceText2, "BC", false), sourceText2.lastIndexOf("BC", ignoreCase = false))
-        assertTwoEquals(28, Stringx.lastIndexOf(sourceText2, "BC", true), sourceText2.lastIndexOf("BC", ignoreCase = true))
-        assertTwoEquals(28, Stringx.lastIndexOf(sourceText2, "bc", sourceText2Count - 1), sourceText2.lastIndexOf("bc", sourceText2Count - 1))
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOf(sourceText2, "BC", sourceText2Count - 1, false),
+            sourceText2.lastIndexOf("BC", sourceText2Count - 1, false)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOf(sourceText2, "BC", sourceText2Count - 1, true),
+            sourceText2.lastIndexOf("BC", sourceText2Count - 1, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOf(sourceText2, "BC", false),
+            sourceText2.lastIndexOf("BC", ignoreCase = false)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOf(sourceText2, "BC", true),
+            sourceText2.lastIndexOf("BC", ignoreCase = true)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOf(sourceText2, "bc", sourceText2Count - 1),
+            sourceText2.lastIndexOf("bc", sourceText2Count - 1)
+        )
         assertTwoEquals(11, Stringx.lastIndexOf(sourceText2, "bc", 14), sourceText2.lastIndexOf("bc", 14))
         assertTwoEquals(28, Stringx.lastIndexOf(sourceText2, "bc"), sourceText2.lastIndexOf("bc"))
         assertTwoEquals(-1, Stringx.lastIndexOf(sourceText2, "BC"), sourceText2.lastIndexOf("BC"))
-        assertTwoEquals(28, Stringx.lastIndexOf(StringBuilder(sourceText2), "bc"), StringBuilder(sourceText2).lastIndexOf("bc"))
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOf(StringBuilder(sourceText2), "bc"),
+            StringBuilder(sourceText2).lastIndexOf("bc")
+        )
 
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), sourceTextCount - 1, false), sourceText.lastIndexOfAny(charArrayOf('t', 'a'), sourceTextCount - 1, false))
-        assertTwoEquals(10, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), 14, false), sourceText.lastIndexOfAny(charArrayOf('t', 'a'), 14, false))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), sourceTextCount - 1, false), sourceText.lastIndexOfAny(charArrayOf('t', 'A'), sourceTextCount - 1, false))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), sourceTextCount - 1, true), sourceText.lastIndexOfAny(charArrayOf('t', 'A'), sourceTextCount - 1, true))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), false), sourceText.lastIndexOfAny(charArrayOf('t', 'A'), ignoreCase = false))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), true), sourceText.lastIndexOfAny(charArrayOf('t', 'A'), ignoreCase = true))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), sourceTextCount - 1), sourceText.lastIndexOfAny(charArrayOf('t', 'a'), sourceTextCount - 1))
-        assertTwoEquals(10, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), 14), sourceText.lastIndexOfAny(charArrayOf('t', 'a'), 14))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a')), sourceText.lastIndexOfAny(charArrayOf('t', 'a')))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A')), sourceText.lastIndexOfAny(charArrayOf('t', 'A')))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(null, charArrayOf('t', 'A')), "".lastIndexOfAny(charArrayOf('t', 'A')))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(sourceText, charArrayOf('a')), sourceText.lastIndexOfAny(charArrayOf('a')))
-        assertTwoEquals(22, Stringx.lastIndexOfAny(StringBuilder(sourceText), charArrayOf('a')), StringBuilder(sourceText).lastIndexOfAny(charArrayOf('a')))
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), sourceTextCount - 1, false),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'a'), sourceTextCount - 1, false)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), 14, false),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'a'), 14, false)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), sourceTextCount - 1, false),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'A'), sourceTextCount - 1, false)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), sourceTextCount - 1, true),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'A'), sourceTextCount - 1, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), false),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'A'), ignoreCase = false)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A'), true),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'A'), ignoreCase = true)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), sourceTextCount - 1),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'a'), sourceTextCount - 1)
+        )
+        assertTwoEquals(
+            10,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a'), 14),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'a'), 14)
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'a')),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'a'))
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('t', 'A')),
+            sourceText.lastIndexOfAny(charArrayOf('t', 'A'))
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(null, charArrayOf('t', 'A')),
+            "".lastIndexOfAny(charArrayOf('t', 'A'))
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(sourceText, charArrayOf('a')),
+            sourceText.lastIndexOfAny(charArrayOf('a'))
+        )
+        assertTwoEquals(
+            22,
+            Stringx.lastIndexOfAny(StringBuilder(sourceText), charArrayOf('a')),
+            StringBuilder(sourceText).lastIndexOfAny(charArrayOf('a'))
+        )
 
-        assertTwoEquals(28, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), sourceText2Count - 1, false), sourceText2.lastIndexOfAny(listOf("bg", "bc"), sourceText2Count - 1, false))
-        assertTwoEquals(11, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), 14, false), sourceText2.lastIndexOfAny(listOf("bg", "bc"), 14, false))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), sourceText2Count - 1, false), sourceText2.lastIndexOfAny(listOf("bg", "BC"), sourceText2Count - 1, false))
-        assertTwoEquals(28, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), sourceText2Count - 1, true), sourceText2.lastIndexOfAny(listOf("bg", "BC"), sourceText2Count - 1, true))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), false), sourceText2.lastIndexOfAny(listOf("bg", "BC"), ignoreCase = false))
-        assertTwoEquals(28, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), true), sourceText2.lastIndexOfAny(listOf("bg", "BC"), ignoreCase = true))
-        assertTwoEquals(28, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), sourceText2Count - 1), sourceText2.lastIndexOfAny(listOf("bg", "bc"), sourceText2Count - 1))
-        assertTwoEquals(11, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), 14), sourceText2.lastIndexOfAny(listOf("bg", "bc"), 14))
-        assertTwoEquals(28, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc")), sourceText2.lastIndexOfAny(listOf("bg", "bc")))
-        assertTwoEquals(-1, Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC")), sourceText2.lastIndexOfAny(listOf("bg", "BC")))
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), sourceText2Count - 1, false),
+            sourceText2.lastIndexOfAny(listOf("bg", "bc"), sourceText2Count - 1, false)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), 14, false),
+            sourceText2.lastIndexOfAny(listOf("bg", "bc"), 14, false)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), sourceText2Count - 1, false),
+            sourceText2.lastIndexOfAny(listOf("bg", "BC"), sourceText2Count - 1, false)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), sourceText2Count - 1, true),
+            sourceText2.lastIndexOfAny(listOf("bg", "BC"), sourceText2Count - 1, true)
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), false),
+            sourceText2.lastIndexOfAny(listOf("bg", "BC"), ignoreCase = false)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC"), true),
+            sourceText2.lastIndexOfAny(listOf("bg", "BC"), ignoreCase = true)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), sourceText2Count - 1),
+            sourceText2.lastIndexOfAny(listOf("bg", "bc"), sourceText2Count - 1)
+        )
+        assertTwoEquals(
+            11,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc"), 14),
+            sourceText2.lastIndexOfAny(listOf("bg", "bc"), 14)
+        )
+        assertTwoEquals(
+            28,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "bc")),
+            sourceText2.lastIndexOfAny(listOf("bg", "bc"))
+        )
+        assertTwoEquals(
+            -1,
+            Stringx.lastIndexOfAny(sourceText2, listOf("bg", "BC")),
+            sourceText2.lastIndexOfAny(listOf("bg", "BC"))
+        )
     }
 
     @Test
     fun testSub() {
-        assertTwoEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), MyIntRange(3, 8)).toString(), StringBuilder("0123456789").subSequence(3..8).toString())
-        assertTwoEquals("345678", Stringx.subSequence(StringBuilder("0123456789"), 3, 9).toString(), StringBuilder("0123456789").subSequence(3, 9).toString())
+        assertTwoEquals(
+            "345678",
+            Stringx.subSequence(StringBuilder("0123456789"), MyIntRange(3, 8)).toString(),
+            StringBuilder("0123456789").subSequence(3..8).toString()
+        )
+        assertTwoEquals(
+            "345678",
+            Stringx.subSequence(StringBuilder("0123456789"), 3, 9).toString(),
+            StringBuilder("0123456789").subSequence(3, 9).toString()
+        )
 
         assertTwoEquals("345678", Stringx.substring("0123456789", MyIntRange(3, 8)), "0123456789".substring(3..8))
         assertTwoEquals("345678", Stringx.substring("0123456789", 3, 9), "0123456789".substring(3, 9))
-        assertTwoEquals("345678", Stringx.substring(StringBuilder("0123456789"), 3, 9), StringBuilder("0123456789").substring(3, 9))
-        assertTwoEquals("345678", Stringx.substring(StringBuilder("0123456789"), MyIntRange(3, 8)), StringBuilder("0123456789").substring(3..8))
+        assertTwoEquals(
+            "345678",
+            Stringx.substring(StringBuilder("0123456789"), 3, 9),
+            StringBuilder("0123456789").substring(3, 9)
+        )
+        assertTwoEquals(
+            "345678",
+            Stringx.substring(StringBuilder("0123456789"), MyIntRange(3, 8)),
+            StringBuilder("0123456789").substring(3..8)
+        )
 
-        assertTwoEquals("test", Stringx.substringBefore("test.txt.zip", '.', "test.txt.zip"), "test.txt.zip".substringBefore('.', "test.txt.zip"))
-        assertTwoEquals("test", Stringx.substringBefore("testtxtzip", '.', "test"), "testtxtzip".substringBefore('.', "test"))
+        assertTwoEquals(
+            "test",
+            Stringx.substringBefore("test.txt.zip", '.', "test.txt.zip"),
+            "test.txt.zip".substringBefore('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "test",
+            Stringx.substringBefore("testtxtzip", '.', "test"),
+            "testtxtzip".substringBefore('.', "test")
+        )
 
-        assertTwoEquals("test", Stringx.substringBefore("test.txt.zip", ".", "test.txt.zip"), "test.txt.zip".substringBefore('.', "test.txt.zip"))
-        assertTwoEquals("test", Stringx.substringBefore("testtxtzip", ".", "test"), "testtxtzip".substringBefore('.', "test"))
+        assertTwoEquals(
+            "test",
+            Stringx.substringBefore("test.txt.zip", ".", "test.txt.zip"),
+            "test.txt.zip".substringBefore('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "test",
+            Stringx.substringBefore("testtxtzip", ".", "test"),
+            "testtxtzip".substringBefore('.', "test")
+        )
 
-        assertTwoEquals("txt.zip", Stringx.substringAfter("test.txt.zip", '.', "test.txt.zip"), "test.txt.zip".substringAfter('.', "test.txt.zip"))
-        assertTwoEquals("txt.zip", Stringx.substringAfter("testtxtzip", '.', "txt.zip"), "testtxtzip".substringAfter('.', "txt.zip"))
+        assertTwoEquals(
+            "txt.zip",
+            Stringx.substringAfter("test.txt.zip", '.', "test.txt.zip"),
+            "test.txt.zip".substringAfter('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "txt.zip",
+            Stringx.substringAfter("testtxtzip", '.', "txt.zip"),
+            "testtxtzip".substringAfter('.', "txt.zip")
+        )
 
-        assertTwoEquals("txt.zip", Stringx.substringAfter("test.txt.zip", ".", "test.txt.zip"), "test.txt.zip".substringAfter('.', "test.txt.zip"))
-        assertTwoEquals("txt.zip", Stringx.substringAfter("testtxtzip", ".", "txt.zip"), "testtxtzip".substringAfter('.', "txt.zip"))
+        assertTwoEquals(
+            "txt.zip",
+            Stringx.substringAfter("test.txt.zip", ".", "test.txt.zip"),
+            "test.txt.zip".substringAfter('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "txt.zip",
+            Stringx.substringAfter("testtxtzip", ".", "txt.zip"),
+            "testtxtzip".substringAfter('.', "txt.zip")
+        )
 
-        assertTwoEquals("test.txt", Stringx.substringBeforeLast("test.txt.zip", '.', "test.txt.zip"), "test.txt.zip".substringBeforeLast('.', "test.txt.zip"))
-        assertTwoEquals("test.txt", Stringx.substringBeforeLast("testtxtzip", '.', "test.txt"), "testtxtzip".substringBeforeLast('.', "test.txt"))
+        assertTwoEquals(
+            "test.txt",
+            Stringx.substringBeforeLast("test.txt.zip", '.', "test.txt.zip"),
+            "test.txt.zip".substringBeforeLast('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "test.txt",
+            Stringx.substringBeforeLast("testtxtzip", '.', "test.txt"),
+            "testtxtzip".substringBeforeLast('.', "test.txt")
+        )
 
-        assertTwoEquals("test.txt", Stringx.substringBeforeLast("test.txt.zip", ".", "test.txt.zip"), "test.txt.zip".substringBeforeLast('.', "test.txt.zip"))
-        assertTwoEquals("test.txt", Stringx.substringBeforeLast("testtxtzip", ".", "test.txt"), "testtxtzip".substringBeforeLast('.', "test.txt"))
+        assertTwoEquals(
+            "test.txt",
+            Stringx.substringBeforeLast("test.txt.zip", ".", "test.txt.zip"),
+            "test.txt.zip".substringBeforeLast('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "test.txt",
+            Stringx.substringBeforeLast("testtxtzip", ".", "test.txt"),
+            "testtxtzip".substringBeforeLast('.', "test.txt")
+        )
 
-        assertTwoEquals("zip", Stringx.substringAfterLast("test.txt.zip", '.', "test.txt.zip"), "test.txt.zip".substringAfterLast('.', "test.txt.zip"))
-        assertTwoEquals("zip", Stringx.substringAfterLast("testtxtzip", '.', "zip"), "testtxtzip".substringAfterLast('.', "zip"))
+        assertTwoEquals(
+            "zip",
+            Stringx.substringAfterLast("test.txt.zip", '.', "test.txt.zip"),
+            "test.txt.zip".substringAfterLast('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "zip",
+            Stringx.substringAfterLast("testtxtzip", '.', "zip"),
+            "testtxtzip".substringAfterLast('.', "zip")
+        )
 
-        assertTwoEquals("zip", Stringx.substringAfterLast("test.txt.zip", ".", "test.txt.zip"), "test.txt.zip".substringAfterLast('.', "test.txt.zip"))
-        assertTwoEquals("zip", Stringx.substringAfterLast("testtxtzip", ".", "zip"), "testtxtzip".substringAfterLast('.', "zip"))
+        assertTwoEquals(
+            "zip",
+            Stringx.substringAfterLast("test.txt.zip", ".", "test.txt.zip"),
+            "test.txt.zip".substringAfterLast('.', "test.txt.zip")
+        )
+        assertTwoEquals(
+            "zip",
+            Stringx.substringAfterLast("testtxtzip", ".", "zip"),
+            "testtxtzip".substringAfterLast('.', "zip")
+        )
     }
 
     @Test
@@ -954,7 +1597,11 @@ class StringxTest {
         val sourceText = "abcdefg"
         val charset = Charset.defaultCharset()
 
-        assertTwoEquals(sourceText, String(Stringx.toByteArray(sourceText, charset), charset), String(sourceText.toByteArray(charset), charset))
+        assertTwoEquals(
+            sourceText,
+            String(Stringx.toByteArray(sourceText, charset), charset),
+            String(sourceText.toByteArray(charset), charset)
+        )
         assertEquals("", String(Stringx.toByteArray(null, charset), charset))
 
         assertTwoEquals(sourceText, String(Stringx.toByteArray(sourceText)), String(sourceText.toByteArray()))
@@ -969,8 +1616,16 @@ class StringxTest {
         assertTwoEquals(resultText, Stringx.reversed(sourceText), sourceText.reversed())
         assertTwoEquals("", Stringx.reversed(null), "".reversed())
 
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.reversed(StringBuilder(sourceText)).toString(), StringBuilder(sourceText).reversed().toString())
-        assertTwoEquals(StringBuilder("").toString(), Stringx.reversed(null as StringBuilder?).toString(), StringBuilder("").reversed().toString())
+        assertTwoEquals(
+            StringBuilder(resultText).toString(),
+            Stringx.reversed(StringBuilder(sourceText)).toString(),
+            StringBuilder(sourceText).reversed().toString()
+        )
+        assertTwoEquals(
+            StringBuilder("").toString(),
+            Stringx.reversed(null as StringBuilder?).toString(),
+            StringBuilder("").reversed().toString()
+        )
     }
 
     @Test
@@ -978,37 +1633,68 @@ class StringxTest {
         val sourceText = "abcdefgfedcba"
         val resultText = "abcdegedcba"
 
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filterTo(StringBuilder(sourceText), StringBuilder()) { it != 'f' }.toString(),
-                StringBuilder(sourceText).filterTo(StringBuilder()) { it != 'f' }.toString())
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filterTo(StringBuilder(sourceText), StringBuilder()) { it != 'f' }.toString(),
+            StringBuilder(sourceText).filterTo(StringBuilder()) { it != 'f' }.toString()
+        )
         assertTwoEquals(StringBuilder("").toString(), Stringx.filterTo(null, StringBuilder()) { it != 'f' }.toString(),
-                StringBuilder("").filterTo(StringBuilder()) { it != 'f' }.toString())
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filter(StringBuilder(sourceText)) { it != 'f' }.toString(),
-                StringBuilder(sourceText).filter { it != 'f' }.toString())
+            StringBuilder("").filterTo(StringBuilder()) { it != 'f' }.toString()
+        )
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filter(StringBuilder(sourceText)) { it != 'f' }.toString(),
+            StringBuilder(sourceText).filter { it != 'f' }.toString()
+        )
         assertTwoEquals(resultText, Stringx.filter(sourceText) { it != 'f' }, sourceText.filter { it != 'f' })
 
         val indexed5 = StringBuilder()
         val indexed6 = StringBuilder()
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filterIndexedTo(StringBuilder(sourceText), StringBuilder()) { index, it -> indexed5.append(index).append(","); it != 'f' }.toString(),
-                StringBuilder(sourceText).filterIndexedTo(StringBuilder()) { index, it -> indexed6.append(index).append(","); it != 'f' }.toString()); assertEquals(indexed5.toString(), indexed6.toString())
-        assertTwoEquals(StringBuilder().toString(), Stringx.filterIndexedTo(null, StringBuilder()) { index, it -> indexed5.append(index).append(","); it != 'f' }.toString(),
-                StringBuilder("").filterIndexedTo(StringBuilder()) { index, it -> indexed6.append(index).append(","); it != 'f' }.toString()); assertEquals(indexed5.toString(), indexed6.toString())
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filterIndexedTo(StringBuilder(sourceText), StringBuilder()) { index, it ->
+                indexed5.append(index).append(","); it != 'f'
+            }.toString(),
+            StringBuilder(sourceText).filterIndexedTo(StringBuilder()) { index, it ->
+                indexed6.append(index).append(","); it != 'f'
+            }.toString()
+        ); assertEquals(indexed5.toString(), indexed6.toString())
+        assertTwoEquals(StringBuilder().toString(),
+            Stringx.filterIndexedTo(null, StringBuilder()) { index, it ->
+                indexed5.append(index).append(","); it != 'f'
+            }.toString(),
+            StringBuilder("").filterIndexedTo(StringBuilder()) { index, it ->
+                indexed6.append(index).append(","); it != 'f'
+            }.toString()
+        ); assertEquals(indexed5.toString(), indexed6.toString())
 
         val indexed3 = StringBuilder()
         val indexed4 = StringBuilder()
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filterIndexed(StringBuilder(sourceText)) { index, it -> indexed3.append(index).append(","); it != 'f' }.toString(),
-                StringBuilder(sourceText).filterIndexed { index, it -> indexed4.append(index).append(","); it != 'f' }.toString()); assertEquals(indexed3.toString(), indexed4.toString())
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filterIndexed(StringBuilder(sourceText)) { index, it ->
+                indexed3.append(index).append(","); it != 'f'
+            }.toString(),
+            StringBuilder(sourceText).filterIndexed { index, it -> indexed4.append(index).append(","); it != 'f' }
+                .toString()
+        ); assertEquals(indexed3.toString(), indexed4.toString())
 
         val indexed1 = StringBuilder()
         val indexed2 = StringBuilder()
-        assertTwoEquals(resultText, Stringx.filterIndexed(sourceText) { index, it -> indexed1.append(index).append(","); it != 'f' },
-                sourceText.filterIndexed { index, it -> indexed2.append(index).append(","); it != 'f' }); assertEquals(indexed1.toString(), indexed2.toString())
+        assertTwoEquals(resultText,
+            Stringx.filterIndexed(sourceText) { index, it -> indexed1.append(index).append(","); it != 'f' },
+            sourceText.filterIndexed { index, it -> indexed2.append(index).append(","); it != 'f' }); assertEquals(
+            indexed1.toString(),
+            indexed2.toString()
+        )
 
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filterNotTo(StringBuilder(sourceText), StringBuilder()) { it == 'f' }.toString(),
-                StringBuilder(sourceText).filterNotTo(StringBuilder()) { it == 'f' }.toString())
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filterNotTo(StringBuilder(sourceText), StringBuilder()) { it == 'f' }.toString(),
+            StringBuilder(sourceText).filterNotTo(StringBuilder()) { it == 'f' }.toString()
+        )
         assertTwoEquals(StringBuilder().toString(), Stringx.filterNotTo(null, StringBuilder()) { it == 'f' }.toString(),
-                StringBuilder("").filterNotTo(StringBuilder()) { it == 'f' }.toString())
-        assertTwoEquals(StringBuilder(resultText).toString(), Stringx.filterNot(StringBuilder(sourceText)) { it == 'f' }.toString(),
-                StringBuilder(sourceText).filterNot { it == 'f' }.toString())
+            StringBuilder("").filterNotTo(StringBuilder()) { it == 'f' }.toString()
+        )
+        assertTwoEquals(StringBuilder(resultText).toString(),
+            Stringx.filterNot(StringBuilder(sourceText)) { it == 'f' }.toString(),
+            StringBuilder(sourceText).filterNot { it == 'f' }.toString()
+        )
         assertTwoEquals(resultText, Stringx.filterNot(sourceText) { it == 'f' }, sourceText.filterNot { it == 'f' })
     }
 
@@ -1018,10 +1704,17 @@ class StringxTest {
         val resultText = "abcdefgfedcba"
         val sourceText2 = "abcdefgfedcba"
         val resultText2 = "bcdefgfedcb"
-        assertTwoEquals(resultText2, Stringx.trim(StringBuilder(sourceText2)) { it == 'a' }, StringBuilder(sourceText2).trim { it == 'a' })
+        assertTwoEquals(
+            resultText2,
+            Stringx.trim(StringBuilder(sourceText2)) { it == 'a' },
+            StringBuilder(sourceText2).trim { it == 'a' })
         assertTwoEquals("", Stringx.trim(StringBuilder("")) { it == 'a' }, StringBuilder("").trim { it == 'a' })
         assertTwoEquals(resultText2, Stringx.trim(sourceText2) { it == 'a' }, sourceText2.trim { it == 'a' })
-        assertTwoEquals(resultText2, Stringx.trim(StringBuilder(sourceText2), 'a'), StringBuilder(sourceText2).trim('a'))
+        assertTwoEquals(
+            resultText2,
+            Stringx.trim(StringBuilder(sourceText2), 'a'),
+            StringBuilder(sourceText2).trim('a')
+        )
         assertTwoEquals(resultText2, Stringx.trim(sourceText2, 'a'), sourceText2.trim('a'))
         assertTwoEquals(resultText, Stringx.trim(StringBuilder(sourceText)), StringBuilder(sourceText).trim())
         assertTwoEquals(resultText, Stringx.trim(sourceText), sourceText.trim())
@@ -1030,12 +1723,29 @@ class StringxTest {
         val resultTextStart = "abcdefgfedcba \n"
         val sourceTextStart2 = "abcdefgfedcba"
         val resultTextStart2 = "bcdefgfedcba"
-        assertTwoEquals(resultTextStart2, Stringx.trimStart(StringBuilder(sourceTextStart2)) { it == 'a' }, StringBuilder(sourceTextStart2).trimStart { it == 'a' })
-        assertTwoEquals("", Stringx.trimStart(StringBuilder("")) { it == 'a' }, StringBuilder("").trimStart { it == 'a' })
-        assertTwoEquals(resultTextStart2, Stringx.trimStart(sourceTextStart2) { it == 'a' }, sourceTextStart2.trimStart { it == 'a' })
-        assertTwoEquals(resultTextStart2, Stringx.trimStart(StringBuilder(sourceTextStart2), 'a'), StringBuilder(sourceTextStart2).trimStart('a'))
+        assertTwoEquals(
+            resultTextStart2,
+            Stringx.trimStart(StringBuilder(sourceTextStart2)) { it == 'a' },
+            StringBuilder(sourceTextStart2).trimStart { it == 'a' })
+        assertTwoEquals(
+            "",
+            Stringx.trimStart(StringBuilder("")) { it == 'a' },
+            StringBuilder("").trimStart { it == 'a' })
+        assertTwoEquals(
+            resultTextStart2,
+            Stringx.trimStart(sourceTextStart2) { it == 'a' },
+            sourceTextStart2.trimStart { it == 'a' })
+        assertTwoEquals(
+            resultTextStart2,
+            Stringx.trimStart(StringBuilder(sourceTextStart2), 'a'),
+            StringBuilder(sourceTextStart2).trimStart('a')
+        )
         assertTwoEquals(resultTextStart2, Stringx.trimStart(sourceTextStart2, 'a'), sourceTextStart2.trimStart('a'))
-        assertTwoEquals(resultTextStart, Stringx.trimStart(StringBuilder(sourceTextStart)), StringBuilder(sourceTextStart).trimStart())
+        assertTwoEquals(
+            resultTextStart,
+            Stringx.trimStart(StringBuilder(sourceTextStart)),
+            StringBuilder(sourceTextStart).trimStart()
+        )
         assertTwoEquals(resultTextStart, Stringx.trimStart(sourceTextStart), sourceTextStart.trimStart())
         assertTwoEquals(resultText, Stringx.trim(sourceText), sourceText.trim())
 
@@ -1043,12 +1753,26 @@ class StringxTest {
         val resultTextEnd = " \tabcdefgfedcba"
         val sourceTextEnd2 = "abcdefgfedcba"
         val resultTextEnd2 = "abcdefgfedcb"
-        assertTwoEquals(resultTextEnd2, Stringx.trimEnd(StringBuilder(sourceTextEnd2)) { it == 'a' }, StringBuilder(sourceTextEnd2).trimEnd { it == 'a' })
+        assertTwoEquals(
+            resultTextEnd2,
+            Stringx.trimEnd(StringBuilder(sourceTextEnd2)) { it == 'a' },
+            StringBuilder(sourceTextEnd2).trimEnd { it == 'a' })
         assertTwoEquals("", Stringx.trimEnd(StringBuilder("")) { it == 'a' }, StringBuilder("").trimEnd { it == 'a' })
-        assertTwoEquals(resultTextEnd2, Stringx.trimEnd(sourceTextEnd2) { it == 'a' }, sourceTextEnd2.trimEnd { it == 'a' })
-        assertTwoEquals(resultTextEnd2, Stringx.trimEnd(StringBuilder(sourceTextEnd2), 'a'), StringBuilder(sourceTextEnd2).trimEnd('a'))
+        assertTwoEquals(
+            resultTextEnd2,
+            Stringx.trimEnd(sourceTextEnd2) { it == 'a' },
+            sourceTextEnd2.trimEnd { it == 'a' })
+        assertTwoEquals(
+            resultTextEnd2,
+            Stringx.trimEnd(StringBuilder(sourceTextEnd2), 'a'),
+            StringBuilder(sourceTextEnd2).trimEnd('a')
+        )
         assertTwoEquals(resultTextEnd2, Stringx.trimEnd(sourceTextEnd2, 'a'), sourceTextEnd2.trimEnd('a'))
-        assertTwoEquals(resultTextEnd, Stringx.trimEnd(StringBuilder(sourceTextEnd)), StringBuilder(sourceTextEnd).trimEnd())
+        assertTwoEquals(
+            resultTextEnd,
+            Stringx.trimEnd(StringBuilder(sourceTextEnd)),
+            StringBuilder(sourceTextEnd).trimEnd()
+        )
         assertTwoEquals(resultTextEnd, Stringx.trimEnd(sourceTextEnd), sourceTextEnd.trimEnd())
     }
 
@@ -1069,10 +1793,26 @@ class StringxTest {
     fun testReplace() {
         val sourceTextRange = "0123456789"
         val resultTextRange = "01aaaaaa89"
-        assertTwoEquals(resultTextRange, Stringx.replaceRange(StringBuilder(sourceTextRange), 2, 8, "aaaaaa").toString(), StringBuilder(sourceTextRange).replaceRange(2, 8, "aaaaaa").toString())
-        assertTwoEquals(resultTextRange, Stringx.replaceRange(sourceTextRange, 2, 8, "aaaaaa"), sourceTextRange.replaceRange(2, 8, "aaaaaa"))
-        assertTwoEquals(resultTextRange, Stringx.replaceRange(StringBuilder(sourceTextRange), MyIntRange(2, 7), "aaaaaa").toString(), StringBuilder(sourceTextRange).replaceRange(2..7, "aaaaaa").toString())
-        assertTwoEquals(resultTextRange, Stringx.replaceRange(sourceTextRange, MyIntRange(2, 7), "aaaaaa"), sourceTextRange.replaceRange(2..7, "aaaaaa"))
+        assertTwoEquals(
+            resultTextRange,
+            Stringx.replaceRange(StringBuilder(sourceTextRange), 2, 8, "aaaaaa").toString(),
+            StringBuilder(sourceTextRange).replaceRange(2, 8, "aaaaaa").toString()
+        )
+        assertTwoEquals(
+            resultTextRange,
+            Stringx.replaceRange(sourceTextRange, 2, 8, "aaaaaa"),
+            sourceTextRange.replaceRange(2, 8, "aaaaaa")
+        )
+        assertTwoEquals(
+            resultTextRange,
+            Stringx.replaceRange(StringBuilder(sourceTextRange), MyIntRange(2, 7), "aaaaaa").toString(),
+            StringBuilder(sourceTextRange).replaceRange(2..7, "aaaaaa").toString()
+        )
+        assertTwoEquals(
+            resultTextRange,
+            Stringx.replaceRange(sourceTextRange, MyIntRange(2, 7), "aaaaaa"),
+            sourceTextRange.replaceRange(2..7, "aaaaaa")
+        )
         try {
             Stringx.replaceRange(sourceTextRange, 2, 1, "aaaa")
             fail()
@@ -1082,60 +1822,204 @@ class StringxTest {
         val sourceTextBefore = "test.txt"
         val sourceTextBeforeError = "testtxt"
         val resultTextBefore = "simple.txt"
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBefore, '.', "simple", sourceTextBefore), sourceTextBefore.replaceBefore('.', "simple", sourceTextBefore))
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBefore, '.', "simple", null), sourceTextBefore.replaceBefore('.', "simple"))
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBeforeError, '.', "simple", resultTextBefore), sourceTextBeforeError.replaceBefore('.', "simple", resultTextBefore))
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBefore, ".", "simple", sourceTextBefore), sourceTextBefore.replaceBefore(".", "simple", sourceTextBefore))
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBefore, ".", "simple", null), sourceTextBefore.replaceBefore(".", "simple"))
-        assertTwoEquals(resultTextBefore, Stringx.replaceBefore(sourceTextBeforeError, ".", "simple", resultTextBefore), sourceTextBeforeError.replaceBefore(".", "simple", resultTextBefore))
-        assertTwoEquals(sourceTextBefore, Stringx.replaceBefore(null, '.', "simple", sourceTextBefore), "".replaceBefore('.', "simple", sourceTextBefore))
-        assertTwoEquals(sourceTextBefore, Stringx.replaceBefore(null, ".", "simple", sourceTextBefore), "".replaceBefore(".", "simple", sourceTextBefore))
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBefore, '.', "simple", sourceTextBefore),
+            sourceTextBefore.replaceBefore('.', "simple", sourceTextBefore)
+        )
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBefore, '.', "simple", null),
+            sourceTextBefore.replaceBefore('.', "simple")
+        )
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBeforeError, '.', "simple", resultTextBefore),
+            sourceTextBeforeError.replaceBefore('.', "simple", resultTextBefore)
+        )
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBefore, ".", "simple", sourceTextBefore),
+            sourceTextBefore.replaceBefore(".", "simple", sourceTextBefore)
+        )
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBefore, ".", "simple", null),
+            sourceTextBefore.replaceBefore(".", "simple")
+        )
+        assertTwoEquals(
+            resultTextBefore,
+            Stringx.replaceBefore(sourceTextBeforeError, ".", "simple", resultTextBefore),
+            sourceTextBeforeError.replaceBefore(".", "simple", resultTextBefore)
+        )
+        assertTwoEquals(
+            sourceTextBefore,
+            Stringx.replaceBefore(null, '.', "simple", sourceTextBefore),
+            "".replaceBefore('.', "simple", sourceTextBefore)
+        )
+        assertTwoEquals(
+            sourceTextBefore,
+            Stringx.replaceBefore(null, ".", "simple", sourceTextBefore),
+            "".replaceBefore(".", "simple", sourceTextBefore)
+        )
 
         val sourceTextBeforeLast = "test.txt.zip"
         val sourceTextBeforeLastError = "testtxtzip"
         val resultTextBeforeLast = "simple.txt.zip"
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLast, '.', "simple.txt", sourceTextBeforeLast), sourceTextBeforeLast.replaceBeforeLast('.', "simple.txt", sourceTextBeforeLast))
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLast, '.', "simple.txt", null), sourceTextBeforeLast.replaceBeforeLast('.', "simple.txt"))
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLastError, '.', "simple.txt", resultTextBeforeLast), sourceTextBeforeLastError.replaceBeforeLast('.', "simple.txt", resultTextBeforeLast))
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLast, ".", "simple.txt", sourceTextBeforeLast), sourceTextBeforeLast.replaceBeforeLast(".", "simple.txt", sourceTextBeforeLast))
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLast, ".", "simple.txt", null), sourceTextBeforeLast.replaceBeforeLast(".", "simple.txt"))
-        assertTwoEquals(resultTextBeforeLast, Stringx.replaceBeforeLast(sourceTextBeforeLastError, ".", "simple.txt", resultTextBeforeLast), sourceTextBeforeLastError.replaceBeforeLast(".", "simple.txt", resultTextBeforeLast))
-        assertTwoEquals(sourceTextBefore, Stringx.replaceBeforeLast(null, '.', "simple.txt", sourceTextBefore), "".replaceBeforeLast('.', "simple.txt", sourceTextBefore))
-        assertTwoEquals(sourceTextBefore, Stringx.replaceBeforeLast(null, ".", "simple.txt", sourceTextBefore), "".replaceBeforeLast(".", "simple.txt", sourceTextBefore))
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLast, '.', "simple.txt", sourceTextBeforeLast),
+            sourceTextBeforeLast.replaceBeforeLast('.', "simple.txt", sourceTextBeforeLast)
+        )
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLast, '.', "simple.txt", null),
+            sourceTextBeforeLast.replaceBeforeLast('.', "simple.txt")
+        )
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLastError, '.', "simple.txt", resultTextBeforeLast),
+            sourceTextBeforeLastError.replaceBeforeLast('.', "simple.txt", resultTextBeforeLast)
+        )
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLast, ".", "simple.txt", sourceTextBeforeLast),
+            sourceTextBeforeLast.replaceBeforeLast(".", "simple.txt", sourceTextBeforeLast)
+        )
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLast, ".", "simple.txt", null),
+            sourceTextBeforeLast.replaceBeforeLast(".", "simple.txt")
+        )
+        assertTwoEquals(
+            resultTextBeforeLast,
+            Stringx.replaceBeforeLast(sourceTextBeforeLastError, ".", "simple.txt", resultTextBeforeLast),
+            sourceTextBeforeLastError.replaceBeforeLast(".", "simple.txt", resultTextBeforeLast)
+        )
+        assertTwoEquals(
+            sourceTextBefore,
+            Stringx.replaceBeforeLast(null, '.', "simple.txt", sourceTextBefore),
+            "".replaceBeforeLast('.', "simple.txt", sourceTextBefore)
+        )
+        assertTwoEquals(
+            sourceTextBefore,
+            Stringx.replaceBeforeLast(null, ".", "simple.txt", sourceTextBefore),
+            "".replaceBeforeLast(".", "simple.txt", sourceTextBefore)
+        )
 
         val sourceTextAfter = "test.txt"
         val sourceTextAfterError = "testtxt"
         val resultTextAfter = "test.zip"
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfter, '.', "zip", sourceTextAfter), sourceTextAfter.replaceAfter('.', "zip", sourceTextAfter))
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfter, '.', "zip", null), sourceTextAfter.replaceAfter('.', "zip"))
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfterError, '.', "zip", resultTextAfter), sourceTextAfterError.replaceAfter('.', "zip", resultTextAfter))
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfter, ".", "zip", sourceTextAfter), sourceTextAfter.replaceAfter(".", "zip", sourceTextAfter))
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfter, ".", "zip", null), sourceTextAfter.replaceAfter(".", "zip"))
-        assertTwoEquals(resultTextAfter, Stringx.replaceAfter(sourceTextAfterError, ".", "zip", resultTextAfter), sourceTextAfterError.replaceAfter(".", "zip", resultTextAfter))
-        assertTwoEquals(sourceTextAfter, Stringx.replaceAfter(null, '.', "zip", sourceTextAfter), "".replaceAfter('.', "zip", sourceTextAfter))
-        assertTwoEquals(sourceTextAfter, Stringx.replaceAfter(null, ".", "zip", sourceTextAfter), "".replaceAfter(".", "zip", sourceTextAfter))
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfter, '.', "zip", sourceTextAfter),
+            sourceTextAfter.replaceAfter('.', "zip", sourceTextAfter)
+        )
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfter, '.', "zip", null),
+            sourceTextAfter.replaceAfter('.', "zip")
+        )
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfterError, '.', "zip", resultTextAfter),
+            sourceTextAfterError.replaceAfter('.', "zip", resultTextAfter)
+        )
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfter, ".", "zip", sourceTextAfter),
+            sourceTextAfter.replaceAfter(".", "zip", sourceTextAfter)
+        )
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfter, ".", "zip", null),
+            sourceTextAfter.replaceAfter(".", "zip")
+        )
+        assertTwoEquals(
+            resultTextAfter,
+            Stringx.replaceAfter(sourceTextAfterError, ".", "zip", resultTextAfter),
+            sourceTextAfterError.replaceAfter(".", "zip", resultTextAfter)
+        )
+        assertTwoEquals(
+            sourceTextAfter,
+            Stringx.replaceAfter(null, '.', "zip", sourceTextAfter),
+            "".replaceAfter('.', "zip", sourceTextAfter)
+        )
+        assertTwoEquals(
+            sourceTextAfter,
+            Stringx.replaceAfter(null, ".", "zip", sourceTextAfter),
+            "".replaceAfter(".", "zip", sourceTextAfter)
+        )
 
         val sourceTextAfterLast = "test.txt.zip"
         val sourceTextAfterLastError = "testtxtzip"
         val resultTextAfterLast = "test.txt.rar"
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLast, '.', "rar", sourceTextAfterLast), sourceTextAfterLast.replaceAfterLast('.', "rar", sourceTextAfterLast))
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLast, '.', "rar", null), sourceTextAfterLast.replaceAfterLast('.', "rar"))
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLastError, '.', "rar", resultTextAfterLast), sourceTextAfterLastError.replaceAfterLast('.', "rar", resultTextAfterLast))
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLast, ".", "rar", sourceTextAfterLast), sourceTextAfterLast.replaceAfterLast(".", "rar", sourceTextAfterLast))
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLast, ".", "rar", null), sourceTextAfterLast.replaceAfterLast(".", "rar"))
-        assertTwoEquals(resultTextAfterLast, Stringx.replaceAfterLast(sourceTextAfterLastError, ".", "rar", resultTextAfterLast), sourceTextAfterLastError.replaceAfterLast(".", "rar", resultTextAfterLast))
-        assertTwoEquals(sourceTextAfterLast, Stringx.replaceAfterLast(null, '.', "rar", sourceTextAfterLast), "".replaceAfterLast('.', "rar", sourceTextAfterLast))
-        assertTwoEquals(sourceTextAfterLast, Stringx.replaceAfterLast(null, ".", "rar", sourceTextAfterLast), "".replaceAfterLast(".", "rar", sourceTextAfterLast))
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLast, '.', "rar", sourceTextAfterLast),
+            sourceTextAfterLast.replaceAfterLast('.', "rar", sourceTextAfterLast)
+        )
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLast, '.', "rar", null),
+            sourceTextAfterLast.replaceAfterLast('.', "rar")
+        )
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLastError, '.', "rar", resultTextAfterLast),
+            sourceTextAfterLastError.replaceAfterLast('.', "rar", resultTextAfterLast)
+        )
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLast, ".", "rar", sourceTextAfterLast),
+            sourceTextAfterLast.replaceAfterLast(".", "rar", sourceTextAfterLast)
+        )
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLast, ".", "rar", null),
+            sourceTextAfterLast.replaceAfterLast(".", "rar")
+        )
+        assertTwoEquals(
+            resultTextAfterLast,
+            Stringx.replaceAfterLast(sourceTextAfterLastError, ".", "rar", resultTextAfterLast),
+            sourceTextAfterLastError.replaceAfterLast(".", "rar", resultTextAfterLast)
+        )
+        assertTwoEquals(
+            sourceTextAfterLast,
+            Stringx.replaceAfterLast(null, '.', "rar", sourceTextAfterLast),
+            "".replaceAfterLast('.', "rar", sourceTextAfterLast)
+        )
+        assertTwoEquals(
+            sourceTextAfterLast,
+            Stringx.replaceAfterLast(null, ".", "rar", sourceTextAfterLast),
+            "".replaceAfterLast(".", "rar", sourceTextAfterLast)
+        )
 
         val sourceTextPattern = "fasfjs hello@gmail.com fasf hello@outlook.com"
         val resultTextPattern = "fasfjs http://google.com fasf http://google.com"
-        assertTwoEquals(resultTextPattern, Stringx.replace(sourceTextPattern, EMAIL, "http://google.com"), sourceTextPattern.replace(Regex(EMAIL.pattern()), "http://google.com"))
-        assertTwoEquals("", Stringx.replace(null, EMAIL, "http://google.com"), "".replace(Regex(EMAIL.pattern()), "http://google.com"))
+        assertTwoEquals(
+            resultTextPattern,
+            Stringx.replace(sourceTextPattern, EMAIL, "http://google.com"),
+            sourceTextPattern.replace(Regex(EMAIL.pattern()), "http://google.com")
+        )
+        assertTwoEquals(
+            "",
+            Stringx.replace(null, EMAIL, "http://google.com"),
+            "".replace(Regex(EMAIL.pattern()), "http://google.com")
+        )
 
         val sourceTextFirstPattern = "fasfjs hello@gmail.com fasf hello@outlook.com"
         val resultTextFirstPattern = "fasfjs http://google.com fasf hello@outlook.com"
-        assertTwoEquals(resultTextFirstPattern, Stringx.replaceFirst(sourceTextFirstPattern, EMAIL, "http://google.com"), sourceTextFirstPattern.replaceFirst(Regex(EMAIL.pattern()), "http://google.com"))
-        assertTwoEquals("", Stringx.replaceFirst(null, EMAIL, "http://google.com"), "".replaceFirst(Regex(EMAIL.pattern()), "http://google.com"))
+        assertTwoEquals(
+            resultTextFirstPattern,
+            Stringx.replaceFirst(sourceTextFirstPattern, EMAIL, "http://google.com"),
+            sourceTextFirstPattern.replaceFirst(Regex(EMAIL.pattern()), "http://google.com")
+        )
+        assertTwoEquals(
+            "",
+            Stringx.replaceFirst(null, EMAIL, "http://google.com"),
+            "".replaceFirst(Regex(EMAIL.pattern()), "http://google.com")
+        )
     }
 
     @Test
@@ -1167,9 +2051,21 @@ class StringxTest {
         assertTwoEquals(false, Stringx.contains(self, "cD"), self.contains("cD"))
         assertTwoEquals(true, Stringx.contains(self, "cD", true), self.contains("cD", true))
 
-        assertTwoEquals(true, Stringx.contains(StringBuilder(self), StringBuilder("cd")), StringBuilder(self).contains("cd"))
-        assertTwoEquals(false, Stringx.contains(StringBuilder(self), StringBuilder("cD")), StringBuilder(self).contains("cD"))
-        assertTwoEquals(true, Stringx.contains(StringBuilder(self), StringBuilder("cD"), true), StringBuilder(self).contains("cD", true))
+        assertTwoEquals(
+            true,
+            Stringx.contains(StringBuilder(self), StringBuilder("cd")),
+            StringBuilder(self).contains("cd")
+        )
+        assertTwoEquals(
+            false,
+            Stringx.contains(StringBuilder(self), StringBuilder("cD")),
+            StringBuilder(self).contains("cD")
+        )
+        assertTwoEquals(
+            true,
+            Stringx.contains(StringBuilder(self), StringBuilder("cD"), true),
+            StringBuilder(self).contains("cD", true)
+        )
 
         assertTwoEquals(true, Stringx.contains(self, 'd'), self.contains('d'))
         assertTwoEquals(false, Stringx.contains(self, 'D'), self.contains('D'))
@@ -1185,138 +2081,179 @@ class StringxTest {
     @Test
     fun testSplit() {
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.splitToIterable("112.135.678,345", arrayOf(".", ",")).joinToString(":"),
-                "112.135.678,345".splitToSequence(*arrayOf(".", ",")).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112.135.678,345", arrayOf(".", ",")).joinToString(":"),
+            "112.135.678,345".splitToSequence(*arrayOf(".", ",")).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678,345",
-                Stringx.splitToIterable("112.135.678,345", arrayOf(".", ","), 3).joinToString(":"),
-                "112.135.678,345".splitToSequence(*arrayOf(".", ","), limit = 3).joinToString(":"))
+            "112:135:678,345",
+            Stringx.splitToIterable("112.135.678,345", arrayOf(".", ","), 3).joinToString(":"),
+            "112.135.678,345".splitToSequence(*arrayOf(".", ","), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112a135a678b345",
-                Stringx.splitToIterable("112a135a678b345", arrayOf("A", "B"), 3).toMutableList().joinToString(":"),
-                "112a135a678b345".splitToSequence(*arrayOf("A", "B"), limit = 3).joinToString(":"))
+            "112a135a678b345",
+            Stringx.splitToIterable("112a135a678b345", arrayOf("A", "B"), 3).toMutableList().joinToString(":"),
+            "112a135a678b345".splitToSequence(*arrayOf("A", "B"), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.splitToIterable("112a135a678a345", arrayOf("A", "B"), true).joinToString(":"),
-                "112a135a678a345".splitToSequence(*arrayOf("A", "B"), ignoreCase = true).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112a135a678a345", arrayOf("A", "B"), true).joinToString(":"),
+            "112a135a678a345".splitToSequence(*arrayOf("A", "B"), ignoreCase = true).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.splitToIterable("112.135.678.345", arrayOf(".")).joinToString(":"),
-                "112.135.678.345".splitToSequence(*arrayOf(".")).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112.135.678.345", arrayOf(".")).joinToString(":"),
+            "112.135.678.345".splitToSequence(*arrayOf(".")).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678.345",
-                Stringx.splitToIterable("112.135.678.345", arrayOf("."), 3).joinToString(":"),
-                "112.135.678.345".splitToSequence(*arrayOf("."), limit = 3).joinToString(":"))
+            "112:135:678.345",
+            Stringx.splitToIterable("112.135.678.345", arrayOf("."), 3).joinToString(":"),
+            "112.135.678.345".splitToSequence(*arrayOf("."), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                ":1:1:2:.:1:3:5:.:6:7:8:.:3:4:5:",
-                Stringx.splitToIterable("112.135.678.345", arrayOf("")).joinToString(":"),
-                "112.135.678.345".splitToSequence(*arrayOf("")).joinToString(":"))
+            ":1:1:2:.:1:3:5:.:6:7:8:.:3:4:5:",
+            Stringx.splitToIterable("112.135.678.345", arrayOf("")).joinToString(":"),
+            "112.135.678.345".splitToSequence(*arrayOf("")).joinToString(":")
+        )
         assertTwoEquals(
-                "112.135.678.345",
-                Stringx.splitToIterable("112.135.678.345", arrayOf(" ")).joinToString(":"),
-                "112.135.678.345".splitToSequence(*arrayOf(" ")).joinToString(":"))
+            "112.135.678.345",
+            Stringx.splitToIterable("112.135.678.345", arrayOf(" ")).joinToString(":"),
+            "112.135.678.345".splitToSequence(*arrayOf(" ")).joinToString(":")
+        )
 
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112.135.678,345", arrayOf(".", ",")).joinToString(":"),
-                "112.135.678,345".split(*arrayOf(".", ",")).joinToString(":"))
+            "112:135:678:345",
+            Stringx.split("112.135.678,345", arrayOf(".", ",")).joinToString(":"),
+            "112.135.678,345".split(*arrayOf(".", ",")).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678,345",
-                Stringx.split("112.135.678,345", arrayOf(".", ","), 3).joinToString(":"),
-                "112.135.678,345".split(*arrayOf(".", ","), limit = 3).joinToString(":"))
+            "112:135:678,345",
+            Stringx.split("112.135.678,345", arrayOf(".", ","), 3).joinToString(":"),
+            "112.135.678,345".split(*arrayOf(".", ","), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112a135a678b345",
-                Stringx.split("112a135a678b345", arrayOf("A", "B"), 3).joinToString(":"),
-                "112a135a678b345".split(*arrayOf("A", "B"), limit = 3).joinToString(":"))
+            "112a135a678b345",
+            Stringx.split("112a135a678b345", arrayOf("A", "B"), 3).joinToString(":"),
+            "112a135a678b345".split(*arrayOf("A", "B"), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112a135a678a345", arrayOf("A", "B"), true).joinToString(":"),
-                "112a135a678a345".split(*arrayOf("A", "B"), ignoreCase = true).joinToString(":"))
+            "112:135:678:345",
+            Stringx.split("112a135a678a345", arrayOf("A", "B"), true).joinToString(":"),
+            "112a135a678a345".split(*arrayOf("A", "B"), ignoreCase = true).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112.135.678.345", arrayOf(".")).joinToString(":"),
-                "112.135.678.345".split(*arrayOf(".")).joinToString(":"))
+            "112:135:678:345",
+            Stringx.split("112.135.678.345", arrayOf(".")).joinToString(":"),
+            "112.135.678.345".split(*arrayOf(".")).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678.345",
-                Stringx.split("112.135.678.345", arrayOf("."), 3).joinToString(":"),
-                "112.135.678.345".split(*arrayOf("."), limit = 3).joinToString(":"))
+            "112:135:678.345",
+            Stringx.split("112.135.678.345", arrayOf("."), 3).joinToString(":"),
+            "112.135.678.345".split(*arrayOf("."), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                ":1:1:2:.:1:3:5:.:6:7:8:.:3:4:5:",
-                Stringx.split("112.135.678.345", arrayOf("")).joinToString(":"),
-                "112.135.678.345".split(*arrayOf("")).joinToString(":"))
+            ":1:1:2:.:1:3:5:.:6:7:8:.:3:4:5:",
+            Stringx.split("112.135.678.345", arrayOf("")).joinToString(":"),
+            "112.135.678.345".split(*arrayOf("")).joinToString(":")
+        )
         assertTwoEquals(
-                "112.135.678.345",
-                Stringx.split("112.135.678.345", arrayOf(" ")).joinToString(":"),
-                "112.135.678.345".split(*arrayOf(" ")).joinToString(":"))
-
-        assertTwoEquals("112:135:678:345",
-                Stringx.splitToIterable("112.135.678,345", charArrayOf('.', ',')).joinToString(":"),
-                "112.135.678,345".splitToSequence(*charArrayOf('.', ',')).joinToString(":"))
-        assertTwoEquals("112:135:678,345",
-                Stringx.splitToIterable("112.135.678,345", charArrayOf('.', ','), 3).joinToString(":"),
-                "112.135.678,345".splitToSequence(*charArrayOf('.', ','), limit = 3).joinToString(":"))
-        assertTwoEquals("112a135a678b345",
-                Stringx.splitToIterable("112a135a678b345", charArrayOf('A', 'B'), 3).joinToString(":"),
-                "112a135a678b345".splitToSequence(*charArrayOf('A', 'B'), limit = 3).joinToString(":"))
-        assertTwoEquals("112:135:678:345",
-                Stringx.splitToIterable("112a135a678a345", charArrayOf('A', 'B'), true).joinToString(":"),
-                "112a135a678a345".splitToSequence(*charArrayOf('A', 'B'), ignoreCase = true).joinToString(":"))
-        assertTwoEquals("112:135:678:345",
-                Stringx.splitToIterable("112.135.678.345", charArrayOf('.')).joinToString(":"),
-                "112.135.678.345".splitToSequence(*charArrayOf('.')).joinToString(":"))
-        assertTwoEquals("112:135:678.345",
-                Stringx.splitToIterable("112.135.678.345", charArrayOf('.'), 3).joinToString(":"),
-                "112.135.678.345".splitToSequence(*charArrayOf('.'), limit = 3).joinToString(":"))
-        assertTwoEquals("112.135.678.345",
-                Stringx.splitToIterable("112.135.678.345", charArrayOf(' ')).joinToString(":"),
-                "112.135.678.345".splitToSequence(*charArrayOf(' ')).joinToString(":"))
+            "112.135.678.345",
+            Stringx.split("112.135.678.345", arrayOf(" ")).joinToString(":"),
+            "112.135.678.345".split(*arrayOf(" ")).joinToString(":")
+        )
 
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112.135.678,345", charArrayOf('.', ',')).joinToString(":"),
-                "112.135.678,345".split(*charArrayOf('.', ',')).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112.135.678,345", charArrayOf('.', ',')).joinToString(":"),
+            "112.135.678,345".splitToSequence(*charArrayOf('.', ',')).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678,345",
-                Stringx.split("112.135.678,345", charArrayOf('.', ','), 3).joinToString(":"),
-                "112.135.678,345".split(*charArrayOf('.', ','), limit = 3).joinToString(":"))
+            "112:135:678,345",
+            Stringx.splitToIterable("112.135.678,345", charArrayOf('.', ','), 3).joinToString(":"),
+            "112.135.678,345".splitToSequence(*charArrayOf('.', ','), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112a135a678b345",
-                Stringx.split("112a135a678b345", charArrayOf('A', 'B'), 3).joinToString(":"),
-                "112a135a678b345".split(*charArrayOf('A', 'B'), limit = 3).joinToString(":"))
+            "112a135a678b345",
+            Stringx.splitToIterable("112a135a678b345", charArrayOf('A', 'B'), 3).joinToString(":"),
+            "112a135a678b345".splitToSequence(*charArrayOf('A', 'B'), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112a135a678a345", charArrayOf('A', 'B'), true).joinToString(":"),
-                "112a135a678a345".split(*charArrayOf('A', 'B'), ignoreCase = true).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112a135a678a345", charArrayOf('A', 'B'), true).joinToString(":"),
+            "112a135a678a345".splitToSequence(*charArrayOf('A', 'B'), ignoreCase = true).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112.135.678.345", charArrayOf('.')).joinToString(":"),
-                "112.135.678.345".split(*charArrayOf('.')).joinToString(":"))
+            "112:135:678:345",
+            Stringx.splitToIterable("112.135.678.345", charArrayOf('.')).joinToString(":"),
+            "112.135.678.345".splitToSequence(*charArrayOf('.')).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678.345",
-                Stringx.split("112.135.678.345", charArrayOf('.'), 3).joinToString(":"),
-                "112.135.678.345".split(*charArrayOf('.'), limit = 3).joinToString(":"))
+            "112:135:678.345",
+            Stringx.splitToIterable("112.135.678.345", charArrayOf('.'), 3).joinToString(":"),
+            "112.135.678.345".splitToSequence(*charArrayOf('.'), limit = 3).joinToString(":")
+        )
         assertTwoEquals(
-                "112.135.678.345",
-                Stringx.split("112.135.678.345", charArrayOf(' ')).joinToString(":"),
-                "112.135.678.345".split(*charArrayOf(' ')).joinToString(":"))
-        assertTwoEquals(
-                "112.135.678.345",
-                Stringx.split("112.135.678.345", charArrayOf('a')).joinToString(":"),
-                "112.135.678.345".split(*charArrayOf('a')).joinToString(":"))
-        assertTwoEquals(
-                "112.135.678.345",
-                Stringx.split("112.135.678.345", charArrayOf('.'), 1).joinToString(":"),
-                "112.135.678.345".split(*charArrayOf('.'), limit = 1).joinToString(":"))
+            "112.135.678.345",
+            Stringx.splitToIterable("112.135.678.345", charArrayOf(' ')).joinToString(":"),
+            "112.135.678.345".splitToSequence(*charArrayOf(' ')).joinToString(":")
+        )
 
         assertTwoEquals(
-                "112:135:678:345",
-                Stringx.split("112.135.678,345", Pattern.compile("[.,]")).joinToString(":"),
-                "112.135.678,345".split(Regex("[.,]")).joinToString(":"))
+            "112:135:678:345",
+            Stringx.split("112.135.678,345", charArrayOf('.', ',')).joinToString(":"),
+            "112.135.678,345".split(*charArrayOf('.', ',')).joinToString(":")
+        )
         assertTwoEquals(
-                "112:135:678,345",
-                Stringx.split("112.135.678,345", Pattern.compile("[.,]"), 3).joinToString(":"),
-                "112.135.678,345".split(Regex("[.,]"), 3).joinToString(":"))
+            "112:135:678,345",
+            Stringx.split("112.135.678,345", charArrayOf('.', ','), 3).joinToString(":"),
+            "112.135.678,345".split(*charArrayOf('.', ','), limit = 3).joinToString(":")
+        )
+        assertTwoEquals(
+            "112a135a678b345",
+            Stringx.split("112a135a678b345", charArrayOf('A', 'B'), 3).joinToString(":"),
+            "112a135a678b345".split(*charArrayOf('A', 'B'), limit = 3).joinToString(":")
+        )
+        assertTwoEquals(
+            "112:135:678:345",
+            Stringx.split("112a135a678a345", charArrayOf('A', 'B'), true).joinToString(":"),
+            "112a135a678a345".split(*charArrayOf('A', 'B'), ignoreCase = true).joinToString(":")
+        )
+        assertTwoEquals(
+            "112:135:678:345",
+            Stringx.split("112.135.678.345", charArrayOf('.')).joinToString(":"),
+            "112.135.678.345".split(*charArrayOf('.')).joinToString(":")
+        )
+        assertTwoEquals(
+            "112:135:678.345",
+            Stringx.split("112.135.678.345", charArrayOf('.'), 3).joinToString(":"),
+            "112.135.678.345".split(*charArrayOf('.'), limit = 3).joinToString(":")
+        )
+        assertTwoEquals(
+            "112.135.678.345",
+            Stringx.split("112.135.678.345", charArrayOf(' ')).joinToString(":"),
+            "112.135.678.345".split(*charArrayOf(' ')).joinToString(":")
+        )
+        assertTwoEquals(
+            "112.135.678.345",
+            Stringx.split("112.135.678.345", charArrayOf('a')).joinToString(":"),
+            "112.135.678.345".split(*charArrayOf('a')).joinToString(":")
+        )
+        assertTwoEquals(
+            "112.135.678.345",
+            Stringx.split("112.135.678.345", charArrayOf('.'), 1).joinToString(":"),
+            "112.135.678.345".split(*charArrayOf('.'), limit = 1).joinToString(":")
+        )
+
+        assertTwoEquals(
+            "112:135:678:345",
+            Stringx.split("112.135.678,345", Pattern.compile("[.,]")).joinToString(":"),
+            "112.135.678,345".split(Regex("[.,]")).joinToString(":")
+        )
+        assertTwoEquals(
+            "112:135:678,345",
+            Stringx.split("112.135.678,345", Pattern.compile("[.,]"), 3).joinToString(":"),
+            "112.135.678,345".split(Regex("[.,]"), 3).joinToString(":")
+        )
 
         try {
             Stringx.splitToIterable("112.135.678,345", arrayOf(".", ","), -1)
@@ -1338,13 +2275,15 @@ class StringxTest {
     @Test
     fun testLines() {
         assertTwoEquals(
-                mutableListOf("1", "2", "3", "4"),
-                Stringx.lines("1\n2\n3\n4"),
-                "1\n2\n3\n4".lines())
+            mutableListOf("1", "2", "3", "4"),
+            Stringx.lines("1\n2\n3\n4"),
+            "1\n2\n3\n4".lines()
+        )
         assertTwoEquals(
-                mutableListOf("1", "2", "3", "4"),
-                Stringx.lineIterable("1\n2\n3\n4").toMutableList(),
-                "1\n2\n3\n4".lineSequence().toMutableList())
+            mutableListOf("1", "2", "3", "4"),
+            Stringx.lineIterable("1\n2\n3\n4").toMutableList(),
+            "1\n2\n3\n4".lineSequence().toMutableList()
+        )
     }
 
     @Test
@@ -1431,7 +2370,11 @@ class StringxTest {
         }
 
         assertTwoEquals("defg", Stringx.drop(StringBuilder(self), 3).toString(), StringBuilder(self).drop(3).toString())
-        assertTwoEquals("", Stringx.drop(StringBuilder(self), self.length + 1).toString(), StringBuilder(self).drop(self.length + 1).toString())
+        assertTwoEquals(
+            "",
+            Stringx.drop(StringBuilder(self), self.length + 1).toString(),
+            StringBuilder(self).drop(self.length + 1).toString()
+        )
         assertTwoEquals(self, Stringx.drop(StringBuilder(self), 0).toString(), StringBuilder(self).drop(0).toString())
         try {
             Stringx.drop(StringBuilder(self), -1)
@@ -1448,26 +2391,62 @@ class StringxTest {
         } catch (e: Exception) {
         }
 
-        assertTwoEquals("abcd", Stringx.dropLast(StringBuilder(self), 3).toString(), StringBuilder(self).dropLast(3).toString())
-        assertTwoEquals("", Stringx.dropLast(StringBuilder(self), self.length + 1).toString(), StringBuilder(self).dropLast(self.length + 1).toString())
-        assertTwoEquals(self, Stringx.dropLast(StringBuilder(self), 0).toString(), StringBuilder(self).dropLast(0).toString())
+        assertTwoEquals(
+            "abcd",
+            Stringx.dropLast(StringBuilder(self), 3).toString(),
+            StringBuilder(self).dropLast(3).toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.dropLast(StringBuilder(self), self.length + 1).toString(),
+            StringBuilder(self).dropLast(self.length + 1).toString()
+        )
+        assertTwoEquals(
+            self,
+            Stringx.dropLast(StringBuilder(self), 0).toString(),
+            StringBuilder(self).dropLast(0).toString()
+        )
         try {
             Stringx.dropLast(StringBuilder(self), -1)
             fail()
         } catch (e: Exception) {
         }
 
-        assertTwoEquals("abcdef", Stringx.dropLastWhile(StringBuilder(self)) { it != 'f' }.toString(), StringBuilder(self).dropLastWhile { it != 'f' }.toString())
-        assertTwoEquals("", Stringx.dropLastWhile(StringBuilder("")) { it != 'f' }.toString(), StringBuilder("").dropLastWhile { it != 'f' }.toString())
-        assertTwoEquals("", Stringx.dropLastWhile(null as StringBuilder?) { it != 'f' }.toString(), StringBuilder("").dropLastWhile { it != 'f' }.toString())
+        assertTwoEquals(
+            "abcdef",
+            Stringx.dropLastWhile(StringBuilder(self)) { it != 'f' }.toString(),
+            StringBuilder(self).dropLastWhile { it != 'f' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.dropLastWhile(StringBuilder("")) { it != 'f' }.toString(),
+            StringBuilder("").dropLastWhile { it != 'f' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.dropLastWhile(null as StringBuilder?) { it != 'f' }.toString(),
+            StringBuilder("").dropLastWhile { it != 'f' }.toString()
+        )
 
         assertTwoEquals("abcdef", Stringx.dropLastWhile(self) { it != 'f' }, self.dropLastWhile { it != 'f' })
         assertTwoEquals("", Stringx.dropLastWhile("") { it != 'f' }, "".dropLastWhile { it != 'f' })
         assertTwoEquals("", Stringx.dropLastWhile(null as String?) { it != 'f' }, "".dropLastWhile { it != 'f' })
 
-        assertTwoEquals("bcdefg", Stringx.dropWhile(StringBuilder(self)) { it != 'b' }.toString(), StringBuilder(self).dropWhile { it != 'b' }.toString())
-        assertTwoEquals("", Stringx.dropWhile(StringBuilder("")) { it != 'b' }.toString(), StringBuilder("").dropWhile { it != 'b' }.toString())
-        assertTwoEquals("", Stringx.dropWhile(null as StringBuilder?) { it != 'b' }.toString(), StringBuilder("").dropWhile { it != 'b' }.toString())
+        assertTwoEquals(
+            "bcdefg",
+            Stringx.dropWhile(StringBuilder(self)) { it != 'b' }.toString(),
+            StringBuilder(self).dropWhile { it != 'b' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.dropWhile(StringBuilder("")) { it != 'b' }.toString(),
+            StringBuilder("").dropWhile { it != 'b' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.dropWhile(null as StringBuilder?) { it != 'b' }.toString(),
+            StringBuilder("").dropWhile { it != 'b' }.toString()
+        )
 
         assertTwoEquals("bcdefg", Stringx.dropWhile(self) { it != 'b' }, self.dropWhile { it != 'b' })
         assertTwoEquals("", Stringx.dropWhile("") { it != 'b' }, "".dropWhile { it != 'b' })
@@ -1481,14 +2460,30 @@ class StringxTest {
         assertTwoEquals("34567", Stringx.slice(source, MyIntRange(3, 7)), source.slice(3..7))
         @Suppress("EmptyRange")
         assertTwoEquals("", Stringx.slice(source, MyIntRange(3, 2)), source.slice(3..2))
-        assertTwoEquals("34567", Stringx.slice(StringBuilder(source), MyIntRange(3, 7)).toString(), StringBuilder(source).slice(3..7).toString())
+        assertTwoEquals(
+            "34567",
+            Stringx.slice(StringBuilder(source), MyIntRange(3, 7)).toString(),
+            StringBuilder(source).slice(3..7).toString()
+        )
         @Suppress("EmptyRange")
-        assertTwoEquals("", Stringx.slice(StringBuilder(source), MyIntRange(3, 2)).toString(), StringBuilder(source).slice(3..2).toString())
+        assertTwoEquals(
+            "",
+            Stringx.slice(StringBuilder(source), MyIntRange(3, 2)).toString(),
+            StringBuilder(source).slice(3..2).toString()
+        )
 
         assertTwoEquals("158", Stringx.slice(source, mutableListOf(1, 5, 8)), source.slice(listOf(1, 5, 8)))
         assertTwoEquals("", Stringx.slice(source, mutableListOf()), source.slice(listOf()))
-        assertTwoEquals("158", Stringx.slice(StringBuilder(source), mutableListOf(1, 5, 8)).toString(), StringBuilder(source).slice(listOf(1, 5, 8)).toString())
-        assertTwoEquals("", Stringx.slice(StringBuilder(source), mutableListOf()).toString(), StringBuilder(source).slice(listOf()).toString())
+        assertTwoEquals(
+            "158",
+            Stringx.slice(StringBuilder(source), mutableListOf(1, 5, 8)).toString(),
+            StringBuilder(source).slice(listOf(1, 5, 8)).toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.slice(StringBuilder(source), mutableListOf()).toString(),
+            StringBuilder(source).slice(listOf()).toString()
+        )
         assertTwoEquals("", Stringx.slice(null, mutableListOf()), "".slice(mutableListOf()))
     }
 
@@ -1504,9 +2499,21 @@ class StringxTest {
             fail()
         } catch (e: Exception) {
         }
-        assertTwoEquals(StringBuilder("0123456").toString(), Stringx.take(StringBuilder(source), 7).toString(), StringBuilder(source).take(7).toString())
-        assertTwoEquals(StringBuilder(source).toString(), Stringx.take(StringBuilder(source), 15).toString(), StringBuilder(source).take(15).toString())
-        assertTwoEquals(StringBuilder("").toString(), Stringx.take(StringBuilder(source), 0).toString(), StringBuilder(source).take(0).toString())
+        assertTwoEquals(
+            StringBuilder("0123456").toString(),
+            Stringx.take(StringBuilder(source), 7).toString(),
+            StringBuilder(source).take(7).toString()
+        )
+        assertTwoEquals(
+            StringBuilder(source).toString(),
+            Stringx.take(StringBuilder(source), 15).toString(),
+            StringBuilder(source).take(15).toString()
+        )
+        assertTwoEquals(
+            StringBuilder("").toString(),
+            Stringx.take(StringBuilder(source), 0).toString(),
+            StringBuilder(source).take(0).toString()
+        )
         try {
             Stringx.take(StringBuilder(source), -1)
             fail()
@@ -1521,9 +2528,21 @@ class StringxTest {
             fail()
         } catch (e: Exception) {
         }
-        assertTwoEquals(StringBuilder("3456789").toString(), Stringx.takeLast(StringBuilder(source), 7).toString(), StringBuilder(source).takeLast(7).toString())
-        assertTwoEquals(StringBuilder(source).toString(), Stringx.takeLast(StringBuilder(source), 15).toString(), StringBuilder(source).takeLast(15).toString())
-        assertTwoEquals(StringBuilder("").toString(), Stringx.takeLast(StringBuilder(source), 0).toString(), StringBuilder(source).takeLast(0).toString())
+        assertTwoEquals(
+            StringBuilder("3456789").toString(),
+            Stringx.takeLast(StringBuilder(source), 7).toString(),
+            StringBuilder(source).takeLast(7).toString()
+        )
+        assertTwoEquals(
+            StringBuilder(source).toString(),
+            Stringx.takeLast(StringBuilder(source), 15).toString(),
+            StringBuilder(source).takeLast(15).toString()
+        )
+        assertTwoEquals(
+            StringBuilder("").toString(),
+            Stringx.takeLast(StringBuilder(source), 0).toString(),
+            StringBuilder(source).takeLast(0).toString()
+        )
         try {
             Stringx.takeLast(StringBuilder(source), -1)
             fail()
@@ -1534,40 +2553,68 @@ class StringxTest {
         assertTwoEquals("", Stringx.takeWhile(null) { it != '6' }, "".takeWhile { it != '6' })
         assertTwoEquals(source, Stringx.takeWhile(source) { it != 'a' }, source.takeWhile { it != 'a' })
 
-        assertTwoEquals(StringBuilder("012345").toString(), Stringx.takeWhile(StringBuilder(source)) { it != '6' }.toString(), StringBuilder(source).takeWhile { it != '6' }.toString())
-        assertTwoEquals("", Stringx.takeWhile(StringBuilder("")) { it != '6' }.toString(), StringBuilder("").takeWhile { it != '6' }.toString())
-        assertTwoEquals(StringBuilder("").toString(), Stringx.takeWhile(null as StringBuilder?) { it != '6' }, StringBuilder("").takeWhile { it != '6' })
+        assertTwoEquals(
+            StringBuilder("012345").toString(),
+            Stringx.takeWhile(StringBuilder(source)) { it != '6' }.toString(),
+            StringBuilder(source).takeWhile { it != '6' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.takeWhile(StringBuilder("")) { it != '6' }.toString(),
+            StringBuilder("").takeWhile { it != '6' }.toString()
+        )
+        assertTwoEquals(
+            StringBuilder("").toString(),
+            Stringx.takeWhile(null as StringBuilder?) { it != '6' },
+            StringBuilder("").takeWhile { it != '6' })
 
         assertTwoEquals("789", Stringx.takeLastWhile(source) { it != '6' }, source.takeLastWhile { it != '6' })
         assertTwoEquals("", Stringx.takeLastWhile(null) { it != '6' }, "".takeLastWhile { it != '6' })
         assertTwoEquals(source, Stringx.takeLastWhile(source) { it != 'a' }, source.takeLastWhile { it != 'a' })
 
-        assertTwoEquals(StringBuilder("789").toString(), Stringx.takeLastWhile(StringBuilder(source)) { it != '6' }.toString(), StringBuilder(source).takeLastWhile { it != '6' }.toString())
-        assertTwoEquals("", Stringx.takeLastWhile(StringBuilder("")) { it != '6' }.toString(), StringBuilder("").takeLastWhile { it != '6' }.toString())
-        assertTwoEquals(StringBuilder("").toString(), Stringx.takeLastWhile(null as StringBuilder?) { it != '6' }, StringBuilder("").takeLastWhile { it != '6' })
+        assertTwoEquals(
+            StringBuilder("789").toString(),
+            Stringx.takeLastWhile(StringBuilder(source)) { it != '6' }.toString(),
+            StringBuilder(source).takeLastWhile { it != '6' }.toString()
+        )
+        assertTwoEquals(
+            "",
+            Stringx.takeLastWhile(StringBuilder("")) { it != '6' }.toString(),
+            StringBuilder("").takeLastWhile { it != '6' }.toString()
+        )
+        assertTwoEquals(
+            StringBuilder("").toString(),
+            Stringx.takeLastWhile(null as StringBuilder?) { it != '6' },
+            StringBuilder("").takeLastWhile { it != '6' })
     }
 
     @Test
     fun testAssociate() {
         val source = "0123456789"
         assertEquals(
-                source.associate { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
-                Stringx.associate(source) { Pair(it.toString(), it.toInt()) }.toList())
+            source.associate { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
+            Stringx.associate(source) { Pair(it.toString(), it.toInt()) }.toList()
+        )
         assertEquals(
-                source.associateBy { it.toString() }.toList(),
-                Stringx.associateBy(source) { it.toString() }.toList())
+            source.associateBy { it.toString() }.toList(),
+            Stringx.associateBy(source) { it.toString() }.toList()
+        )
         assertEquals(
-                source.associateBy({ it.toString() }) { it.toInt() }.toList(),
-                Stringx.associateBy(source, { it.toString() }) { it.toInt() }.toList())
+            source.associateBy({ it.toString() }) { it.toInt() }.toList(),
+            Stringx.associateBy(source, { it.toString() }) { it.toInt() }.toList()
+        )
         assertEquals(
-                source.associateTo(LinkedHashMap()) { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
-                Stringx.associateTo(source, LinkedHashMap()) { Pair(it.toString(), it.toInt()) }.toList())
+            source.associateTo(LinkedHashMap()) { kotlin.Pair(it.toString(), it.toInt()) }.toList(),
+            Stringx.associateTo(source, LinkedHashMap()) { Pair(it.toString(), it.toInt()) }.toList()
+        )
         assertEquals(
-                source.associateByTo(LinkedHashMap()) { it.toString() }.toList(),
-                Stringx.associateByTo(source, LinkedHashMap()) { it.toString() }.toList())
+            source.associateByTo(LinkedHashMap()) { it.toString() }.toList(),
+            Stringx.associateByTo(source, LinkedHashMap()) { it.toString() }.toList()
+        )
         assertEquals(
-                source.associateByTo(LinkedHashMap(), { it.toString() }) { it.toInt() }.toList(),
-                Stringx.associateByTo(source, LinkedHashMap(), { it.toString() }) { it.toInt() }.toList())
+            source.associateByTo(LinkedHashMap(), { it.toString() }) { it.toInt() }.toList(),
+            Stringx.associateByTo(source, LinkedHashMap(), { it.toString() }) { it.toInt() }.toList()
+        )
     }
 
     @Test
@@ -1580,15 +2627,21 @@ class StringxTest {
         assertEquals("0", Stringx.toSet("0").joinToString(""))
         assertTwoEquals(source, Stringx.toHashSet(source).joinToString(""), source.toHashSet().joinToString(""))
         assertTwoEquals(source, Stringx.toSortedSet(source).joinToString(""), source.toSortedSet().joinToString(""))
-        assertTwoEquals(source, Stringx.toCollection(source, LinkedList()).joinToString(""), source.toCollection(LinkedList()).joinToString(""))
+        assertTwoEquals(
+            source,
+            Stringx.toCollection(source, LinkedList()).joinToString(""),
+            source.toCollection(LinkedList()).joinToString("")
+        )
     }
 
     @Test
     fun testFlatMap() {
         val source = "0123456789"
-        assertTwoEquals(listOf("1", "2", "2", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "5",
-                "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7",
-                "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"), Stringx.flatMap(source) {
+        assertTwoEquals(listOf(
+            "1", "2", "2", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "5",
+            "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7",
+            "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"
+        ), Stringx.flatMap(source) {
             LinkedList<String>().apply {
                 for (int in 0 until it.toString().toInt()) {
                     add(it.toString())
@@ -1602,9 +2655,11 @@ class StringxTest {
             }
         })
 
-        assertTwoEquals(listOf("1", "2", "2", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "5",
-                "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7",
-                "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"), Stringx.flatMapTo(source, ArrayList()) {
+        assertTwoEquals(listOf(
+            "1", "2", "2", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "5",
+            "6", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7",
+            "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"
+        ), Stringx.flatMapTo(source, ArrayList()) {
             LinkedList<String>().apply {
                 for (int in 0 until it.toString().toInt()) {
                     add(it.toString())
@@ -1622,47 +2677,52 @@ class StringxTest {
     @Test
     fun testGroup() {
         val source = "1365268945336807532324589"
-        val map = sortedMapOf("0" to listOf('0')
-                , "1" to listOf('1')
-                , "2" to listOf('2', '2', '2')
-                , "3" to listOf('3', '3', '3', '3', '3')
-                , "4" to listOf('4', '4')
-                , "5" to listOf('5', '5', '5', '5')
-                , "6" to listOf('6', '6', '6')
-                , "7" to listOf('7')
-                , "8" to listOf('8', '8', '8')
-                , "9" to listOf('9', '9'))
-        val map2 = sortedMapOf("0" to listOf("0")
-                , "1" to listOf("1")
-                , "2" to listOf("2", "2", "2")
-                , "3" to listOf("3", "3", "3", "3", "3")
-                , "4" to listOf("4", "4")
-                , "5" to listOf("5", "5", "5", "5")
-                , "6" to listOf("6", "6", "6")
-                , "7" to listOf("7")
-                , "8" to listOf("8", "8", "8")
-                , "9" to listOf("9", "9"))
-
-        assertTwoEquals(
-                map,
-                Stringx.groupBy(source) { it.toString() }.toSortedMap(),
-                source.groupBy { it.toString() }.toSortedMap()
+        val map = sortedMapOf(
+            "0" to listOf('0'),
+            "1" to listOf('1'),
+            "2" to listOf('2', '2', '2'),
+            "3" to listOf('3', '3', '3', '3', '3'),
+            "4" to listOf('4', '4'),
+            "5" to listOf('5', '5', '5', '5'),
+            "6" to listOf('6', '6', '6'),
+            "7" to listOf('7'),
+            "8" to listOf('8', '8', '8'),
+            "9" to listOf('9', '9')
         )
-        assertTwoEquals(
-                map2,
-                Stringx.groupBy(source, { it.toString() }) { it.toString() }.toSortedMap(),
-                source.groupBy({ it.toString() }) { it.toString() }.toSortedMap()
+        val map2 = sortedMapOf(
+            "0" to listOf("0"),
+            "1" to listOf("1"),
+            "2" to listOf("2", "2", "2"),
+            "3" to listOf("3", "3", "3", "3", "3"),
+            "4" to listOf("4", "4"),
+            "5" to listOf("5", "5", "5", "5"),
+            "6" to listOf("6", "6", "6"),
+            "7" to listOf("7"),
+            "8" to listOf("8", "8", "8"),
+            "9" to listOf("9", "9")
         )
 
         assertTwoEquals(
-                map,
-                Stringx.groupByTo(source, LinkedHashMap<String, List<Char>>()) { it.toString() }.toSortedMap(),
-                source.groupByTo(LinkedHashMap()) { it.toString() }.toSortedMap()
+            map,
+            Stringx.groupBy(source) { it.toString() }.toSortedMap(),
+            source.groupBy { it.toString() }.toSortedMap()
         )
         assertTwoEquals(
-                map2,
-                Stringx.groupByTo(source, LinkedHashMap<String, List<String>>(), { it.toString() }) { it.toString() }.toSortedMap(),
-                source.groupByTo(LinkedHashMap(), { it.toString() }) { it.toString() }.toSortedMap()
+            map2,
+            Stringx.groupBy(source, { it.toString() }) { it.toString() }.toSortedMap(),
+            source.groupBy({ it.toString() }) { it.toString() }.toSortedMap()
+        )
+
+        assertTwoEquals(
+            map,
+            Stringx.groupByTo(source, LinkedHashMap<String, List<Char>>()) { it.toString() }.toSortedMap(),
+            source.groupByTo(LinkedHashMap()) { it.toString() }.toSortedMap()
+        )
+        assertTwoEquals(
+            map2,
+            Stringx.groupByTo(source, LinkedHashMap<String, List<String>>(), { it.toString() }) { it.toString() }
+                .toSortedMap(),
+            source.groupByTo(LinkedHashMap(), { it.toString() }) { it.toString() }.toSortedMap()
         )
     }
 
@@ -1672,98 +2732,110 @@ class StringxTest {
         val result = listOf("1", "3", "6", "5", "2", "6", "8", "9", "4", "5", "3", "3", "6")
 
         assertTwoEquals(
-                result,
-                Stringx.map(source) { it.toString() },
-                source.map { it.toString() }
+            result,
+            Stringx.map(source) { it.toString() },
+            source.map { it.toString() }
         )
         assertTwoEquals(
-                result,
-                Stringx.mapTo(source, ArrayList(source.length)) { it.toString() },
-                source.mapTo(ArrayList(source.length)) { it.toString() }
+            result,
+            Stringx.mapTo(source, ArrayList(source.length)) { it.toString() },
+            source.mapTo(ArrayList(source.length)) { it.toString() }
         )
 
         val indexPair1 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                result,
-                Stringx.mapIndexed(source) { index, it -> indexPair1.first.append(index);it.toString() },
-                source.mapIndexed { index, it -> indexPair1.second.append(index); it.toString() }
+            result,
+            Stringx.mapIndexed(source) { index, it -> indexPair1.first.append(index);it.toString() },
+            source.mapIndexed { index, it -> indexPair1.second.append(index); it.toString() }
         )
         assertTwoEquals(
-                "0123456789101112",
-                indexPair1.first.toString(),
-                indexPair1.second.toString()
+            "0123456789101112",
+            indexPair1.first.toString(),
+            indexPair1.second.toString()
         )
         val indexPair2 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                result,
-                Stringx.mapIndexedTo(source, ArrayList(source.length)) { index, it -> indexPair2.first.append(index);it.toString() },
-                source.mapIndexedTo(ArrayList(source.length)) { index, it -> indexPair2.second.append(index); it.toString() }
+            result,
+            Stringx.mapIndexedTo(
+                source,
+                ArrayList(source.length)
+            ) { index, it -> indexPair2.first.append(index);it.toString() },
+            source.mapIndexedTo(ArrayList(source.length)) { index, it -> indexPair2.second.append(index); it.toString() }
         )
         assertTwoEquals(
-                "0123456789101112",
-                indexPair2.first.toString(),
-                indexPair2.second.toString()
+            "0123456789101112",
+            indexPair2.first.toString(),
+            indexPair2.second.toString()
         )
 
         val resultNotNull = listOf("1", "6", "5", "2", "6", "8", "9", "4", "5", "6")
         assertTwoEquals(
-                resultNotNull,
-                Stringx.mapNotNull(source) { if (it != '3') it.toString() else null },
-                source.mapNotNull { if (it != '3') it.toString() else null }
+            resultNotNull,
+            Stringx.mapNotNull(source) { if (it != '3') it.toString() else null },
+            source.mapNotNull { if (it != '3') it.toString() else null }
         )
         assertTwoEquals(
-                resultNotNull,
-                Stringx.mapNotNullTo(source, ArrayList(source.length)) { if (it != '3') it.toString() else null },
-                source.mapNotNullTo(ArrayList(source.length)) { if (it != '3') it.toString() else null }
+            resultNotNull,
+            Stringx.mapNotNullTo(source, ArrayList(source.length)) { if (it != '3') it.toString() else null },
+            source.mapNotNullTo(ArrayList(source.length)) { if (it != '3') it.toString() else null }
         )
 
         val indexPair3 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                resultNotNull,
-                Stringx.mapIndexedNotNull(source) { index, it -> indexPair3.first.append(index);if (it != '3') it.toString() else null },
-                source.mapIndexedNotNull { index, it -> indexPair3.second.append(index);if (it != '3') it.toString() else null }
+            resultNotNull,
+            Stringx.mapIndexedNotNull(source) { index, it -> indexPair3.first.append(index);if (it != '3') it.toString() else null },
+            source.mapIndexedNotNull { index, it -> indexPair3.second.append(index);if (it != '3') it.toString() else null }
         )
         assertTwoEquals(
-                "0123456789101112",
-                indexPair3.first.toString(),
-                indexPair3.second.toString()
+            "0123456789101112",
+            indexPair3.first.toString(),
+            indexPair3.second.toString()
         )
         val indexPair4 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                resultNotNull,
-                Stringx.mapIndexedNotNullTo(source, ArrayList(source.length)) { index, it -> indexPair4.first.append(index);if (it != '3') it.toString() else null },
-                source.mapIndexedNotNullTo(ArrayList(source.length)) { index, it -> indexPair4.second.append(index);if (it != '3') it.toString() else null }
+            resultNotNull,
+            Stringx.mapIndexedNotNullTo(
+                source,
+                ArrayList(source.length)
+            ) { index, it -> indexPair4.first.append(index);if (it != '3') it.toString() else null },
+            source.mapIndexedNotNullTo(ArrayList(source.length)) { index, it -> indexPair4.second.append(index);if (it != '3') it.toString() else null }
         )
         assertTwoEquals(
-                "0123456789101112",
-                indexPair4.first.toString(),
-                indexPair4.second.toString()
+            "0123456789101112",
+            indexPair4.first.toString(),
+            indexPair4.second.toString()
         )
     }
 
     @Test
     fun testWithIndex() {
         val source = "1365268945336"
-        assertTwoEquals(listOf(Pair(0, '1')
-                , Pair(1, '3')
-                , Pair(2, '6')
-                , Pair(3, '5')
-                , Pair(4, '2')
-                , Pair(5, '6')
-                , Pair(6, '8')
-                , Pair(7, '9')
-                , Pair(8, '4')
-                , Pair(9, '5')
-                , Pair(10, '3')
-                , Pair(11, '3')
-                , Pair(12, '6')
-        ), Stringx.withIndex(source).map { Pair(it.index, it.value) }, source.withIndex().map { Pair(it.index, it.value) })
+        assertTwoEquals(listOf(
+            Pair(0, '1'),
+            Pair(1, '3'),
+            Pair(2, '6'),
+            Pair(3, '5'),
+            Pair(4, '2'),
+            Pair(5, '6'),
+            Pair(6, '8'),
+            Pair(7, '9'),
+            Pair(8, '4'),
+            Pair(9, '5'),
+            Pair(10, '3'),
+            Pair(11, '3'),
+            Pair(12, '6')
+        ),
+            Stringx.withIndex(source).map { Pair(it.index, it.value) },
+            source.withIndex().map { Pair(it.index, it.value) })
     }
 
     @Test
     fun testAll() {
         assertTwoEquals(true, Stringx.all("14134543") { it.isDigit() }, "14134543".all { it.isDigit() })
-        assertTwoEquals(false, Stringx.all("fas42rqwr  \nrqw") { it.isDigit() }, "fas42rqwr  \nrqw".all { it.isDigit() })
+        assertTwoEquals(
+            false,
+            Stringx.all("fas42rqwr  \nrqw") { it.isDigit() },
+            "fas42rqwr  \nrqw".all { it.isDigit() })
     }
 
     @Test
@@ -1771,7 +2843,10 @@ class StringxTest {
         assertTwoEquals(true, Stringx.any("14134543"), "14134543".any())
         assertTwoEquals(false, Stringx.any(""), "".any())
         assertTwoEquals(true, Stringx.any("as发生法萨芬") { Charx.isChinese(it) }, "as发生法萨芬".any { Charx.isChinese(it) })
-        assertTwoEquals(false, Stringx.any("as789fksnfs") { Charx.isChinese(it) }, "as789fksnfs".any { Charx.isChinese(it) })
+        assertTwoEquals(
+            false,
+            Stringx.any("as789fksnfs") { Charx.isChinese(it) },
+            "as789fksnfs".any { Charx.isChinese(it) })
     }
 
     @Test
@@ -1781,7 +2856,10 @@ class StringxTest {
         assertTwoEquals(0, Stringx.count(""), "".count())
         assertEquals(0, Stringx.count(null))
 
-        assertTwoEquals(6, Stringx.count(source) { it.toString().toInt() % 2 == 0 }, source.count { it.toString().toInt() % 2 == 0 })
+        assertTwoEquals(
+            6,
+            Stringx.count(source) { it.toString().toInt() % 2 == 0 },
+            source.count { it.toString().toInt() % 2 == 0 })
         assertEquals(0, Stringx.count(null) { it.toString().toInt() % 2 == 0 })
     }
 
@@ -1790,56 +2868,66 @@ class StringxTest {
         val source = "1365268945336"
 
         assertTwoEquals(
-                61,
-                Stringx.fold(source, 0) { accumulator, it -> accumulator + it.toString().toInt() },
-                source.fold(0) { accumulator, it -> accumulator + it.toString().toInt() }
+            61,
+            Stringx.fold(source, 0) { accumulator, it -> accumulator + it.toString().toInt() },
+            source.fold(0) { accumulator, it -> accumulator + it.toString().toInt() }
         )
         assertTwoEquals(
-                63,
-                Stringx.fold(source, 2) { accumulator, it -> accumulator + it.toString().toInt() },
-                source.fold(2) { accumulator, it -> accumulator + it.toString().toInt() }
+            63,
+            Stringx.fold(source, 2) { accumulator, it -> accumulator + it.toString().toInt() },
+            source.fold(2) { accumulator, it -> accumulator + it.toString().toInt() }
         )
 
         val indexPair1 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                61,
-                Stringx.foldIndexed(source, 0) { index, accumulator, it -> indexPair1.first.append(index);accumulator + it.toString().toInt() },
-                source.foldIndexed(0) { index, accumulator, it -> indexPair1.second.append(index);accumulator + it.toString().toInt() }
+            61,
+            Stringx.foldIndexed(
+                source,
+                0
+            ) { index, accumulator, it -> indexPair1.first.append(index);accumulator + it.toString().toInt() },
+            source.foldIndexed(0) { index, accumulator, it ->
+                indexPair1.second.append(index);accumulator + it.toString().toInt()
+            }
         )
         assertTwoEquals(
-                "0123456789101112",
-                indexPair1.first.toString(),
-                indexPair1.second.toString()
+            "0123456789101112",
+            indexPair1.first.toString(),
+            indexPair1.second.toString()
         )
 
         assertTwoEquals(
-                61,
-                Stringx.foldRight(source, 0) { it, accumulator -> accumulator + it.toString().toInt() },
-                source.foldRight(0) { it, accumulator -> accumulator + it.toString().toInt() }
+            61,
+            Stringx.foldRight(source, 0) { it, accumulator -> accumulator + it.toString().toInt() },
+            source.foldRight(0) { it, accumulator -> accumulator + it.toString().toInt() }
         )
         assertTwoEquals(
-                63,
-                Stringx.foldRight(source, 2) { it, accumulator -> accumulator + it.toString().toInt() },
-                source.foldRight(2) { it, accumulator -> accumulator + it.toString().toInt() }
+            63,
+            Stringx.foldRight(source, 2) { it, accumulator -> accumulator + it.toString().toInt() },
+            source.foldRight(2) { it, accumulator -> accumulator + it.toString().toInt() }
         )
         assertEquals(
-                3,
-                Stringx.foldRight(null, 3) { it, accumulator -> accumulator + it.toString().toInt() }
+            3,
+            Stringx.foldRight(null, 3) { it, accumulator -> accumulator + it.toString().toInt() }
         )
 
         val indexPair2 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                61,
-                Stringx.foldRightIndexed(source, 0) { index, it, accumulator -> indexPair2.first.append(index);accumulator + it.toString().toInt() },
-                source.foldRightIndexed(0) { index, it, accumulator -> indexPair2.second.append(index);accumulator + it.toString().toInt() }
+            61,
+            Stringx.foldRightIndexed(
+                source,
+                0
+            ) { index, it, accumulator -> indexPair2.first.append(index);accumulator + it.toString().toInt() },
+            source.foldRightIndexed(0) { index, it, accumulator ->
+                indexPair2.second.append(index);accumulator + it.toString().toInt()
+            }
         )
         assertTwoEquals(
-                "1211109876543210",
-                indexPair2.first.toString(), indexPair2.second.toString()
+            "1211109876543210",
+            indexPair2.first.toString(), indexPair2.second.toString()
         )
         assertEquals(
-                3,
-                Stringx.foldRightIndexed(null, 3) { _, it, accumulator -> accumulator + it.toString().toInt() }
+            3,
+            Stringx.foldRightIndexed(null, 3) { _, it, accumulator -> accumulator + it.toString().toInt() }
         )
     }
 
@@ -1848,9 +2936,14 @@ class StringxTest {
         val source = "1365268945336"
 
         assertTwoEquals(source, StringBuilder().apply { Stringx.forEach(source) { append(it) } }.toString(),
-                StringBuilder().apply { source.forEach { append(it) } }.toString())
-        assertTwoEquals("0:11:32:63:54:25:66:87:98:49:510:311:312:6", StringBuilder().apply { Stringx.forEachIndexed(source) { index, it -> append(index.toString() + ":" + it) } }.toString(),
-                StringBuilder().apply { source.forEachIndexed { index, it -> append(index.toString() + ":" + it) } }.toString())
+            StringBuilder().apply { source.forEach { append(it) } }.toString()
+        )
+        assertTwoEquals("0:11:32:63:54:25:66:87:98:49:510:311:312:6",
+            StringBuilder().apply { Stringx.forEachIndexed(source) { index, it -> append(index.toString() + ":" + it) } }
+                .toString(),
+            StringBuilder().apply { source.forEachIndexed { index, it -> append(index.toString() + ":" + it) } }
+                .toString()
+        )
     }
 
     @Test
@@ -1861,12 +2954,24 @@ class StringxTest {
         assertTwoEquals(null, Stringx.maxOrNull(""), "".maxOrNull())
         assertNull(Stringx.maxOrNull(null))
 
-        assertTwoEquals('9', Stringx.maxByOrNull(source) { it.toString().toInt() }, source.maxByOrNull { it.toString().toInt() })
-        assertTwoEquals(null, Stringx.maxByOrNull("") { it.toString().toInt() }, "".maxByOrNull { it.toString().toInt() })
+        assertTwoEquals(
+            '9',
+            Stringx.maxByOrNull(source) { it.toString().toInt() },
+            source.maxByOrNull { it.toString().toInt() })
+        assertTwoEquals(
+            null,
+            Stringx.maxByOrNull("") { it.toString().toInt() },
+            "".maxByOrNull { it.toString().toInt() })
         assertNull(Stringx.maxByOrNull(null) { it.toString().toInt() })
 
-        assertTwoEquals('9', Stringx.maxWithOrNull(source) { it1, it2 -> it1 - it2 }, source.maxWithOrNull { o1, o2 -> o1 - o2 })
-        assertTwoEquals(null, Stringx.maxWithOrNull("") { it1, it2 -> it1 - it2 }, "".maxWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(
+            '9',
+            Stringx.maxWithOrNull(source) { it1, it2 -> it1 - it2 },
+            source.maxWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(
+            null,
+            Stringx.maxWithOrNull("") { it1, it2 -> it1 - it2 },
+            "".maxWithOrNull { o1, o2 -> o1 - o2 })
         assertNull(Stringx.maxWithOrNull(null) { it1, it2 -> it1 - it2 })
 
 
@@ -1900,12 +3005,24 @@ class StringxTest {
         assertTwoEquals(null, Stringx.minOrNull(""), "".minOrNull())
         assertNull(Stringx.minOrNull(null))
 
-        assertTwoEquals('1', Stringx.minByOrNull(source) { it.toString().toInt() }, source.minByOrNull { it.toString().toInt() })
-        assertTwoEquals(null, Stringx.minByOrNull("") { it.toString().toInt() }, "".minByOrNull { it.toString().toInt() })
+        assertTwoEquals(
+            '1',
+            Stringx.minByOrNull(source) { it.toString().toInt() },
+            source.minByOrNull { it.toString().toInt() })
+        assertTwoEquals(
+            null,
+            Stringx.minByOrNull("") { it.toString().toInt() },
+            "".minByOrNull { it.toString().toInt() })
         assertNull(Stringx.minByOrNull(null) { it.toString().toInt() })
 
-        assertTwoEquals('1', Stringx.minWithOrNull(source) { it1, it2 -> it1 - it2 }, source.minWithOrNull { o1, o2 -> o1 - o2 })
-        assertTwoEquals(null, Stringx.minWithOrNull("") { it1, it2 -> it1 - it2 }, "".minWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(
+            '1',
+            Stringx.minWithOrNull(source) { it1, it2 -> it1 - it2 },
+            source.minWithOrNull { o1, o2 -> o1 - o2 })
+        assertTwoEquals(
+            null,
+            Stringx.minWithOrNull("") { it1, it2 -> it1 - it2 },
+            "".minWithOrNull { o1, o2 -> o1 - o2 })
         assertNull(Stringx.minWithOrNull(null) { it1, it2 -> it1 - it2 })
 
 
@@ -1937,8 +3054,14 @@ class StringxTest {
         assertTwoEquals(false, Stringx.none("1"), "1".none())
         assertEquals(false, Stringx.none(null))
 
-        assertTwoEquals(true, Stringx.none("132412dsg") { Charx.isChinese(it) }, "132412dsg".none { Charx.isChinese(it) })
-        assertTwoEquals(false, Stringx.none("13241天2dsg") { Charx.isChinese(it) }, "13241天2dsg".none { Charx.isChinese(it) })
+        assertTwoEquals(
+            true,
+            Stringx.none("132412dsg") { Charx.isChinese(it) },
+            "132412dsg".none { Charx.isChinese(it) })
+        assertTwoEquals(
+            false,
+            Stringx.none("13241天2dsg") { Charx.isChinese(it) },
+            "13241天2dsg".none { Charx.isChinese(it) })
         assertEquals(true, Stringx.none(null) { Charx.isChinese(it) })
     }
 
@@ -1947,7 +3070,10 @@ class StringxTest {
         val source = "1365268945336"
 
         val pair1 = Pair(StringBuilder(), StringBuilder())
-        assertTwoEquals(source, Stringx.onEach(source) { pair1.first.append(it) }, source.onEach { pair1.second.append(it) })
+        assertTwoEquals(
+            source,
+            Stringx.onEach(source) { pair1.first.append(it) },
+            source.onEach { pair1.second.append(it) })
         assertTwoEquals(source, pair1.first.toString(), pair1.second.toString())
 
         val pair2 = Pair(StringBuilder(), StringBuilder())
@@ -1964,9 +3090,9 @@ class StringxTest {
         val source = "1365268945336"
 
         assertTwoEquals(
-                'm',
-                Stringx.reduce(source) { accumulator, it -> accumulator + it.toString().toInt() },
-                source.reduce { accumulator, it -> accumulator + it.toString().toInt() })
+            'm',
+            Stringx.reduce(source) { accumulator, it -> accumulator + it.toString().toInt() },
+            source.reduce { accumulator, it -> accumulator + it.toString().toInt() })
         try {
             Stringx.reduce("") { accumulator, it -> accumulator + it.toString().toInt() }
             fail()
@@ -1980,13 +3106,18 @@ class StringxTest {
 
         val indexPair1 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                'm',
-                Stringx.reduceIndexed(source) { index, accumulator, it -> indexPair1.first.append(index);accumulator + it.toString().toInt() },
-                source.reduceIndexed { index, accumulator, it -> indexPair1.second.append(index);accumulator + it.toString().toInt() })
+            'm',
+            Stringx.reduceIndexed(source) { index, accumulator, it ->
+                indexPair1.first.append(index);accumulator + it.toString().toInt()
+            },
+            source.reduceIndexed { index, accumulator, it ->
+                indexPair1.second.append(index);accumulator + it.toString().toInt()
+            })
         assertTwoEquals(
-                "123456789101112",
-                indexPair1.first.toString(),
-                indexPair1.second.toString())
+            "123456789101112",
+            indexPair1.first.toString(),
+            indexPair1.second.toString()
+        )
         try {
             Stringx.reduceIndexed("") { _, accumulator, it -> accumulator + it.toString().toInt() }
             fail()
@@ -1999,9 +3130,9 @@ class StringxTest {
         }
 
         assertTwoEquals(
-                'm',
-                Stringx.reduceRight(source) { it, accumulator -> accumulator + it.toString().toInt() },
-                source.reduceRight { it, accumulator -> accumulator + it.toString().toInt() })
+            'm',
+            Stringx.reduceRight(source) { it, accumulator -> accumulator + it.toString().toInt() },
+            source.reduceRight { it, accumulator -> accumulator + it.toString().toInt() })
         try {
             Stringx.reduceRight("") { accumulator, it -> accumulator + it.toString().toInt() }
             fail()
@@ -2015,13 +3146,18 @@ class StringxTest {
 
         val indexPair2 = Pair(StringBuilder(), StringBuilder())
         assertTwoEquals(
-                'm',
-                Stringx.reduceRightIndexed(source) { index, it, accumulator -> indexPair2.first.append(index);accumulator + it.toString().toInt() },
-                source.reduceRightIndexed { index, it, accumulator -> indexPair2.second.append(index);accumulator + it.toString().toInt() })
+            'm',
+            Stringx.reduceRightIndexed(source) { index, it, accumulator ->
+                indexPair2.first.append(index);accumulator + it.toString().toInt()
+            },
+            source.reduceRightIndexed { index, it, accumulator ->
+                indexPair2.second.append(index);accumulator + it.toString().toInt()
+            })
         assertTwoEquals(
-                "11109876543210",
-                indexPair2.first.toString(),
-                indexPair2.second.toString())
+            "11109876543210",
+            indexPair2.first.toString(),
+            indexPair2.second.toString()
+        )
         try {
             Stringx.reduceRightIndexed("") { _, accumulator, it -> accumulator + it.toString().toInt() }
             fail()
@@ -2039,77 +3175,89 @@ class StringxTest {
         val source = "1365268945336"
 
         assertTwoEquals(
-                61,
-                Stringx.sumBy(source) { it.toString().toInt() },
-                source.sumBy { it.toString().toInt() })
+            61,
+            Stringx.sumBy(source) { it.toString().toInt() },
+            source.sumBy { it.toString().toInt() })
         assertTwoEquals(
-                61.0,
-                Stringx.sumByDouble(source) { it.toString().toDouble() },
-                source.sumByDouble { it.toString().toDouble() })
+            61.0,
+            Stringx.sumByDouble(source) { it.toString().toDouble() },
+            source.sumByDouble { it.toString().toDouble() })
     }
 
     @Test
     fun testChunked() {
         val source = "0123456789"
         assertTwoEquals(
-                listOf("012", "345", "678", "9"),
-                Stringx.chunked(source, 3),
-                source.chunked(3))
+            listOf("012", "345", "678", "9"),
+            Stringx.chunked(source, 3),
+            source.chunked(3)
+        )
         assertTwoEquals(
-                listOf(3, 12, 21, 9),
-                Stringx.chunked(source, 3) { partial -> partial.sumBy { it.toString().toInt() } },
-                source.chunked(3) { partial -> partial.sumBy { it.toString().toInt() } })
+            listOf(3, 12, 21, 9),
+            Stringx.chunked(source, 3) { partial -> partial.sumBy { it.toString().toInt() } },
+            source.chunked(3) { partial -> partial.sumBy { it.toString().toInt() } })
 
         assertTwoEquals(
-                listOf("012", "345", "678", "9"),
-                Stringx.chunkedIterable(source, 3).toMutableList(),
-                source.chunkedSequence(3).toMutableList())
+            listOf("012", "345", "678", "9"),
+            Stringx.chunkedIterable(source, 3).toMutableList(),
+            source.chunkedSequence(3).toMutableList()
+        )
         assertTwoEquals(
-                listOf(3, 12, 21, 9),
-                Stringx.chunkedIterable(source, 3) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList(),
-                source.chunkedSequence(3) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList())
+            listOf(3, 12, 21, 9),
+            Stringx.chunkedIterable(source, 3) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList(),
+            source.chunkedSequence(3) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList()
+        )
     }
 
     @Test
     fun testPartition() {
         val source = "0123456789"
         assertTwoEquals(
-                Pair("02468", "13579").toString(),
-                Stringx.partition(source) { it.toString().toInt() % 2 == 0 }.toString(),
-                source.partition { it.toString().toInt() % 2 == 0 }.toString())
+            Pair("02468", "13579").toString(),
+            Stringx.partition(source) { it.toString().toInt() % 2 == 0 }.toString(),
+            source.partition { it.toString().toInt() % 2 == 0 }.toString()
+        )
         assertTwoEquals(
-                Pair("02468", "13579").toString(),
-                Stringx.partition(StringBuilder(source)) { it.toString().toInt() % 2 == 0 }.toString(),
-                StringBuilder(source).partition { it.toString().toInt() % 2 == 0 }.toString())
+            Pair("02468", "13579").toString(),
+            Stringx.partition(StringBuilder(source)) { it.toString().toInt() % 2 == 0 }.toString(),
+            StringBuilder(source).partition { it.toString().toInt() % 2 == 0 }.toString()
+        )
     }
 
     @Test
     fun testWindowed() {
         val source = "0123456789"
         assertTwoEquals(
-                listOf("012", "234", "456", "678"),
-                Stringx.windowed(source, 3, 2, false),
-                source.windowed(3, 2, false))
+            listOf("012", "234", "456", "678"),
+            Stringx.windowed(source, 3, 2, false),
+            source.windowed(3, 2, false)
+        )
         assertTwoEquals(
-                listOf("012", "234", "456", "678", "89"),
-                Stringx.windowed(source, 3, 2, true),
-                source.windowed(3, 2, true))
+            listOf("012", "234", "456", "678", "89"),
+            Stringx.windowed(source, 3, 2, true),
+            source.windowed(3, 2, true)
+        )
 
         assertTwoEquals(
-                listOf(3, 9, 15, 21),
-                Stringx.windowed(source, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } },
-                source.windowed(3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } })
+            listOf(3, 9, 15, 21),
+            Stringx.windowed(source, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } },
+            source.windowed(3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } })
 
-        assertEquals(listOf<String>(), Stringx.windowed(null, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } })
+        assertEquals(
+            listOf<String>(),
+            Stringx.windowed(null, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } })
 
         assertTwoEquals(
-                listOf("012", "234", "456", "678"),
-                Stringx.windowedIterable(source, 3, 2, false).toMutableList(),
-                source.windowedSequence(3, 2, false).toMutableList())
+            listOf("012", "234", "456", "678"),
+            Stringx.windowedIterable(source, 3, 2, false).toMutableList(),
+            source.windowedSequence(3, 2, false).toMutableList()
+        )
         assertTwoEquals(
-                listOf(3, 9, 15, 21),
-                Stringx.windowedIterable(source, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList(),
-                source.windowedSequence(3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList())
+            listOf(3, 9, 15, 21),
+            Stringx.windowedIterable(source, 3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } }
+                .toMutableList(),
+            source.windowedSequence(3, 2, false) { partial -> partial.sumBy { it.toString().toInt() } }.toMutableList()
+        )
 
         try {
             Stringx.windowed(source, 3, 0, false)
@@ -2148,25 +3296,44 @@ class StringxTest {
         val source = "0123456789"
         val other = "01234567"
         assertTwoEquals(
-                listOf("0:0", "1:1", "2:2", "3:3", "4:4", "5:5", "6:6", "7:7"),
-                Stringx.zip(source, other) { it1, it2 -> "$it1:$it2" },
-                source.zip(other) { it1, it2 -> "$it1:$it2" })
+            listOf("0:0", "1:1", "2:2", "3:3", "4:4", "5:5", "6:6", "7:7"),
+            Stringx.zip(source, other) { it1, it2 -> "$it1:$it2" },
+            source.zip(other) { it1, it2 -> "$it1:$it2" })
         assertTwoEquals(
-                listOf(Pair("0", "0").toString(), Pair("1", "1").toString(), Pair("2", "2").toString(), Pair("3", "3").toString(), Pair("4", "4").toString(), Pair("5", "5").toString(), Pair("6", "6").toString(), Pair("7", "7").toString()),
-                Stringx.zip(source, other).map { it.toString() },
-                source.zip(other).map { it.toString() })
+            listOf(
+                Pair("0", "0").toString(),
+                Pair("1", "1").toString(),
+                Pair("2", "2").toString(),
+                Pair("3", "3").toString(),
+                Pair("4", "4").toString(),
+                Pair("5", "5").toString(),
+                Pair("6", "6").toString(),
+                Pair("7", "7").toString()
+            ),
+            Stringx.zip(source, other).map { it.toString() },
+            source.zip(other).map { it.toString() })
 
         assertEquals(listOf<String>(), Stringx.zip(null, other).map { it.toString() })
         assertEquals(listOf<String>(), Stringx.zip(source, null).map { it.toString() })
 
         assertTwoEquals(
-                listOf("0:1", "1:2", "2:3", "3:4", "4:5", "5:6", "6:7", "7:8", "8:9"),
-                Stringx.zipWithNext(source) { it1, it2 -> "$it1:$it2" },
-                source.zipWithNext { it1, it2 -> "$it1:$it2" })
+            listOf("0:1", "1:2", "2:3", "3:4", "4:5", "5:6", "6:7", "7:8", "8:9"),
+            Stringx.zipWithNext(source) { it1, it2 -> "$it1:$it2" },
+            source.zipWithNext { it1, it2 -> "$it1:$it2" })
         assertTwoEquals(
-                listOf(Pair("0", "1").toString(), Pair("1", "2").toString(), Pair("2", "3").toString(), Pair("3", "4").toString(), Pair("4", "5").toString(), Pair("5", "6").toString(), Pair("6", "7").toString(), Pair("7", "8").toString(), Pair("8", "9").toString()),
-                Stringx.zipWithNext(source).map { it.toString() },
-                source.zipWithNext().map { it.toString() })
+            listOf(
+                Pair("0", "1").toString(),
+                Pair("1", "2").toString(),
+                Pair("2", "3").toString(),
+                Pair("3", "4").toString(),
+                Pair("4", "5").toString(),
+                Pair("5", "6").toString(),
+                Pair("6", "7").toString(),
+                Pair("7", "8").toString(),
+                Pair("8", "9").toString()
+            ),
+            Stringx.zipWithNext(source).map { it.toString() },
+            source.zipWithNext().map { it.toString() })
         assertEquals(listOf<String>(), Stringx.zipWithNext("").map { it.toString() })
         assertEquals(listOf<String>(), Stringx.zipWithNext(null).map { it.toString() })
     }
@@ -2175,13 +3342,15 @@ class StringxTest {
     fun testAs() {
         val source = "0123456789"
         assertTwoEquals(
-                "0,1,2,3,4,5,6,7,8,9",
-                Stringx.asIterable(source).joinToString(","),
-                source.asIterable().joinToString(","))
+            "0,1,2,3,4,5,6,7,8,9",
+            Stringx.asIterable(source).joinToString(","),
+            source.asIterable().joinToString(",")
+        )
         assertTwoEquals(
-                "",
-                Stringx.asIterable(StringBuilder("")).joinToString(","),
-                StringBuilder("").asIterable().joinToString(","))
+            "",
+            Stringx.asIterable(StringBuilder("")).joinToString(","),
+            StringBuilder("").asIterable().joinToString(",")
+        )
         assertEquals(listOf<Char>(), Stringx.asIterable(null))
         assertEquals(listOf<Char>(), Stringx.asIterable(""))
     }
