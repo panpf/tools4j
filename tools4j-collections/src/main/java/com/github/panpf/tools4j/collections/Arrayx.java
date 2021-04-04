@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * Array tool method
  * <br>
- * from kotlin files: Arrays.kt, ArraysJVM.kt, _ArraysKt, _ArraysJvm.kt
+ * from kotlin files: Arrays.kt, ArraysJVM.kt, _Arrays.kt, _ArraysJvm.kt
  */
 public class Arrayx {
 
@@ -17331,7 +17331,7 @@ public class Arrayx {
      * If two corresponding elements are nested arrays, they are also compared deeply.
      * If any of arrays contains itself on any nesting level the behavior is undefined.
      */
-    public static <T> boolean contentDeepEquals(@Nullable T[] elements, T[] other) {
+    public static <T> boolean contentDeepEquals(@Nullable T[] elements, @Nullable T[] other) {
         return Arrays.deepEquals(elements, other);
     }
 
