@@ -40,6 +40,8 @@ implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION" // Ko
 implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION" // Kotlin extension, not required
 
+implementation "com.github.panpf.tools4j:tools4j-environment:$LAST_VERSION"
+
 implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
 implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION" // Kotlin extension, not required
 
