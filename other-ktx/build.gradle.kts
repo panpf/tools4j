@@ -4,7 +4,7 @@ plugins {
     id("kotlin")
 }
 
-group = "com.github.panpf.tools4j"
+group = property("GROUP").toString()
 version = property("VERSION").toString()
 
 configure<JavaPluginConvention> {

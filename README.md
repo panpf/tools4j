@@ -1,81 +1,80 @@
-# Tools4j
+# Tools4J
 
 [![Platform][platform_java_icon]][platform_java_link]
 [![Platform][platform_kotlin_icon]][platform_kotlin_link]
 ![SourceCompatibility][source_compatibility_icon]
 ![TargetCompatibility][target_compatibility_icon]
 ![KotlinJvmTarget][kotlin_jvmtarget_icon]
+[![Download][version_icon]][version_link]
 [![License][license_icon]][license_link]
 
 Extensions to the Java standard library, some tool methods related to File, IO, primitive types, String, Array, and Collection
 
 ## Getting Started
 
-This library has been published to `jcenter` and private repositories `https://dl.bintray.com/panpf/maven/`, you can freely choose where to download it
-
-Add the following dependencies to your module `build.gradle` file ：
+This library has been published to `mavenCentral`. Add the following dependencies to your module `build.gradle` file ：
 ```grovvy
-implementation "com.github.panpf.tools4j:tools4j:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-ktx:${LAST_VERSION}" // Kotlin extension, not required
 ```
 
-Please replace `$LAST_VERSION` with the latest version: [![Download][version_icon]][version_link]
+`${LAST_VERSION}`: [![Download][version_icon]][version_link]
 
-The "com.github.panpf.tools4j:tools4j:$LAST_VERSION" dependency will add all the modules included in tools4j to your project (Except for 'tools4j-test'). If you only need of one of the modules, you can just add it to your project, all supported modules as follows:
+The "io.github.panpf.tools4j:tools4j:${LAST_VERSION}" dependency will add all the modules included in tools4j to your project (Except for 'tools4j-test'). If you only need of one of the modules, you can just add it to your project, all supported modules as follows:
 ```groovy
-implementation "com.github.panpf.tools4j:tools4j-annotation:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-annotation-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-annotation:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-annotation-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-base64:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-base64-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-base64:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-base64-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-collections:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-collections-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-collections:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-collections-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-compare:$LAST_VERSION"
+implementation "io.github.panpf.tools4j:tools4j-compare:${LAST_VERSION}"
 
-implementation "com.github.panpf.tools4j:tools4j-crypto:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-crypto-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-crypto:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-crypto-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-date:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-date-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-date:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-date-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-io:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-io-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-io:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-io-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-lang:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-lang-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-lang:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-lang-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-math:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-math-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-math:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-math-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-net:$LAST_VERSION"
+implementation "io.github.panpf.tools4j:tools4j-net:${LAST_VERSION}"
 
-implementation "com.github.panpf.tools4j:tools4j-premise:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-premise-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-premise:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-premise-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-ranges:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-ranges:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-ranges-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-ranges-date:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-ranges-date-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-ranges-date:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-ranges-date-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-reflect:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-reflect-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-reflect:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-reflect-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-regex:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-regex-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-regex:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-regex-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-security:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-security-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-security:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-security-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "com.github.panpf.tools4j:tools4j-sequences:$LAST_VERSION"
+implementation "io.github.panpf.tools4j:tools4j-sequences:${LAST_VERSION}"
 
-implementation "com.github.panpf.tools4j:tools4j-test:$LAST_VERSION"    // Not included in 'com.github.panpf.tools4j:tools4j'
-implementation "com.github.panpf.tools4j:tools4j-test-ktx:$LAST_VERSION" // Kotlin extension, not required, Not included in 'com.github.panpf.tools4j:tools4j-ktx'
+implementation "io.github.panpf.tools4j:tools4j-test:${LAST_VERSION}"    // Not included in 'io.github.panpf.tools4j:tools4j'
+implementation "io.github.panpf.tools4j:tools4j-test-ktx:${LAST_VERSION}" // Kotlin extension, not required, Not included in 'io.github.panpf.tools4j:tools4j-ktx'
 
-implementation "com.github.panpf.tools4j:tools4j-zip:$LAST_VERSION"
-implementation "com.github.panpf.tools4j:tools4j-zip-ktx:$LAST_VERSION" // Kotlin extension, not required
+implementation "io.github.panpf.tools4j:tools4j-zip:${LAST_VERSION}"
+implementation "io.github.panpf.tools4j:tools4j-zip-ktx:${LAST_VERSION}" // Kotlin extension, not required
 ```
 
 Dependencies：
@@ -351,8 +350,8 @@ Please view the [CHANGELOG.md] file
 [source_compatibility_icon]: https://img.shields.io/badge/SourceCompatibility-1.6-red.svg
 [target_compatibility_icon]: https://img.shields.io/badge/TargetCompatibility-1.6-red.svg
 [kotlin_jvmtarget_icon]: https://img.shields.io/badge/KotlinJvmTarget-1.6-red.svg
-[version_icon]: https://api.bintray.com/packages/panpf/maven/tools4j/images/download.svg
-[version_link]:https://bintray.com/panpf/maven/tools4j/_latestVersion
+[version_icon]: https://img.shields.io/maven-central/v/io.github.panpf.tools4j/tools4j
+[version_link]: https://repo1.maven.org/maven2/io/github/panpf/tools4j/
 
 [CHANGELOG.md]: CHANGELOG.md
 
