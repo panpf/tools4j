@@ -34,17 +34,19 @@ dependencies {
 tasks.getByName("check").dependsOn(tasks.getByName("jacocoTestReport"))
 
 /**
- * publish config, The following properties are generally configured in the ~/.gradle/gradle.properties file
+ * publish config
  */
-if (hasProperty("signing.keyId")
-    && hasProperty("signing.password")
-    && hasProperty("signing.secretKeyRingFile")
-    && hasProperty("mavenCentralUsername")
-    && hasProperty("mavenCentralPassword")
+if (hasProperty("signing.keyId")    // configured in the ~/.gradle/gradle.properties file
+    && hasProperty("signing.password")    // configured in the ~/.gradle/gradle.properties file
+    && hasProperty("signing.secretKeyRingFile")    // configured in the ~/.gradle/gradle.properties file
+    && hasProperty("mavenCentralUsername")    // configured in the ~/.gradle/gradle.properties file
+    && hasProperty("mavenCentralPassword")    // configured in the ~/.gradle/gradle.properties file
+    && hasProperty("GROUP")    // configured in the rootProject/gradle.properties file
+    && hasProperty("POM_ARTIFACT_ID")    // configured in the project/gradle.properties file
 ) {
-    apply { plugin("com.vanniktech.maven.publish") }
+    apply { plugin("com.github.panpf.maven.publish") }
 
-    configure<com.vanniktech.maven.publish.MavenPublishPluginExtension> {
-        sonatypeHost = com.vanniktech.maven.publish.SonatypeHost.S01
+    configure<com.github.panpf.maven.publish.MavenPublishPluginExtension> {
+        sonatypeHost = com.github.panpf.maven.publish.SonatypeHost.S01
     }
 }

@@ -79,10 +79,6 @@ implementation "io.github.panpf.tools4j:tools4j-zip:${LAST_VERSION}"
 implementation "io.github.panpf.tools4j:tools4j-zip-ktx:${LAST_VERSION}" // Kotlin extension, not required
 ```
 
-Dependencies：
-* org.jetbrains:annotations: 13.0
-* org.jetbrains.kotlin:kotlin-stdlib-jdk7: 1.4.10（Only the '\*-ktx' library dependencies it）
-
 ## Modules
 
 ### tools4j-annotation
