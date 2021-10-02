@@ -28,9 +28,6 @@ implementation "io.github.panpf.tools4j:tools4j-annotation-ktx:${LAST_VERSION}" 
 implementation "io.github.panpf.tools4j:tools4j-base64:${LAST_VERSION}"
 implementation "io.github.panpf.tools4j:tools4j-base64-ktx:${LAST_VERSION}" // Kotlin extension, not required
 
-implementation "io.github.panpf.tools4j:tools4j-collections:${LAST_VERSION}"
-implementation "io.github.panpf.tools4j:tools4j-collections-ktx:${LAST_VERSION}" // Kotlin extension, not required
-
 implementation "io.github.panpf.tools4j:tools4j-compare:${LAST_VERSION}"
 
 implementation "io.github.panpf.tools4j:tools4j-crypto:${LAST_VERSION}"
@@ -90,57 +87,6 @@ implementation "io.github.panpf.tools4j:tools4j-zip-ktx:${LAST_VERSION}" // Kotl
 ![TestCoverage](https://img.shields.io/badge/TestCoverage-86%25-green.svg)
 * Base64x: [Base64x.java] ([Test][Base64xTest.kt]) | [Base64x.kt] ([Test][Base64xKtxTest.kt])
     * encode, encodeToString, decode, decodeToString
-
-### tools4j-collections
-![TestCoverage](https://img.shields.io/badge/TestCoverage-20%25-red.svg)
-* Arrayx: Test coverage 3%. [Arrayx.java] ([Test][ArrayxTest.kt]) | [Arrayx.kt] ([Test][ArrayxKtxTest.kt])
-    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, arrayOf, isEmpty, isNotEmpty, orEmpty, 
-    * toTypedArray, toCollection, toList, toSet, toHashSet, asList, map, mapTo, mapIndexed, mapIndexedTo, 
-    * mapNotNull, mapNotNullTo, mapIndexedNotNull, reverse, reversed, sort, sortDescending, sortWith, 
-    * sortBy, sortByDescending, sorted, sortedDescending, sortedWith, sortedBy, sortedByDescending, 
-    * sortedArray, sortedArrayDescending, sortedArrayWith, single, singleOrNull, any, all, iterator, 
-    * asIterable, groupBy, groupByTo, count, maxOrNull, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, 
-    * maxOfWith, maxOfWithOrNull, minOrNull, minByOrNull, minWithOrNull, minOf, minOfOrNull, minOfWith, 
-    * minOfWithOrNull, joinTo, joinToString, sum, sumBy, sumByDouble, plus, plusElement, indices, indexOf, 
-    * indexOfFirst, lastIndexOf, contains, forEach, forEachIndexed, filter, filterIndexed, filterIndexedTo, 
-    * filterIsInstance, filterIsInstanceTo, filterNot, filterNotNullTo, filterNotTo, filterTo, zip, 
-    * partition, first, firstOrNull, last, lastOrNull, find, findLast, getOrElse, getOrNull, elementAt, 
-    * elementAtOrElse, elementAtOrNull, flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, averageOf, 
-    * average, none, reduce, reduceIndexed, reduceRight, reduceRightIndexed, fold, foldIndexed, foldRight, 
-    * foldRightIndexed, intersect, subtract, drop, dropLast, dropLastWhile, dropWhile, take, takeLast, 
-    * takeLastWhile, takeWhile, distinct, distinctBy, withIndex, contentHashCode, contentDeepEquals, 
-    * contentDeepHashCode, contentDeepToString, contentToString, contentEquals, binarySearch, copyOf, 
-    * copyOfRange, slice, sliceArray, associate, associateBy, associateByTo, associateTo
-* Collectionx: Test coverage 100%. [Collectionx.java] ([Test][CollectionxTest.kt]) | [Collectionx.kt] ([Test][CollectionxKtxTest.kt])
-    * isNullOrEmpty, isNotNullOrEmpty, joinToArrayString, linkedListOf, collectionSizeOrDefault, isEmpty, 
-    * isNotEmpty, orEmpty, list, listOf, immutableListOf, mutableListOf, arrayListOf, emptyList, immutableSetOf, 
-    * emptySet, mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, filterTo, filterNotTo, filterNotNullTo, 
-    * filterIndexedTo, filterIsInstanceTo, filter, filterNot, filterNotNull, filterIndexed, filterIsInstance,
-    * filterInPlace, mapTo, mapIndexedTo, mapIndexed, mapNotNullTo, mapNotNull, mapIndexedNotNullTo, 
-    * mapIndexedNotNull, flatMap, flatMapTo, flatMapIndexed, flatMapIndexedTo, joinTo, joinToString, count, 
-    * averageOf, sumOf, sumBy, first, firstOrNull, last, lastOrNull, find, findLast, getOrElse, getOrNull, 
-    * maxOrNull, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minOrNull, 
-    * minByOrNull, minWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull, addAll, removeAll, 
-    * partition, toCollection, toList, toSet, toSortedSet, toHashSet, safeToConvertToSet, withIndex, 
-    * convertToSetForSetOperationWith, convertToSetForSetOperation, union, all, any, contains, forEach, 
-    * forEachIndexed, onEach, onEachIndexed, chunked, minus, minusElement, plus, plusElement, indices, 
-    * groupByTo, groupBy, sort, sortWith, sortBy, sortedDescending, sortByDescending, sortedWith, sortedBy, 
-    * sorted, sortedByDescending, reverse, indexOf, indexOfFirst, indexOfLast, lastIndexOf, fold, foldIndexed,
-    * foldRight, foldRightIndexed, reduce, reduceIndexed, reduceRight, reduceRightIndexed, slice, take, 
-    * takeLast, takeLastWhile, takeWhile, distinct, distinctBy, intersect, retainAll, associateTo, 
-    * associate, associateByTo, associateBy, drop, dropLast, dropLastWhile, dropWhile, single, 
-    * singleOrNull, elementAtOrElse, elementAt, elementAtOrNull, fill, shuffle, shuffled, windowed, 
-    * zip, unzip, zipWithNext, iterator, to\*Array, flatten, requireNoNulls
-* Groupingx: Test coverage 100%. [Groupingx.java] ([Test][GroupingxTest.kt])
-    * groupingBy, aggregate, aggregateTo, fold, foldTo, reduce, reduceTo, eachCount, eachCountTo
-* Mapx: Test coverage 100%. [Mapx.java] ([Test][MapxTest.kt]) | [Mapx.kt] ([Test][MapxKtxTest.kt])
-    * builder, isNullOrEmpty, isNotNullOrEmpty, emptyMap, immutableMapOf, mutableMapOf, hashMapOf, linkedMapOf, 
-    * sortedMapOf, isEmpty, isNotEmpty, orEmpty, putAll, plus, plusAssign, remove, minus, minusAssign, set,
-    * get, getOrElse, getValue, getOrPut, contains, containsKey, containsValue, all, any, count, forEach, 
-    * onEach, maxByOrNull, maxWithOrNull, maxOf, maxOfOrNull, maxOfWith, maxOfWithOrNull, minByOrNull, 
-    * minWithOrNull, minOf, minOfOrNull, minOfWith, minOfWithOrNull, none, filterKeys, filterValues, 
-    * filterTo, filter, filterNotTo, filterNot, iterator, toPair, toMap, toList, asIterable, mapValuesTo, 
-    * mapValues, mapKeysTo, mapKeys, mapTo, map, mapNotNullTo, mapNotNull, flatMapTo, flatMap, capacity
 
 ### tools4j-compare
 ![TestCoverage](https://img.shields.io/badge/TestCoverage-81%25-green.svg)

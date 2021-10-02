@@ -16,7 +16,7 @@ dependencies {
     api("org.jetbrains:annotations:${property("JETBRAINS_ANNOTATIONS_VERSION")}")
     api(project(":tools4j-annotation"))
     api(project(":tools4j-base64"))
-    api(project(":tools4j-collections"))
+//    api(project(":tools4j-collections"))
     api(project(":tools4j-compare"))
     api(project(":tools4j-crypto"))
     api(project(":tools4j-date"))

@@ -25,7 +25,7 @@ dependencies {
     api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${property("KOTLIN_VERSION")}")
     api(project(":tools4j-annotation-ktx"))
     api(project(":tools4j-base64-ktx"))
-    api(project(":tools4j-collections-ktx"))
+//    api(project(":tools4j-collections-ktx"))
     api(project(":tools4j-crypto-ktx"))
     api(project(":tools4j-date-ktx"))
     api(project(":tools4j-environment"))
